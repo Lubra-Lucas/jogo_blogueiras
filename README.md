@@ -34,7 +34,7 @@ Veja [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 1. Base do projeto (feito)
 2. Fisica e capsula com WASD e click-to-move (feito)
-3. Camera em terceira pessoa
+3. Camera em terceira pessoa (feito)
 4. Controles mobile
 5. Personagem boneca com animacoes
 6. Praca central

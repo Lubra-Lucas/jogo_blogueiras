@@ -30,7 +30,7 @@ export function Hud() {
       <h1 className="hud-title">Jogo das Blogueiras</h1>
       <div className="hud-fps">{fps} FPS</div>
       <p className={hasMoved ? 'hud-hint hud-hint--hidden' : 'hud-hint'}>
-        WASD para andar · Shift para correr · Clique no chão para ir até lá · Arraste para girar a câmera
+        WASD para andar · Shift para correr · Clique no chão para ir até lá · Arraste para girar a câmera · Roda do mouse para zoom
       </p>
     </>
   )

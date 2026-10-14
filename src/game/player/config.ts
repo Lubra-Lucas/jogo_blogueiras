@@ -22,7 +22,4 @@ export const PLAYER = {
   arriveGain: 6, // velocidade desejada = distancia * ganho (limitada) -> desacelera ao chegar
   stuckSeconds: 0.8,
   stuckProgress: 0.02, // m de progresso minimo para nao contar como preso
-  // camera (temporaria ate o passo 3)
-  cameraFollowRate: 8,
-  cameraTargetHeight: 1.2,
 } as const

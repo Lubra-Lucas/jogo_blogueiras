@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { Vector3 } from 'three'
+import type { RapierRigidBody } from '@react-three/rapier'
 
 /**
  * Estado do jogador local. `position`, `velocity`, `speed`, `yaw` e `grounded` sao MUTADOS no
@@ -17,6 +18,8 @@ export interface PlayerState {
   yaw: number
   grounded: boolean
   hasMoved: boolean
+  /** corpo rigido do jogador (para excluir da colisao da camera); null ate montar */
+  body: RapierRigidBody | null
 }
 
 export const usePlayerStore = create<PlayerState>()(() => ({
@@ -26,4 +29,5 @@ export const usePlayerStore = create<PlayerState>()(() => ({
   yaw: 0,
   grounded: true,
   hasMoved: false,
+  body: null,
 }))

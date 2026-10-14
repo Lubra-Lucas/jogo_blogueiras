@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useThree } from '@react-three/fiber'
 import { Matrix3, Raycaster, Vector2, Vector3, type Mesh, type Object3D } from 'three'
-import { setMoveTarget } from './intent'
+import { isPointerClaimed, setMoveTarget } from './intent'
 
 const MAX_MOVE_PX = 6 // acima disso e arrasto de camera, nao clique
 const MAX_HOLD_MS = 300
@@ -10,7 +10,7 @@ const DOUBLE_TAP_PX = 30
 const MIN_NORMAL_Y = 0.7 // so aceita superficies "de chao"
 
 /**
- * Click-to-move (mouse esquerdo e toque). Usa eventos do canvas sem interferir no OrbitControls:
+ * Click-to-move (mouse esquerdo e toque). Usa eventos do canvas sem interferir na camera (CameraInput):
  * so conta como clique se o ponteiro andou < 6 px e ficou pressionado < 300 ms.
  * Apenas meshes com userData.walkable = true sao alvos validos.
  * Duplo clique / duplo toque = correr ate la.
@@ -31,10 +31,14 @@ export function ClickToMove() {
       if (o.userData.walkable && (o as Mesh).isMesh) walkables.push(o)
     }
 
-    let down: { id: number; x: number; y: number; t: number } | null = null
+    let down: { id: number; x: number; y: number; t: number; far: boolean } | null = null
     let lastTap = { t: -1e9, x: 0, y: 0 }
 
     const onDown = (e: PointerEvent) => {
+      if (isPointerClaimed(e.pointerId)) {
+        down = null // dedo reservado por outro controle (joystick)
+        return
+      }
       if (!e.isPrimary) {
         down = null // segundo dedo (pinca/zoom): invalida o toque
         return
@@ -43,7 +47,13 @@ export function ClickToMove() {
         down = null
         return
       }
-      down = { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now() }
+      down = { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now(), far: false }
+    }
+
+    // Passou do limite em qualquer momento = arrasto de camera (mesmo que volte ao ponto inicial).
+    const onMove = (e: PointerEvent) => {
+      const d = down
+      if (d && e.pointerId === d.id && Math.hypot(e.clientX - d.x, e.clientY - d.y) > MAX_MOVE_PX) d.far = true
     }
 
     const onUp = (e: PointerEvent) => {
@@ -51,7 +61,7 @@ export function ClickToMove() {
       if (!d || e.pointerId !== d.id) return
       down = null
       const now = performance.now()
-      if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > MAX_MOVE_PX) return
+      if (d.far || Math.hypot(e.clientX - d.x, e.clientY - d.y) > MAX_MOVE_PX) return
       if (now - d.t > MAX_HOLD_MS) return
 
       const rect = el.getBoundingClientRect()
@@ -77,11 +87,13 @@ export function ClickToMove() {
     }
 
     el.addEventListener('pointerdown', onDown)
+    el.addEventListener('pointermove', onMove)
     el.addEventListener('pointerup', onUp)
     el.addEventListener('pointercancel', onCancel)
     return () => {
       el.removeEventListener('pointerdown', onDown)
-      el.removeEventListener('pointerup', onUp)
+      el.removeEventListener('pointermove', onMove)
+    el.removeEventListener('pointerup', onUp)
       el.removeEventListener('pointercancel', onCancel)
     }
   }, [gl, camera, scene])

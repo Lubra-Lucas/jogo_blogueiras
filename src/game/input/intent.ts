@@ -70,3 +70,35 @@ export function setMoveTarget(point: Vector3, run: boolean) {
 export function clearMoveTarget() {
   intent.target = null
 }
+
+/**
+ * Intencao da camera. Fontes (mouse, toque, teclado) ACUMULAM; a ThirdPersonCamera consome e zera
+ * a cada frame. Convencao: yawDelta > 0 gira a camera no sentido anti-horario visto de cima
+ * (a visao vira para a esquerda); pitchDelta > 0 sobe a camera (olhar mais para baixo);
+ * zoomDelta e logaritmico (distancia *= exp(zoomDelta); > 0 afasta).
+ */
+export const cameraIntent = {
+  yawDelta: 0,
+  pitchDelta: 0,
+  zoomDelta: 0,
+  /** giro continuo do teclado, -1..1 (Q = +1 esquerda, E = -1 direita); multiplicado por rad/s e dt. */
+  keyYaw: 0,
+}
+
+/** Giro continuo do teclado (Q/E). */
+export function setKeyboardCameraYaw(v: number) {
+  cameraIntent.keyYaw = v
+}
+
+// ---- Posse de ponteiros: controles (ex.: joystick do passo 4) "reservam" um pointerId para a
+// camera e o click-to-move ignorarem aquele dedo. ----
+const claimed = new Set<number>()
+export function claimPointer(id: number) {
+  claimed.add(id)
+}
+export function releasePointer(id: number) {
+  claimed.delete(id)
+}
+export function isPointerClaimed(id: number) {
+  return claimed.has(id)
+}

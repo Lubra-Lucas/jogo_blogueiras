@@ -1,13 +1,25 @@
 import { useEffect, useMemo, useRef } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, useRapier, type RapierRigidBody } from '@react-three/rapier'
-import { MathUtils, Vector3, type Group } from 'three'
+import { MathUtils, Vector3, type Group, type Material } from 'three'
 import { clearMoveTarget, intent } from '../input/intent'
 import { usePlayerStore } from '../../state/playerStore'
+import { useCameraStore } from '../../state/cameraStore'
+import { CAMERA } from '../camera/config'
 import { PLAYER as C } from './config'
 
 type Rapier = ReturnType<typeof useRapier>
 type CharacterController = ReturnType<Rapier['world']['createCharacterController']>
+
+function setOpacity(m: Material | null, o: number) {
+  if (!m) return
+  const t = o < 0.999
+  if (m.transparent !== t) {
+    m.transparent = t
+    m.needsUpdate = true
+  }
+  m.opacity = o
+}
 
 const SPAWN_Y = 0.03 + C.halfHeight + C.radius + 0.05
 
@@ -18,11 +30,11 @@ const SPAWN_Y = 0.03 + C.halfHeight + C.radius + 0.05
  */
 export function PlayerController({ shadows }: { shadows: boolean }) {
   const { world } = useRapier()
-  const camera = useThree((s) => s.camera)
-  const controlsRaw = useThree((s) => s.controls)
 
   const body = useRef<RapierRigidBody>(null)
   const visual = useRef<Group>(null)
+  const bodyMat = useRef<Material>(null)
+  const noseMat = useRef<Material>(null)
   const controller = useRef<CharacterController | null>(null)
 
   // Estado de simulacao + temporarios reutilizados (sem alocacao por frame).
@@ -36,9 +48,6 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       bestDist: Infinity,
       stuck: 0,
       desired: { x: 0, y: 0, z: 0 },
-      dir: new Vector3(),
-      camDelta: new Vector3(),
-      camGoal: new Vector3(),
       moved: false,
     }),
     [],
@@ -64,6 +73,10 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
     const st = usePlayerStore.getState()
     st.position.copy(sim.pos)
     st.yaw = sim.yaw
+    st.body = body.current
+    return () => {
+      if (usePlayerStore.getState().body === body.current) usePlayerStore.setState({ body: null })
+    }
   }, [sim])
 
   useFrame((_, rawDelta) => {
@@ -75,17 +88,9 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
     if (dt <= 0) return
 
     // ---- direcao desejada, relativa a camera ----
-    camera.getWorldDirection(sim.dir)
-    let fx = sim.dir.x
-    let fz = sim.dir.z
-    const fl = Math.hypot(fx, fz)
-    if (fl < 1e-4) {
-      fx = 0
-      fz = -1
-    } else {
-      fx /= fl
-      fz /= fl
-    }
+    const camYaw = useCameraStore.getState().yaw
+    const fx = -Math.sin(camYaw)
+    const fz = -Math.cos(camYaw)
     const rx = -fz
     const rz = fx
 
@@ -179,6 +184,12 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       v.rotation.y = sim.yaw
     }
 
+    // ---- some a capsula quando a camera chega muito perto ----
+    const camDist = useCameraStore.getState().distance
+    const op = MathUtils.clamp((camDist - CAMERA.fadeEnd) / (CAMERA.fadeStart - CAMERA.fadeEnd), 0, 1)
+    setOpacity(bodyMat.current, op)
+    setOpacity(noseMat.current, op)
+
     // ---- estado compartilhado (mutado no lugar) ----
     const st = usePlayerStore.getState()
     st.position.copy(sim.pos)
@@ -189,15 +200,6 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
     if (!sim.moved && st.speed > 0.5) {
       sim.moved = true
       usePlayerStore.setState({ hasMoved: true })
-    }
-
-    // ---- camera (temporario): segue o jogador mantendo angulo/distancia do OrbitControls ----
-    const controls = controlsRaw as unknown as { target: Vector3 } | null
-    if (controls) {
-      sim.camGoal.set(sim.pos.x, sim.pos.y + C.cameraTargetHeight, sim.pos.z)
-      sim.camDelta.copy(sim.camGoal).sub(controls.target).multiplyScalar(1 - Math.exp(-C.cameraFollowRate * dt))
-      controls.target.add(sim.camDelta)
-      camera.position.add(sim.camDelta)
     }
   })
 
@@ -210,12 +212,12 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       <group ref={visual} position={[sim.pos.x, sim.pos.y, sim.pos.z]}>
         <mesh castShadow={shadows}>
           <capsuleGeometry args={[C.radius, C.halfHeight * 2, 12, 24]} />
-          <meshPhysicalMaterial color="#ff9ccb" roughness={0.25} metalness={0.05} clearcoat={1} clearcoatRoughness={0.08} />
+          <meshPhysicalMaterial ref={bodyMat} color="#ff9ccb" roughness={0.25} metalness={0.05} clearcoat={1} clearcoatRoughness={0.08} />
         </mesh>
         {/* "Nariz" dourado: mostra para onde a capsula esta virada (+Z local) */}
         <mesh position={[0, 0.3, C.radius - 0.02]} castShadow={shadows}>
           <sphereGeometry args={[0.1, 16, 16]} />
-          <meshStandardMaterial color="#e6b84f" metalness={0.9} roughness={0.3} />
+          <meshStandardMaterial ref={noseMat} color="#e6b84f" metalness={0.9} roughness={0.3} />
         </mesh>
       </group>
     </>

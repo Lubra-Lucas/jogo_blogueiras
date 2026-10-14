@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useThree } from '@react-three/fiber'
-import { AdaptiveDpr, Environment, Lightformer, OrbitControls, Sparkles } from '@react-three/drei'
+import { AdaptiveDpr, Environment, Lightformer, Sparkles } from '@react-three/drei'
 import { Fog } from 'three'
 import { QUALITY_SETTINGS, type QualityTier } from './systems/quality'
 import { Ground } from './world/Ground'
@@ -12,7 +12,8 @@ import { KeyboardInput } from './input/KeyboardInput'
 import { ClickToMove } from './input/ClickToMove'
 import { PlayerController } from './player/PlayerController'
 import { DestinationMarker } from './player/DestinationMarker'
-import { PLAYER } from './player/config'
+import { CameraInput } from './input/CameraInput'
+import { ThirdPersonCamera } from './camera/ThirdPersonCamera'
 
 const DEBUG_PHYSICS = new URLSearchParams(window.location.search).get('debug') === '1'
 
@@ -67,9 +68,12 @@ export function Game({ tier }: { tier: QualityTier }) {
         <Centerpiece shadows={q.shadows} />
         <TestArea shadows={q.shadows} />
         <PlayerController shadows={q.shadows} />
+        {/* depois do PlayerController: useFrame na ordem de montagem */}
+        <ThirdPersonCamera />
       </Physics>
       <KeyboardInput />
       <ClickToMove />
+      <CameraInput />
       <DestinationMarker />
       <Sparkles
         count={q.sparkles}
@@ -80,15 +84,6 @@ export function Game({ tier }: { tier: QualityTier }) {
         color="#ffe9a8"
       />
 
-      {/* Temporario: no jogo final a camera sera em terceira pessoa. */}
-      <OrbitControls
-        makeDefault
-        target={[PLAYER.spawn[0], 2.1, PLAYER.spawn[1]]}
-        enablePan={false}
-        minDistance={4}
-        maxDistance={30}
-        maxPolarAngle={Math.PI / 2 - 0.05}
-      />
       <AdaptiveDpr pixelated={false} />
     </>
   )
