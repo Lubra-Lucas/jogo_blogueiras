@@ -1,25 +1,17 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, useRapier, type RapierRigidBody } from '@react-three/rapier'
-import { MathUtils, Vector3, type Group, type Material } from 'three'
+import { MathUtils, Vector3, type Group } from 'three'
 import { clearMoveTarget, intent } from '../input/intent'
 import { usePlayerStore } from '../../state/playerStore'
 import { useCameraStore } from '../../state/cameraStore'
 import { CAMERA } from '../camera/config'
 import { PLAYER as C } from './config'
+import { useAppearanceStore } from '../../state/appearanceStore'
+import { Character } from '../character/Character'
 
 type Rapier = ReturnType<typeof useRapier>
 type CharacterController = ReturnType<Rapier['world']['createCharacterController']>
-
-function setOpacity(m: Material | null, o: number) {
-  if (!m) return
-  const t = o < 0.999
-  if (m.transparent !== t) {
-    m.transparent = t
-    m.needsUpdate = true
-  }
-  m.opacity = o
-}
 
 const SPAWN_Y = 0.03 + C.halfHeight + C.radius + 0.05
 
@@ -33,8 +25,7 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
 
   const body = useRef<RapierRigidBody>(null)
   const visual = useRef<Group>(null)
-  const bodyMat = useRef<Material>(null)
-  const noseMat = useRef<Material>(null)
+  const appearance = useAppearanceStore((st) => st.appearance)
   const controller = useRef<CharacterController | null>(null)
 
   // Estado de simulacao + temporarios reutilizados (sem alocacao por frame).
@@ -184,11 +175,8 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       v.rotation.y = sim.yaw
     }
 
-    // ---- some a capsula quando a camera chega muito perto ----
-    const camDist = useCameraStore.getState().distance
-    const op = MathUtils.clamp((camDist - CAMERA.fadeEnd) / (CAMERA.fadeStart - CAMERA.fadeEnd), 0, 1)
-    setOpacity(bodyMat.current, op)
-    setOpacity(noseMat.current, op)
+    // ---- some o personagem quando a camera chega muito perto ----
+    if (v) v.visible = useCameraStore.getState().distance > (CAMERA.fadeStart + CAMERA.fadeEnd) / 2
 
     // ---- estado compartilhado (mutado no lugar) ----
     const st = usePlayerStore.getState()
@@ -210,15 +198,10 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       </RigidBody>
 
       <group ref={visual} position={[sim.pos.x, sim.pos.y, sim.pos.z]}>
-        <mesh castShadow={shadows}>
-          <capsuleGeometry args={[C.radius, C.halfHeight * 2, 12, 24]} />
-          <meshPhysicalMaterial ref={bodyMat} color="#ff9ccb" roughness={0.25} metalness={0.05} clearcoat={1} clearcoatRoughness={0.08} />
-        </mesh>
-        {/* "Nariz" dourado: mostra para onde a capsula esta virada (+Z local) */}
-        <mesh position={[0, 0.3, C.radius - 0.02]} castShadow={shadows}>
-          <sphereGeometry args={[0.1, 16, 16]} />
-          <meshStandardMaterial ref={noseMat} color="#e6b84f" metalness={0.9} roughness={0.3} />
-        </mesh>
+        {/* a posicao do controle e o centro da capsula: os pes ficam meia-altura + raio abaixo */}
+        <group position={[0, -(C.halfHeight + C.radius), 0]}>
+          <Character appearance={appearance} shadows={shadows} />
+        </group>
       </group>
     </>
   )

@@ -14,7 +14,9 @@ import { PlayerController } from './player/PlayerController'
 import { DestinationMarker } from './player/DestinationMarker'
 import { CameraInput } from './input/CameraInput'
 import { ThirdPersonCamera } from './camera/ThirdPersonCamera'
+import { CharacterViewer, getViewMode } from './character/CharacterViewer'
 
+const VIEW = getViewMode()
 const DEBUG_PHYSICS = new URLSearchParams(window.location.search).get('debug') === '1'
 
 export function Game({ tier }: { tier: QualityTier }) {
@@ -63,18 +65,30 @@ export function Game({ tier }: { tier: QualityTier }) {
         shadow-bias={-0.0004}
       />
 
-      <Physics timeStep="vary" gravity={[0, -9.81, 0]} debug={DEBUG_PHYSICS}>
-        <Ground shadows={q.shadows} />
-        <Centerpiece shadows={q.shadows} />
-        <TestArea shadows={q.shadows} />
-        <PlayerController shadows={q.shadows} />
-        {/* depois do PlayerController: useFrame na ordem de montagem */}
-        <ThirdPersonCamera />
-      </Physics>
-      <KeyboardInput />
-      <ClickToMove />
-      <CameraInput />
-      <DestinationMarker />
+      {VIEW ? (
+        <>
+          {/* modo de revisao da arte: so a praca + personagem na origem */}
+          <Physics timeStep="vary" gravity={[0, -9.81, 0]}>
+            <Ground shadows={q.shadows} />
+          </Physics>
+          <CharacterViewer mode={VIEW} shadows={q.shadows} />
+        </>
+      ) : (
+        <>
+          <Physics timeStep="vary" gravity={[0, -9.81, 0]} debug={DEBUG_PHYSICS}>
+            <Ground shadows={q.shadows} />
+            <Centerpiece shadows={q.shadows} />
+            <TestArea shadows={q.shadows} />
+            <PlayerController shadows={q.shadows} />
+            {/* depois do PlayerController: useFrame na ordem de montagem */}
+            <ThirdPersonCamera />
+          </Physics>
+          <KeyboardInput />
+          <ClickToMove />
+          <CameraInput />
+          <DestinationMarker />
+        </>
+      )}
       <Sparkles
         count={q.sparkles}
         scale={[9, 5, 9]}
