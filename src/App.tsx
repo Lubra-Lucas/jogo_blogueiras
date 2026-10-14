@@ -1,14 +1,19 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { ACESFilmicToneMapping, SRGBColorSpace } from 'three'
 import { Game } from './game/Game'
 import { getQuality, QUALITY_SETTINGS } from './game/systems/quality'
+import { initDeviceDetection, useDeviceStore } from './game/systems/device'
 import { Hud } from './ui/Hud'
+import { Joystick } from './ui/Joystick'
+import { FullscreenButton } from './ui/FullscreenButton'
 
 const tier = getQuality()
 const settings = QUALITY_SETTINGS[tier]
 
 export default function App() {
+  const isTouch = useDeviceStore((s) => s.isTouch)
+  useEffect(() => initDeviceDetection(), [])
   return (
     <div className="app">
       <Suspense fallback={<div className="loading">Carregando...</div>}>
@@ -28,6 +33,8 @@ export default function App() {
       </Suspense>
       <div className="ui-layer">
         <Hud />
+        {isTouch && <FullscreenButton />}
+        {isTouch && <Joystick />}
       </div>
     </div>
   )

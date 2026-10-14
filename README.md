@@ -20,6 +20,10 @@ Abra o endereco `Local` mostrado no terminal (normalmente http://localhost:5173/
 
 Dica: use `?quality=low|medium|high` na URL para forcar um nivel de qualidade grafica, e `?debug=1` para ver os colisores da fisica.
 
+### Testar no celular (GitHub Pages)
+
+Abra https://lubra-lucas.github.io/jogo_blogueiras/ no navegador do celular (depois de um push na `main` e do deploy terminar). Use o joystick (canto inferior esquerdo) para andar, arraste fora dele para girar a camera, pinca para zoom e toque no chao para ir ate la. Em iPhone, "Adicionar a Tela de Inicio" deixa o jogo em tela cheia.
+
 ## Build e deploy
 
 - `npm run build` gera a pasta `dist`.
@@ -35,7 +39,7 @@ Veja [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 1. Base do projeto (feito)
 2. Fisica e capsula com WASD e click-to-move (feito)
 3. Camera em terceira pessoa (feito)
-4. Controles mobile
+4. Controles mobile (feito)
 5. Personagem boneca com animacoes
 6. Praca central
 7. Ruas e fachadas
