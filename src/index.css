@@ -86,8 +86,14 @@ canvas {
   padding: 4px 14px;
   border-radius: 999px;
   font-size: 13px;
-  white-space: nowrap;
+  max-width: calc(100vw - 24px);
+  text-align: center;
   background: rgba(255, 244, 230, 0.75);
+  transition: opacity 0.8s ease;
+}
+
+.hud-hint--hidden {
+  opacity: 0;
 }
 
 .loading {

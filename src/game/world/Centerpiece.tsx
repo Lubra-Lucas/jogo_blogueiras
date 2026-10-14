@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { CylinderCollider, RigidBody } from '@react-three/rapier'
 import type { Group } from 'three'
 
 /** Pedestal dourado com uma gema rosa girando (placeholder da futura fonte). */
@@ -16,6 +17,11 @@ export function Centerpiece({ shadows }: { shadows: boolean }) {
 
   return (
     <group>
+      {/* colisao do pedestal: cilindro fixo (nao da para atravessar nem subir) */}
+      <RigidBody type="fixed" colliders={false}>
+        <CylinderCollider args={[1, 2.5]} position={[0, 1, 0]} />
+      </RigidBody>
+
       <mesh position={[0, 0.2, 0]} castShadow={shadows} receiveShadow={shadows}>
         <cylinderGeometry args={[2.2, 2.5, 0.4, 48]} />
         <meshStandardMaterial {...gold} />

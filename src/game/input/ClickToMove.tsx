@@ -1,0 +1,90 @@
+import { useEffect } from 'react'
+import { useThree } from '@react-three/fiber'
+import { Matrix3, Raycaster, Vector2, Vector3, type Mesh, type Object3D } from 'three'
+import { setMoveTarget } from './intent'
+
+const MAX_MOVE_PX = 6 // acima disso e arrasto de camera, nao clique
+const MAX_HOLD_MS = 300
+const DOUBLE_TAP_MS = 350
+const DOUBLE_TAP_PX = 30
+const MIN_NORMAL_Y = 0.7 // so aceita superficies "de chao"
+
+/**
+ * Click-to-move (mouse esquerdo e toque). Usa eventos do canvas sem interferir no OrbitControls:
+ * so conta como clique se o ponteiro andou < 6 px e ficou pressionado < 300 ms.
+ * Apenas meshes com userData.walkable = true sao alvos validos.
+ * Duplo clique / duplo toque = correr ate la.
+ */
+export function ClickToMove() {
+  const gl = useThree((s) => s.gl)
+  const camera = useThree((s) => s.camera)
+  const scene = useThree((s) => s.scene)
+
+  useEffect(() => {
+    const el = gl.domElement
+    const ray = new Raycaster()
+    const ndc = new Vector2()
+    const normal = new Vector3()
+    const normalMatrix = new Matrix3()
+    const walkables: Object3D[] = []
+    const collect = (o: Object3D) => {
+      if (o.userData.walkable && (o as Mesh).isMesh) walkables.push(o)
+    }
+
+    let down: { id: number; x: number; y: number; t: number } | null = null
+    let lastTap = { t: -1e9, x: 0, y: 0 }
+
+    const onDown = (e: PointerEvent) => {
+      if (!e.isPrimary) {
+        down = null // segundo dedo (pinca/zoom): invalida o toque
+        return
+      }
+      if (e.pointerType === 'mouse' && e.button !== 0) {
+        down = null
+        return
+      }
+      down = { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now() }
+    }
+
+    const onUp = (e: PointerEvent) => {
+      const d = down
+      if (!d || e.pointerId !== d.id) return
+      down = null
+      const now = performance.now()
+      if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > MAX_MOVE_PX) return
+      if (now - d.t > MAX_HOLD_MS) return
+
+      const rect = el.getBoundingClientRect()
+      ndc.set(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1)
+      ray.setFromCamera(ndc, camera)
+      walkables.length = 0
+      scene.traverse(collect)
+      const hit = ray.intersectObjects(walkables, false)[0]
+      if (!hit || !hit.face) return
+      normalMatrix.getNormalMatrix(hit.object.matrixWorld)
+      normal.copy(hit.face.normal).applyMatrix3(normalMatrix).normalize()
+      if (normal.y <= MIN_NORMAL_Y) return
+
+      const dbl =
+        now - lastTap.t < DOUBLE_TAP_MS &&
+        Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < DOUBLE_TAP_PX
+      lastTap = dbl ? { t: -1e9, x: 0, y: 0 } : { t: now, x: e.clientX, y: e.clientY }
+      setMoveTarget(hit.point, dbl)
+    }
+
+    const onCancel = () => {
+      down = null
+    }
+
+    el.addEventListener('pointerdown', onDown)
+    el.addEventListener('pointerup', onUp)
+    el.addEventListener('pointercancel', onCancel)
+    return () => {
+      el.removeEventListener('pointerdown', onDown)
+      el.removeEventListener('pointerup', onUp)
+      el.removeEventListener('pointercancel', onCancel)
+    }
+  }, [gl, camera, scene])
+
+  return null
+}

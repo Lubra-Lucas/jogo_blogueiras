@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { usePlayerStore } from '../state/playerStore'
 
 function useFps() {
   const [fps, setFps] = useState(0)
@@ -23,11 +24,14 @@ function useFps() {
 
 export function Hud() {
   const fps = useFps()
+  const hasMoved = usePlayerStore((s) => s.hasMoved)
   return (
     <>
       <h1 className="hud-title">Jogo das Blogueiras</h1>
       <div className="hud-fps">{fps} FPS</div>
-      <p className="hud-hint">Arraste para olhar ao redor</p>
+      <p className={hasMoved ? 'hud-hint hud-hint--hidden' : 'hud-hint'}>
+        WASD para andar · Shift para correr · Clique no chão para ir até lá · Arraste para girar a câmera
+      </p>
     </>
   )
 }

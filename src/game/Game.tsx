@@ -6,6 +6,15 @@ import { QUALITY_SETTINGS, type QualityTier } from './systems/quality'
 import { Ground } from './world/Ground'
 import { Sky } from './world/Sky'
 import { Centerpiece } from './world/Centerpiece'
+import { TestArea } from './world/TestArea'
+import { Physics } from '@react-three/rapier'
+import { KeyboardInput } from './input/KeyboardInput'
+import { ClickToMove } from './input/ClickToMove'
+import { PlayerController } from './player/PlayerController'
+import { DestinationMarker } from './player/DestinationMarker'
+import { PLAYER } from './player/config'
+
+const DEBUG_PHYSICS = new URLSearchParams(window.location.search).get('debug') === '1'
 
 export function Game({ tier }: { tier: QualityTier }) {
   const q = QUALITY_SETTINGS[tier]
@@ -53,8 +62,15 @@ export function Game({ tier }: { tier: QualityTier }) {
         shadow-bias={-0.0004}
       />
 
-      <Ground shadows={q.shadows} />
-      <Centerpiece shadows={q.shadows} />
+      <Physics timeStep="vary" gravity={[0, -9.81, 0]} debug={DEBUG_PHYSICS}>
+        <Ground shadows={q.shadows} />
+        <Centerpiece shadows={q.shadows} />
+        <TestArea shadows={q.shadows} />
+        <PlayerController shadows={q.shadows} />
+      </Physics>
+      <KeyboardInput />
+      <ClickToMove />
+      <DestinationMarker />
       <Sparkles
         count={q.sparkles}
         scale={[9, 5, 9]}
@@ -67,7 +83,7 @@ export function Game({ tier }: { tier: QualityTier }) {
       {/* Temporario: no jogo final a camera sera em terceira pessoa. */}
       <OrbitControls
         makeDefault
-        target={[0, 1.6, 0]}
+        target={[PLAYER.spawn[0], 2.1, PLAYER.spawn[1]]}
         enablePan={false}
         minDistance={4}
         maxDistance={30}

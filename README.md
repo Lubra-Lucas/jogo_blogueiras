@@ -18,7 +18,7 @@ Abra o endereco `Local` mostrado no terminal (normalmente http://localhost:5173/
 1. Conecte o celular na mesma rede wifi do computador.
 2. Rode `npm run dev` e abra no celular o endereco `Network` mostrado no terminal.
 
-Dica: use `?quality=low|medium|high` na URL para forcar um nivel de qualidade grafica.
+Dica: use `?quality=low|medium|high` na URL para forcar um nivel de qualidade grafica, e `?debug=1` para ver os colisores da fisica.
 
 ## Build e deploy
 
@@ -32,8 +32,8 @@ Veja [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Roadmap do marco 1
 
-1. Base do projeto
-2. Fisica e capsula com WASD
+1. Base do projeto (feito)
+2. Fisica e capsula com WASD e click-to-move (feito)
 3. Camera em terceira pessoa
 4. Controles mobile
 5. Personagem boneca com animacoes
