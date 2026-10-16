@@ -22,6 +22,9 @@ import { useShopStore } from './ui/shop/shopStore'
 import { MarketHost, useMarketUi } from './ui/market'
 import { FastTravelFade } from './game/navigation/FastTravelFade'
 import { InteriorUi } from './ui/interiors/InteriorUi'
+import { TravelUi } from './ui/travel/TravelUi'
+import { PetHud } from './ui/pets/PetHud'
+import { PetShopScreen } from './ui/pets/PetShopScreen'
 
 const tier = getQuality()
 const settings = QUALITY_SETTINGS[tier]
@@ -69,8 +72,11 @@ export default function App() {
         <VehicleUi />
         <MinigameHost />
         <ShopHost />
+        <PetHud />
+        <PetShopScreen />
         <MarketHost />
         <FastTravelFade />
+        <TravelUi />
       </div>
     </div>
   )

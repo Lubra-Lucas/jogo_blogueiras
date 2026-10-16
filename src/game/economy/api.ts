@@ -13,7 +13,7 @@ import { ownsEditionOfItem, useInventory } from '../market/inventory'
  *  - getWalletSnapshot()     : { brilhos, diamantes }
  * Para reagir a mudancas use `useProfileStore((s) => s.owned)`.
  */
-export type OwnableCategory = 'roupas' | 'joias' | 'cabelos' | 'carros' | 'casas'
+export type OwnableCategory = 'roupas' | 'joias' | 'cabelos' | 'carros' | 'casas' | 'pets'
 
 export function ownsItem(id: string): boolean {
   return useProfileStore.getState().owned.includes(id) || ownsEditionOfItem(id)
@@ -25,6 +25,7 @@ export function editionBaseItemIds(): string[] {
 }
 
 export function categoryOf(id: string): OwnableCategory | null {
+  if (id.startsWith('pet.') || id.startsWith('petacc.')) return 'pets'
   const big = bigTickets().find((b) => b.id === id)
   if (big) return big.kind === 'car' ? 'carros' : 'casas'
   if (WEARABLES[id]?.slot === 'hair') return 'cabelos'

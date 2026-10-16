@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { CanvasTexture, CircleGeometry, Matrix4, PlaneGeometry, Quaternion, RepeatWrapping, SphereGeometry, SRGBColorSpace, TorusGeometry, Vector3, type BufferGeometry } from 'three'
+import { BoxGeometry, CanvasTexture, CircleGeometry, CylinderGeometry, Matrix4, PlaneGeometry, Quaternion, RepeatWrapping, SphereGeometry, SRGBColorSpace, Vector3, type BufferGeometry } from 'three'
 import { CITY } from './layout'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { merge, paint, ribbon } from './geo'
@@ -131,12 +131,17 @@ const FLOWER_SETS = [
   ['#8f6fc4', '#b49be0', '#f2eef8'], // lilas
 ]
 
-/** Canteiros: moldura de perola + monte de folhas menta + flores-bolha em coral / limao / lilas. */
+/**
+ * Canteiros: meio-fio de pedra em blocos (com juntas), terra, moita de folhas irregulares (varios lobos) e flores com caule:
+ * miolo alto de margaridas + corola de tulipas baixas, em coral / limao / lilas (so um pouco de rosa).
+ */
 export function bedsGeometry(): BufferGeometry {
   const list: BufferGeometry[] = []
   const M = new Matrix4()
   const q = new Quaternion()
   const up = new Vector3(0, 1, 0)
+  let seed = 11
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647)
   for (const b of BEDS) {
     M.compose(new Vector3(b.x, 0, b.z), q.setFromAxisAngle(up, b.rot), new Vector3(1, 1, 1))
     const add = (g: BufferGeometry, color: string) => {
@@ -144,22 +149,50 @@ export function bedsGeometry(): BufferGeometry {
       g.applyMatrix4(M)
       list.push(g)
     }
-    const border = new TorusGeometry(1, 0.1, 6, 22).rotateX(Math.PI / 2)
-    border.scale(2.0, 1.4, 1.05)
-    border.translate(0, 0.11, 0)
-    add(border, '#cfc7b6')
-    const mound = new SphereGeometry(1, 14, 7, 0, Math.PI * 2, 0, Math.PI / 2)
-    mound.scale(1.95, 0.42, 0.98)
-    add(mound, '#5f9a4f')
+    // meio-fio: 20 blocos de pedra ao longo da elipse (2.0 x 1.05)
+    const NB = 20
+    for (let i = 0; i < NB; i++) {
+      const a = ((i + 0.5) / NB) * Math.PI * 2
+      const blk = new BoxGeometry(0.5, 0.2, 0.2)
+      blk.rotateY(Math.atan2(-1.05 * Math.cos(a), -2.0 * Math.sin(a)))
+      blk.translate(Math.cos(a) * 2.0, 0.1, Math.sin(a) * 1.05)
+      add(blk, i % 3 === 0 ? '#c6bda8' : '#d6cfbd')
+    }
+    const soil = new CylinderGeometry(1, 1, 0.08, 20)
+    soil.scale(1.95, 1, 1.0)
+    soil.translate(0, 0.09, 0)
+    add(soil, '#5a4330')
+    // moita: lobos de folhas achatados e irregulares
+    for (let i = 0; i < 7; i++) {
+      const a = (i / 7) * Math.PI * 2 + rnd()
+      const lobe = new SphereGeometry(0.46 + rnd() * 0.12, 8, 5)
+      lobe.scale(1.25, 0.55, 1)
+      lobe.translate(Math.cos(a) * 1.05, 0.28, Math.sin(a) * 0.5)
+      add(lobe, ['#4f8f45', '#5f9a4f', '#46843f'][i % 3])
+    }
+    const core = new SphereGeometry(0.7, 9, 5)
+    core.scale(1.5, 0.6, 0.85)
+    core.translate(0, 0.32, 0)
+    add(core, '#548f48')
+    // flores: caule + corola (disco) + miolo; as altas no centro, as baixas na borda
     const set = FLOWER_SETS[b.hue % 3]
-    for (let i = 0; i < 12; i++) {
-      const a = (i / 12) * Math.PI * 2 + b.hue
-      const rr = i < 4 ? 0.28 : 0.8
+    for (let i = 0; i < 15; i++) {
+      const a = (i / 15) * Math.PI * 2 + b.hue
+      const tall = i < 5
+      const rr = tall ? 0.28 : 0.78
       const fx = Math.cos(a) * rr * 1.7
       const fz = Math.sin(a) * rr * 0.82
-      const f = new SphereGeometry(0.27 - (i % 3) * 0.03, 8, 5)
-      f.translate(fx, 0.46 + (i < 4 ? 0.12 : 0), fz)
-      add(f, set[i % 3])
+      const h = tall ? 0.62 : 0.36
+      const stem = new CylinderGeometry(0.014, 0.018, h, 4)
+      stem.translate(fx, 0.34 + h / 2, fz)
+      add(stem, '#3f7a3a')
+      const bloom = new CylinderGeometry(tall ? 0.15 : 0.12, 0.05, 0.06, 7)
+      bloom.rotateX((rnd() - 0.5) * 0.5)
+      bloom.translate(fx, 0.36 + h, fz)
+      add(bloom, set[i % 3])
+      const eye = new SphereGeometry(0.045, 6, 4)
+      eye.translate(fx, 0.4 + h, fz)
+      add(eye, tall ? '#f2c230' : '#fff3d0')
     }
   }
   return merge(list)

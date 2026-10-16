@@ -426,9 +426,9 @@ def frame_rect(w, h, t, loc, mat, y=None):
 # orcamento de triangulos por peca (o jogo carrega o kit inteiro e funde por celula); acima disso aplica Decimate
 BUDGET = {"wall_door": 3000, "wall_window": 1900, "wall_plain": 1900, "bench_tufted": 1700, "arch_gate": 2600, "fountain_center": 6500,
           "lamp_post": 950, "planter_round": 1100, "hedge_heart": 1100, "fence_segment": 700, "awning_striped": 1000,
-          "balcony_curved": 1100, "house_shell": 1100, "house_shell_wide": 1700, "roof_pitched": 900, "gazebo": 3200,
+          "balcony_curved": 1100, "house_shell": 2100, "house_shell_wide": 3200, "roof_pitched": 900, "gazebo": 3200,
           "bridge_small": 2200, "column_rococo": 1200, "cornice_scallop": 1000, "roof_dome_small": 1500, "wall_corner": 1200,
-          "facade_win": 620, "facade_door": 680, "balloon_heart": 700, "sign_frame": 2000}
+          "facade_win": 760, "facade_door": 800, "balloon_heart": 700, "sign_frame": 2000}
 
 
 def decimate_to(ob, target):
@@ -1004,11 +1004,25 @@ def arch_outline(w, h_rect, n=14):
 
 
 def lite_window(loc, rot, w=1.3, hr=1.1, glass="glass"):
-    """janelinha em arco com moldura de metal (para as laterais/fundos), centrada em loc (base da janela)."""
+    """janelinha em arco com moldura de metal (para as laterais/fundos), centrada em loc (base da janela).
+    Detalhe: caixilho em cruz, peitoril com consolos, fecho-chave (keystone) e venezianas laterais."""
     x, y, z = loc
     P = []
     P.append(prism(arch_outline(w + .26, hr, 10), .1, "xz", "trim", loc=(x, y, z - .08), rot=rot, bevel=.02, seg=2))
     P.append(prism(arch_outline(w, hr, 10), .16, "xz", glass, loc=(x, y, z), rot=rot))
+    rz = rot[2] if isinstance(rot, (tuple, list)) else 0.0
+    cz, sz = cos(rz), sin(rz)
+    # eixo local: u ao longo da janela -> (cz, sz); n (para fora, -Y local) -> (-sz, cz) * n com n < 0
+    def L(u, n, zz):
+        return (x + cz * u - sz * n, y + sz * u + cz * n, zz)
+    out = -.1
+    P.append(box((w + .5, .2, .09), L(0, out - .02, z - .1), "white", rot=rot))
+    for sg in (-1, 1):
+        P.append(box((.12, .14, .14), L(sg * (w / 2 + .1), out, z - .2), "white", rot=rot))
+        P.append(box((.34, .05, hr + w / 2 + .08), L(sg * (w / 2 + .3), out + .04, z + (hr + w / 2) / 2), "accent2", rot=rot))
+    P.append(box((.06, .12, hr + w / 2), L(0, out + .06, z + (hr + w / 2) / 2), "trim", rot=rot))
+    P.append(box((w, .12, .05), L(0, out + .06, z + hr * .55), "trim", rot=rot))
+    P.append(box((.2, .12, .22), L(0, out - .02, z + hr + w / 2 + .12), "accent", rot=rot))
     return P
 
 
@@ -1025,6 +1039,19 @@ def house_shell(w=8.0, d=8.0, h=8.0, side_wins=True):
     for sx in (-1, 1):
         for sy in (-1, 1):
             P.append(cyl(.26, h - .7, (sx * (w / 2 + .02), sy * (d / 2 + .02), h / 2), "accent", n=10))
+            P.append(box((.62, .62, .12), (sx * (w / 2 + .02), sy * (d / 2 + .02), .66), "white"))
+            P.append(box((.62, .62, .12), (sx * (w / 2 + .02), sy * (d / 2 + .02), h - .8), "white"))
+    # fiadas de pedra no soco e dentilhoes sob a cornija
+    for zz in (.15, .3, .45):
+        P.append(box((w + .34, d + .34, .018), (0, 0, zz), "deep", seg=1))
+    for side in range(4):
+        L = w if side < 2 else d
+        for i in range(int(L / .7)):
+            u = -L / 2 + .35 + i * .7
+            if side < 2:
+                P.append(box((.2, .18, .16), (u, (-1 if side == 0 else 1) * (d / 2 + .3), h - .62), "white"))
+            else:
+                P.append(box((.18, .2, .16), ((-1 if side == 2 else 1) * (w / 2 + .3), u, h - .62), "white"))
     # festao (conchinhas) da cornija
     for side in range(4):
         L = w if side < 2 else d
@@ -1044,7 +1071,7 @@ def house_shell(w=8.0, d=8.0, h=8.0, side_wins=True):
     if side_wins:
         for sx in (-1, 1):
             for z0 in (.95, 5.0):
-                P += lite_window((sx * (w / 2 + .02), 0, z0), (0, 0, pi / 2))
+                P += lite_window((sx * (w / 2 + .02), 0, z0), (0, 0, sx * pi / 2))
         for z0 in (.95, 5.0):
             for x in ((-w / 4, w / 4) if w > 9 else (0,)):
                 P += lite_window((x, d / 2 + .02, z0), (0, 0, pi))

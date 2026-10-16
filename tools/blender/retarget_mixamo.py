@@ -40,6 +40,7 @@ CLIPS = {
     "desfile":     dict(file="Catwalk Walk.fbx", loop=True, xy="drift", group="core", window=(40, 200, 26, 52)),  # ciclo de passos dentro do desfile de 15 s
     "stand_to_sit": dict(file="Stand To Sit.fbx", loop=False, xy="start", group="core"),
     "sit_to_stand": dict(file="Sit To Stand.fbx", loop=False, xy="start", group="core"),
+    "run":         dict(file="Running (1).fbx", loop=True, xy="drift", group="core"),  # Mixamo Running, In Place
     "run_turn":    dict(file="Running Turn 180.fbx", loop=False, xy="drift0", group="core"),
     # --- emotes (doll_anims_emotes.glb) ---
     "clap":        dict(file="Standing Clap.fbx", loop=True, xy="drift", group="emotes"),

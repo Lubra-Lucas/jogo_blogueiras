@@ -79,8 +79,10 @@ export function InteriorHost() {
       let bd = Infinity
       for (const s of room.spots) {
         const d2 = (s.x - p.x) ** 2 + (s.z - p.z) ** 2
-        if (d2 < s.radius * s.radius && d2 < bd) {
-          bd = d2
+        // conversar com NPC nunca encobre um ponto de uso (minijogo, loja...) ao alcance: so entra na disputa com penalidade
+        const rank = d2 + (s.action === 'talk' ? 100 : 0)
+        if (d2 < s.radius * s.radius && rank < bd) {
+          bd = rank
           best = { key: s.key, label: s.label, spot: s, d2 }
         }
       }

@@ -25,8 +25,14 @@ function globe(x: number, z: number, rot: number, lx: number, ly: number, lz: nu
 }
 
 let CACHE: LampSpot[] | null = null
+/** Cidade nova ativa (game/travel): fornece os proprios postes. */
+let provider: (() => LampSpot[]) | null = null
+export function setLampProvider(fn: (() => LampSpot[]) | null) {
+  provider = fn
+}
 /** Todos os postes da cidade (kit Y2K, kit romantico e os do Centro) com a posicao do globo aceso. */
 export function lampSpots(): LampSpot[] {
+  if (provider) return provider()
   if (CACHE) return CACHE
   const out: LampSpot[] = []
   for (const l of CITY.lamps) {

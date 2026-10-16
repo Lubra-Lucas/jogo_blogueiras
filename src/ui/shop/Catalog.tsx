@@ -19,6 +19,7 @@ export const GROUPS: Record<ShopId | 'tudo', Group[]> = {
   salao: [{ id: 'all', label: 'Cabelos', test: (s) => s.kind === 'hair' }],
   concessionaria: [{ id: 'all', label: 'Carros', test: (s) => s.kind === 'car' }],
   imobiliaria: [{ id: 'all', label: 'Casas', test: (s) => s.kind === 'house' }],
+  petshop: [{ id: 'all', label: 'Pets', test: () => false }],
   tudo: [
     { id: 'roupas', label: 'Roupas', test: (s) => s.kind === 'garment' },
     { id: 'joias', label: 'Joias', test: (s) => s.kind === 'jewelry' },

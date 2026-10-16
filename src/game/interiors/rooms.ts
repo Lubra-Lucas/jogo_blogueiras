@@ -7,7 +7,8 @@ import { estudio } from './layouts/estudio'
 import { palco } from './layouts/palco'
 import { casa } from './layouts/casa'
 import { cassino } from './layouts/cassino'
+import { petshop } from './layouts/petshop'
 
-export const ROOMS: RoomLayout[] = [cafe, salao, boutique, joalheria, estudio, palco, casa, cassino]
+export const ROOMS: RoomLayout[] = [cafe, salao, boutique, joalheria, estudio, palco, casa, cassino, petshop]
 export const ROOMS_BY_POI: Record<string, RoomLayout> = Object.fromEntries(ROOMS.map((r) => [r.poi, r]))
 export const ROOMS_BY_ID: Record<string, RoomLayout> = Object.fromEntries(ROOMS.map((r) => [r.id, r]))

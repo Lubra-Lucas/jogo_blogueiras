@@ -3,7 +3,8 @@ import { useMinigameStore } from '../minigames/minigameStore'
 import { minigamesAtPoi } from '../../ui/minigames/registry'
 import { shopsAtPoi } from '../../ui/shop/registry'
 import { useShopStore } from '../../ui/shop/shopStore'
-import { enterRoom } from '../interiors/interiorStore'
+import { interiorBridge } from '../interiors/interiorBridge'
+import { enterRoom, isTransitioning } from '../interiors/interiorStore'
 
 export interface NearbyMinigame {
   id: string
@@ -45,6 +46,8 @@ export function poiShops(poiId: string): NearbyShop[] {
 /** [E] (index 0), [R] (index 1)... / toque: "Entrar" (se houver interior), minijogos e lojas da porta mais próxima, nessa ordem. */
 export function interact(index = 0): boolean {
   if (useShopStore.getState().open) return false
+  // dentro de uma sala (ou no fade de entrada/saida) o aviso de porta da cidade nao vale: quem responde e o InteriorHost
+  if (interiorBridge.active || isTransitioning()) return false
   const near = useInteractionStore.getState().nearby
   if (!near) return false
   let i = index

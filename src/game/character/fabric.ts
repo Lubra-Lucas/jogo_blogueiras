@@ -1,3 +1,4 @@
+import { applyShine, dullShine } from './jewelShine'
 import { Color, DoubleSide, MeshPhysicalMaterial, RepeatWrapping, SRGBColorSpace, TextureLoader, type Texture } from 'three'
 
 /** Acabamentos de tecido/metal das pecas (os manifestos listam os suportados por slot). */
@@ -112,7 +113,7 @@ export function applyFinish(m: MeshPhysicalMaterial, finish: string, color: stri
   m.needsUpdate = true
 }
 
-/** Material de joia por slot: metal (espelhado), gem (cristal translucido), pearl, ribbon (cetim). */
+/** Material de joia por slot: metal (espelhado), gem (cristal facetado), pearl, ribbon (cetim). Brilho em `jewelShine.ts`. */
 export function applyJewelMaterial(m: MeshPhysicalMaterial, slot: string, color: string, fin?: Record<string, number | string>): void {
   m.emissive.set('#000000')
   m.emissiveIntensity = 0
@@ -120,17 +121,11 @@ export function applyJewelMaterial(m: MeshPhysicalMaterial, slot: string, color:
   if (slot === 'metal') {
     applyFinish(m, 'gold', color)
     m.color.set(color)
-    m.roughness = 0.14
+    applyShine(m, 'metal')
   } else if (slot === 'gem') {
     applyFinish(m, 'latex', color)
-    m.roughness = 0.05
-    m.metalness = 0
-    m.transmission = 0.85
-    m.ior = 2.2
-    m.thickness = 0.01
-    m.clearcoat = 1
     m.emissive.set(color)
-    m.emissiveIntensity = 0.12
+    applyShine(m, 'gem')
   } else if (slot === 'lens' || slot === 'glass') {
     // lente de oculos: translucida, levemente tingida
     applyFinish(m, 'latex', color)
@@ -139,21 +134,24 @@ export function applyJewelMaterial(m: MeshPhysicalMaterial, slot: string, color:
     m.transparent = true
     m.opacity = 0.42
     m.depthWrite = false
+    applyShine(m, 'glass')
   } else if (slot === 'pearl') {
     applyFinish(m, 'pearl', color)
-    m.sheen = 1
-    m.clearcoat = 1
+    applyShine(m, 'pearl')
   } else applyFinish(m, 'satin', color)
   if (fin) {
     // parametros do manifesto por slot (palha, tecido, couro...): nao forca cetim
     const n = (k: string) => (typeof fin[k] === 'number' ? (fin[k] as number) : undefined)
     if (n('rough') !== undefined) m.roughness = n('rough')!
-    if (slot !== 'gem' || n('coat') !== undefined) m.clearcoat = n('coat') ?? 0
+    // peca "fosca" declarada no manifesto (ex.: miçanga de tecido num slot pearl): sem iridescencia/cintilacao e reflexo fraco
+    if (slot === 'pearl' && (n('rough') ?? 0) > 0.3) dullShine(m)
+    const shiny = slot === 'metal' || slot === 'gem' || slot === 'pearl' || slot === 'lens' || slot === 'glass'
+    if (!shiny || n('coat') !== undefined) m.clearcoat = n('coat') ?? 0
     if (n('coat_rough') !== undefined) m.clearcoatRoughness = n('coat_rough')!
     if (n('sheen') !== undefined) m.sheen = n('sheen')!
     if (n('sheen_rough') !== undefined) m.sheenRoughness = n('sheen_rough')!
     if (typeof fin.sheen_tint === 'string') m.sheenColor.set(fin.sheen_tint)
-    if (n('transmission') !== undefined) m.transmission = n('transmission')!
+    // `transmission` do manifesto e ignorado de proposito: forca um passe extra de render (caro no celular)
     if (n('emission') !== undefined) {
       m.emissive.set(color)
       m.emissiveIntensity = n('emission')!

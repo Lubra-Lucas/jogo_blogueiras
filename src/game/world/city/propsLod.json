@@ -24,9 +24,9 @@
   },
   "lod_building_capsule_row": {
    "file": "lod/lod_building_capsule_row.glb",
-   "tris": 726,
+   "tris": 784,
    "of": "building_capsule_row",
-   "bytes": 28072
+   "bytes": 33652
   },
   "lod_storefront_glass": {
    "file": "lod/lod_storefront_glass.glb",
@@ -36,15 +36,15 @@
   },
   "lod_canopy_curved": {
    "file": "lod/lod_canopy_curved.glb",
-   "tris": 478,
+   "tris": 514,
    "of": "canopy_curved",
-   "bytes": 20964
+   "bytes": 24676
   },
   "lod_kiosk_pod": {
    "file": "lod/lod_kiosk_pod.glb",
-   "tris": 676,
+   "tris": 891,
    "of": "kiosk_pod",
-   "bytes": 30192
+   "bytes": 40396
   },
   "lod_holo_sign": {
    "file": "lod/lod_holo_sign.glb",
@@ -54,15 +54,15 @@
   },
   "lod_lamp_futuristic": {
    "file": "lod/lod_lamp_futuristic.glb",
-   "tris": 481,
+   "tris": 494,
    "of": "lamp_futuristic",
-   "bytes": 18276
+   "bytes": 21784
   },
   "lod_bench_bubble": {
    "file": "lod/lod_bench_bubble.glb",
-   "tris": 424,
+   "tris": 458,
    "of": "bench_bubble",
-   "bytes": 14512
+   "bytes": 19532
   },
   "lod_planter_orb": {
    "file": "lod/lod_planter_orb.glb",
@@ -78,9 +78,9 @@
   },
   "lod_plaza_centerpiece": {
    "file": "lod/lod_plaza_centerpiece.glb",
-   "tris": 1186,
+   "tris": 1329,
    "of": "plaza_centerpiece",
-   "bytes": 47268
+   "bytes": 57208
   },
   "lod_paving_y2k": {
    "file": "lod/lod_paving_y2k.glb",
@@ -204,15 +204,15 @@
   },
   "lod_house_shell": {
    "file": "lod/lod_house_shell.glb",
-   "tris": 418,
+   "tris": 567,
    "of": "house_shell",
-   "bytes": 25384
+   "bytes": 37140
   },
   "lod_house_shell_wide": {
    "file": "lod/lod_house_shell_wide.glb",
-   "tris": 459,
+   "tris": 650,
    "of": "house_shell_wide",
-   "bytes": 26896
+   "bytes": 41788
   },
   "lod_facade_win": {
    "file": "lod/lod_facade_win.glb",

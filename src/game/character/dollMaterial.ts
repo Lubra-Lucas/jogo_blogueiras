@@ -1,4 +1,4 @@
-import { Color, MeshPhysicalMaterial, Vector3, type IUniform, type Texture, type WebGLProgramParametersWithUniforms } from 'three'
+import { Color, MeshPhysicalMaterial, Vector2, Vector3, type IUniform, type Texture, type WebGLProgramParametersWithUniforms } from 'three'
 import { NUDE_UNDER, type LipFinish, type SkinFinish, type SuitFinish } from '../../shared/appearance'
 import { FACE_BOX } from './makeup/landmarks'
 
@@ -70,9 +70,9 @@ export function createBodyMaterial(map: Texture | null, normalMap: Texture | nul
     uUseMk: u(0),
     uFaceBox: u([x0, y0, 1 / (x1 - x0), 1 / (y1 - y0)]),
     uSkin: u(new Color('#efcdbd')),
-    uSuit: u(new Color('#f39ab3')),
-    uSuitSkin: u(0),
-    uUnder: u(new Color('#d9bba8')),
+    uSuit: u(new Color('#16141a')),
+    uSuitSkin: u(1), // base na cor da pele ate o look ser aplicado (nunca o rosa pintado na textura)
+    uUnder: u(new Color('#efcdbd')),
     uUnderOn: u(0),
     uCovUp: u(0),
     uCovLow: u(0),
@@ -159,11 +159,15 @@ void main() {
   vec3 refSkin = vec3(${REF_SKIN.join(',')});
   vec3 chroma = clamp((tex / tl) / (refSkin / dLum(refSkin)), 0.6, 1.5);
   float rs = clamp(tl / dLum(refSkin), 0.6, 1.15);
-  vec3 skinCol = uSkin * pow(rs, 1.15) * mix(vec3(1.0), chroma, 0.7);
+  // cabeca/pescoco: detalhe cheio (sombras do rosto, orelhas, blush pintado); corpo: quase plano, para o tom escolhido sair
+  // igual em bracos/pernas/maos/pes e na base do corpo (sem emenda no pescoco, pulsos e tornozelos)
+  float headW = smoothstep(1.27, 1.34, vRest.y);
+  float rsBody = clamp(tl / dLum(refSkin), 0.9, 1.06);
+  vec3 skinCol = uSkin * mix(rsBody, pow(rs, 1.15), headW) * mix(vec3(1.0), chroma, 0.45 * headW);
   // macacao (cor propria) ou "base do corpo" na cor da pele (liso, sem o croma pintado)
   vec3 refSuit = vec3(${REF_SUIT.join(',')});
   vec3 suitCol = uSuit * clamp(tl / dLum(refSuit), 0.6, 1.3);
-  vec3 suitSkinCol = uSkin * clamp(tl / dLum(refSuit), 0.9, 1.06);
+  vec3 suitSkinCol = uSkin * clamp(tl / dLum(refSuit), 0.9, 1.06); // mesma faixa de luminancia do corpo (rsBody): sem emenda
   suitCol = mix(suitCol, suitSkinCol, uSuitSkin);
   // roupa intima seamless (strapless + calcinha) so no tronco: zona em coordenadas do modelo em repouso
   // collant/maio inteiro recatado: gola canoa (mais alta nas laterais), cavas e perna alta
@@ -275,7 +279,7 @@ metalnessFactor = max(metalnessFactor, step(1.5, uNailFin) * clamp(wNail * 1.4, 
 }`,
       )
   }
-  material.customProgramCacheKey = () => 'doll-body-v2'
+  material.customProgramCacheKey = () => 'doll-body-v3'
   return { material, uniforms }
 }
 
@@ -300,19 +304,29 @@ export interface BodyLook {
   nails?: { style: number; c1: string; c2: string; fin: number }
 }
 
+/** Rosa do macacao pintado na textura original (cor padrao antiga de `suit.color`). */
+const LEGACY_PINK = '#f39ab3'
+
 export function applyBodyLook(m: DollBodyMaterial, look: BodyLook) {
   const U = m.uniforms
   ;(U.uSkin.value as Color).set(look.skin)
   ;(U.uSuit.value as Color).set(look.suit)
+  // base do corpo: SEMPRE pele + um maio recatado (zona do collant) na cor escolhida; o rosa pintado na textura nunca aparece.
+  // 'color' (legado: macacao no corpo todo) agora tambem so cobre o maio; bracos, pernas, maos e pes sao pele.
   const sb = look.suitBase ?? 'color'
-  U.uSuitSkin.value = sb === 'color' ? 0 : 1
-  U.uUnderOn.value = sb === 'auto' || sb === 'under' ? 1 : 0
+  U.uSuitSkin.value = 1
+  U.uUnderOn.value = 1
   U.uCovUp.value = sb === 'auto' && look.covered?.up ? 1 : 0
   U.uCovLow.value = sb === 'auto' && look.covered?.low ? 1 : 0
-  const nude = look.suit.toLowerCase() === NUDE_UNDER
+  const sl = look.suit.toLowerCase()
+  // NUDE_UNDER (base "cor da pele") e o rosa original do macacao pintado (#f39ab3, padrao antigo) = exatamente a pele escolhida
+  const nude = sl === NUDE_UNDER || sl === LEGACY_PINK
+  // base nude: o tom da pele escolhido, so ~6% mais escuro e em cetim: o maio recatado le como tecido (borda no decote e nas
+  // pernas) sem virar outra cor; bracos, pernas, maos, pes e rosto sao exatamente o tom escolhido
   ;(U.uUnder.value as Color).set(nude ? look.skin : look.suit)
-  if (nude) (U.uUnder.value as Color).multiplyScalar(0.9).lerp(new Color('#d9a98d'), 0.1)
-  const f = FINISHES[sb === 'auto' || sb === 'under' ? 'satin' : look.finish]
+  if (nude) (U.uUnder.value as Color).multiplyScalar(0.94)
+  ;(U.uSuit.value as Color).copy(U.uUnder.value as Color)
+  const f = FINISHES[sb === 'auto' || sb === 'under' || nude ? 'satin' : look.finish]
   U.uRoughSuit.value = f.rough
   U.uCcSuit.value = f.cc
   U.uCcrSuit.value = f.ccRough
@@ -385,6 +399,11 @@ export function createHairMaterial(map: Texture | null, normalMap: Texture | nul
     uClipR: u(new Vector3(1, 1, 1)),
     uClipMinY: u(0),
     uClipSoft: u(0.02),
+    // calibracao por cabelo (hairFit.ts): escala/offset em torno do pivo, so acima da faixa (cranio)
+    uCalS: u(new Vector3(1, 1, 1)),
+    uCalO: u(new Vector3()),
+    uCalP: u(new Vector3(0, 1.46, 0)),
+    uCalBand: u(new Vector2(1.3, 1.4)),
   }
   const material = new MeshPhysicalMaterial({
     map,
@@ -401,8 +420,8 @@ export function createHairMaterial(map: Texture | null, normalMap: Texture | nul
   material.onBeforeCompile = (shader: WebGLProgramParametersWithUniforms) => {
     Object.assign(shader.uniforms, uniforms)
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vHairPos;\nuniform float uClipOn; uniform vec3 uClipC; uniform vec3 uClipR; uniform float uClipMinY; uniform float uClipSoft;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvHairPos = position;\nif (uClipOn > 0.5) { vec3 cq = (position - uClipC) / uClipR; float cd = length(cq); if (cd > 1.0) { float cw = smoothstep(uClipMinY, uClipMinY + max(uClipSoft, 1e-3), position.y); transformed = mix(position, uClipC + cq / cd * uClipR, cw); } }')
+      .replace('#include <common>', '#include <common>\nvarying vec3 vHairPos;\nuniform float uClipOn; uniform vec3 uClipC; uniform vec3 uClipR; uniform float uClipMinY; uniform float uClipSoft;\nuniform vec3 uCalS; uniform vec3 uCalO; uniform vec3 uCalP; uniform vec2 uCalBand;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvHairPos = position;\ntransformed = mix(transformed, uCalP + (transformed - uCalP) * uCalS + uCalO, smoothstep(uCalBand.x, uCalBand.y, position.y));\nif (uClipOn > 0.5) { vec3 cq = (transformed - uClipC) / uClipR; float cd = length(cq); if (cd > 1.0) { float cw = smoothstep(uClipMinY, uClipMinY + max(uClipSoft, 1e-3), position.y); transformed = mix(transformed, uClipC + cq / cd * uClipR, cw); } }')
     shader.fragmentShader = shader.fragmentShader
       .replace(
         'void main() {',
@@ -444,6 +463,6 @@ vec3 hairCol = mix(uHair, uHair2, hairT);
         '#include <lights_physical_fragment>\n#ifdef USE_CLEARCOAT\nmaterial.clearcoat = uHairGloss * 0.3;\nmaterial.clearcoatRoughness = mix(0.5, 0.25, uHairGloss);\n#endif',
       )
   }
-  material.customProgramCacheKey = () => 'doll-hair-v4'
+  material.customProgramCacheKey = () => 'doll-hair-v5'
   return { material, uniforms }
 }
