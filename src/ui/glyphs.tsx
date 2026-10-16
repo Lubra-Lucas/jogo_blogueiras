@@ -99,6 +99,18 @@ export const GBolt = g(<path d="M13 3 5.500 13.500H11L10 21l7.500-10.500H12z" />
 export const GStar = g(<path d="m12 3.500 2.600 5.400 5.900.8-4.300 4.100 1 5.900L12 16.900l-5.200 2.800 1-5.900L3.500 9.700l5.900-.8z" />)
 export const GCheck = g(<path d="m5 12.500 4.500 4.500L19 7.500" />)
 export const GClose = g(<path d="M6 6l12 12M18 6 6 18" />)
+/** minimizar (seta para baixo sobre um traco) e restaurar (seta para cima) */
+export const GMinimize = g(<path d="M6.500 9 12 14.500 17.500 9M7 19h10" />)
+export const GRestore = g(<path d="M6.500 15 12 9.500l5.500 5.500M7 5h10" />)
+/** camera frontal/traseira (duas setas girando), zoom e pose */
+export const GFlipCam = g(
+  <>
+    <path d="M4.500 11a7.500 7.500 0 0 1 13-4.600L19.500 8.500M19.500 4.500v4h-4" />
+    <path d="M19.500 13a7.500 7.500 0 0 1-13 4.600L4.500 15.500M4.500 19.500v-4h4" />
+  </>,
+)
+export const GZoomIn = g(<path d="M12 5.500v13M5.500 12h13" />)
+export const GZoomOut = g(<path d="M5.500 12h13" />)
 export const GBack = g(<path d="M14.500 5 7.500 12l7 7" />)
 export const GShutter = g(
   <>

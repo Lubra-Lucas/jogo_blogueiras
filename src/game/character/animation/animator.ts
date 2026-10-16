@@ -11,12 +11,14 @@ import {
   type Bone,
   type Object3D,
 } from 'three'
+import { buildRunClip } from './runClip'
 
 /** Clipes do retarget (tools/blender/retarget_mixamo.py). `core` = doll_anims_core.glb, o resto vem de doll_anims_emotes.glb. */
 export type ClipName =
   | 'idle'
   | 'walk'
   | 'walk_normal'
+  | 'run'
   | 'desfile'
   | 'stand_to_sit'
   | 'sit_to_stand'
@@ -38,7 +40,7 @@ export type ClipName =
 export const EMOTE_CLIPS: ReadonlySet<string> = new Set(['clap', 'dance_twerk', 'jump', 'wave', 'kiss', 'bow', 'laugh', 'cry', 'point', 'thankful', 'texting'])
 
 /** Velocidade (m/s) que o clipe de passo cobre por ciclo a 1x; timeScale = velocidade real / este valor (sem deslizar o pe). */
-export const CLIP_SPEED: Partial<Record<ClipName, number>> = { walk_normal: 1.03, desfile: 0.86 }
+export const CLIP_SPEED: Partial<Record<ClipName, number>> = { walk_normal: 1.03, desfile: 0.86, run: 1.65 }
 
 const BASE = import.meta.env.BASE_URL
 export const CORE_URL = `${BASE}assets/anims/doll_anims_core.glb`
@@ -68,12 +70,12 @@ export interface AnimInput {
 const FADE = 0.25
 const MOVE_ON = 0.45 // m/s: comeca a andar
 const MOVE_OFF = 0.25 // m/s: volta ao idle (histerese)
-const RUN_ON = 2.5 // m/s: passa a correr
-const RUN_OFF = 2.2
+const RUN_ON = 2.2 // m/s: passa a correr
+const RUN_OFF = 1.9
 const WALK_TS_MAX = 2.0
-const RUN_TS_MAX = 2.8
+const RUN_TS_MAX = 1.9
 const TS_MIN = 0.6
-const LEAN_RUN = 0.17 // rad de inclinacao para frente ao correr (ate existir um clipe de corrida)
+const LEAN_RUN = 0.1 // rad de inclinacao extra do tronco ao correr (soma-se a inclinacao do clipe `run`)
 const LEAN_WALK = 0.02
 const FIDGET_MIN = 10 // s parada sem fazer nada ate pegar o celular
 const FIDGET_RAND = 5
@@ -152,6 +154,9 @@ export class CharacterAnimator {
     this.spine1 = bones.mixamorigSpine1
     this.addClips(clips)
     if (!this.actions.has('idle')) this.addClips([makeIdleClip(bones)])
+    // corrida provisoria (procedural, a partir da caminhada) enquanto nao houver um clipe `run` retargetado
+    const walk = clips.find((c) => c.name === 'walk_normal')
+    if (walk && !this.actions.has('run')) this.addClips([buildRunClip(walk)])
   }
 
   /** Adiciona clipes (ex.: o arquivo de emotes carregado sob demanda). */
@@ -184,7 +189,11 @@ export class CharacterAnimator {
     if (once || ONE_SHOT.has(name) && !this.looping) next.setLoop(LoopOnce, 1)
     else next.setLoop(LoopRepeat, Infinity)
     if (once && REPEATS[name]) next.setLoop(LoopRepeat, REPEATS[name]!)
+    const prev = this.current
+    const loco = (n: ClipName | null) => n === 'walk_normal' || n === 'run'
+    const phase = prev && loco(this.currentName) && loco(name) ? prev.time / prev.getClip().duration : 0
     next.reset().play()
+    if (phase > 0) next.time = phase * next.getClip().duration // troca andar <-> correr mantem a fase do passo
     if (this.current && fade > 0) this.current.crossFadeTo(next, fade, false)
     else if (this.current) this.current.stop()
     this.current = next
@@ -210,7 +219,7 @@ export class CharacterAnimator {
     const speed = inp.speed
     this.moving = inp.seat === 'none' && (this.moving ? speed > MOVE_OFF : speed > MOVE_ON)
     this.running = this.running ? speed > RUN_OFF : speed > RUN_ON
-    const step: ClipName = inp.desfile ? 'desfile' : 'walk_normal'
+    const step: ClipName = inp.desfile ? 'desfile' : this.running && this.actions.has('run') ? 'run' : 'walk_normal'
     let want: ClipName = 'idle'
     let once = false
     let fade = FADE
@@ -262,7 +271,7 @@ export class CharacterAnimator {
     const k = 1 - Math.exp(-8 * dt)
     this.timeScale += (ts - this.timeScale) * k
     this.lean += (leanTarget - this.lean) * (1 - Math.exp(-5 * dt))
-    if (this.current && (this.currentName === 'walk_normal' || this.currentName === 'desfile')) this.current.setEffectiveTimeScale(this.timeScale)
+    if (this.current && (this.currentName === 'walk_normal' || this.currentName === 'desfile' || this.currentName === 'run')) this.current.setEffectiveTimeScale(this.timeScale)
     this.mixer.update(dt)
     if (this.spine1 && this.lean > 0.002) {
       this.qLean.setFromAxisAngle(AXIS_X, this.lean)

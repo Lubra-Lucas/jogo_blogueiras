@@ -10,6 +10,8 @@ import { CAMERA as C } from './config'
 import { navBridge } from '../navigation/navStore'
 import { driveBridge } from '../vehicles/driveStore'
 import { interiorBridge } from '../interiors/interiorBridge'
+import { SelfieCamera } from '../../ui/selfie/SelfieCamera'
+import { selfieBridge } from '../../ui/selfie/selfieStore'
 
 const PITCH_MIN = MathUtils.degToRad(C.minPitchDeg)
 const PITCH_MAX = MathUtils.degToRad(C.maxPitchDeg)
@@ -54,6 +56,7 @@ export function ThirdPersonCamera() {
     const dt = Math.min(rawDelta, 0.05)
     if (dt <= 0) return
     if (driveBridge.active) return // dirigindo: a camera e a do carro (game/vehicles/VehicleCamera)
+    if (selfieBridge.active) return // selfie: a camera e a do rosto (ui/selfie/SelfieCamera, montada abaixo)
     const ps = usePlayerStore.getState()
     const cs = useCameraStore.getState()
 
@@ -155,5 +158,5 @@ export function ThirdPersonCamera() {
     cs.distance = rig.dist
   })
 
-  return null
+  return <SelfieCamera />
 }

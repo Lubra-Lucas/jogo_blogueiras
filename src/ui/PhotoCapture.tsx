@@ -4,6 +4,8 @@ import { usePhotoStore } from '../state/photoStore'
 import { usePlayerStore } from '../state/playerStore'
 import { locate } from '../game/world/city/layout'
 import { useProfileStore } from '../state/profileStore'
+import { useUiStore } from '../state/uiStore'
+import { useSelfieStore } from './selfie/selfieStore'
 
 const W = 360
 
@@ -23,7 +25,8 @@ export function PhotoCapture() {
     c.getContext('2d')?.drawImage(src, 0, 0, W, h)
     const p = usePlayerStore.getState().position
     const where = locate(p.x, p.z)
-    usePhotoStore.getState().add(c.toDataURL('image/jpeg', 0.72), where.name)
+    const selfie = useUiStore.getState().cameraMode && useSelfieStore.getState().front
+    usePhotoStore.getState().add(c.toDataURL('image/jpeg', 0.72), selfie ? `Selfie · ${where.name}` : where.name)
     if (where.id === 'praca') useProfileStore.getState().completeQuest('photo-spot')
   })
   return null

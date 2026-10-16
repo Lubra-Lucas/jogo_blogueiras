@@ -1,4 +1,5 @@
-import { forwardRef, Suspense, use, useEffect, useImperativeHandle, useDeferredValue, useMemo } from 'react'
+import { forwardRef, Suspense, use, useImperativeHandle, useDeferredValue, useLayoutEffect, useMemo } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useGLTF, useTexture } from '@react-three/drei'
 import { Color, MeshPhysicalMaterial, Vector3, type Material, NoColorSpace, Skeleton, type Bone, type Group, type MeshStandardMaterial, type Object3D, type SkinnedMesh, type Texture } from 'three'
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
@@ -10,6 +11,8 @@ import { BLANK_TEXTURE, getMakeupTextures } from './makeup/textures'
 import { DEFAULT_MAKEUP, makeupIsEmpty, normalizeMakeup } from '../../shared/appearance'
 import { getWearable, WEARABLES, type WearableDef } from './items'
 import { getCatalogItem, hairFit, loadCatalog, type CatalogItem } from './catalog'
+import { syncJewelEnv } from './jewelShine'
+import { applyHairCalib, hairCalibFor } from './hairFit'
 import { applyFinish, applyJewelMaterial, fabricTex, onFabricTextureLoad } from './fabric'
 import { motifColor, patternTexture } from './patterns'
 import { morphInfluence } from './morphConfig'
@@ -120,6 +123,7 @@ function buildAttachment(rig: Rig, part: Part, gltf: GLTF): Attachment {
   if (def) {
     const h = def.kind === 'hair' && own ? createHairMaterial(own.map, own.normalMap, def.refLum) : createHairMaterial(rig.map, rig.normalMap)
     const material = h.material
+    applyHairCalib(h.uniforms, hairCalibFor((def.glb.split('/').pop() ?? '').replace('.glb', '')))
     for (const m of meshes) m.material = material
     // faixa vertical do cabelo (ombre/mechas): altura min/max da malha em repouso
     let ymin = Infinity
@@ -212,6 +216,8 @@ function applyMorphs(mesh: SkinnedMesh, morphs: Record<string, number>) {
   for (const name in dict) inf[dict[name]] = morphInfluence(name, morphs[name] ?? 0)
 }
 
+// Efeitos em layout: o look (pele/macacao/cabelo/joias/morphs) e aplicado ANTES do primeiro quadro desenhado.
+// Com useEffect havia 1+ quadros com os uniforms padrao (corpo todo rosa, cabelo sem cor, joias sem material).
 function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterProps & { handle: React.Ref<CharacterHandle> }) {
   use(loadBaseMeta(appearance.base))
   const base = BASES[appearance.base]
@@ -250,7 +256,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
   // ---- esqueleto + malha do corpo (clone por instancia) ----
   const rig = useMemo(() => buildRig(gltfs[0].scene), [gltfs[0]]) // eslint-disable-line react-hooks/exhaustive-deps
   useImperativeHandle(handle, () => rig, [rig])
-  useEffect(() => {
+  useLayoutEffect(() => {
     applyRestPose(rig.bones, rig.root)
   }, [rig])
 
@@ -266,7 +272,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
 
   // ---- material do corpo (um por instancia) ----
   const bodyMat = useMemo(() => createBodyMaterial(rig.map, rig.normalMap, { mask: masks[0], mask2: masks[1], mask3: masks[2], mask4: masks[3] }, BLANK_TEXTURE), [rig, masks])
-  useEffect(() => {
+  useLayoutEffect(() => {
     rig.body.material = bodyMat.material
     rig.body.frustumCulled = false
     return () => bodyMat.material.dispose()
@@ -274,7 +280,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
 
   const mkp = useMemo(() => normalizeMakeup(appearance.makeup ?? DEFAULT_MAKEUP), [appearance.makeup])
   const lookKey = JSON.stringify([appearance.skin, appearance.suit, appearance.lips, appearance.hair.color, appearance.eyes, mkp, !!(appearance.outfit.dress || appearance.outfit.top), !!(appearance.outfit.dress || appearance.outfit.bottom)])
-  useEffect(() => {
+  useLayoutEffect(() => {
     const eyes = appearance.eyes
     const brow = mkp.brows
     const nails = mkp.nails
@@ -309,7 +315,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [rig, attachKey, gltfs.length],
   )
-  useEffect(() => {
+  useLayoutEffect(() => {
     for (const a of attachments) for (const m of a.meshes) rig.armature.add(m)
     return () => {
       for (const a of attachments) {
@@ -321,7 +327,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
   }, [rig, attachments])
 
   const colorKey = JSON.stringify(parts.map((d) => [d.color, d.ref, d.hairLook]))
-  useEffect(() => {
+  useLayoutEffect(() => {
     attachments.forEach((a, i) => a.apply(parts[i]))
     return onFabricTextureLoad(() => attachments.forEach((a, i) => parts[i] && a.apply(parts[i])))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -335,7 +341,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [rig, jewelKey, gltfs.length],
   )
-  useEffect(() => {
+  useLayoutEffect(() => {
     for (const j of jewelObjs) for (const r of j.roots) r.bone.add(r.obj)
     return () => {
       for (const j of jewelObjs) {
@@ -345,7 +351,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
     }
   }, [jewelObjs])
   const jewelColorKey = JSON.stringify(jewels.map((j) => j.ref))
-  useEffect(() => {
+  useLayoutEffect(() => {
     jewelObjs.forEach((j, i) => {
       for (const { slot, mat } of j.materials) {
         const idx = j.item.mats.findIndex((m) => m.id === slot)
@@ -356,10 +362,16 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jewelObjs, jewelColorKey])
 
+  // reflexo de ambiente das joias: copia scene.environment (cidade/interiores/visualizador) para os materiais
+  const scene = useThree((st) => st.scene)
+  useFrame(() => {
+    for (const j of jewelObjs) for (const m of j.materials) syncJewelEnv(m.mat, scene)
+  })
+
   // ---- cabelo sob chapeu: recorta o elipsoide (hairClip do acessorio) ----
   const clip = jewels.map((j) => j.item.hairClip).find(Boolean) ?? null
   const clipKey = clip ? JSON.stringify(clip) : ''
-  useEffect(() => {
+  useLayoutEffect(() => {
     for (const a of attachments) {
       const U = a.hairUniforms
       if (!U) continue
@@ -376,19 +388,19 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
 
   // ---- morphs (corpo e cabelo compartilham os nomes) ----
   const morphKey = JSON.stringify(appearance.morphs)
-  useEffect(() => {
+  useLayoutEffect(() => {
     applyMorphs(rig.body, appearance.morphs)
     for (const a of attachments) for (const m of a.meshes) applyMorphs(m, appearance.morphs)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rig, attachments, morphKey])
 
   // ---- sombras ----
-  useEffect(() => {
+  useLayoutEffect(() => {
     rig.body.castShadow = shadows
     for (const a of attachments) for (const m of a.meshes) m.castShadow = shadows
   }, [rig, attachments, shadows])
 
-  useEffect(
+  useLayoutEffect(
     () => () => {
       rig.skeleton.dispose()
     },
