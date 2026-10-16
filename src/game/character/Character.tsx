@@ -149,13 +149,16 @@ function buildAttachment(rig: Rig, part: Part, gltf: GLTF): Attachment {
       const mat = slotMats.get(ms.id)
       if (!mat) return
       applyFinish(mat, p.ref?.finishes?.[i] ?? ms.finish, p.ref?.colors?.[i] ?? ms.color)
-      // estampa: so no primeiro slot de material (base); o detalhe (trim) vira a cor do motivo
-      const pat = i === 0 && p.ref?.pattern ? item.patterns?.find((x) => x.id === p.ref!.pattern) : undefined
+      // estampa: so no slot de estampa (padrao: o primeiro); a peca pode trazer uma por padrao (`defaultPattern`), 'none' = liso.
+      // O detalhe (trim) vira a cor do motivo nas estampas procedurais; texturas tonais multiplicam a cor do slot.
+      const patId = p.ref?.pattern ?? item.defaultPattern
+      const isPatSlot = item.patternSlot ? ms.id === item.patternSlot : i === 0
+      const pat = isPatSlot && patId && patId !== 'none' ? item.patterns?.find((x) => x.id === patId) : undefined
       if (pat) {
-        const baseCol = p.ref?.colors?.[0] ?? ms.color
+        const baseCol = p.ref?.colors?.[i] ?? ms.color
         const motif = motifColor(baseCol, p.ref?.colors?.[1] ?? item.mats[1]?.color)
         mat.map = pat.texture ? fabricTex(pat.texture, true, pat.scale ?? 4) : patternTexture(pat.id, baseCol, motif, pat.scale ?? 4)
-        mat.color.set('#ffffff')
+        mat.color.set(pat.texture && pat.tonal ? baseCol : pat.texture && !p.ref?.pattern ? baseCol : '#ffffff')
         mat.needsUpdate = true
       }
     })

@@ -90,7 +90,7 @@ def _decimate(P, tris, target):
 
 
 def shell(body, G, vsel, *, off=0.006, disp=None, hem=None, sleeve_end=None, hem_tol=0.03, hull=True, hull_z=(0.88, 0.95, 1.10, 1.15), clear=0.006,
-          smooth=(12, 6, 2), mat="base", minsize=60, wsm=3, bsm=10, target=4800, holes=None):
+          smooth=(12, 6, 2), mat="base", minsize=60, wsm=3, bsm=10, target=4800, holes=None, hem_flare=0.0, hem_ramp=0.085):
     """cut the selected body region (decimated to ~target tris), offset it and fit it on every morph state. returns Res."""
     I = info(body); tris = body.tris
     ft = components(tris[vsel[tris].all(1)], minsize)
@@ -115,6 +115,9 @@ def shell(body, G, vsel, *, off=0.006, disp=None, hem=None, sleeve_end=None, hem
     log("shell verts", n, "tris", len(polys), "changed states", sum(chg.values()))
     z0 = P0[:, 2]
     offv = np.full(n, float(off)) if np.isscalar(off) else off(P0, I, V)
+    if hem_flare and hem is not None:   # barra levemente evasê: o top fica por cima do cos das saias/calcas (sem z-fighting)
+        hz0 = (hem[0] if isinstance(hem, (list, tuple)) else hem)(P0[:, 0], P0[:, 1])
+        offv = offv + hem_flare * smoothstep(hz0 + hem_ramp, hz0, P0[:, 2]) * (~I.arm[V])
     D = disp(P0, I, V) if disp is not None else None
     ring = np.round(z0 / 0.005).astype(int)
     ring = np.where(I.arm[V], -99999 - np.arange(n), ring)       # arms never take part in the bust hull
@@ -160,6 +163,7 @@ def shell(body, G, vsel, *, off=0.006, disp=None, hem=None, sleeve_end=None, hem
         Gp = clearance(Gp, body, s, clear, 2)
         Gp = g.taubin(Gp, smooth[2], fixed=fixed)
         Gp = clearance(Gp, body, s, clear, 1)
+        for hf, hb in zip(hems, hem_b): Gp[hb, 2] = hf(Gp[hb, 0], Gp[hb, 1])
         states[s] = Gp
     base = states["Basis"]
     W = weights_smooth(g, W0, wsm)

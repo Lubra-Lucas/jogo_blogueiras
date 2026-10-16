@@ -9,6 +9,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 OUT = r"C:\Users\user\AppData\Local\Temp\claude\shots\garments"
 spec = json.load(open(sys.argv[sys.argv.index("--") + 1]))
+OUT = spec.get("out", OUT)
 gdir = spec.get("garments_dir", os.path.join(REPO, "public", "assets", "garments"))
 os.makedirs(OUT, exist_ok=True)
 

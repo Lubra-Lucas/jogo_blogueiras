@@ -13,7 +13,7 @@ def build(body):
     for zt_, zh, bulge, mat in tiers:
         L = env_layer(body, zt_, zh, nth=96, row_t=[0, 0.12, 0.28, 0.46, 0.64, 0.82, 0.94, 1.0],
                       off=lambda t, th, bulge=bulge: 0.013 + bulge * np.sin(math.pi * min(t / 0.96, 1.0)) ** 0.85 + 0.0 * th)
-        add_layer(G, body, L, mat, dict(lw=0.4, spine_top=0.2, spine_fade=0.2), falloff=0.25, clear=0.01)
+        add_layer(G, body, L, mat, dict(lw=0.9, spine_top=0.2, spine_fade=0.2, wt=(0.0, 0.25), split=0.06), falloff=0.25, clear=0.01)
     waistband(G, body, 0.890, 0.856, "trim", bulge=0.002)
     mats = {"base": ("#6fb7a5", "latex"), "accent": ("#b9a6e8", "latex"), "trim": ("#f4f4f8", "satin")}
     meta = meta_of("bubble_dress", "Vestido de bolhas Y2K", "dress", ["base", "accent", "trim"], {"base": "#6fb7a5", "accent": "#b9a6e8", "trim": "#f4f4f8"},

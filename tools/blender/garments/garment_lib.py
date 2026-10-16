@@ -258,7 +258,7 @@ def hex2lin(h):
     return [(x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4) for x in c] + [1.0]
 
 
-def make_material(name, hexcol, finish, tex_dir=None, double=True):
+def make_material(name, hexcol, finish, tex_dir=None, double=True, pattern=None):
     f = FINISHES[finish]
     old = bpy.data.materials.get(name)
     if old is not None: bpy.data.materials.remove(old)
@@ -285,6 +285,13 @@ def make_material(name, hexcol, finish, tex_dir=None, double=True):
         tx = nt.nodes.new('ShaderNodeTexImage'); tx.image = img
         nm = nt.nodes.new('ShaderNodeNormalMap'); nm.inputs['Strength'].default_value = 1.0
         nt.links.new(tx.outputs['Color'], nm.inputs['Color']); nt.links.new(nm.outputs['Normal'], pb.inputs['Normal'])
+    if pattern and tex_dir:   # estampa: textura x cor do slot (a cor do jogo continua tingindo)
+        img = bpy.data.images.load(os.path.join(tex_dir, "pattern_" + pattern + ".jpg")); img.colorspace_settings.name = 'sRGB'
+        tx = nt.nodes.new('ShaderNodeTexImage'); tx.image = img; tx.extension = 'REPEAT'
+        mix = nt.nodes.new('ShaderNodeMix'); mix.data_type = 'RGBA'; mix.blend_type = 'MULTIPLY'
+        mix.inputs['Factor'].default_value = 1.0
+        mix.inputs[7].default_value = hex2lin(hexcol)
+        nt.links.new(tx.outputs['Color'], mix.inputs[6]); nt.links.new(mix.outputs[2], pb.inputs['Base Color'])
     m.use_backface_culling = not double
     try: m.surface_render_method = 'BLENDED' if ('alpha' in f or f.get('alphaTexture')) else 'DITHERED'
     except Exception: pass
@@ -300,8 +307,8 @@ def to_blender(g, mat_specs, tex_dir):
     me.update()
     ob = bpy.data.objects.new(g.id, me); bpy.context.scene.collection.objects.link(ob)
     for slot in g.mats:
-        hexc, fin = mat_specs[slot]
-        me.materials.append(make_material(slot, hexc, fin, tex_dir))
+        sp = mat_specs[slot]; hexc, fin = sp[0], sp[1]
+        me.materials.append(make_material(slot, hexc, fin, tex_dir, pattern=(sp[2] if len(sp) > 2 else None)))
     me.polygons.foreach_set('material_index', mats.astype(np.int32))
     me.polygons.foreach_set('use_smooth', [True] * len(me.polygons))
     ul = me.uv_layers.new(name="UVMap"); ul.data.foreach_set('uv', uv.astype(np.float32).ravel())

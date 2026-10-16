@@ -144,6 +144,10 @@ function plazaTextures(): { map: CanvasTexture; glow: CanvasTexture } {
   return { map, glow }
 }
 
+/** Camadas visuais (0..0,06 m no projeto) sao achatadas por SURF_K; o topo do colisor do chao = altura da pista (carros e pes assentam na superficie). */
+const SURF_K = 0.4
+export const GROUND_Y = 0.04 * SURF_K
+
 export function Surfaces({ shadows }: { shadows: boolean }) {
   const meshes = useMemo(() => buildLayers().map((l) => ({ y: l.y, geo: merge(l.geoms) })), [])
   const plaza = useMemo(() => ({ tex: plazaTextures(), geo: new CircleGeometry(38, 128).rotateX(-Math.PI / 2) }), [])
@@ -152,9 +156,10 @@ export function Surfaces({ shadows }: { shadows: boolean }) {
     <group>
       <RigidBody type="fixed" colliders={false}>
         {/* chao: caixa fina (topo em y=0) cobrindo toda a cidade */}
-        <CuboidCollider args={[CITY.half + 5, 0.5, CITY.half + 5]} position={[0, -0.5, 0]} />
+        <CuboidCollider args={[CITY.half + 5, 0.5, CITY.half + 5]} position={[0, -0.5 + GROUND_Y, 0]} />
       </RigidBody>
 
+      <group scale={[1, SURF_K, 1]}>
       {meshes.map((m, i) => (
         <mesh key={i} geometry={m.geo} receiveShadow={shadows} userData={WALK} renderOrder={i}>
           <meshPhysicalMaterial
@@ -192,6 +197,7 @@ export function Surfaces({ shadows }: { shadows: boolean }) {
           polygonOffsetUnits={-7}
         />
       </mesh>
+      </group>
 
     </group>
   )

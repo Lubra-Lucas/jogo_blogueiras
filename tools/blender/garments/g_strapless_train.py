@@ -16,7 +16,7 @@ def build(body):
                   off=lambda t, th_: 0.011 + 0.17 * np.clip((t - 0.45) / 0.55, 0, 1) ** 1.5 * (0.65 + 0.35 * np.sin(th_ / 2) ** 2),
                   hem_extra=lambda t, th_: 0.26 * np.clip((t - 0.4) / 0.6, 0, 1) ** 1.6 * np.clip(-np.cos(th_), 0, 1) ** 2.0,
                   zwave=(0.012, 9, 0.4))
-    add_layer_w(G, body, L, "base", lw=0.5, knee=0.5, falloff=0.25, clear=0.01, spine_fade=0.15)
+    add_layer_w(G, body, L, "base", lw=1.0, knee=0.6, falloff=0.25, clear=0.01, spine_fade=0.15, wt=(0.0, 0.14), train=0.9, split=0.07)
     waistband(G, body, 0.896, 0.846, "trim", bulge=0.003)
     mats = {"base": ("#16315e", "satin"), "trim": ("#d6b25a", "gold")}
     meta = meta_of("strapless_train", "Vestido tomara que caia com cauda", "dress", ["base", "trim"], {"base": "#16315e", "trim": "#d6b25a"}, {"base": "satin", "trim": "gold"},

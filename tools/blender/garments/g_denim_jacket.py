@@ -10,7 +10,7 @@ def build(body):
         s = I_.s[V]; arm = I_.arm[V]
         return np.where(arm, 0.014 - 0.006 * smoothstep(1.6, 1.88, s), 0.0135)
     mt = lambda c, r: ["trim" if ((r.arm_poly[i] and r.I.s[r.V][r.pa[i]].mean() > 1.74) or c[i, 2] < 0.885) else "base" for i in range(len(c))]
-    r = shell(body, G, sel, off=off, hem=zb, sleeve_end=1.9, clear=0.007, smooth=(14, 6, 3), mat=mt)
+    r = shell(body, G, sel, hem_flare=0.012, off=off, hem=zb, sleeve_end=1.9, clear=0.007, smooth=(14, 6, 3), mat=mt)
     collar_flat(G, body, r, r0=(0.060, 0.064), r1=(0.098, 0.092), lift=0.005, mat="base")
     front_placket(G, body, r, 0.88, 1.15, 0.012, "trim")
     for th in (-26, 26): seam_line(G, body, r, th, 0.89, 1.08, 0.012, mat="trim")

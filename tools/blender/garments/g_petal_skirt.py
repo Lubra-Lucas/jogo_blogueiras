@@ -33,11 +33,11 @@ def build(body):
     G = Garment("petal_skirt", body)
     waistband(G, body, 0.894, 0.842, "trim", bulge=0.003)
     L0 = env_layer(body, 0.878, 0.74, nth=72, rows=4, off=lambda t, th: 0.0125)
-    add_layer(G, body, L0, "lining", dict(lw=0.45, spine_top=0.2, spine_fade=0.2), falloff=0.22, clear=0.008)
+    add_layer(G, body, L0, "lining", dict(lw=0.9, spine_top=0.2, spine_fade=0.2, wt=(0.0, 0.25), split=0.06), falloff=0.22, clear=0.008)
     rings = [(0.874, 0.46, 0.16, 12, 1.12, 0.0, "base"), (0.868, 0.36, 0.22, 12, 1.12, math.pi / 12, "accent"), (0.862, 0.24, 0.30, 10, 1.1, 0.0, "base")]
     for zt, zp, fl, n, wf, ph, mat in rings:
         P, T, pl = petal_ring(body, zt, zp, fl, n, wf, ph)
-        add_raw(G, body, P, T, pl, mat, lw=0.3, falloff=0.25, clear=0.01)
+        add_raw(G, body, P, T, pl, mat, lw=0.8, wt=(0.0, 0.3), falloff=0.25, clear=0.01)
     mats = {"base": ("#6d2fa0", "latex"), "accent": ("#2d9aa8", "latex"), "trim": ("#d6b25a", "gold"), "lining": ("#1b1330", "matte")}
     meta = meta_of("petal_skirt", "Saia de pétalas arquitetônica", "bottom", ["base", "accent", "trim", "lining"],
                    {"base": "#6d2fa0", "accent": "#2d9aa8", "trim": "#d6b25a", "lining": "#1b1330"},

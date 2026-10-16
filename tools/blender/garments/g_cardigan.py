@@ -10,7 +10,7 @@ def build(body):
         s = I_.s[V]; arm = I_.arm[V]
         return np.where(arm, 0.016 - 0.008 * smoothstep(1.55, 1.88, s), 0.014)
     mt = lambda c, r: ["trim" if (c[i, 2] < 0.925 or (r.arm_poly[i] and r.I.s[r.V][r.pa[i]].mean() > 1.76)) else "base" for i in range(len(c))]
-    r = shell(body, G, sel, off=off, hem=zb, sleeve_end=1.9, clear=0.006, smooth=(14, 6, 3), mat=mt)
+    r = shell(body, G, sel, hem_flare=0.012, off=off, hem=zb, sleeve_end=1.9, clear=0.006, smooth=(14, 6, 3), mat=mt)
     front_placket(G, body, r, 0.92, 1.10, 0.011, "trim")
     buttons(G, body, r, np.arange(0.93, 1.10, 0.04), 0.0034, 0.004, "accent")
     mats = {"base": ("#7b8f6a", "matte"), "trim": ("#6a7d5a", "matte"), "accent": ("#f3eee2", "pearl")}

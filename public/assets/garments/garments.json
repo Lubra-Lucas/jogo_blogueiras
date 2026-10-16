@@ -2,102 +2,6 @@
   "version": 1,
   "items": [
     {
-      "id": "corset",
-      "label": "Espartilho coração",
-      "slot": "top",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#ff3f8e",
-        "trim": "#fff1f6",
-        "accent": "#e8b84a"
-      },
-      "finish": {
-        "base": "latex",
-        "trim": "satin",
-        "accent": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "latex",
-          "satin",
-          "glitter",
-          "matte"
-        ],
-        "trim": [
-          "satin",
-          "latex",
-          "pearl",
-          "matte"
-        ],
-        "accent": [
-          "gold",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "torso"
-      ],
-      "hides": [],
-      "file": "corset.glb",
-      "triangles": 4174,
-      "sizeBytes": 491200,
-      "morphTargets": 16
-    },
-    {
-      "id": "aline",
-      "label": "Saia midi evasê com laço",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#c8a4ff",
-        "trim": "#ffffff",
-        "accent": "#ff7ab8"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin",
-        "accent": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "latex",
-          "matte",
-          "glitter",
-          "lace"
-        ],
-        "trim": [
-          "satin",
-          "pearl",
-          "lace"
-        ],
-        "accent": [
-          "satin",
-          "latex",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "hips",
-        "thighs",
-        "knees"
-      ],
-      "hides": [],
-      "notes": "bow slot accent = knot, bow loops/tails = base",
-      "file": "aline.glb",
-      "triangles": 2320,
-      "sizeBytes": 207116,
-      "morphTargets": 6
-    },
-    {
       "id": "tutu",
       "label": "Saia tutu",
       "slot": "bottom",
@@ -144,109 +48,22 @@
       "file": "tutu.glb",
       "triangles": 3680,
       "sizeBytes": 324072,
-      "morphTargets": 7
-    },
-    {
-      "id": "ballgown",
-      "label": "Saia de baile rococó",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "accent",
-        "trim",
-        "lining"
-      ],
-      "palette": {
-        "base": "#fff0f6",
-        "accent": "#ffc4dd",
-        "trim": "#e8b84a",
-        "lining": "#ffffff"
-      },
-      "finish": {
-        "base": "satin",
-        "accent": "satin",
-        "trim": "satin",
-        "lining": "tulle"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "latex",
-          "glitter",
-          "lace",
-          "matte"
+      "morphTargets": 7,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
         ],
-        "accent": [
-          "satin",
-          "tulle",
-          "lace",
-          "glitter"
-        ],
-        "trim": [
-          "satin",
-          "pearl",
-          "gold"
-        ],
-        "lining": [
-          "tulle",
-          "lace"
-        ]
+        "default": null
       },
-      "covers": [
-        "hips",
-        "legs"
-      ],
-      "hides": [
-        "legs"
-      ],
-      "notes": "combine with corset to form a dress; floor length",
-      "file": "ballgown.glb",
-      "triangles": 6272,
-      "sizeBytes": 440364,
-      "morphTargets": 7
-    },
-    {
-      "id": "gloves",
-      "label": "Luvas de ópera",
-      "slot": "gloves",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#f6c6dc",
-        "trim": "#ffffff"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "latex",
-          "lace",
-          "glitter",
-          "matte"
-        ],
-        "trim": [
-          "satin",
-          "lace",
-          "pearl",
-          "tulle"
-        ]
-      },
-      "covers": [
-        "hands",
-        "forearms",
-        "upperArmsLower"
-      ],
-      "hides": [],
-      "notes": "both arms in one mesh; offset 3.2 mm hands / 4.5 mm arms",
-      "file": "gloves.glb",
-      "triangles": 7387,
-      "sizeBytes": 386576,
-      "morphTargets": 15
+      "motionClean": true,
+      "sitSafe": false
     },
     {
       "id": "stockings",
@@ -288,666 +105,22 @@
       "file": "stockings.glb",
       "triangles": 3920,
       "sizeBytes": 337700,
-      "morphTargets": 6
-    },
-    {
-      "id": "bodysuit",
-      "label": "Body de manga longa",
-      "slot": "top",
-      "slots": [
-        "base"
-      ],
-      "palette": {
-        "base": "#2a2f4a"
-      },
-      "finish": {
-        "base": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "latex",
-          "matte",
-          "glitter"
-        ]
-      },
-      "covers": [
-        "torso",
-        "arms",
-        "hips"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "y2k",
-          "casual",
-          "goth"
+      "morphTargets": 6,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
         ],
-        "colors": [
-          "azul-marinho"
-        ],
-        "formality": 0.35,
-        "rarity": "comum"
+        "default": null
       },
-      "notes": "cobre o quadril ate a virilha: usar com saia/calca",
-      "file": "bodysuit.glb",
-      "triangles": 4800,
-      "sizeBytes": 533604,
-      "morphTargets": 16
-    },
-    {
-      "id": "pleated_skirt",
-      "label": "Saia plissada",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#2f4a3a",
-        "trim": "#d9d2c0"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "glitter",
-          "latex"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ]
-      },
-      "covers": [
-        "hips",
-        "upperThighs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "esportivo",
-          "y2k"
-        ],
-        "colors": [
-          "verde"
-        ],
-        "formality": 0.25,
-        "rarity": "comum"
-      },
-      "file": "pleated_skirt.glb",
-      "triangles": 1920,
-      "sizeBytes": 172892,
-      "morphTargets": 6
-    },
-    {
-      "id": "ruffle_mini",
-      "label": "Minissaia de babados",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "accent",
-        "trim"
-      ],
-      "palette": {
-        "base": "#f1ece0",
-        "accent": "#d8cdb4",
-        "trim": "#2a2f4a"
-      },
-      "finish": {
-        "base": "satin",
-        "accent": "satin",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "matte",
-          "glitter",
-          "lace",
-          "tulle"
-        ],
-        "accent": [
-          "satin",
-          "matte",
-          "lace",
-          "tulle"
-        ],
-        "trim": [
-          "satin",
-          "matte",
-          "latex"
-        ]
-      },
-      "covers": [
-        "hips",
-        "upperThighs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "romantico",
-          "casual",
-          "praia"
-        ],
-        "colors": [
-          "branco"
-        ],
-        "formality": 0.35,
-        "rarity": "comum"
-      },
-      "file": "ruffle_mini.glb",
-      "triangles": 2880,
-      "sizeBytes": 261796,
-      "morphTargets": 7
-    },
-    {
-      "id": "balloon_skirt",
-      "label": "Saia balonê",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#7a1f4a",
-        "trim": "#e8dcc6"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "matte",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "satin",
-          "matte"
-        ]
-      },
-      "covers": [
-        "hips",
-        "thighs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "y2k",
-          "romantico",
-          "gala"
-        ],
-        "colors": [
-          "vinho"
-        ],
-        "formality": 0.6,
-        "rarity": "raro"
-      },
-      "file": "balloon_skirt.glb",
-      "triangles": 2592,
-      "sizeBytes": 225172,
-      "morphTargets": 7
-    },
-    {
-      "id": "skinny_jeans",
-      "label": "Calça jeans skinny",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#3b5a85",
-        "trim": "#34527a",
-        "accent": "#c98a3c"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte",
-        "accent": "matte"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ],
-        "accent": [
-          "matte",
-          "gold"
-        ]
-      },
-      "covers": [
-        "hips",
-        "legs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "y2k"
-        ],
-        "colors": [
-          "azul"
-        ],
-        "formality": 0.2,
-        "rarity": "comum"
-      },
-      "file": "skinny_jeans.glb",
-      "triangles": 4825,
-      "sizeBytes": 373876,
-      "morphTargets": 7
-    },
-    {
-      "id": "leggings",
-      "label": "Legging esportiva",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#22252e",
-        "trim": "#17181d",
-        "accent": "#8c93a3"
-      },
-      "finish": {
-        "base": "latex",
-        "trim": "matte",
-        "accent": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "latex",
-          "matte",
-          "satin",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ],
-        "accent": [
-          "satin",
-          "matte",
-          "gold"
-        ]
-      },
-      "covers": [
-        "hips",
-        "legs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "esportivo",
-          "casual",
-          "y2k"
-        ],
-        "colors": [
-          "preto"
-        ],
-        "formality": 0.1,
-        "rarity": "comum"
-      },
-      "file": "leggings.glb",
-      "triangles": 5304,
-      "sizeBytes": 413012,
-      "morphTargets": 7
-    },
-    {
-      "id": "cargo",
-      "label": "Calça cargo",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#6b6a4b",
-        "trim": "#57563c"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ]
-      },
-      "covers": [
-        "hips",
-        "legs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "esportivo",
-          "y2k"
-        ],
-        "colors": [
-          "verde-oliva"
-        ],
-        "formality": 0.15,
-        "rarity": "comum"
-      },
-      "file": "cargo.glb",
-      "triangles": 4927,
-      "sizeBytes": 378820,
-      "morphTargets": 7
-    },
-    {
-      "id": "tailored_shorts",
-      "label": "Short de alfaiataria",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#d8c8a8",
-        "trim": "#bfae8a",
-        "accent": "#d6b25a"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte",
-        "accent": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ],
-        "accent": [
-          "gold",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "hips",
-        "upperThighs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "praia",
-          "gala"
-        ],
-        "colors": [
-          "bege"
-        ],
-        "formality": 0.45,
-        "rarity": "comum"
-      },
-      "file": "tailored_shorts.glb",
-      "triangles": 4619,
-      "sizeBytes": 378508,
-      "morphTargets": 7
-    },
-    {
-      "id": "denim_shorts",
-      "label": "Short jeans",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#4a6fa0",
-        "trim": "#8fb0d8",
-        "accent": "#d6b25a"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte",
-        "accent": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ],
-        "accent": [
-          "gold",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "hips",
-        "upperThighs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "praia",
-          "y2k"
-        ],
-        "colors": [
-          "azul"
-        ],
-        "formality": 0.1,
-        "rarity": "comum"
-      },
-      "file": "denim_shorts.glb",
-      "triangles": 3395,
-      "sizeBytes": 292808,
-      "morphTargets": 6
-    },
-    {
-      "id": "palazzo",
-      "label": "Calça pantalona",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#e9dfcc",
-        "trim": "#cfc3a8"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "matte",
-          "glitter",
-          "latex"
-        ],
-        "trim": [
-          "satin",
-          "matte"
-        ]
-      },
-      "covers": [
-        "hips",
-        "legs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "romantico",
-          "casual",
-          "gala",
-          "praia"
-        ],
-        "colors": [
-          "bege"
-        ],
-        "formality": 0.5,
-        "rarity": "comum"
-      },
-      "file": "palazzo.glb",
-      "triangles": 4800,
-      "sizeBytes": 371880,
-      "morphTargets": 7
-    },
-    {
-      "id": "evase_dress",
-      "label": "Vestido evasê com cinto",
-      "slot": "dress",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#2f6fa8",
-        "trim": "#f1ede2",
-        "accent": "#d6b25a"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "satin",
-        "accent": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "glitter",
-          "lace",
-          "latex"
-        ],
-        "trim": [
-          "satin",
-          "matte",
-          "latex"
-        ],
-        "accent": [
-          "gold",
-          "pearl",
-          "satin"
-        ]
-      },
-      "covers": [
-        "torso",
-        "upperArms",
-        "hips",
-        "thighs"
-      ],
-      "hides": [
-        "top",
-        "bottom"
-      ],
-      "tags": {
-        "styles": [
-          "romantico",
-          "casual",
-          "gala"
-        ],
-        "colors": [
-          "azul"
-        ],
-        "formality": 0.55,
-        "rarity": "comum"
-      },
-      "file": "evase_dress.glb",
-      "triangles": 5920,
-      "sizeBytes": 536896,
-      "morphTargets": 11
-    },
-    {
-      "id": "dungarees",
-      "label": "Jardineira jeans",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#3e6190",
-        "trim": "#2f4f7a",
-        "accent": "#d6b25a"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte",
-        "accent": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ],
-        "accent": [
-          "gold",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "torso",
-        "hips",
-        "legs"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "y2k",
-          "esportivo"
-        ],
-        "colors": [
-          "azul"
-        ],
-        "formality": 0.1,
-        "rarity": "comum"
-      },
-      "notes": "slot bottom: peitilho e alcas por cima de uma camiseta (folga 15 mm no peitilho)",
-      "file": "dungarees.glb",
-      "triangles": 5011,
-      "sizeBytes": 432060,
-      "morphTargets": 10
+      "motionClean": true,
+      "sitSafe": true
     },
     {
       "id": "princess_ball",
@@ -1022,40 +195,1449 @@
       "file": "princess_ball.glb",
       "triangles": 9294,
       "sizeBytes": 867408,
-      "morphTargets": 16
+      "morphTargets": 16,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "motionClean": true,
+      "sitSafe": false
     },
     {
-      "id": "organza_sleeves",
-      "label": "Top com mangas gigantes de organza",
-      "slot": "top",
+      "id": "stiletto_pumps",
+      "label": "Scarpin salto agulha",
+      "slot": "shoes",
       "slots": [
         "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#7a1f2b",
+        "trim": "#2a1a1a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "latex",
+          "matte",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "latex",
+          "satin",
+          "gold"
+        ]
+      },
+      "covers": [
+        "feet"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "gala",
+          "casual",
+          "romantico"
+        ],
+        "colors": [
+          "vinho"
+        ],
+        "formality": 0.85,
+        "rarity": "comum"
+      },
+      "lift": 0.0045,
+      "heelCm": 10,
+      "file": "stiletto_pumps.glb",
+      "triangles": 11188,
+      "sizeBytes": 389680,
+      "morphTargets": 0,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "strappy_sandals",
+      "label": "Sandália de tiras",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
         "accent"
       ],
       "palette": {
-        "base": "#2a1f3d",
-        "accent": "#e8dff5"
+        "base": "#c8a165",
+        "trim": "#5a3b2a",
+        "accent": "#d6b25a"
       },
       "finish": {
         "base": "satin",
-        "accent": "tulle"
+        "trim": "matte",
+        "accent": "gold"
       },
       "finishesSupported": {
         "base": [
           "satin",
           "matte",
           "latex",
-          "glitter"
+          "glitter",
+          "gold"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
         ],
         "accent": [
-          "tulle",
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "feet"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "gala",
+          "praia",
+          "romantico",
+          "casual"
+        ],
+        "colors": [
+          "caramelo"
+        ],
+        "formality": 0.65,
+        "rarity": "comum"
+      },
+      "lift": 0.0042,
+      "heelCm": 9,
+      "file": "strappy_sandals.glb",
+      "triangles": 7632,
+      "sizeBytes": 308324,
+      "morphTargets": 2,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "mary_janes",
+      "label": "Mary Jane plataforma",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#1d1d24",
+        "trim": "#2a2024",
+        "accent": "#c7c9d1"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "latex",
+          "satin"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "feet"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "romantico",
+          "goth",
+          "y2k"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.5,
+        "rarity": "comum"
+      },
+      "lift": 0.016,
+      "heelCm": 9,
+      "file": "mary_janes.glb",
+      "triangles": 7408,
+      "sizeBytes": 270072,
+      "morphTargets": 0,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "loafers",
+      "label": "Mocassim plataforma",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#5a1f2a",
+        "trim": "#2c1a1a",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "feet"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "classico",
+          "preppy"
+        ],
+        "colors": [
+          "bordo"
+        ],
+        "formality": 0.55,
+        "rarity": "comum"
+      },
+      "lift": 0.012,
+      "file": "loafers.glb",
+      "triangles": 6982,
+      "sizeBytes": 252820,
+      "morphTargets": 0,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "lurex_jumpsuit",
+      "label": "Macacão de lurex",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#b08a3c",
+        "trim": "#8a6a28",
+        "accent": "#e3c878"
+      },
+      "finish": {
+        "base": "glitter",
+        "trim": "gold",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "gold",
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "y2k",
+          "festa"
+        ],
+        "colors": [
+          "dourado"
+        ],
+        "formality": 0.8,
+        "rarity": "epico"
+      },
+      "notes": "frente-unica (halter); ajustado no tronco e reto nas pernas",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "lurex_jumpsuit.glb",
+      "triangles": 5205,
+      "sizeBytes": 474032,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "y2k_vinyl_set",
+      "label": "Conjunto Y2K de vinil",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#b7bcc7",
+        "trim": "#8e94a1",
+        "accent": "#d9dce3"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "latex",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "y2k",
+          "festa"
+        ],
+        "colors": [
+          "prata"
+        ],
+        "formality": 0.5,
+        "rarity": "raro"
+      },
+      "notes": "top halter cropped + calca flare de cintura baixa (cintura de altura media: pouca pele a mostra)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "y2k_vinyl_set.glb",
+      "triangles": 7038,
+      "sizeBytes": 559324,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "romper",
+      "label": "Macaquinho",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#b5654a",
+        "trim": "#9a523a",
+        "accent": "#e3d9c4"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "praia",
+          "boho"
+        ],
+        "colors": [
+          "terracota"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "romper.glb",
+      "triangles": 5279,
+      "sizeBytes": 493176,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "opera_gloves",
+      "label": "Luvas longas de gala",
+      "slot": "gloves",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#efe6d6",
+        "trim": "#ffffff"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "lace",
+          "latex",
+          "matte",
+          "glitter"
+        ],
+        "trim": [
+          "satin",
+          "lace",
+          "pearl",
+          "tulle"
+        ]
+      },
+      "covers": [
+        "hands",
+        "forearms",
+        "upperArms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "gala",
+          "classico",
+          "romantico"
+        ],
+        "colors": [
+          "marfim"
+        ],
+        "formality": 1.0,
+        "rarity": "epico"
+      },
+      "notes": "vao ate acima do cotovelo (s>=0.30 do braco); par do vestido de gala",
+      "patterns": {
+        "slot": "base",
+        "supported": [],
+        "default": null
+      },
+      "file": "opera_gloves.glb",
+      "triangles": 7882,
+      "sizeBytes": 417056,
+      "morphTargets": 15,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "satin_pajamas",
+      "label": "Pijama de cetim",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#2a3555",
+        "trim": "#d9d1c0",
+        "accent": "#e8e2d3"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "pearl"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "romantico",
+          "pijama"
+        ],
+        "colors": [
+          "azul-marinho"
+        ],
+        "formality": 0.05,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "satin_pajamas.glb",
+      "triangles": 9417,
+      "sizeBytes": 791492,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "sweat_set",
+      "label": "Conjunto de moletom",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#9aa0ac",
+        "trim": "#868c98"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "esportivo",
+          "streetwear"
+        ],
+        "colors": [
+          "cinza"
+        ],
+        "formality": 0.05,
+        "rarity": "comum"
+      },
+      "notes": "top cropped + calca jogger com punho no tornozelo",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "sweat_set.glb",
+      "triangles": 8599,
+      "sizeBytes": 698300,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "swimsuit",
+      "label": "Maiô",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#1f3a5f",
+        "trim": "#f0ece2"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "praia",
+          "esportivo"
+        ],
+        "colors": [
+          "azul-marinho"
+        ],
+        "formality": 0.0,
+        "rarity": "comum"
+      },
+      "notes": "maio inteiro de corte conservador (shorts ate o alto da coxa); combina com kaftan (top)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "swimsuit.glb",
+      "triangles": 4840,
+      "sizeBytes": 466340,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "winter_coat",
+      "label": "Casaco longo com cachecol",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#8a7258",
+        "trim": "#6f5b45",
+        "accent": "#b84a3a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips",
+        "thighs",
+        "knees",
+        "neck"
+      ],
+      "hides": [
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "inverno",
+          "classico",
+          "casual"
+        ],
+        "colors": [
+          "marrom"
+        ],
+        "formality": 0.6,
+        "rarity": "raro"
+      },
+      "notes": "cachecol no slot accent (voltas no pescoco + ponta); hides bottom",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "winter_coat.glb",
+      "triangles": 8965,
+      "sizeBytes": 700456,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "turtleneck_knit",
+      "label": "Blusa de tricô gola alta",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#c9b79c",
+        "trim": "#b8a587"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "neck"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "classico",
+          "romantico"
+        ],
+        "colors": [
+          "bege"
+        ],
+        "formality": 0.35,
+        "rarity": "comum"
+      },
+      "notes": "gola alta cobre o pescoco (base do pescoco ate 1.22 m); estampa trico embutida",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": "trico"
+      },
+      "file": "turtleneck_knit.glb",
+      "triangles": 5200,
+      "sizeBytes": 551696,
+      "morphTargets": 12,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "puffer_jacket",
+      "label": "Jaqueta puffer",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#e6dccb",
+        "trim": "#cfc3ae",
+        "accent": "#8e8a82"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "neck"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "esportivo",
+          "inverno"
+        ],
+        "colors": [
+          "bege"
+        ],
+        "formality": 0.15,
+        "rarity": "comum"
+      },
+      "notes": "acolchoada (gomos em z); gola alta ate 1.20 m",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "puffer_jacket.glb",
+      "triangles": 5348,
+      "sizeBytes": 487972,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "ankle_boots",
+      "label": "Botinha de couro",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#4a3224",
+        "trim": "#2c1e16",
+        "accent": "#b8924f"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "latex",
+          "satin"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte"
+        ]
+      },
+      "covers": [
+        "feet",
+        "ankles"
+      ],
+      "hides": [
+        "legwear"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "goth",
+          "country"
+        ],
+        "colors": [
+          "marrom"
+        ],
+        "formality": 0.4,
+        "rarity": "comum"
+      },
+      "notes": "cano ate 0.31 m; meias e meias-calca sao escondidas (hides legwear); calca justa fica por dentro do cano",
+      "lift": 0.0058,
+      "heelCm": 8,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "ankle_boots.glb",
+      "triangles": 7929,
+      "sizeBytes": 337584,
+      "morphTargets": 2,
+      "motionClean": false,
+      "sitSafe": true
+    },
+    {
+      "id": "ankle_socks",
+      "label": "Meias soquete com babado",
+      "slot": "legwear",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#f4f1ea",
+        "trim": "#ffffff"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "lace"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "glitter",
+          "latex"
+        ],
+        "trim": [
           "lace",
           "satin",
+          "tulle",
+          "matte"
+        ]
+      },
+      "covers": [
+        "calves",
+        "ankles"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "romantico",
+          "casual",
+          "y2k"
+        ],
+        "colors": [
+          "branco"
+        ],
+        "formality": 0.25,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "ankle_socks.glb",
+      "triangles": 1344,
+      "sizeBytes": 184720,
+      "morphTargets": 2,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "ballgown",
+      "label": "Saia de baile rococó",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "accent",
+        "trim",
+        "lining"
+      ],
+      "palette": {
+        "base": "#fff0f6",
+        "accent": "#ffc4dd",
+        "trim": "#e8b84a",
+        "lining": "#ffffff"
+      },
+      "finish": {
+        "base": "satin",
+        "accent": "satin",
+        "trim": "satin",
+        "lining": "tulle"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "latex",
+          "glitter",
+          "lace",
+          "matte"
+        ],
+        "accent": [
+          "satin",
+          "tulle",
+          "lace",
+          "glitter"
+        ],
+        "trim": [
+          "satin",
+          "pearl",
+          "gold"
+        ],
+        "lining": [
+          "tulle",
+          "lace"
+        ]
+      },
+      "covers": [
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "legs"
+      ],
+      "notes": "combine with corset to form a dress; floor length",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "ballgown.glb",
+      "triangles": 6272,
+      "sizeBytes": 440364,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "beach_wedges",
+      "label": "Anabela de praia",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#f0e7d6",
+        "trim": "#b99a6b",
+        "accent": "#2f6f73"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin"
+        ],
+        "accent": [
+          "satin",
+          "matte",
+          "gold"
+        ]
+      },
+      "covers": [
+        "feet"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "praia",
+          "casual",
+          "boho"
+        ],
+        "colors": [
+          "bege"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "lift": 0.01,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "beach_wedges.glb",
+      "triangles": 5676,
+      "sizeBytes": 262160,
+      "morphTargets": 2,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "bodysuit",
+      "label": "Body de manga longa",
+      "slot": "top",
+      "slots": [
+        "base"
+      ],
+      "palette": {
+        "base": "#2a2f4a"
+      },
+      "finish": {
+        "base": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "latex",
+          "matte",
           "glitter"
         ]
       },
       "covers": [
         "torso",
+        "arms",
+        "hips"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "y2k",
+          "casual",
+          "goth"
+        ],
+        "colors": [
+          "azul-marinho"
+        ],
+        "formality": 0.35,
+        "rarity": "comum"
+      },
+      "notes": "cobre o quadril ate a virilha: usar com saia/calca",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "bodysuit.glb",
+      "triangles": 4799,
+      "sizeBytes": 492660,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "bolero",
+      "label": "Bolero manga bufante",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#8a1f3a",
+        "trim": "#d9c9a0"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "latex",
+          "glitter",
+          "lace"
+        ],
+        "trim": [
+          "satin",
+          "matte",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "upperTorso",
         "arms"
       ],
       "hides": [],
@@ -1066,146 +1648,448 @@
           "romantico"
         ],
         "colors": [
-          "roxo",
-          "branco"
+          "vinho"
         ],
-        "formality": 0.85,
-        "rarity": "epico"
+        "formality": 0.8,
+        "rarity": "raro"
       },
-      "file": "organza_sleeves.glb",
-      "triangles": 5199,
-      "sizeBytes": 477696,
-      "morphTargets": 11
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "bolero.glb",
+      "triangles": 4799,
+      "sizeBytes": 359496,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": true
     },
     {
-      "id": "ruff_top",
-      "label": "Top com gola rufo",
+      "id": "cami_top",
+      "label": "Regata de alcinha",
       "slot": "top",
       "slots": [
         "base",
-        "accent",
         "trim"
       ],
       "palette": {
-        "base": "#1c1a24",
-        "accent": "#b8923c",
-        "trim": "#f4f0e6"
+        "base": "#e8e1d4",
+        "trim": "#d6cdbb"
       },
       "finish": {
         "base": "satin",
-        "accent": "gold",
         "trim": "satin"
       },
       "finishesSupported": {
         "base": [
-          "satin",
           "matte",
+          "satin",
           "latex",
           "glitter"
         ],
-        "accent": [
-          "gold",
-          "satin",
-          "pearl"
-        ],
         "trim": [
+          "matte",
           "satin",
-          "tulle",
-          "lace",
-          "matte"
+          "latex"
         ]
       },
       "covers": [
-        "torso",
-        "upperArms",
-        "neck"
+        "torso"
       ],
       "hides": [],
       "tags": {
         "styles": [
-          "rococo",
-          "gala",
-          "goth"
+          "casual",
+          "romantico",
+          "praia"
         ],
         "colors": [
-          "preto",
-          "dourado"
+          "bege"
         ],
-        "formality": 0.9,
-        "rarity": "epico"
+        "formality": 0.15,
+        "rarity": "comum"
       },
-      "file": "ruff_top.glb",
-      "triangles": 6048,
-      "sizeBytes": 578244,
-      "morphTargets": 11
+      "notes": "alcas finas (nao cobrem o ombro): o jogo pode tingir a regiao do bodysuit para pele",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "cami_top.glb",
+      "triangles": 2310,
+      "sizeBytes": 232848,
+      "morphTargets": 10,
+      "motionClean": true,
+      "sitSafe": true
     },
     {
-      "id": "petal_skirt",
-      "label": "Saia de pétalas arquitetônica",
-      "slot": "bottom",
+      "id": "cardigan",
+      "label": "Cardigan com botões de pérola",
+      "slot": "top",
       "slots": [
         "base",
-        "accent",
         "trim",
-        "lining"
+        "accent"
       ],
       "palette": {
-        "base": "#6d2fa0",
-        "accent": "#2d9aa8",
-        "trim": "#d6b25a",
-        "lining": "#1b1330"
+        "base": "#7b8f6a",
+        "trim": "#6a7d5a",
+        "accent": "#f3eee2"
       },
       "finish": {
-        "base": "latex",
-        "accent": "latex",
-        "trim": "gold",
-        "lining": "matte"
+        "base": "matte",
+        "trim": "matte",
+        "accent": "pearl"
       },
       "finishesSupported": {
         "base": [
-          "latex",
+          "matte",
           "satin",
-          "glitter",
-          "matte"
-        ],
-        "accent": [
-          "latex",
-          "satin",
-          "glitter",
-          "matte"
+          "glitter"
         ],
         "trim": [
-          "gold",
+          "matte",
           "satin"
         ],
-        "lining": [
+        "accent": [
+          "pearl",
+          "gold"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "romantico",
+          "casual"
+        ],
+        "colors": [
+          "verde"
+        ],
+        "formality": 0.4,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "cardigan.glb",
+      "triangles": 4896,
+      "sizeBytes": 402656,
+      "morphTargets": 8,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "cargo",
+      "label": "Calça cargo",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#6b6a4b",
+        "trim": "#57563c"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
           "matte",
           "satin"
         ]
       },
       "covers": [
         "hips",
-        "thighs",
-        "knees"
+        "legs"
       ],
       "hides": [],
       "tags": {
         "styles": [
-          "y2k",
-          "gala",
-          "goth"
+          "casual",
+          "esportivo",
+          "y2k"
         ],
         "colors": [
-          "roxo",
-          "turquesa"
+          "verde-oliva"
         ],
-        "formality": 0.85,
-        "rarity": "lendario"
+        "formality": 0.15,
+        "rarity": "comum"
       },
-      "file": "petal_skirt.glb",
-      "triangles": 2272,
-      "sizeBytes": 258556,
-      "morphTargets": 7
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "cargo.glb",
+      "triangles": 4927,
+      "sizeBytes": 378820,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "chunky_sneakers",
+      "label": "Tênis chunky",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#f1efe9",
+        "trim": "#d8d3c6",
+        "accent": "#3d5a80"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "latex",
+          "satin"
+        ],
+        "accent": [
+          "matte",
+          "satin",
+          "gold"
+        ]
+      },
+      "covers": [
+        "feet",
+        "ankles"
+      ],
+      "hides": [
+        "legwear"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "esportivo",
+          "y2k"
+        ],
+        "colors": [
+          "branco"
+        ],
+        "formality": 0.1,
+        "rarity": "comum"
+      },
+      "notes": "solado cunha ate o chao (en pointe), estilo plataforma inclinado",
+      "lift": 0.014,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "chunky_sneakers.glb",
+      "triangles": 7753,
+      "sizeBytes": 343048,
+      "morphTargets": 2,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "corset",
+      "label": "Espartilho coração",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#ff3f8e",
+        "trim": "#fff1f6",
+        "accent": "#e8b84a"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "satin",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "satin",
+          "glitter",
+          "matte"
+        ],
+        "trim": [
+          "satin",
+          "latex",
+          "pearl",
+          "matte"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "torso"
+      ],
+      "hides": [],
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "corset.glb",
+      "triangles": 4174,
+      "sizeBytes": 491200,
+      "morphTargets": 16,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "cowboy_boots",
+      "label": "Bota cowboy",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#7a4a2b",
+        "trim": "#4b3220",
+        "accent": "#d9c7a0"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "latex"
+        ],
+        "accent": [
+          "matte",
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "feet",
+        "ankles",
+        "calves"
+      ],
+      "hides": [
+        "legwear"
+      ],
+      "tags": {
+        "styles": [
+          "country",
+          "casual",
+          "boho"
+        ],
+        "colors": [
+          "marrom"
+        ],
+        "formality": 0.35,
+        "rarity": "raro"
+      },
+      "lift": 0.0058,
+      "heelCm": 6,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "cowboy_boots.glb",
+      "triangles": 8584,
+      "sizeBytes": 378568,
+      "morphTargets": 2,
+      "motionClean": true,
+      "sitSafe": true
     },
     {
       "id": "crinoline",
@@ -1274,22 +2158,3090 @@
         "formality": 1.0,
         "rarity": "lendario"
       },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
       "file": "crinoline.glb",
       "triangles": 6448,
       "sizeBytes": 548024,
-      "morphTargets": 7
+      "morphTargets": 7,
+      "motionClean": false,
+      "sitSafe": false
     },
     {
-      "id": "fur_coat",
-      "label": "Casaco de pele fake",
+      "id": "crop_collar",
+      "label": "Cropped com gola",
       "slot": "top",
       "slots": [
         "base",
         "trim"
       ],
       "palette": {
-        "base": "#f1ece4",
-        "trim": "#e2dacd"
+        "base": "#23395d",
+        "trim": "#f4f1ea"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "glitter",
+          "latex"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "lace"
+        ]
+      },
+      "covers": [
+        "torso",
+        "upperArms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "esportivo",
+          "y2k"
+        ],
+        "colors": [
+          "azul",
+          "branco"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "crop_collar.glb",
+      "triangles": 5167,
+      "sizeBytes": 420728,
+      "morphTargets": 8,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "cycling_shorts",
+      "label": "Bermuda ciclista",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#1f2430",
+        "trim": "#161a24",
+        "accent": "#c9d3dd"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "esportivo",
+          "casual",
+          "y2k"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.05,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "cycling_shorts.glb",
+      "triangles": 5039,
+      "sizeBytes": 415848,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "denim_jacket",
+      "label": "Jaqueta jeans",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#35567f",
+        "trim": "#c98a3c",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "y2k",
+          "esportivo"
+        ],
+        "colors": [
+          "azul"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "denim_jacket.glb",
+      "triangles": 5338,
+      "sizeBytes": 504400,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "denim_shirt",
+      "label": "Camisa jeans",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#7ea0c8",
+        "trim": "#5f82ad",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "country",
+          "y2k"
+        ],
+        "colors": [
+          "azul"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": "jeans"
+      },
+      "file": "denim_shirt.glb",
+      "triangles": 5297,
+      "sizeBytes": 601628,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "denim_shorts",
+      "label": "Short jeans",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#4a6fa0",
+        "trim": "#8fb0d8",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "hips",
+        "upperThighs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "praia",
+          "y2k"
+        ],
+        "colors": [
+          "azul"
+        ],
+        "formality": 0.1,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "denim_shorts.glb",
+      "triangles": 3395,
+      "sizeBytes": 292804,
+      "morphTargets": 6,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "denim_skirt",
+      "label": "Saia jeans",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#5b83b5",
+        "trim": "#4a6f9e",
+        "accent": "#d9a14a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "y2k",
+          "country"
+        ],
+        "colors": [
+          "azul"
+        ],
+        "formality": 0.15,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": "jeans"
+      },
+      "file": "denim_skirt.glb",
+      "triangles": 2880,
+      "sizeBytes": 344536,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "dj_vest",
+      "label": "Colete de DJ",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#16161c",
+        "trim": "#0f0f14",
+        "accent": "#7ef0d2"
+      },
+      "finish": {
+        "base": "glitter",
+        "trim": "latex",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "y2k",
+          "festa",
+          "streetwear"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.3,
+        "rarity": "raro"
+      },
+      "notes": "colete cropped com zíper neon (accent); profissao DJ",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "dj_vest.glb",
+      "triangles": 3321,
+      "sizeBytes": 313392,
+      "morphTargets": 8,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "dungarees",
+      "label": "Jardineira jeans",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#3e6190",
+        "trim": "#2f4f7a",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "legs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "y2k",
+          "esportivo"
+        ],
+        "colors": [
+          "azul"
+        ],
+        "formality": 0.1,
+        "rarity": "comum"
+      },
+      "notes": "slot bottom: peitilho e alcas por cima de uma camiseta (folga 15 mm no peitilho)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "dungarees.glb",
+      "triangles": 5012,
+      "sizeBytes": 429652,
+      "morphTargets": 10,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "fishnet",
+      "label": "Meias arrastão",
+      "slot": "legwear",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#1c1b22",
+        "trim": "#1c1b22"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "satin",
+          "lace",
+          "latex",
+          "matte"
+        ]
+      },
+      "covers": [
+        "thighs",
+        "knees",
+        "calves",
+        "ankles"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "goth",
+          "y2k"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.4,
+        "rarity": "raro"
+      },
+      "notes": "malha em geometria real (fios), sem alpha; termina no tornozelo",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "fishnet.glb",
+      "triangles": 2968,
+      "sizeBytes": 602056,
+      "morphTargets": 6,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "flare_pants",
+      "label": "Calça flare",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#4d6e9b",
+        "trim": "#3e5c85",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "hips",
+        "legs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "boho",
+          "y2k"
+        ],
+        "colors": [
+          "azul"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "notes": "boca larga cobre o pe ate 0.085 m (sapatos ficam por dentro da barra)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": "jeans"
+      },
+      "file": "flare_pants.glb",
+      "triangles": 4806,
+      "sizeBytes": 470564,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "glitter_heels",
+      "label": "Salto glitter",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#b9bcc7",
+        "trim": "#8f93a1",
+        "accent": "#d6d9e2"
+      },
+      "finish": {
+        "base": "glitter",
+        "trim": "satin",
+        "accent": "pearl"
+      },
+      "finishesSupported": {
+        "base": [
+          "glitter",
+          "satin",
+          "latex",
+          "matte",
+          "gold"
+        ],
+        "trim": [
+          "satin",
+          "gold",
+          "matte"
+        ],
+        "accent": [
+          "pearl",
+          "gold"
+        ]
+      },
+      "covers": [
+        "feet"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "gala",
+          "y2k",
+          "festa"
+        ],
+        "colors": [
+          "prata"
+        ],
+        "formality": 0.9,
+        "rarity": "epico"
+      },
+      "lift": 0.0048,
+      "heelCm": 11,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "glitter_heels.glb",
+      "triangles": 7308,
+      "sizeBytes": 268108,
+      "morphTargets": 0,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "gym_set",
+      "label": "Roupa de academia",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#3b2f4a",
+        "trim": "#2c2338",
+        "accent": "#8fd3c1"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "esportivo",
+          "casual"
+        ],
+        "colors": [
+          "roxo"
+        ],
+        "formality": 0.05,
+        "rarity": "comum"
+      },
+      "notes": "top esportivo de cobertura alta + legging; faixa mint (accent)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "gym_set.glb",
+      "triangles": 7121,
+      "sizeBytes": 585024,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "gloves",
+      "label": "Luvas de ópera",
+      "slot": "gloves",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#f6c6dc",
+        "trim": "#ffffff"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "latex",
+          "lace",
+          "glitter",
+          "matte"
+        ],
+        "trim": [
+          "satin",
+          "lace",
+          "pearl",
+          "tulle"
+        ]
+      },
+      "covers": [
+        "hands",
+        "forearms",
+        "upperArmsLower"
+      ],
+      "hides": [],
+      "notes": "both arms in one mesh; offset 3.2 mm hands / 4.5 mm arms",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "gloves.glb",
+      "triangles": 7387,
+      "sizeBytes": 386576,
+      "morphTargets": 15,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "hairdresser_smock",
+      "label": "Jaleco de cabeleireira",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#f3f1ec",
+        "trim": "#c4d0de",
+        "accent": "#8a9bb0"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "upperArms",
+        "hips",
+        "thighs"
+      ],
+      "hides": [
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "profissao",
+          "casual",
+          "classico"
+        ],
+        "colors": [
+          "branco"
+        ],
+        "formality": 0.35,
+        "rarity": "comum"
+      },
+      "notes": "jaleco curto com botoes de lado e bolsos; profissao cabeleireira; hides bottom (saia curta)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "hairdresser_smock.glb",
+      "triangles": 5405,
+      "sizeBytes": 506960,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "tailored_shorts",
+      "label": "Short de alfaiataria",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#d8c8a8",
+        "trim": "#bfae8a",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "hips",
+        "upperThighs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "praia",
+          "gala"
+        ],
+        "colors": [
+          "bege"
+        ],
+        "formality": 0.45,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "tailored_shorts.glb",
+      "triangles": 4619,
+      "sizeBytes": 378508,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "palazzo",
+      "label": "Calça pantalona",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#e9dfcc",
+        "trim": "#cfc3a8"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "glitter",
+          "latex"
+        ],
+        "trim": [
+          "satin",
+          "matte"
+        ]
+      },
+      "covers": [
+        "hips",
+        "legs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "romantico",
+          "casual",
+          "gala",
+          "praia"
+        ],
+        "colors": [
+          "bege"
+        ],
+        "formality": 0.5,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "palazzo.glb",
+      "triangles": 4800,
+      "sizeBytes": 371880,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "hoodie",
+      "label": "Moletom com capuz",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#8d9096",
+        "trim": "#7b7e84",
+        "accent": "#e9e6df"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "esportivo",
+          "streetwear"
+        ],
+        "colors": [
+          "cinza"
+        ],
+        "formality": 0.05,
+        "rarity": "comum"
+      },
+      "notes": "capuz caido nas costas; bolso canguru; cordoes em accent",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "hoodie.glb",
+      "triangles": 5334,
+      "sizeBytes": 504136,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "tailored_trousers",
+      "label": "Calça de alfaiataria",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#5b5f68",
+        "trim": "#464a52",
+        "accent": "#c9ccd3"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "hips",
+        "legs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "classico",
+          "gala",
+          "casual"
+        ],
+        "colors": [
+          "cinza"
+        ],
+        "formality": 0.7,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "tailored_trousers.glb",
+      "triangles": 5222,
+      "sizeBytes": 410484,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "pencil_skirt",
+      "label": "Saia lápis",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#2b2b33",
+        "trim": "#1d1d24"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "gala",
+          "casual",
+          "goth"
+        ],
+        "colors": [
+          "cinza"
+        ],
+        "formality": 0.7,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "pencil_skirt.glb",
+      "triangles": 3972,
+      "sizeBytes": 315804,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "tank",
+      "label": "Regata canelada",
+      "slot": "top",
+      "slots": [
+        "base"
+      ],
+      "palette": {
+        "base": "#1f1f26"
+      },
+      "finish": {
+        "base": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ]
+      },
+      "covers": [
+        "torso"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "esportivo",
+          "praia"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.1,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "tank.glb",
+      "triangles": 2967,
+      "sizeBytes": 264156,
+      "morphTargets": 9,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "sequin_mini",
+      "label": "Vestido de paetê curto",
+      "slot": "dress",
+      "slots": [
+        "base"
+      ],
+      "palette": {
+        "base": "#c2a14f"
+      },
+      "finish": {
+        "base": "glitter"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "y2k",
+          "festa"
+        ],
+        "colors": [
+          "dourado"
+        ],
+        "formality": 0.8,
+        "rarity": "epico"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "sequin_mini.glb",
+      "triangles": 5000,
+      "sizeBytes": 444060,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "jumpsuit",
+      "label": "Macacão pantalona",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#b5473a",
+        "trim": "#8f3328",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "gala",
+          "praia"
+        ],
+        "colors": [
+          "terracota"
+        ],
+        "formality": 0.55,
+        "rarity": "raro"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "jumpsuit.glb",
+      "triangles": 5206,
+      "sizeBytes": 474512,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "sequin_top",
+      "label": "Top de paetê",
+      "slot": "top",
+      "slots": [
+        "base"
+      ],
+      "palette": {
+        "base": "#c9a14a"
+      },
+      "finish": {
+        "base": "glitter"
+      },
+      "finishesSupported": {
+        "base": [
+          "glitter",
+          "satin",
+          "latex",
+          "matte"
+        ]
+      },
+      "covers": [
+        "torso"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "y2k",
+          "gala"
+        ],
+        "colors": [
+          "dourado"
+        ],
+        "formality": 0.6,
+        "rarity": "raro"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "sequin_top.glb",
+      "triangles": 2414,
+      "sizeBytes": 216024,
+      "morphTargets": 8,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "tee",
+      "label": "Camiseta básica",
+      "slot": "top",
+      "slots": [
+        "base"
+      ],
+      "palette": {
+        "base": "#f4f1ea"
+      },
+      "finish": {
+        "base": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "glitter",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "upperArms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual"
+        ],
+        "colors": [
+          "branco"
+        ],
+        "formality": 0.15,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "tee.glb",
+      "triangles": 4799,
+      "sizeBytes": 425868,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "shirt_bow",
+      "label": "Camisa social com laço",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#f6f4ee",
+        "trim": "#e9e6dd",
+        "accent": "#d9d4c6"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "pearl"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "latex",
+          "glitter",
+          "lace"
+        ],
+        "trim": [
+          "satin",
+          "matte",
+          "lace"
+        ],
+        "accent": [
+          "pearl",
+          "gold"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "gala",
+          "romantico"
+        ],
+        "colors": [
+          "branco"
+        ],
+        "formality": 0.65,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "shirt_bow.glb",
+      "triangles": 5732,
+      "sizeBytes": 551524,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "plaid_shirt",
+      "label": "Camisa xadrez",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#ffffff",
+        "trim": "#8a2a2a",
+        "accent": "#e9e2d0"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "pearl"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "country",
+          "grunge"
+        ],
+        "colors": [
+          "vermelho"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "notes": "estampa xadrez embutida no slot base (cor branca = estampa original; qualquer cor tinge)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": "xadrez"
+      },
+      "file": "plaid_shirt.glb",
+      "triangles": 5265,
+      "sizeBytes": 557420,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "knee_boots",
+      "label": "Bota cano alto",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#241c1a",
+        "trim": "#17110f",
+        "accent": "#8a7a5c"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "latex",
+          "satin"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte"
+        ]
+      },
+      "covers": [
+        "feet",
+        "ankles",
+        "calves"
+      ],
+      "hides": [
+        "legwear"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "goth",
+          "gala"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.6,
+        "rarity": "raro"
+      },
+      "notes": "cano ate 0.445 m (joelho em 0.49): usar com saias e vestidos",
+      "lift": 0.0058,
+      "heelCm": 7,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "knee_boots.glb",
+      "triangles": 8960,
+      "sizeBytes": 411912,
+      "morphTargets": 3,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "platform_heels",
+      "label": "Salto plataforma",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#1c1c22",
+        "trim": "#2b2b33",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "matte",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "satin",
+          "matte",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "latex",
+          "satin"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "feet"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "y2k",
+          "goth",
+          "gala"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.6,
+        "rarity": "raro"
+      },
+      "lift": 0.02,
+      "heelCm": 10,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "platform_heels.glb",
+      "triangles": 7311,
+      "sizeBytes": 327268,
+      "morphTargets": 2,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "shirtdress",
+      "label": "Vestido chemise",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#b9a77f",
+        "trim": "#8f7e58",
+        "accent": "#e9e2d0"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "pearl"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "classico",
+          "casual",
+          "country"
+        ],
+        "colors": [
+          "bege"
+        ],
+        "formality": 0.45,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "shirtdress.glb",
+      "triangles": 6744,
+      "sizeBytes": 614880,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "knit_dress",
+      "label": "Vestido de tricô",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#c9b79c",
+        "trim": "#b8a587"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "classico",
+          "inverno"
+        ],
+        "colors": [
+          "bege"
+        ],
+        "formality": 0.4,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": "trico"
+      },
+      "file": "knit_dress.glb",
+      "triangles": 6643,
+      "sizeBytes": 637280,
+      "morphTargets": 11,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "skinny_jeans",
+      "label": "Calça jeans skinny",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#3b5a85",
+        "trim": "#34527a",
+        "accent": "#c98a3c"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin"
+        ],
+        "accent": [
+          "matte",
+          "gold"
+        ]
+      },
+      "covers": [
+        "hips",
+        "legs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "y2k"
+        ],
+        "colors": [
+          "azul"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "skinny_jeans.glb",
+      "triangles": 4825,
+      "sizeBytes": 373876,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "lace_gloves",
+      "label": "Luvas curtas de renda",
+      "slot": "gloves",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#f4efe6",
+        "trim": "#ffffff"
+      },
+      "finish": {
+        "base": "lace",
+        "trim": "lace"
+      },
+      "finishesSupported": {
+        "base": [
+          "lace",
+          "satin",
+          "latex",
+          "matte",
+          "glitter"
+        ],
+        "trim": [
+          "lace",
+          "satin",
+          "tulle",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "hands",
+        "wrists"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "romantico",
+          "gala",
+          "goth"
+        ],
+        "colors": [
+          "branco"
+        ],
+        "formality": 0.7,
+        "rarity": "raro"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "lace_gloves.glb",
+      "triangles": 5462,
+      "sizeBytes": 381796,
+      "morphTargets": 15,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "tshirt_dress",
+      "label": "Vestido camiseta",
+      "slot": "dress",
+      "slots": [
+        "base"
+      ],
+      "palette": {
+        "base": "#6f7f90"
+      },
+      "finish": {
+        "base": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "esportivo"
+        ],
+        "colors": [
+          "azul"
+        ],
+        "formality": 0.1,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "tshirt_dress.glb",
+      "triangles": 5416,
+      "sizeBytes": 476000,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "metal_midi",
+      "label": "Saia midi plissada metalizada",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#c9b27a",
+        "trim": "#8a7340"
+      },
+      "finish": {
+        "base": "gold",
+        "trim": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "gold",
+          "satin",
+          "glitter",
+          "latex",
+          "matte"
+        ],
+        "trim": [
+          "gold",
+          "satin",
+          "matte"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs",
+        "knees",
+        "calves"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "y2k",
+          "gala"
+        ],
+        "colors": [
+          "dourado"
+        ],
+        "formality": 0.7,
+        "rarity": "epico"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "metal_midi.glb",
+      "triangles": 3072,
+      "sizeBytes": 243604,
+      "morphTargets": 6,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "tennis_set",
+      "label": "Conjunto de tênis",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#f2f0ea",
+        "trim": "#1f2f55",
+        "accent": "#c9ccd4"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "pearl"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips",
+        "thighs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "esportivo",
+          "preppy",
+          "casual"
+        ],
+        "colors": [
+          "branco"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "tennis_set.glb",
+      "triangles": 5471,
+      "sizeBytes": 526452,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "school_uniform",
+      "label": "Uniforme escolar",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#ffffff",
+        "trim": "#f4f2ec",
+        "accent": "#23395d"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "upperArms",
+        "hips",
+        "thighs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "preppy",
+          "kawaii",
+          "casual"
+        ],
+        "colors": [
+          "branco",
+          "azul-marinho"
+        ],
+        "formality": 0.35,
+        "rarity": "comum"
+      },
+      "notes": "slots: base = saia plissada xadrez, trim = blusa, accent = gola marinheira/gravata/cós",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": "xadrez"
+      },
+      "file": "school_uniform.glb",
+      "triangles": 5871,
+      "sizeBytes": 612472,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "off_shoulder",
+      "label": "Blusa ombro a ombro",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#f2efe6",
+        "trim": "#f2efe6"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "lace",
+          "glitter"
+        ],
+        "trim": [
+          "satin",
+          "tulle",
+          "lace",
+          "matte"
+        ]
+      },
+      "covers": [
+        "torso",
+        "upperArms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "romantico",
+          "casual",
+          "praia"
+        ],
+        "colors": [
+          "branco"
+        ],
+        "formality": 0.45,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "off_shoulder.glb",
+      "triangles": 3402,
+      "sizeBytes": 283756,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "latex_skirt",
+      "label": "Saia lápis de látex",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#17171c",
+        "trim": "#d6b25a"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "satin",
+          "matte",
+          "glitter"
+        ],
+        "trim": [
+          "gold",
+          "latex",
+          "satin"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "y2k",
+          "goth",
+          "gala"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.65,
+        "rarity": "raro"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "latex_skirt.glb",
+      "triangles": 3972,
+      "sizeBytes": 313744,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "sweater",
+      "label": "Suéter oversized",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#e8dcc6",
+        "trim": "#d4c6aa"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "romantico"
+        ],
+        "colors": [
+          "bege"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "sweater.glb",
+      "triangles": 4799,
+      "sizeBytes": 459400,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "leggings",
+      "label": "Legging esportiva",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#22252e",
+        "trim": "#17181d",
+        "accent": "#8c93a3"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "matte",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "matte",
+          "satin",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin"
+        ],
+        "accent": [
+          "satin",
+          "matte",
+          "gold"
+        ]
+      },
+      "covers": [
+        "hips",
+        "legs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "esportivo",
+          "casual",
+          "y2k"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.1,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "leggings.glb",
+      "triangles": 5304,
+      "sizeBytes": 412972,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "latex_top",
+      "label": "Top de látex",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#17171c",
+        "trim": "#d6b25a"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "satin",
+          "matte",
+          "glitter"
+        ],
+        "trim": [
+          "gold",
+          "pearl",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "y2k",
+          "goth",
+          "gala"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.6,
+        "rarity": "raro"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "latex_top.glb",
+      "triangles": 2432,
+      "sizeBytes": 226864,
+      "morphTargets": 8,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "y2k_vinyl",
+      "label": "Vestido Y2K de vinil",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#5d6fa8",
+        "trim": "#c9ced8"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "satin",
+          "glitter",
+          "matte"
+        ],
+        "trim": [
+          "gold",
+          "latex",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "upperThighs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "y2k",
+          "goth",
+          "gala"
+        ],
+        "colors": [
+          "prata",
+          "azul"
+        ],
+        "formality": 0.6,
+        "rarity": "epico"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "y2k_vinyl.glb",
+      "triangles": 6320,
+      "sizeBytes": 597220,
+      "morphTargets": 11,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "tube_dress",
+      "label": "Vestido tubinho",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#7b1e2e",
+        "trim": "#3a0f17"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "latex",
+          "glitter",
+          "lace"
+        ],
+        "trim": [
+          "satin",
+          "matte",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "y2k"
+        ],
+        "colors": [
+          "vinho"
+        ],
+        "formality": 0.75,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "tube_dress.glb",
+      "triangles": 6972,
+      "sizeBytes": 587676,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "pleated_skirt",
+      "label": "Saia plissada",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#2f4a3a",
+        "trim": "#d9d2c0"
       },
       "finish": {
         "base": "matte",
@@ -1308,29 +5260,566 @@
         ]
       },
       "covers": [
-        "torso",
-        "arms",
         "hips",
         "upperThighs"
       ],
       "hides": [],
       "tags": {
         "styles": [
-          "gala",
-          "rococo",
+          "casual",
+          "esportivo",
           "y2k"
         ],
         "colors": [
+          "verde"
+        ],
+        "formality": 0.25,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "pleated_skirt.glb",
+      "triangles": 1920,
+      "sizeBytes": 172936,
+      "morphTargets": 6,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "organza_sleeves",
+      "label": "Top com mangas gigantes de organza",
+      "slot": "top",
+      "slots": [
+        "base",
+        "accent"
+      ],
+      "palette": {
+        "base": "#2a1f3d",
+        "accent": "#e8dff5"
+      },
+      "finish": {
+        "base": "satin",
+        "accent": "tulle"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "latex",
+          "glitter"
+        ],
+        "accent": [
+          "tulle",
+          "lace",
+          "satin",
+          "glitter"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "gala",
+          "rococo",
+          "romantico"
+        ],
+        "colors": [
+          "roxo",
           "branco"
         ],
-        "formality": 0.8,
+        "formality": 0.85,
         "rarity": "epico"
       },
-      "notes": "casaco longo ate a coxa: slot top (cobre a saia curta); use com calca/saia longa",
-      "file": "fur_coat.glb",
-      "triangles": 7511,
-      "sizeBytes": 631932,
-      "morphTargets": 11
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "organza_sleeves.glb",
+      "triangles": 5199,
+      "sizeBytes": 477696,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "ruff_top",
+      "label": "Top com gola rufo",
+      "slot": "top",
+      "slots": [
+        "base",
+        "accent",
+        "trim"
+      ],
+      "palette": {
+        "base": "#1c1a24",
+        "accent": "#b8923c",
+        "trim": "#f4f0e6"
+      },
+      "finish": {
+        "base": "satin",
+        "accent": "gold",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "latex",
+          "glitter"
+        ],
+        "accent": [
+          "gold",
+          "satin",
+          "pearl"
+        ],
+        "trim": [
+          "satin",
+          "tulle",
+          "lace",
+          "matte"
+        ]
+      },
+      "covers": [
+        "torso",
+        "upperArms",
+        "neck"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "rococo",
+          "gala",
+          "goth"
+        ],
+        "colors": [
+          "preto",
+          "dourado"
+        ],
+        "formality": 0.9,
+        "rarity": "epico"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "ruff_top.glb",
+      "triangles": 6048,
+      "sizeBytes": 578240,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "rain_boots",
+      "label": "Galocha",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#d9a521",
+        "trim": "#2a2a2e"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "satin",
+          "matte",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "latex"
+        ]
+      },
+      "covers": [
+        "feet",
+        "ankles",
+        "calves"
+      ],
+      "hides": [
+        "legwear"
+      ],
+      "tags": {
+        "styles": [
+          "casual",
+          "kawaii",
+          "esportivo"
+        ],
+        "colors": [
+          "amarelo"
+        ],
+        "formality": 0.1,
+        "rarity": "comum"
+      },
+      "lift": 0.01,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "rain_boots.glb",
+      "triangles": 7810,
+      "sizeBytes": 333596,
+      "morphTargets": 2,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "biker_jacket",
+      "label": "Jaqueta de couro biker",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#1d1d21",
+        "trim": "#141417",
+        "accent": "#b3b6bd"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "latex",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "goth",
+          "casual",
+          "rock",
+          "y2k"
+        ],
+        "colors": [
+          "preto"
+        ],
+        "formality": 0.3,
+        "rarity": "raro"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "biker_jacket.glb",
+      "triangles": 5294,
+      "sizeBytes": 487696,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "floral_midi",
+      "label": "Vestido floral midi",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#ffffff",
+        "trim": "#3b5b46"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs",
+        "knees",
+        "calves"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "romantico",
+          "boho",
+          "casual"
+        ],
+        "colors": [
+          "floral"
+        ],
+        "formality": 0.5,
+        "rarity": "comum"
+      },
+      "notes": "estampa floral embutida no slot base (branco = estampa original)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": "floral"
+      },
+      "file": "floral_midi.glb",
+      "triangles": 6855,
+      "sizeBytes": 645368,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "satin_suit",
+      "label": "Terninho de cetim",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#6e1f2e",
+        "trim": "#541724",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "classico",
+          "festa"
+        ],
+        "colors": [
+          "vinho"
+        ],
+        "formality": 0.85,
+        "rarity": "epico"
+      },
+      "notes": "blazer + calca em um item (slot dress)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "satin_suit.glb",
+      "triangles": 9015,
+      "sizeBytes": 732576,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "velvet_coat",
+      "label": "Sobretudo de veludo",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#1d4a3a",
+        "trim": "#143629",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "classico",
+          "romantico"
+        ],
+        "colors": [
+          "verde"
+        ],
+        "formality": 0.85,
+        "rarity": "epico"
+      },
+      "notes": "veludo = satin de brilho baixo; gola xale larga; hides bottom",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "velvet_coat.glb",
+      "triangles": 7803,
+      "sizeBytes": 699700,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
     },
     {
       "id": "trench",
@@ -1391,382 +5880,25 @@
         "rarity": "raro"
       },
       "notes": "longo ate o joelho; hides bottom (saias curtas apareceriam por baixo da aba)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
       "file": "trench.glb",
       "triangles": 6972,
-      "sizeBytes": 639116,
-      "morphTargets": 11
-    },
-    {
-      "id": "tulle_cape",
-      "label": "Capa de tule dramática",
-      "slot": "top",
-      "slots": [
-        "base",
-        "accent",
-        "trim"
-      ],
-      "palette": {
-        "base": "#e6e1f0",
-        "accent": "#cbbfe6",
-        "trim": "#d6b25a"
-      },
-      "finish": {
-        "base": "tulle",
-        "accent": "tulle",
-        "trim": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "tulle",
-          "satin",
-          "lace",
-          "glitter"
-        ],
-        "accent": [
-          "tulle",
-          "satin",
-          "lace",
-          "glitter"
-        ],
-        "trim": [
-          "gold",
-          "pearl",
-          "satin"
-        ]
-      },
-      "covers": [
-        "shoulders",
-        "back",
-        "arms"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "gala",
-          "rococo",
-          "romantico"
-        ],
-        "colors": [
-          "lilas"
-        ],
-        "formality": 0.95,
-        "rarity": "lendario"
-      },
-      "notes": "rigida (nao reage a morphs do corpo, so ao esqueleto); aberta na frente; slot top: pode ficar por cima de dress? nao - substitui o top",
-      "file": "tulle_cape.glb",
-      "triangles": 3094,
-      "sizeBytes": 134280,
-      "morphTargets": 0
-    },
-    {
-      "id": "tee",
-      "label": "Camiseta básica",
-      "slot": "top",
-      "slots": [
-        "base"
-      ],
-      "palette": {
-        "base": "#f4f1ea"
-      },
-      "finish": {
-        "base": "matte"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "glitter",
-          "latex"
-        ]
-      },
-      "covers": [
-        "torso",
-        "upperArms"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual"
-        ],
-        "colors": [
-          "branco"
-        ],
-        "formality": 0.15,
-        "rarity": "comum"
-      },
-      "file": "tee.glb",
-      "triangles": 4799,
-      "sizeBytes": 426164,
-      "morphTargets": 11
-    },
-    {
-      "id": "crop_collar",
-      "label": "Cropped com gola",
-      "slot": "top",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#23395d",
-        "trim": "#f4f1ea"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "glitter",
-          "latex"
-        ],
-        "trim": [
-          "matte",
-          "satin",
-          "lace"
-        ]
-      },
-      "covers": [
-        "torso",
-        "upperArms"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "esportivo",
-          "y2k"
-        ],
-        "colors": [
-          "azul",
-          "branco"
-        ],
-        "formality": 0.2,
-        "rarity": "comum"
-      },
-      "file": "crop_collar.glb",
-      "triangles": 5167,
-      "sizeBytes": 420728,
-      "morphTargets": 8
-    },
-    {
-      "id": "shirt_bow",
-      "label": "Camisa social com laço",
-      "slot": "top",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#f6f4ee",
-        "trim": "#e9e6dd",
-        "accent": "#d9d4c6"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin",
-        "accent": "pearl"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "matte",
-          "latex",
-          "glitter",
-          "lace"
-        ],
-        "trim": [
-          "satin",
-          "matte",
-          "lace"
-        ],
-        "accent": [
-          "pearl",
-          "gold"
-        ]
-      },
-      "covers": [
-        "torso",
-        "arms"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "gala",
-          "romantico"
-        ],
-        "colors": [
-          "branco"
-        ],
-        "formality": 0.65,
-        "rarity": "comum"
-      },
-      "file": "shirt_bow.glb",
-      "triangles": 5732,
-      "sizeBytes": 550756,
-      "morphTargets": 11
-    },
-    {
-      "id": "off_shoulder",
-      "label": "Blusa ombro a ombro",
-      "slot": "top",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#f2efe6",
-        "trim": "#f2efe6"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "matte",
-          "lace",
-          "glitter"
-        ],
-        "trim": [
-          "satin",
-          "tulle",
-          "lace",
-          "matte"
-        ]
-      },
-      "covers": [
-        "torso",
-        "upperArms"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "romantico",
-          "casual",
-          "praia"
-        ],
-        "colors": [
-          "branco"
-        ],
-        "formality": 0.45,
-        "rarity": "comum"
-      },
-      "file": "off_shoulder.glb",
-      "triangles": 3402,
-      "sizeBytes": 283912,
-      "morphTargets": 7
-    },
-    {
-      "id": "sweater",
-      "label": "Suéter oversized",
-      "slot": "top",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#e8dcc6",
-        "trim": "#d4c6aa"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ]
-      },
-      "covers": [
-        "torso",
-        "arms",
-        "hips"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "romantico"
-        ],
-        "colors": [
-          "bege"
-        ],
-        "formality": 0.2,
-        "rarity": "comum"
-      },
-      "file": "sweater.glb",
-      "triangles": 4799,
-      "sizeBytes": 459400,
-      "morphTargets": 11
-    },
-    {
-      "id": "denim_jacket",
-      "label": "Jaqueta jeans",
-      "slot": "top",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#35567f",
-        "trim": "#c98a3c",
-        "accent": "#d6b25a"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte",
-        "accent": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ],
-        "accent": [
-          "gold",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "torso",
-        "arms"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "y2k",
-          "esportivo"
-        ],
-        "colors": [
-          "azul"
-        ],
-        "formality": 0.2,
-        "rarity": "comum"
-      },
-      "file": "denim_jacket.glb",
-      "triangles": 5338,
-      "sizeBytes": 503144,
-      "morphTargets": 11
+      "sizeBytes": 639024,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
     },
     {
       "id": "blazer",
@@ -1820,713 +5952,37 @@
         "formality": 0.75,
         "rarity": "raro"
       },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
       "file": "blazer.glb",
       "triangles": 5016,
-      "sizeBytes": 447416,
-      "morphTargets": 11
+      "sizeBytes": 448580,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
     },
     {
-      "id": "bolero",
-      "label": "Bolero manga bufante",
+      "id": "fur_coat",
+      "label": "Casaco de pele fake",
       "slot": "top",
       "slots": [
         "base",
         "trim"
       ],
       "palette": {
-        "base": "#8a1f3a",
-        "trim": "#d9c9a0"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "matte",
-          "latex",
-          "glitter",
-          "lace"
-        ],
-        "trim": [
-          "satin",
-          "matte",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "upperTorso",
-        "arms"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "gala",
-          "rococo",
-          "romantico"
-        ],
-        "colors": [
-          "vinho"
-        ],
-        "formality": 0.8,
-        "rarity": "raro"
-      },
-      "file": "bolero.glb",
-      "triangles": 4799,
-      "sizeBytes": 359496,
-      "morphTargets": 7
-    },
-    {
-      "id": "cardigan",
-      "label": "Cardigan com botões de pérola",
-      "slot": "top",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#7b8f6a",
-        "trim": "#6a7d5a",
-        "accent": "#f3eee2"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte",
-        "accent": "pearl"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ],
-        "accent": [
-          "pearl",
-          "gold"
-        ]
-      },
-      "covers": [
-        "torso",
-        "arms"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "romantico",
-          "casual"
-        ],
-        "colors": [
-          "verde"
-        ],
-        "formality": 0.4,
-        "rarity": "comum"
-      },
-      "file": "cardigan.glb",
-      "triangles": 4896,
-      "sizeBytes": 402492,
-      "morphTargets": 8
-    },
-    {
-      "id": "jumpsuit",
-      "label": "Macacão pantalona",
-      "slot": "dress",
-      "slots": [
-        "base",
-        "trim",
-        "accent"
-      ],
-      "palette": {
-        "base": "#b5473a",
-        "trim": "#8f3328",
-        "accent": "#d6b25a"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "matte",
-        "accent": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin"
-        ],
-        "accent": [
-          "gold",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "torso",
-        "hips",
-        "legs"
-      ],
-      "hides": [
-        "top",
-        "bottom"
-      ],
-      "tags": {
-        "styles": [
-          "casual",
-          "gala",
-          "praia"
-        ],
-        "colors": [
-          "terracota"
-        ],
-        "formality": 0.55,
-        "rarity": "raro"
-      },
-      "file": "jumpsuit.glb",
-      "triangles": 5206,
-      "sizeBytes": 474512,
-      "morphTargets": 11
-    },
-    {
-      "id": "bubble_dress",
-      "label": "Vestido de bolhas Y2K",
-      "slot": "dress",
-      "slots": [
-        "base",
-        "accent",
-        "trim"
-      ],
-      "palette": {
-        "base": "#6fb7a5",
-        "accent": "#b9a6e8",
-        "trim": "#f4f4f8"
-      },
-      "finish": {
-        "base": "latex",
-        "accent": "latex",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "latex",
-          "satin",
-          "glitter",
-          "matte"
-        ],
-        "accent": [
-          "latex",
-          "satin",
-          "glitter",
-          "matte"
-        ],
-        "trim": [
-          "satin",
-          "latex",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "torso",
-        "hips",
-        "thighs",
-        "knees"
-      ],
-      "hides": [
-        "top",
-        "bottom"
-      ],
-      "tags": {
-        "styles": [
-          "y2k",
-          "gala",
-          "romantico"
-        ],
-        "colors": [
-          "verde-agua",
-          "lilas"
-        ],
-        "formality": 0.7,
-        "rarity": "epico"
-      },
-      "file": "bubble_dress.glb",
-      "triangles": 7112,
-      "sizeBytes": 602884,
-      "morphTargets": 10
-    },
-    {
-      "id": "tank",
-      "label": "Regata canelada",
-      "slot": "top",
-      "slots": [
-        "base"
-      ],
-      "palette": {
-        "base": "#1f1f26"
-      },
-      "finish": {
-        "base": "matte"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "latex",
-          "glitter"
-        ]
-      },
-      "covers": [
-        "torso"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "casual",
-          "esportivo",
-          "praia"
-        ],
-        "colors": [
-          "preto"
-        ],
-        "formality": 0.1,
-        "rarity": "comum"
-      },
-      "file": "tank.glb",
-      "triangles": 2739,
-      "sizeBytes": 252684,
-      "morphTargets": 10
-    },
-    {
-      "id": "sequin_top",
-      "label": "Top de paetê",
-      "slot": "top",
-      "slots": [
-        "base"
-      ],
-      "palette": {
-        "base": "#c9a14a"
-      },
-      "finish": {
-        "base": "glitter"
-      },
-      "finishesSupported": {
-        "base": [
-          "glitter",
-          "satin",
-          "latex",
-          "matte"
-        ]
-      },
-      "covers": [
-        "torso"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "y2k",
-          "gala"
-        ],
-        "colors": [
-          "dourado"
-        ],
-        "formality": 0.6,
-        "rarity": "raro"
-      },
-      "file": "sequin_top.glb",
-      "triangles": 2224,
-      "sizeBytes": 202808,
-      "morphTargets": 8
-    },
-    {
-      "id": "latex_top",
-      "label": "Top de látex",
-      "slot": "top",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#17171c",
-        "trim": "#d6b25a"
-      },
-      "finish": {
-        "base": "latex",
-        "trim": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "latex",
-          "satin",
-          "matte",
-          "glitter"
-        ],
-        "trim": [
-          "gold",
-          "pearl",
-          "satin"
-        ]
-      },
-      "covers": [
-        "torso"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "y2k",
-          "goth",
-          "gala"
-        ],
-        "colors": [
-          "preto"
-        ],
-        "formality": 0.6,
-        "rarity": "raro"
-      },
-      "file": "latex_top.glb",
-      "triangles": 2432,
-      "sizeBytes": 229352,
-      "morphTargets": 8
-    },
-    {
-      "id": "fishnet",
-      "label": "Meias arrastão",
-      "slot": "legwear",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#1c1b22",
-        "trim": "#1c1b22"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "matte",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "satin",
-          "lace",
-          "latex",
-          "matte"
-        ]
-      },
-      "covers": [
-        "thighs",
-        "knees",
-        "calves",
-        "ankles"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "goth",
-          "y2k"
-        ],
-        "colors": [
-          "preto"
-        ],
-        "formality": 0.4,
-        "rarity": "raro"
-      },
-      "notes": "malha em geometria real (fios), sem alpha; termina no tornozelo",
-      "file": "fishnet.glb",
-      "triangles": 2968,
-      "sizeBytes": 602056,
-      "morphTargets": 6
-    },
-    {
-      "id": "ankle_socks",
-      "label": "Meias soquete com babado",
-      "slot": "legwear",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#f4f1ea",
-        "trim": "#ffffff"
-      },
-      "finish": {
-        "base": "matte",
-        "trim": "lace"
-      },
-      "finishesSupported": {
-        "base": [
-          "matte",
-          "satin",
-          "glitter",
-          "latex"
-        ],
-        "trim": [
-          "lace",
-          "satin",
-          "tulle",
-          "matte"
-        ]
-      },
-      "covers": [
-        "calves",
-        "ankles"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "romantico",
-          "casual",
-          "y2k"
-        ],
-        "colors": [
-          "branco"
-        ],
-        "formality": 0.25,
-        "rarity": "comum"
-      },
-      "file": "ankle_socks.glb",
-      "triangles": 1344,
-      "sizeBytes": 184720,
-      "morphTargets": 2
-    },
-    {
-      "id": "lace_gloves",
-      "label": "Luvas curtas de renda",
-      "slot": "gloves",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#f4efe6",
-        "trim": "#ffffff"
-      },
-      "finish": {
-        "base": "lace",
-        "trim": "lace"
-      },
-      "finishesSupported": {
-        "base": [
-          "lace",
-          "satin",
-          "latex",
-          "matte",
-          "glitter"
-        ],
-        "trim": [
-          "lace",
-          "satin",
-          "tulle",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "hands",
-        "wrists"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "romantico",
-          "gala",
-          "goth"
-        ],
-        "colors": [
-          "branco"
-        ],
-        "formality": 0.7,
-        "rarity": "raro"
-      },
-      "file": "lace_gloves.glb",
-      "triangles": 5462,
-      "sizeBytes": 381796,
-      "morphTargets": 15
-    },
-    {
-      "id": "long_flow",
-      "label": "Saia longa fluida",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#1f6b57",
-        "trim": "#14463a"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "matte",
-          "glitter",
-          "lace",
-          "latex"
-        ],
-        "trim": [
-          "satin",
-          "matte"
-        ]
-      },
-      "covers": [
-        "hips",
-        "legs"
-      ],
-      "hides": [
-        "legs"
-      ],
-      "tags": {
-        "styles": [
-          "romantico",
-          "praia",
-          "casual"
-        ],
-        "colors": [
-          "verde"
-        ],
-        "formality": 0.55,
-        "rarity": "comum"
-      },
-      "file": "long_flow.glb",
-      "triangles": 2944,
-      "sizeBytes": 227396,
-      "morphTargets": 6
-    },
-    {
-      "id": "tube_dress",
-      "label": "Vestido tubinho",
-      "slot": "dress",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#7b1e2e",
-        "trim": "#3a0f17"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "satin"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "matte",
-          "latex",
-          "glitter",
-          "lace"
-        ],
-        "trim": [
-          "satin",
-          "matte",
-          "latex"
-        ]
-      },
-      "covers": [
-        "torso",
-        "hips",
-        "thighs",
-        "knees"
-      ],
-      "hides": [
-        "top",
-        "bottom"
-      ],
-      "tags": {
-        "styles": [
-          "gala",
-          "y2k"
-        ],
-        "colors": [
-          "vinho"
-        ],
-        "formality": 0.75,
-        "rarity": "comum"
-      },
-      "file": "tube_dress.glb",
-      "triangles": 7080,
-      "sizeBytes": 600004,
-      "morphTargets": 11
-    },
-    {
-      "id": "y2k_vinyl",
-      "label": "Vestido Y2K de vinil",
-      "slot": "dress",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#5d6fa8",
-        "trim": "#c9ced8"
-      },
-      "finish": {
-        "base": "latex",
-        "trim": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "latex",
-          "satin",
-          "glitter",
-          "matte"
-        ],
-        "trim": [
-          "gold",
-          "latex",
-          "satin"
-        ]
-      },
-      "covers": [
-        "torso",
-        "hips",
-        "upperThighs"
-      ],
-      "hides": [
-        "top",
-        "bottom"
-      ],
-      "tags": {
-        "styles": [
-          "y2k",
-          "goth",
-          "gala"
-        ],
-        "colors": [
-          "prata",
-          "azul"
-        ],
-        "formality": 0.6,
-        "rarity": "epico"
-      },
-      "file": "y2k_vinyl.glb",
-      "triangles": 6320,
-      "sizeBytes": 597220,
-      "morphTargets": 11
-    },
-    {
-      "id": "pencil_skirt",
-      "label": "Saia lápis",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#2b2b33",
-        "trim": "#1d1d24"
+        "base": "#f1ece4",
+        "trim": "#e2dacd"
       },
       "finish": {
         "base": "matte",
@@ -2536,198 +5992,53 @@
         "base": [
           "matte",
           "satin",
-          "latex",
-          "glitter"
-        ],
-        "trim": [
-          "matte",
-          "satin",
+          "glitter",
           "latex"
-        ]
-      },
-      "covers": [
-        "hips",
-        "thighs",
-        "knees"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "gala",
-          "casual",
-          "goth"
-        ],
-        "colors": [
-          "cinza"
-        ],
-        "formality": 0.7,
-        "rarity": "comum"
-      },
-      "file": "pencil_skirt.glb",
-      "triangles": 4080,
-      "sizeBytes": 323152,
-      "morphTargets": 7
-    },
-    {
-      "id": "latex_skirt",
-      "label": "Saia lápis de látex",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#17171c",
-        "trim": "#d6b25a"
-      },
-      "finish": {
-        "base": "latex",
-        "trim": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "latex",
-          "satin",
-          "matte",
-          "glitter"
         ],
         "trim": [
-          "gold",
-          "latex",
+          "matte",
           "satin"
         ]
       },
       "covers": [
+        "torso",
+        "arms",
         "hips",
-        "thighs",
-        "knees"
+        "upperThighs"
       ],
       "hides": [],
-      "tags": {
-        "styles": [
-          "y2k",
-          "goth",
-          "gala"
-        ],
-        "colors": [
-          "preto"
-        ],
-        "formality": 0.65,
-        "rarity": "raro"
-      },
-      "file": "latex_skirt.glb",
-      "triangles": 4080,
-      "sizeBytes": 321332,
-      "morphTargets": 7
-    },
-    {
-      "id": "strapless_train",
-      "label": "Vestido tomara que caia com cauda",
-      "slot": "dress",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#16315e",
-        "trim": "#d6b25a"
-      },
-      "finish": {
-        "base": "satin",
-        "trim": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "satin",
-          "latex",
-          "matte",
-          "glitter",
-          "lace"
-        ],
-        "trim": [
-          "gold",
-          "satin",
-          "pearl"
-        ]
-      },
-      "covers": [
-        "torso",
-        "hips",
-        "legs"
-      ],
-      "hides": [
-        "top",
-        "bottom",
-        "legs"
-      ],
       "tags": {
         "styles": [
           "gala",
-          "romantico"
+          "rococo",
+          "y2k"
         ],
         "colors": [
-          "azul-marinho"
+          "branco"
         ],
-        "formality": 0.95,
+        "formality": 0.8,
         "rarity": "epico"
       },
-      "file": "strapless_train.glb",
-      "triangles": 5842,
-      "sizeBytes": 500804,
-      "morphTargets": 10
-    },
-    {
-      "id": "metal_midi",
-      "label": "Saia midi plissada metalizada",
-      "slot": "bottom",
-      "slots": [
-        "base",
-        "trim"
-      ],
-      "palette": {
-        "base": "#c9b27a",
-        "trim": "#8a7340"
-      },
-      "finish": {
-        "base": "gold",
-        "trim": "gold"
-      },
-      "finishesSupported": {
-        "base": [
-          "gold",
-          "satin",
-          "glitter",
-          "latex",
-          "matte"
+      "notes": "casaco longo ate a coxa: slot top (cobre a saia curta); use com calca/saia longa",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
         ],
-        "trim": [
-          "gold",
-          "satin",
-          "matte"
-        ]
+        "default": null
       },
-      "covers": [
-        "hips",
-        "thighs",
-        "knees",
-        "calves"
-      ],
-      "hides": [],
-      "tags": {
-        "styles": [
-          "y2k",
-          "gala"
-        ],
-        "colors": [
-          "dourado"
-        ],
-        "formality": 0.7,
-        "rarity": "epico"
-      },
-      "file": "metal_midi.glb",
-      "triangles": 3072,
-      "sizeBytes": 243604,
-      "morphTargets": 6
+      "file": "fur_coat.glb",
+      "triangles": 7511,
+      "sizeBytes": 631820,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
     },
     {
       "id": "gala_tulle",
@@ -2798,10 +6109,705 @@
         "rarity": "epico"
       },
       "notes": "corpete+cinto = slot trim (cetim); camadas de saia = base/accent (tule, alpha blend)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
       "file": "gala_tulle.glb",
       "triangles": 9031,
       "sizeBytes": 794880,
-      "morphTargets": 10
+      "morphTargets": 10,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "strapless_train",
+      "label": "Vestido tomara que caia com cauda",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#16315e",
+        "trim": "#d6b25a"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "latex",
+          "matte",
+          "glitter",
+          "lace"
+        ],
+        "trim": [
+          "gold",
+          "satin",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom",
+        "legs"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "romantico"
+        ],
+        "colors": [
+          "azul-marinho"
+        ],
+        "formality": 0.95,
+        "rarity": "epico"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "strapless_train.glb",
+      "triangles": 5842,
+      "sizeBytes": 500804,
+      "morphTargets": 10,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "bubble_dress",
+      "label": "Vestido de bolhas Y2K",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "accent",
+        "trim"
+      ],
+      "palette": {
+        "base": "#6fb7a5",
+        "accent": "#b9a6e8",
+        "trim": "#f4f4f8"
+      },
+      "finish": {
+        "base": "latex",
+        "accent": "latex",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "satin",
+          "glitter",
+          "matte"
+        ],
+        "accent": [
+          "latex",
+          "satin",
+          "glitter",
+          "matte"
+        ],
+        "trim": [
+          "satin",
+          "latex",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "y2k",
+          "gala",
+          "romantico"
+        ],
+        "colors": [
+          "verde-agua",
+          "lilas"
+        ],
+        "formality": 0.7,
+        "rarity": "epico"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "bubble_dress.glb",
+      "triangles": 7112,
+      "sizeBytes": 602884,
+      "morphTargets": 10,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "balloon_skirt",
+      "label": "Saia balonê",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#7a1f4a",
+        "trim": "#e8dcc6"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "satin",
+          "matte"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "y2k",
+          "romantico",
+          "gala"
+        ],
+        "colors": [
+          "vinho"
+        ],
+        "formality": 0.6,
+        "rarity": "raro"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "balloon_skirt.glb",
+      "triangles": 2592,
+      "sizeBytes": 225068,
+      "morphTargets": 7,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "bow_gown",
+      "label": "Vestido de festa com laço nas costas",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#1f5d4e",
+        "trim": "#17493c",
+        "accent": "#2c7a66"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs",
+        "knees",
+        "calves"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "romantico",
+          "festa"
+        ],
+        "colors": [
+          "verde"
+        ],
+        "formality": 0.9,
+        "rarity": "epico"
+      },
+      "notes": "laco gigante nas costas (slot accent = alcas/lacos, base = pontas)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "bow_gown.glb",
+      "triangles": 7095,
+      "sizeBytes": 605900,
+      "morphTargets": 11,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "wrap_skirt",
+      "label": "Saia envelope",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#8a3b3b",
+        "trim": "#6c2b2b",
+        "accent": "#6c2b2b"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "romantico",
+          "casual",
+          "boho"
+        ],
+        "colors": [
+          "vinho"
+        ],
+        "formality": 0.5,
+        "rarity": "comum"
+      },
+      "notes": "fenda diagonal na frente-esquerda (largura crescente) e laco lateral na cintura",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "wrap_skirt.glb",
+      "triangles": 3984,
+      "sizeBytes": 320912,
+      "morphTargets": 7,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "petal_skirt",
+      "label": "Saia de pétalas arquitetônica",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "accent",
+        "trim",
+        "lining"
+      ],
+      "palette": {
+        "base": "#6d2fa0",
+        "accent": "#2d9aa8",
+        "trim": "#d6b25a",
+        "lining": "#1b1330"
+      },
+      "finish": {
+        "base": "latex",
+        "accent": "latex",
+        "trim": "gold",
+        "lining": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "satin",
+          "glitter",
+          "matte"
+        ],
+        "accent": [
+          "latex",
+          "satin",
+          "glitter",
+          "matte"
+        ],
+        "trim": [
+          "gold",
+          "satin"
+        ],
+        "lining": [
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "y2k",
+          "gala",
+          "goth"
+        ],
+        "colors": [
+          "roxo",
+          "turquesa"
+        ],
+        "formality": 0.85,
+        "rarity": "lendario"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "petal_skirt.glb",
+      "triangles": 2272,
+      "sizeBytes": 258188,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "silk_midi_skirt",
+      "label": "Saia midi de seda",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#8a9a7b",
+        "trim": "#76856a"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs",
+        "knees",
+        "calves"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "romantico",
+          "classico",
+          "boho"
+        ],
+        "colors": [
+          "verde"
+        ],
+        "formality": 0.6,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "silk_midi_skirt.glb",
+      "triangles": 4080,
+      "sizeBytes": 310080,
+      "morphTargets": 7,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "feather_skirt",
+      "label": "Saia de penas",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#22263a",
+        "trim": "#17192a",
+        "accent": "#5a3d6e"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte",
+        "accent": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "gala",
+          "goth",
+          "festa"
+        ],
+        "colors": [
+          "azul-marinho"
+        ],
+        "formality": 0.8,
+        "rarity": "epico"
+      },
+      "notes": "penas estilizadas = camadas opacas com borda em lobulos (27 por volta)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "feather_skirt.glb",
+      "triangles": 3936,
+      "sizeBytes": 325672,
+      "morphTargets": 6,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "ruffle_mini",
+      "label": "Minissaia de babados",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "accent",
+        "trim"
+      ],
+      "palette": {
+        "base": "#f1ece0",
+        "accent": "#d8cdb4",
+        "trim": "#2a2f4a"
+      },
+      "finish": {
+        "base": "satin",
+        "accent": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "glitter",
+          "lace",
+          "tulle"
+        ],
+        "accent": [
+          "satin",
+          "matte",
+          "lace",
+          "tulle"
+        ],
+        "trim": [
+          "satin",
+          "matte",
+          "latex"
+        ]
+      },
+      "covers": [
+        "hips",
+        "upperThighs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "romantico",
+          "casual",
+          "praia"
+        ],
+        "colors": [
+          "branco"
+        ],
+        "formality": 0.35,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "ruffle_mini.glb",
+      "triangles": 2880,
+      "sizeBytes": 261796,
+      "morphTargets": 7,
+      "motionClean": false,
+      "sitSafe": false
     },
     {
       "id": "slip_dress",
@@ -2848,10 +6854,969 @@
         "formality": 0.7,
         "rarity": "raro"
       },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
       "file": "slip_dress.glb",
       "triangles": 5519,
-      "sizeBytes": 469320,
-      "morphTargets": 11
+      "sizeBytes": 467560,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "long_flow",
+      "label": "Saia longa fluida",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#1f6b57",
+        "trim": "#14463a"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "glitter",
+          "lace",
+          "latex"
+        ],
+        "trim": [
+          "satin",
+          "matte"
+        ]
+      },
+      "covers": [
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "legs"
+      ],
+      "tags": {
+        "styles": [
+          "romantico",
+          "praia",
+          "casual"
+        ],
+        "colors": [
+          "verde"
+        ],
+        "formality": 0.55,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "long_flow.glb",
+      "triangles": 2944,
+      "sizeBytes": 227396,
+      "morphTargets": 6,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "mermaid_gown",
+      "label": "Vestido longo sereia",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#5a1f3a",
+        "trim": "#d6b25a"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "gold",
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs",
+        "knees",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom",
+        "legs"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "romantico"
+        ],
+        "colors": [
+          "vinho"
+        ],
+        "formality": 0.95,
+        "rarity": "epico"
+      },
+      "notes": "decote canoa com alcas largas; ajustado ate o joelho e abre em cauda",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "mermaid_gown.glb",
+      "triangles": 6593,
+      "sizeBytes": 548008,
+      "morphTargets": 10,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "vest",
+      "label": "Colete de alfaiataria",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#3a3f4b",
+        "trim": "#2a2e38",
+        "accent": "#b9bcc6"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "satin",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "classico",
+          "casual",
+          "gala"
+        ],
+        "colors": [
+          "cinza"
+        ],
+        "formality": 0.65,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "vest.glb",
+      "triangles": 3722,
+      "sizeBytes": 367024,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "gala_train_gown",
+      "label": "Vestido de gala com cauda",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#0f3b4a",
+        "trim": "#0b2b36",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom",
+        "legs"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "classico"
+        ],
+        "colors": [
+          "azul-petroleo"
+        ],
+        "formality": 1.0,
+        "rarity": "lendario"
+      },
+      "notes": "cauda longa nas costas; combina com opera_gloves (slot gloves)",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "gala_train_gown.glb",
+      "triangles": 6120,
+      "sizeBytes": 561500,
+      "morphTargets": 11,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "aline",
+      "label": "Saia midi evasê com laço",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#c8a4ff",
+        "trim": "#ffffff",
+        "accent": "#ff7ab8"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "latex",
+          "matte",
+          "glitter",
+          "lace"
+        ],
+        "trim": [
+          "satin",
+          "pearl",
+          "lace"
+        ],
+        "accent": [
+          "satin",
+          "latex",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [],
+      "notes": "bow slot accent = knot, bow loops/tails = base",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "aline.glb",
+      "triangles": 2320,
+      "sizeBytes": 207116,
+      "morphTargets": 6,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "evase_dress",
+      "label": "Vestido evasê com cinto",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#2f6fa8",
+        "trim": "#f1ede2",
+        "accent": "#d6b25a"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "satin",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "glitter",
+          "lace",
+          "latex"
+        ],
+        "trim": [
+          "satin",
+          "matte",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "upperArms",
+        "hips",
+        "thighs"
+      ],
+      "hides": [
+        "top",
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "romantico",
+          "casual",
+          "gala"
+        ],
+        "colors": [
+          "azul"
+        ],
+        "formality": 0.55,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "evase_dress.glb",
+      "triangles": 5920,
+      "sizeBytes": 536880,
+      "morphTargets": 11,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "kaftan",
+      "label": "Saída de praia kaftan",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#2f6f73",
+        "trim": "#f0e4cc"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms",
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [
+        "bottom"
+      ],
+      "tags": {
+        "styles": [
+          "praia",
+          "boho",
+          "casual"
+        ],
+        "colors": [
+          "verde"
+        ],
+        "formality": 0.2,
+        "rarity": "comum"
+      },
+      "notes": "tunica longa ate o joelho; hides bottom",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "kaftan.glb",
+      "triangles": 5863,
+      "sizeBytes": 511564,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
+    },
+    {
+      "id": "barista_apron",
+      "label": "Avental de barista",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#4a3b2e",
+        "trim": "#2d2420"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "thighs"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "profissao",
+          "casual",
+          "cafe"
+        ],
+        "colors": [
+          "marrom"
+        ],
+        "formality": 0.3,
+        "rarity": "comum"
+      },
+      "notes": "sobreposicao (offset 20 mm): usar sobre camiseta/camisa; babador + painel so na frente; ideal profissao barista/chef",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "barista_apron.glb",
+      "triangles": 1797,
+      "sizeBytes": 177008,
+      "morphTargets": 10,
+      "motionClean": false,
+      "sitSafe": false
+    },
+    {
+      "id": "tulle_cape",
+      "label": "Capa de tule dramática",
+      "slot": "top",
+      "slots": [
+        "base",
+        "accent",
+        "trim",
+        "lining"
+      ],
+      "palette": {
+        "base": "#e6e1f0",
+        "accent": "#cbbfe6",
+        "trim": "#d6b25a",
+        "lining": "#cfc6e0"
+      },
+      "finish": {
+        "base": "tulle",
+        "accent": "tulle",
+        "trim": "gold",
+        "lining": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "tulle",
+          "satin",
+          "lace",
+          "glitter"
+        ],
+        "accent": [
+          "tulle",
+          "satin",
+          "lace",
+          "glitter"
+        ],
+        "trim": [
+          "gold",
+          "pearl",
+          "satin"
+        ],
+        "lining": [
+          "satin",
+          "matte"
+        ]
+      },
+      "covers": [
+        "shoulders",
+        "back",
+        "arms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "gala",
+          "rococo",
+          "romantico"
+        ],
+        "colors": [
+          "lilas"
+        ],
+        "formality": 0.95,
+        "rarity": "lendario"
+      },
+      "notes": "rigida (nao reage a morphs do corpo, so ao esqueleto); aberta na frente; slot top: pode ficar por cima de dress? nao - substitui o top",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "tulle_cape.glb",
+      "triangles": 5770,
+      "sizeBytes": 203900,
+      "morphTargets": 0,
+      "motionClean": false,
+      "sitSafe": true
+    },
+    {
+      "id": "cropped_sweatshirt",
+      "label": "Moletom cropped",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#a8b4a0",
+        "trim": "#94a08c"
+      },
+      "finish": {
+        "base": "matte",
+        "trim": "matte"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ]
+      },
+      "covers": [
+        "torso",
+        "arms"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "casual",
+          "esportivo",
+          "streetwear"
+        ],
+        "colors": [
+          "verde"
+        ],
+        "formality": 0.05,
+        "rarity": "comum"
+      },
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "cropped_sweatshirt.glb",
+      "triangles": 4800,
+      "sizeBytes": 389856,
+      "morphTargets": 8,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "ballet_flats",
+      "label": "Sapatilha de balé",
+      "slot": "shoes",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#e9e2d6",
+        "trim": "#d6cdbb",
+        "accent": "#e9e2d6"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "matte",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "satin",
+          "matte",
+          "latex"
+        ],
+        "accent": [
+          "satin",
+          "matte",
+          "latex"
+        ]
+      },
+      "covers": [
+        "feet"
+      ],
+      "hides": [],
+      "tags": {
+        "styles": [
+          "romantico",
+          "casual"
+        ],
+        "colors": [
+          "bege"
+        ],
+        "formality": 0.45,
+        "rarity": "comum"
+      },
+      "notes": "o pe da boneca e en pointe: a sapatilha le-se como sapatilha de ponta",
+      "lift": 0.003,
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "ballet_flats.glb",
+      "triangles": 7752,
+      "sizeBytes": 288388,
+      "morphTargets": 0,
+      "motionClean": true,
+      "sitSafe": true
+    },
+    {
+      "id": "ruffle_gown",
+      "label": "Vestido de baile de babados",
+      "slot": "dress",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#ece4d6",
+        "trim": "#cfc4b0",
+        "accent": "#d9cfbd"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "matte",
+          "satin",
+          "latex",
+          "glitter"
+        ],
+        "trim": [
+          "matte",
+          "satin",
+          "latex"
+        ],
+        "accent": [
+          "gold",
+          "pearl",
+          "matte",
+          "satin"
+        ]
+      },
+      "covers": [
+        "torso",
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "top",
+        "bottom",
+        "legs"
+      ],
+      "tags": {
+        "styles": [
+          "gala",
+          "romantico",
+          "festa"
+        ],
+        "colors": [
+          "marfim"
+        ],
+        "formality": 0.95,
+        "rarity": "lendario"
+      },
+      "notes": "4 camadas de babado opacas sobre saia de baile",
+      "patterns": {
+        "slot": "base",
+        "supported": [
+          "xadrez",
+          "floral",
+          "poa",
+          "listras",
+          "leopardo",
+          "jeans",
+          "trico"
+        ],
+        "default": null
+      },
+      "file": "ruffle_gown.glb",
+      "triangles": 7888,
+      "sizeBytes": 645928,
+      "morphTargets": 11,
+      "motionClean": true,
+      "sitSafe": false
     }
-  ]
+  ],
+  "patterns": [
+    {
+      "id": "xadrez",
+      "label": "Xadrez",
+      "file": "tex/pattern_xadrez.jpg",
+      "tonal": false,
+      "tileMeters": 1.0
+    },
+    {
+      "id": "floral",
+      "label": "Floral",
+      "file": "tex/pattern_floral.jpg",
+      "tonal": false,
+      "tileMeters": 1.0
+    },
+    {
+      "id": "poa",
+      "label": "Poá",
+      "file": "tex/pattern_poa.jpg",
+      "tonal": false,
+      "tileMeters": 1.0
+    },
+    {
+      "id": "listras",
+      "label": "Listras",
+      "file": "tex/pattern_listras.jpg",
+      "tonal": false,
+      "tileMeters": 1.0
+    },
+    {
+      "id": "leopardo",
+      "label": "Animal print",
+      "file": "tex/pattern_leopardo.jpg",
+      "tonal": false,
+      "tileMeters": 1.0
+    },
+    {
+      "id": "jeans",
+      "label": "Jeans (trama)",
+      "file": "tex/pattern_jeans.jpg",
+      "tonal": true,
+      "tileMeters": 1.0
+    },
+    {
+      "id": "trico",
+      "label": "Tricô",
+      "file": "tex/pattern_trico.jpg",
+      "tonal": true,
+      "tileMeters": 1.0
+    }
+  ],
+  "gameNotes": {
+    "bodysuit": "O corpo da boneca tem um bodysuit rosa pintado na textura: roupas sem manga/tomara-que-caia/cavadas deixam essa regiao (ombros, colo, barriga) aparecer. O jogo deve tingir a mascara do bodysuit para a cor da pele quando o item equipado tiver slot top/dress sem cobertura total (itens com covers sem 'shoulders'/'neck').",
+    "patterns": "db.patterns lista as estampas tileaveis (JPEG 512, 1 UV = ~1 m). Cada item tem patterns {slot, supported[], default}: para aplicar, material[slot].map = textura (wrap repeat) e color = tom (branco = estampa original; tonal=true multiplica uma trama clara pela cor do slot). O item pode ja vir com estampa embutida (default != null).",
+    "shoeLift": "Itens slot 'shoes' trazem 'lift' (m): quanto o fundo da sola fica abaixo do chao (plataformas). O jogo deve subir a boneca em 'lift' (ou aceitar afundar ate 2 cm). 'heelCm' e' so informativo. O pe da boneca e' en pointe: solados em cunha chegam ao chao e saltos finos sao reais.",
+    "neck": "Pescoco = z 1.20..1.26 m (Neck bone 1.184-1.254). Golas altas/cachecois ficam nessa faixa.",
+    "hides": "Botas/tenis escondem 'legwear' (meias nao devem atravessar o cano)."
+  }
 }

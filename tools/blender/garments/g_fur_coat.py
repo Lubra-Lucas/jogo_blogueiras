@@ -13,7 +13,7 @@ def build(body):
     r = shell(body, G, sel, off=off, hem=zb, sleeve_end=1.88, clear=0.008, smooth=(10, 4, 3), target=5000, mat="base")
     L = env_layer(body, 0.866, 0.585, nth=104, rows=8, off=lambda t, th: 0.040 + 0.06 * t ** 1.2 + 0.010 * np.sin(23 * th) * t + 0.006 * np.sin(41 * th + 1),
                   zwave=(0.014, 26, 0.0), scallop=(0.02, 26))
-    add_layer(G, body, L, "base", dict(lw=0.4, spine_top=0.25, spine_fade=0.3), falloff=0.25, clear=0.011)
+    add_layer_w(G, body, L, "base", lw=0.9, knee=0.5, falloff=0.25, clear=0.011, spine_fade=0.3, wt=(0.0, 0.25))
     ruff_neck(G, body, r, cx=0.0, cy=0.0, base_r=(0.068, 0.066), layers=2, z0=1.20, spread=0.06, nth=88, waves=30, mat="trim")
     mats = {"base": ("#f1ece4", "matte"), "trim": ("#e2dacd", "matte")}
     meta = meta_of("fur_coat", "Casaco de pele fake", "top", ["base", "trim"], {"base": "#f1ece4", "trim": "#e2dacd"}, {"base": "matte", "trim": "matte"},

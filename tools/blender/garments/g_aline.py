@@ -15,7 +15,7 @@ def build(body):
     nth = 96
     mats = ["trim" if (i // nth) >= 6 else "base" for i in range(len(L['polys']))]
     S, g = states_for(body, L['P'], L['polys'], falloff=0.25, clear=0.009)
-    W = weights_smooth(g, skirt_weights(body, L['P'], L['t'], lw=0.38, spine_top=0.2, spine_fade=0.25), 1)
+    W = weights_smooth(g, skirt_weights(body, L['P'], L['t'], lw=0.9, spine_top=0.2, spine_fade=0.25, wt=(0.0, 0.25), split=0.07), 1)
     G.add(S, L['polys'], mats, cyl_uv(L['P'], L['polys'], AX), W)
     # bow on the front-left of the waistband
     bv, bp, bs = bow_local(1.7)

@@ -23,18 +23,18 @@ function rng(seed: number) {
 const rnd = rng(424242)
 const PI = Math.PI
 
-interface Taken {
+export interface Taken {
   x: number
   z: number
   r: number
 }
-const taken: Taken[] = []
+export const taken: Taken[] = []
 
-const half = (r: Road) => (r.width - ROAD_SPEC[r.kind].sidewalk * 2) / 2 // meia-largura do asfalto
-const roads = CITY.roads.filter((r) => r.kind !== 'path')
+export const half = (r: Road) => (r.width - ROAD_SPEC[r.kind].sidewalk * 2) / 2 // meia-largura do asfalto
+export const roads = CITY.roads.filter((r) => r.kind !== 'path')
 const paths = CITY.roads.filter((r) => r.kind === 'path')
 
-function frameAt(pts: readonly Vec2[], s: number): { x: number; z: number; tx: number; tz: number } {
+export function frameAt(pts: readonly Vec2[], s: number): { x: number; z: number; tx: number; tz: number } {
   let acc = 0
   for (let i = 0; i < pts.length - 1; i++) {
     const l = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1])
@@ -48,15 +48,15 @@ function frameAt(pts: readonly Vec2[], s: number): { x: number; z: number; tx: n
 }
 
 /** distancia (m) da borda do asfalto mais proximo: <0 = em cima do asfalto */
-function asphaltClear(x: number, z: number): number {
+export function asphaltClear(x: number, z: number): number {
   let best = Infinity
   for (const r of roads) best = Math.min(best, distToPolyline(x, z, r.points) - half(r))
   return best
 }
-const inPlaza = (x: number, z: number, m = 0) => CITY.areas.some((a) => a.kind !== 'parque' && inShape(a.bounds, x, z, m))
-const inLake = (x: number, z: number, m = 0) => Math.hypot(x - CITY.lake.cx, z - CITY.lake.cz) < CITY.lake.r + 2 + m
+export const inPlaza = (x: number, z: number, m = 0) => CITY.areas.some((a) => a.kind !== 'parque' && inShape(a.bounds, x, z, m))
+export const inLake = (x: number, z: number, m = 0) => Math.hypot(x - CITY.lake.cx, z - CITY.lake.cz) < CITY.lake.r + 2 + m
 
-function inBlock(x: number, z: number, pad: number): boolean {
+export function inBlock(x: number, z: number, pad: number): boolean {
   for (const b of CITY.blocks) {
     const dx = x - b.x
     const dz = z - b.z
@@ -71,7 +71,7 @@ function inBlock(x: number, z: number, pad: number): boolean {
   return false
 }
 
-function nearTaken(x: number, z: number, r: number): boolean {
+export function nearTaken(x: number, z: number, r: number): boolean {
   for (const t of taken) if (Math.hypot(t.x - x, t.z - z) < t.r + r) return true
   return false
 }
@@ -100,10 +100,15 @@ const big: KitItem[] = []
 const small: KitItem[] = []
 const decor: KitItem[] = []
 const walk: KitItem[] = []
-type Bucket = 'big' | 'small' | 'decor' | 'walk'
-const B: Record<Bucket, KitItem[]> = { big, small, decor, walk }
+/** rodada 2 (streetLife.ts): clutter (miudezas, corte ~34 m), wall (detalhes de fachada), roof (telhados, corte longo), vend (vendedores/obra/veiculos, corte ~60 m) */
+const clutter: KitItem[] = []
+const wall: KitItem[] = []
+const roof: KitItem[] = []
+const vend: KitItem[] = []
+type Bucket = 'big' | 'small' | 'decor' | 'walk' | 'clutter' | 'wall' | 'roof' | 'vend'
+const B: Record<Bucket, KitItem[]> = { big, small, decor, walk, clutter, wall, roof, vend }
 
-interface Opt {
+export interface Opt {
   /** raio de folga (m) para outras pecas e predios */
   r?: number
   /** permite estar sobre o asfalto / na praca */
@@ -119,9 +124,9 @@ interface Opt {
 }
 
 /** coloca uma peca se o local estiver livre; devolve true se colocou */
-function put(piece: string, x: number, z: number, rot: number, pal: string, o: Opt = {}): boolean {
+export function put(piece: string, x: number, z: number, rot: number, pal: string, o: Opt = {}): boolean {
   const r = o.r ?? 0.8
-  if (!o.asphalt && asphaltClear(x, z) < r * 0.5 + 0.1) return false
+  if (!o.asphalt && asphaltClear(x, z) < Math.max(r * 0.5 + 0.1, o.bucket === 'walk' ? 0 : 1.0)) return false
   if (!o.plaza && inPlaza(x, z, 0)) return false
   if (inLake(x, z)) return false
   if (inBlock(x, z, r * 0.7)) return false
@@ -133,13 +138,13 @@ function put(piece: string, x: number, z: number, rot: number, pal: string, o: O
 }
 
 /** pose sem verificar nada (cena ja conferida) */
-function force(piece: string, x: number, z: number, rot: number, pal: string, o: Opt = {}) {
+export function force(piece: string, x: number, z: number, rot: number, pal: string, o: Opt = {}) {
   B[o.bucket ?? 'small'].push({ piece: nm(piece), x, z, rot, pal, s: o.s, over: o.over, collide: o.collide, y: o.y })
   if (!o.free && o.r) taken.push({ x, z, r: o.r })
 }
 
 /** tenta posicoes em espiral em torno de (cx, cz) */
-function around(piece: string, cx: number, cz: number, rot: number, pal: string, o: Opt = {}, maxR = 7): boolean {
+export function around(piece: string, cx: number, cz: number, rot: number, pal: string, o: Opt = {}, maxR = 7): boolean {
   if (put(piece, cx, cz, rot, pal, o)) return true
   for (let rad = 1.5; rad <= maxR; rad += 1.5) {
     const n = Math.round(rad * 4)
@@ -151,8 +156,8 @@ function around(piece: string, cx: number, cz: number, rot: number, pal: string,
   return false
 }
 
-const faceTo = (x: number, z: number, tx: number, tz: number) => Math.atan2(tx - x, tz - z)
-const districtOf = (x: number, z: number): string => {
+export const faceTo = (x: number, z: number, tx: number, tz: number) => Math.atan2(tx - x, tz - z)
+export const districtOf = (x: number, z: number): string => {
   for (const d of CITY.districts) if (inShape(d.bounds, x, z)) return d.id
   return 'cidade'
 }
@@ -178,7 +183,7 @@ export interface Mark {
 export const ZEBRAS: Zebra[] = []
 export const MARKS: Mark[] = []
 
-interface Cross {
+export interface Cross {
   x: number
   z: number
   a: Road
@@ -186,7 +191,7 @@ interface Cross {
   ta: Vec2
   tb: Vec2
 }
-const crosses: Cross[] = []
+export const crosses: Cross[] = []
 {
   const seg = (r: Road, i: number) => ({ ax: r.points[i][0], az: r.points[i][1], bx: r.points[i + 1][0], bz: r.points[i + 1][1] })
   for (let i = 0; i < roads.length; i++) {
@@ -403,9 +408,10 @@ for (const r of roads) {
   })
   // carros estacionados junto ao meio-fio (avenida: nas duas pistas; rua: so um lado)
   let kc = 0
-  along(r, 9 + rnd() * 6, 1e9, avenue ? 31 : 38, 14, (a) => {
-    const side = avenue ? (kc % 2 ? 1 : -1) : 1
+  along(r, 9 + rnd() * 6, 1e9, avenue ? 44 : 52, 14, (a) => {
+    const side = 1 // so um lado: faixas livres para os carros dirigiveis
     kc++
+    if (r.id === 'anel') return // o anel da Praca Central fica livre para dirigir
     const st = styleAt(a.x, a.z)
     const offset = half(r) - (avenue ? 1.15 : 0.9)
     const [x, z] = off(a, side, offset)
@@ -680,6 +686,13 @@ small.push(...decor)
 export const STREET_DECOR: KitItem[] = decor
 /** pecas rasas (tapetes, fonte de piso, pedras, piquenique): malha com userData.walkable */
 export const STREET_WALK: KitItem[] = walk
+export const STREET_CLUTTER: KitItem[] = clutter
+/** detalhes de fachada (arandelas, vitrines, toldos, outdoors, murais, bandeiras) */
+export const STREET_WALL: KitItem[] = wall
+/** telhados (ar-condicionado, caixa d'agua, parabolicas, jardins, mastros) */
+export const STREET_ROOF: KitItem[] = roof
+/** vendedores, veiculos de luxo, obra, pier: corte medio */
+export const STREET_VEND: KitItem[] = vend
 export const STREET_SMALL_DIST = 40
 export const STREET_DECOR_DIST = 95
 

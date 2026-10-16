@@ -9,7 +9,7 @@ def build(body):
     cuff = lambda c, r: ["trim" if (r.arm_poly[i] and abs(r.I.s[r.V][r.pa[i]].mean() - 1.92) < 0.16) else "base" for i in range(len(c))]
     def off(P0, I_, V):
         s = I_.s[V]; return 0.011 - 0.005 * smoothstep(1.55, 1.9, s) * I_.arm[V]
-    r = shell(body, G, sel, off=off, hem=zb, sleeve_end=1.92, clear=0.006, mat=cuff)
+    r = shell(body, G, sel, hem_flare=0.012, off=off, hem=zb, sleeve_end=1.92, clear=0.006, mat=cuff)
     collar_flat(G, body, r, r0=(0.052, 0.056), r1=(0.082, 0.078), lift=0.004, mat="base")
     front_placket(G, body, r, 0.84, 1.14, 0.010, "trim")
     buttons(G, body, r, np.arange(0.86, 1.12, 0.045), 0.0030, 0.0035, "accent")

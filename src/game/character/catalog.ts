@@ -60,6 +60,8 @@ export interface PatternDef {
   texture?: string
   /** repeticoes da estampa no UV */
   scale?: number
+  /** textura tonal (trama clara): multiplica a cor do slot; sem isso a estampa e' multicolor (cor branca = original) */
+  tonal?: boolean
 }
 
 /** Elipsoide do cabelo escondido sob um chapeu/penteado (espaco da malha do corpo em repouso). */
@@ -82,6 +84,14 @@ export interface CatalogItem {
   attachments?: Attach[]
   /** roupas: estampas disponiveis */
   patterns?: PatternDef[]
+  /** estampa que a peca ja traz (manifesto `patterns.default`); 'none' em ItemRef.pattern forca liso */
+  defaultPattern?: string
+  /** slot de material que recebe a estampa (padrao: o primeiro) */
+  patternSlot?: string
+  /** sapatos: altura do salto em cm (informativo) */
+  heelCm?: number
+  /** false = a peca atravessa as coxas na pose sentada (saias longas): o jogo pode reduzir o empurrao/esconder ao sentar */
+  sitSafe?: boolean
   /** roupas: o que a peca esconde (`top`, `bottom`, `legs` = meias, ...) */
   hides?: string[]
   /** sapatos: elevacao (m) a aplicar ao personagem */
@@ -116,6 +126,14 @@ const GARMENT_SWATCHES = ['#ff6fa5', '#ffb3d1', '#fff1f6', '#c8a4ff', '#b6e3ff',
 const JEWEL_LABELS: Record<string, string> = { metal: 'Metal', gem: 'Cristal', pearl: 'Pérola', ribbon: 'Fita', lens: 'Lente', leather: 'Couro', fabric: 'Tecido', strap: 'Alça', frame: 'Armação' }
 const SLOT_LABELS: Record<string, string> = { base: 'Base', trim: 'Detalhe', accent: 'Acento', lining: 'Forro' }
 
+interface GlobalPattern {
+  label?: string
+  texture?: string
+  file?: string
+  scale?: number
+  tonal?: boolean
+  tileMeters?: number
+}
 interface GarmentJson {
   items: Array<{
     id: string
@@ -128,10 +146,13 @@ interface GarmentJson {
     file: string
     hides?: string[]
     lift?: number
-    patterns?: Array<string | { id: string; label?: string; texture?: string; file?: string; scale?: number }>
+    heelCm?: number
+    sitSafe?: boolean
+    /** lista de estampas, ou {slot, supported[], default} (pipeline Blender da rodada 3) */
+    patterns?: Array<string | { id: string; label?: string; texture?: string; file?: string; scale?: number }> | { slot?: string; supported?: string[]; default?: string | null }
   }>
   /** definicoes globais de estampa (opcional) */
-  patterns?: Record<string, { label?: string; texture?: string; file?: string; scale?: number }> | Array<{ id: string; label?: string; texture?: string; file?: string; scale?: number }>
+  patterns?: Record<string, GlobalPattern> | Array<GlobalPattern & { id: string }>
 }
 interface JewelryJson {
   metals?: Record<string, string>
@@ -163,35 +184,51 @@ const PATTERN_LABELS: Record<string, string> = {
   stars: 'Estrelas',
   checker: 'Tabuleiro',
   none: 'Liso',
+  trico: 'Tricô',
+  jeans: 'Jeans',
 }
 /** Normaliza nomes de estampa dos manifestos (pt/en) para ids conhecidos. */
 export function canonPattern(id: string): string {
   const k = id.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, '')
-  const map: Record<string, string> = { listras: 'stripes', stripe: 'stripes', poa: 'dots', bolinhas: 'dots', polka: 'dots', polkadot: 'dots', xadrez: 'plaid', tartan: 'plaid', vichy: 'gingham', flores: 'floral', onca: 'leopard', animalprint: 'leopard', coracoes: 'hearts', estrelas: 'stars', tabuleiro: 'checker', pieddepoule: 'houndstooth' }
+  const map: Record<string, string> = { listras: 'stripes', stripe: 'stripes', poa: 'dots', bolinhas: 'dots', polka: 'dots', polkadot: 'dots', xadrez: 'plaid', tartan: 'plaid', vichy: 'gingham', flores: 'floral', onca: 'leopard', leopardo: 'leopard', animalprint: 'leopard', coracoes: 'hearts', estrelas: 'stars', tabuleiro: 'checker', pieddepoule: 'houndstooth' }
   return map[k] ?? k
 }
-function parsePatterns(item: GarmentJson['items'][number], global: GarmentJson['patterns']): PatternDef[] | undefined {
-  if (!Array.isArray(item.patterns) || !item.patterns.length) return undefined
-  const gl: Record<string, { label?: string; texture?: string; file?: string; scale?: number }> = Array.isArray(global) ? Object.fromEntries(global.map((g) => [g.id, g])) : (global ?? {})
-  return item.patterns
+/** Arquivo de textura do manifesto ("tex/pattern_x.jpg") -> nome relativo a assets/garments/tex/. */
+const texName = (f: string | undefined) => (f ? f.replace(/^\.?\/?tex\//, '') : undefined)
+
+function parsePatterns(item: GarmentJson['items'][number], global: GarmentJson['patterns']): { defs?: PatternDef[]; def?: string; slot?: string } {
+  const gl: Record<string, GlobalPattern> = Array.isArray(global) ? Object.fromEntries(global.map((g) => [g.id, g])) : (global ?? {})
+  const raw = item.patterns
+  if (!raw) return {}
+  const list: Array<string | { id: string; label?: string; texture?: string; file?: string; scale?: number }> = Array.isArray(raw) ? raw : (raw.supported ?? [])
+  const meta = Array.isArray(raw) ? undefined : raw
+  const defs = list
     .map((p) => {
       const o = typeof p === 'string' ? { id: p } : p
       const id = canonPattern(o.id)
       const g = gl[o.id] ?? gl[id] ?? {}
       const x = o as { texture?: string; file?: string; label?: string; scale?: number }
-      return { id, label: x.label ?? g.label ?? PATTERN_LABELS[id] ?? o.id, texture: x.texture ?? x.file ?? g.texture ?? g.file, scale: x.scale ?? g.scale } as PatternDef
+      const texture = texName(x.texture ?? x.file ?? g.texture ?? g.file)
+      return { id, label: x.label ?? g.label ?? PATTERN_LABELS[id] ?? o.id, texture, scale: x.scale ?? g.scale ?? (texture ? (g.tileMeters ?? 1) : undefined), tonal: g.tonal } as PatternDef
     })
     .filter((p) => !!p.id)
+  return { defs: defs.length ? defs : undefined, def: meta?.default ? canonPattern(meta.default) : undefined, slot: meta?.slot }
 }
 
 function parseGarments(j: GarmentJson): CatalogItem[] {
-  return j.items.map((g) => ({
+  return j.items.map((g) => {
+    const pp = parsePatterns(g, j.patterns)
+    return {
     id: g.id,
     kind: 'garment' as const,
     slot: g.slot,
     label: labelOf(g.id, g.label),
     glb: `${A}garments/${g.file}`,
-    patterns: parsePatterns(g, j.patterns),
+    patterns: pp.defs,
+    defaultPattern: pp.def,
+    patternSlot: pp.slot,
+    heelCm: typeof g.heelCm === 'number' ? g.heelCm : undefined,
+    sitSafe: typeof g.sitSafe === 'boolean' ? g.sitSafe : undefined,
     hides: Array.isArray(g.hides) && g.hides.length ? g.hides : undefined,
     lift: typeof g.lift === 'number' ? g.lift : undefined,
     mats: g.slots.map((s) => ({
@@ -202,7 +239,8 @@ function parseGarments(j: GarmentJson): CatalogItem[] {
       finishes: g.finishesSupported[s] ?? [g.finish[s] ?? 'satin'],
       swatches: GARMENT_SWATCHES,
     })),
-  }))
+    }
+  })
 }
 
 function parseHairClip(h: JewelryJson['pieces'][number]['hairClip']): HairClip | undefined {

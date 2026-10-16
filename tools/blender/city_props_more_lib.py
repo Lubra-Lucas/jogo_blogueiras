@@ -33,6 +33,7 @@ cyl, heart, bow = pp.cyl, pp.heart, ck.bow
 arc3, tri_count = ck.arc3, ck.tri_count
 rr_pts, sup, circ, text3d, wheel, rn, smooth3 = pp.rr_pts, pp.sup, pp.circ, pp.text3d, pp.wheel, pp.rn, pp.smooth3
 _hp = ck._hp
+stripes, pearls = pp.stripes, pp.pearls
 
 # metais reais
 ck.METALS.update({"brass": ("#c9a15a", 0.24), "bronze": ("#8c6a46", 0.3), "steel": ("#c3c9d1", 0.2),
@@ -89,6 +90,23 @@ PALS = {
     "bike_c":   P_("Bike marinho", "#27406b", "#c3c9d1", "#e0b020", "#8a6038", "#1f2024", "#6b4a2f", "steel"),
     "play":     P_("Playground", "#2f6fb0", "#e0b020", "#c9402f", "#3f8a52", "#2a2a2e", "#a07a48", "steel"),
     "flower_real": P_("Carrinho de flores", "#f1ede2", "#3f7a4a", "#c9553a", "#e8d79a", "#4a3220", "#8a6038", "brass", leaf="#5f9a58"),
+    # ---- rodada 2 (vida da rua) ----
+    "olive":    P_("Oliveira em vaso", "#b8704a", "#8f5236", "#c9a15a", "#8a9a6a", "#3a2a1c", "#8a6038", "steel", leaf="#7f9060"),
+    "bags":     P_("Sacolas de loja", "#f1ede2", "#1f1f24", "#b8352f", "#d9c9a8", "#2f4a6a", "#8a6038", "brass"),
+    "chalk":    P_("Lousa de cafe", "#2b302d", "#8a6038", "#f4f0e6", "#e0b858", "#1c1d21", "#a07a48", "steel"),
+    "market":   P_("Feira", "#f1ede2", "#c9402f", "#e0b020", "#7aa05a", "#5a3b28", "#a07a48", "steel", leaf="#5f9a58"),
+    "buckets":  P_("Baldes de flor", "#aeb4bb", "#d9405a", "#f2d36b", "#f4f0e6", "#4a3220", "#8a6038", "steel", leaf="#5f9a58"),
+    "gold":     P_("Dourado luxo", "#c9a15a", "#efe6d4", "#1f1f24", "#f6f0e2", "#2a2a2e", "#6a1f2a", "brass", leaf="#4f7d4a"),
+    "scaffold": P_("Andaime", "#b9bfc6", "#8f969e", "#f26a1f", "#c9a56e", "#2a2a2c", "#a07a48", "steel"),
+    "cartyel":  P_("Carrinho amarelo", "#e0b020", "#b8352f", "#f1ede2", "#c9a56e", "#2a2a2e", "#8a6038", "steel"),
+    "mural":    P_("Mural", "#e8dfc8", "#c9553a", "#2f4a6a", "#e0b858", "#2f5d46", "#8a6038", "steel"),
+    "ad":       P_("Anuncio", "#f4f0e6", "#1f1f24", "#b8352f", "#e0b858", "#2f4a6a", "#8a6038", "steel", glow="#fff0c8"),
+    "blanket":  P_("Manta de piquenique", "#f1ede2", "#b8352f", "#2f4a6a", "#e0b858", "#3a2a1c", "#8a6038", "steel"),
+    "rug":      P_("Tapete", "#7a2a30", "#c9a15a", "#f1ede2", "#2f4a6a", "#3a1a1c", "#8a6038", "brass"),
+    "arcade":   P_("Fliperama", "#23252f", "#2f3347", "#35e8ff", "#ff3fb4", "#101018", "#3a2f4a", "black_steel", glow="#35e8ff", gs=8.0),
+    "wall_tan": P_("Parede/equip", "#d9d3c4", "#a8a396", "#b5502f", "#f0e8d8", "#2f3036", "#8a6038", "steel", glass="#9db7c4"),
+    "boat":     P_("Barco", "#efe6cf", "#2f4a6a", "#b8352f", "#a07a48", "#3a2a1c", "#a07a48", "brass"),
+    "pier":     P_("Deck", "#a07a48", "#8a6038", "#c9a15a", "#c9b08a", "#3a2a1c", "#8a6038", "steel"),
     "lights":   P_("Luzinhas", "#2a2a2e", "#44474f", "#c9a15a", "#f4efe2", "#17181c", "#6b4a2f", "black_steel", glow="#ffe2a8", gs=7.0),
 }
 ck.PALETTES.update(PALS)
@@ -108,6 +126,12 @@ def setup_mats(pal):
 # helpers
 # ----------------------------------------------------------------------------------------------------
 REG = []
+# rodada 2: orcamento de triangulos por peca (Decimate colapsa o excedente; pecas planas/pano nao entram)
+R2_TT = {"flower_buckets": 1100, "bike_share_dock": 1300, "fruit_stand": 1300, "flower_kiosk": 1300, "hotdog_cart": 900, "coffee_cart": 800,
+         "post_box_pillar": 520, "potted_olive": 800, "topiary_planter": 700, "patio_heater": 520, "shopping_bags": 420, "dog_bowl_post": 340,
+         "charging_station": 520, "atm_unit": 520, "shop_awning": 640, "rooftop_water_tank": 700, "rooftop_garden": 1100,
+         "window_display_dress": 800, "window_display_bags": 600, "window_display_shoes": 800, "limo_black": 1000, "lake_pier": 900,
+         "scaffold_tower": 1200, "site_hut": 700, "cement_mixer": 600, "bird_bath": 450, "newspaper_stack": 350, "chalkboard_sign": 380}
 
 
 def piece(name, pal, family, collider=None, walkable=False, note=None, mount=None, tri_target=None, cull="props", variants=None):
@@ -160,6 +184,8 @@ def bbox_game(ob):
 def build_piece(spec):
     setup_mats(spec["pal"])
     parts = [p for p in spec["fn"]() if p is not None]
+    if spec["name"] in R2_TT and not spec["tri_target"]:
+        spec["tri_target"] = R2_TT[spec["name"]]
     ob = ck.finish(spec["name"], parts)
     if spec["tri_target"]:
         ck.decimate_to(ob, spec["tri_target"])

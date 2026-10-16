@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { OrthographicCamera } from '@react-three/drei'
-import type { DirectionalLight, InstancedMesh, Mesh } from 'three'
+import { Frustum, Matrix4, type Camera, type DirectionalLight, type InstancedMesh, type Mesh } from 'three'
 import { usePlayerStore } from '../../../state/playerStore'
 import { CITY } from './layout'
 import { env } from '../environment/envState'
@@ -56,9 +56,11 @@ export function MapCamera() {
 
 /** ?stats=1: mostra draw calls e triangulos na tela. */
 export function StatsProbe() {
+  const camera = useThree((s) => s.camera)
   const gl = useThree((s) => s.gl)
   const scene = useThree((s) => s.scene)
   const enabled = useMemo(() => new URLSearchParams(window.location.search).get('stats') === '1', [])
+  ;(scene as unknown as { __cam?: Camera }).__cam = camera
   useEffect(() => {
     if (!enabled) return
     const el = document.createElement('div')
@@ -85,6 +87,22 @@ export function StatsProbe() {
         kitTris += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3
         kitCalls++
       })
+      // desenhos reais do kit: malhas visiveis (pai e proprio) dentro do frustum; as que projetam sombra contam de novo
+      const cam = (scene as unknown as { __cam?: Camera }).__cam
+      let fr = 0
+      let frTris = 0
+      let frSh = 0
+      if (cam) {
+        const f = new Frustum().setFromProjectionMatrix(new Matrix4().multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse))
+        scene.traverse((o) => {
+          const m = o as Mesh
+          if (!o.userData.kit || !m.isMesh || !m.visible || !o.parent?.visible || !f.intersectsObject(m)) return
+          fr++
+          frTris += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3
+          if (m.castShadow) frSh++
+        })
+      }
+      rows.unshift([1e12, `KIT fr: ${fr} malhas (+${frSh} sombra) ${Math.round(frTris)} tris`])
       rows.unshift([1e12, `KIT visivel: ${Math.round(kitTris)} tris em ${kitCalls} malhas`])
       rows.sort((a, b) => b[0] - a[0])
       el.style.whiteSpace = 'pre'

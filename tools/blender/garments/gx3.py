@@ -68,14 +68,14 @@ def pleat_skirt(G, body, z_top, z_hem, flare, nth=144, pleats=36, amp=0.010, row
     tri = lambda th: (np.abs(((th * pleats / (2 * math.pi)) % 1.0) - 0.5) * 2 - 0.5)
     L = env_layer(body, z_top, z_hem, nth=nth, rows=rows, drop=drop,
                   off=lambda t, th: off0 + flare * t ** 0.9 + amp * tri(th) * np.clip(t * 1.6, 0, 1), zwave=zwave)
-    add_layer(G, body, L, mat, dict(lw=lw, spine_top=0.2, spine_fade=0.25), falloff=falloff, clear=0.008)
+    add_layer(G, body, L, mat, dict(lw=max(lw, 0.85), spine_top=0.2, spine_fade=0.25, wt=(0.0, 0.5)), falloff=falloff, clear=0.009)
     return L
 
 
-def add_raw(G, body, P, t, polys, mat, lw=0.4, spine_top=0.2, spine_fade=0.2, falloff=0.25, clear=0.008, uvscale=1.0):
+def add_raw(G, body, P, t, polys, mat, lw=0.4, spine_top=0.2, spine_fade=0.2, falloff=0.25, clear=0.008, uvscale=1.0, wt=(0.1, 0.9)):
     """parametric surface (P rest positions, t = 0 top .. 1 hem per vertex) fitted like a skirt layer"""
     S, g = states_for(body, P, polys, falloff=falloff, clear=clear)
-    W = weights_smooth(g, skirt_weights(body, P, t, lw=lw, spine_top=spine_top, spine_fade=spine_fade), 1)
+    W = weights_smooth(g, skirt_weights(body, P, t, lw=lw, spine_top=spine_top, spine_fade=spine_fade, wt=wt), 1)
     G.add(S, polys, mat, cyl_uv(P, polys, AX, uvscale), W)
     return S
 
@@ -92,15 +92,34 @@ def bow_on_part(G, body, part_idx, theta, z, radius, size):
     G.add(Vs, pl, bs, planar_uv(Vs["Basis"], pl), part['W'][at.weights_src()])
 
 
-def add_layer_w(G, body, L, mat, lw=0.5, knee=0.0, falloff=0.25, clear=0.008, spine_top=0.2, spine_fade=0.25, wsm=1):
+def add_layer_w(G, body, L, mat, lw=0.5, knee=0.0, falloff=0.25, clear=0.008, spine_top=0.2, spine_fade=0.25, wsm=1, slit=None, wt=(0.1, 0.9), only=None, train=0.0, split=0.16):
     """like add_layer but with leg-following weights: lw = share given to the thighs at the hem; knee = share of the thigh weight moved to the shin below z 0.58"""
     S, g = states_for(body, L['P'], L['polys'], falloff=falloff, clear=clear)
-    W = skirt_weights(body, L['P'], L['t'], lw=lw, spine_top=spine_top, spine_fade=spine_fade)
+    W = skirt_weights(body, L['P'], L['t'], lw=lw, spine_top=spine_top, spine_fade=spine_fade, wt=wt, split=split)
     if knee > 0:
         z = L['P'][:, 2]; f = knee * smoothstep(0.58, 0.36, z)
         for nm in ("Left", "Right"):
             u = body.bidx[f"mixamorig:{nm}UpLeg"]; l = body.bidx[f"mixamorig:{nm}Leg"]
             mv = W[:, u] * f; W[:, u] -= mv; W[:, l] += mv
+    if train > 0:   # cauda: o fundo de tras segue quadril + as duas pernas por igual (sem osso dominante), em vez de balancar como triangulo rigido
+        back = np.clip(-np.cos(L['th']), 0, 1) ** 1.2 * smoothstep(0.35, 0.9, L['t']) * train
+        hips = body.bidx["mixamorig:Hips"]; Lb = body.bidx["mixamorig:LeftUpLeg"]; Rb = body.bidx["mixamorig:RightUpLeg"]; Sp = body.bidx["mixamorig:Spine"]
+        tgt = np.zeros_like(W); tgt[:, hips] = 0.45; tgt[:, Lb] = 0.25; tgt[:, Rb] = 0.25; tgt[:, Sp] = 0.05
+        W = W * (1 - back[:, None]) + tgt * back[:, None]
+        wsm = max(wsm, 4)
     W = weights_smooth(g, W, wsm)
-    G.add(S, L['polys'], mat, cyl_uv(L['P'], L['polys'], AX, 1.0), W)
+    polys = L['polys']
+    if slit is not None:   # (theta_center, half_width_rad, t_start): opening in the layer (back/side slit), wide enough for a full stride
+        tc, hw, t0 = slit
+        keep = []
+        for q in polys:
+            d = np.abs(((L['th'][list(q)] - tc + math.pi) % (2 * math.pi)) - math.pi).min()
+            tt = L['t'][list(q)].mean()
+            hwk = hw * np.clip((tt - t0) / max(1e-6, 1 - t0), 0, 1) + 0.0
+            keep.append(not (tt > t0 and d < hwk))
+        polys = [q for q, k in zip(polys, keep) if k]
+    if only is not None:   # (theta_center, half_width): mantem so a faixa angular (ex.: painel frontal de avental)
+        tc, hw = only
+        polys = [q for q in polys if np.abs(((L['th'][list(q)] - tc + math.pi) % (2 * math.pi)) - math.pi).max() < hw]
+    G.add(S, polys, mat, cyl_uv(L['P'], polys, AX, 1.0), W)
     return S

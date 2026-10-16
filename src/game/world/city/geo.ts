@@ -96,12 +96,13 @@ export function paint(g: BufferGeometry, color: string | Color): BufferGeometry 
 }
 
 /** Junta geometrias (position/normal/color) numa so. */
-export function merge(list: BufferGeometry[]): BufferGeometry {
+export function merge(list: BufferGeometry[], keepUv = false): BufferGeometry {
   const clean = list.map((g) => {
     const c = g.index ? g : g.clone()
     for (const name of Object.keys(c.attributes)) {
-      if (name !== 'position' && name !== 'normal' && name !== 'color') c.deleteAttribute(name)
+      if (name !== 'position' && name !== 'normal' && name !== 'color' && !(keepUv && name === 'uv')) c.deleteAttribute(name)
     }
+    if (keepUv && !c.attributes.uv) c.setAttribute('uv', new Float32BufferAttribute(new Float32Array(c.attributes.position.count * 2), 2))
     if (!c.index) {
       const count = c.attributes.position.count
       c.setIndex(Array.from({ length: count }, (_, i) => i))

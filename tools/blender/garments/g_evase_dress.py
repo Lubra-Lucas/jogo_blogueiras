@@ -8,7 +8,7 @@ def build(body):
     sel = torso_sel(I, zb, neck=(0.070, 0.085, 0.056, 0.0, 1.08), sleeve=0.45)
     r = shell(body, G, sel, off=0.0075, hem=zb, sleeve_end=0.45, clear=0.006, target=3600)
     L = layer(body, 0.872, 0.55, 0.37, 0.335, nth=96, rows=8, flare=0.75, drop=1.1, top_off=0.014, ruffle=(0.012, 12), zwave=(0.005, 12, 0.0))
-    add_layer(G, body, L, "base", dict(lw=0.45, spine_top=0.2, spine_fade=0.2), falloff=0.25, clear=0.009)
+    add_layer(G, body, L, "base", dict(lw=0.9, spine_top=0.2, spine_fade=0.2, wt=(0.0, 0.25), split=0.07), falloff=0.25, clear=0.009)
     b = waistband(G, body, 0.894, 0.848, "trim", bulge=0.003)
     add_bow_on(G, body, b, 0.0, 0.872, 1.4, rr=0.018)
     mats = {"base": ("#2f6fa8", "matte"), "trim": ("#f1ede2", "satin"), "accent": ("#d6b25a", "gold")}

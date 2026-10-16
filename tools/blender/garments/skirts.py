@@ -77,12 +77,12 @@ def layer(body, z_top, z_hem, rx, ry, nth=100, rows=5, flare=0.8, drop=1.2, top_
     return dict(P=P, t=t, th=thv, polys=polys, n=len(P))
 
 
-def skirt_weights(body, P, t, lw=0.5, spine_top=0.35, spine_fade=0.3):
+def skirt_weights(body, P, t, lw=0.5, spine_top=0.35, spine_fade=0.3, wt=(0.1, 0.9), split=0.16):
     W = np.zeros((len(P), len(body.bones)))
     hips = body.bidx["mixamorig:Hips"]; sp = body.bidx["mixamorig:Spine"]
     L = body.bidx["mixamorig:LeftUpLeg"]; R = body.bidx["mixamorig:RightUpLeg"]
-    sl = np.clip(0.5 + P[:, 0] / 0.16, 0, 1)
-    wl = lw * smoothstep(0.1, 0.9, t)
+    sl = np.clip(0.5 + P[:, 0] / split, 0, 1)
+    wl = lw * smoothstep(wt[0], wt[1], t)
     ws = spine_top * (1 - smoothstep(0.0, spine_fade, t))
     W[:, L] = wl * sl; W[:, R] = wl * (1 - sl); W[:, sp] = ws
     W[:, hips] = 1 - W[:, L] - W[:, R] - W[:, sp]

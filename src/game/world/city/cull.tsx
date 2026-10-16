@@ -25,3 +25,32 @@ export function Cull({ cx, cz, r, max, children }: { cx: number; cz: number; r: 
   })
   return <group ref={ref}>{children}</group>
 }
+
+/**
+ * Cull com LOD: `children` = versao detalhada, `lo` = versao decimada (alem de `lod` m do centro da celula, com folga
+ * proporcional ao raio e histerese de 3 m). Some inteiro a mais de `max` m.
+ */
+export function LodCull({ cx, cz, r, max, lod, lo, children }: { cx: number; cz: number; r: number; max: number; lod: number; lo: ReactNode; children: ReactNode }) {
+  const hi = useRef<Group>(null)
+  const far = useRef<Group>(null)
+  const near = useRef(true)
+  useFrame(({ camera }) => {
+    const h = hi.current
+    const f = far.current
+    if (!h || !f) return
+    const d = Math.hypot(camera.position.x - cx, camera.position.z - cz)
+    const vis = d - r < max
+    const lim = lod + r * 0.3
+    near.current = near.current ? d < lim + 3 : d < lim - 3
+    const vh = vis && near.current
+    const vf = vis && !near.current
+    if (h.visible !== vh) h.visible = vh
+    if (f.visible !== vf) f.visible = vf
+  })
+  return (
+    <group>
+      <group ref={hi}>{children}</group>
+      <group ref={far}>{lo}</group>
+    </group>
+  )
+}

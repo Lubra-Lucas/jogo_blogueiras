@@ -8,7 +8,7 @@ def build(body):
     cfg = [(0.876, 0.745, 0.255, "base", 0.0), (0.800, 0.675, 0.300, "accent", 0.9), (0.725, 0.605, 0.345, "base", 1.8)]
     for zt, zh, R, mat, ph in cfg:
         L = layer(body, zt, zh, R, R * 0.9, nth=100, rows=5, flare=0.7, drop=1.2, top_off=0.014, ruffle=(0.03, 18), zwave=(0.008, 18, ph), scallop=(0.008, 18))
-        add_layer(G, body, L, mat, dict(lw=0.55, spine_top=0.2, spine_fade=0.25), falloff=0.25, clear=0.008)
+        add_layer(G, body, L, mat, dict(lw=0.9, spine_top=0.2, spine_fade=0.25, wt=(0.0, 0.25), split=0.07), falloff=0.25, clear=0.008)
     mats = {"base": ("#f1ece0", "satin"), "accent": ("#d8cdb4", "satin"), "trim": ("#2a2f4a", "satin")}
     meta = meta_of("ruffle_mini", "Minissaia de babados", "bottom", ["base", "accent", "trim"], {"base": "#f1ece0", "accent": "#d8cdb4", "trim": "#2a2f4a"},
                    {"base": "satin", "accent": "satin", "trim": "satin"},

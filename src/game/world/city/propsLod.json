@@ -1,0 +1,896 @@
+{
+ "units": "m",
+ "up": "Y",
+ "front": "+Z",
+ "style": "LOD decimado (city_lod.py)",
+ "pieces": {
+  "lod_building_bubble": {
+   "file": "lod/lod_building_bubble.glb",
+   "tris": 972,
+   "of": "building_bubble",
+   "bytes": 38000
+  },
+  "lod_building_bubble_tall": {
+   "file": "lod/lod_building_bubble_tall.glb",
+   "tris": 1047,
+   "of": "building_bubble_tall",
+   "bytes": 39368
+  },
+  "lod_building_bubble_wide": {
+   "file": "lod/lod_building_bubble_wide.glb",
+   "tris": 713,
+   "of": "building_bubble_wide",
+   "bytes": 28908
+  },
+  "lod_building_capsule_row": {
+   "file": "lod/lod_building_capsule_row.glb",
+   "tris": 726,
+   "of": "building_capsule_row",
+   "bytes": 28072
+  },
+  "lod_storefront_glass": {
+   "file": "lod/lod_storefront_glass.glb",
+   "tris": 639,
+   "of": "storefront_glass",
+   "bytes": 30636
+  },
+  "lod_canopy_curved": {
+   "file": "lod/lod_canopy_curved.glb",
+   "tris": 478,
+   "of": "canopy_curved",
+   "bytes": 20964
+  },
+  "lod_kiosk_pod": {
+   "file": "lod/lod_kiosk_pod.glb",
+   "tris": 676,
+   "of": "kiosk_pod",
+   "bytes": 30192
+  },
+  "lod_holo_sign": {
+   "file": "lod/lod_holo_sign.glb",
+   "tris": 500,
+   "of": "holo_sign",
+   "bytes": 18440
+  },
+  "lod_lamp_futuristic": {
+   "file": "lod/lod_lamp_futuristic.glb",
+   "tris": 481,
+   "of": "lamp_futuristic",
+   "bytes": 18276
+  },
+  "lod_bench_bubble": {
+   "file": "lod/lod_bench_bubble.glb",
+   "tris": 424,
+   "of": "bench_bubble",
+   "bytes": 14512
+  },
+  "lod_planter_orb": {
+   "file": "lod/lod_planter_orb.glb",
+   "tris": 421,
+   "of": "planter_orb",
+   "bytes": 17652
+  },
+  "lod_floating_platform": {
+   "file": "lod/lod_floating_platform.glb",
+   "tris": 559,
+   "of": "floating_platform",
+   "bytes": 21324
+  },
+  "lod_plaza_centerpiece": {
+   "file": "lod/lod_plaza_centerpiece.glb",
+   "tris": 1186,
+   "of": "plaza_centerpiece",
+   "bytes": 47268
+  },
+  "lod_paving_y2k": {
+   "file": "lod/lod_paving_y2k.glb",
+   "tris": 442,
+   "of": "paving_y2k",
+   "bytes": 14160
+  },
+  "lod_wall_plain": {
+   "file": "lod/lod_wall_plain.glb",
+   "tris": 512,
+   "of": "wall_plain",
+   "bytes": 16636
+  },
+  "lod_wall_window": {
+   "file": "lod/lod_wall_window.glb",
+   "tris": 513,
+   "of": "wall_window",
+   "bytes": 24396
+  },
+  "lod_wall_door": {
+   "file": "lod/lod_wall_door.glb",
+   "tris": 809,
+   "of": "wall_door",
+   "bytes": 32568
+  },
+  "lod_wall_corner": {
+   "file": "lod/lod_wall_corner.glb",
+   "tris": 456,
+   "of": "wall_corner",
+   "bytes": 18240
+  },
+  "lod_column_rococo": {
+   "file": "lod/lod_column_rococo.glb",
+   "tris": 456,
+   "of": "column_rococo",
+   "bytes": 19364
+  },
+  "lod_arch_gate": {
+   "file": "lod/lod_arch_gate.glb",
+   "tris": 702,
+   "of": "arch_gate",
+   "bytes": 26640
+  },
+  "lod_cornice_scallop": {
+   "file": "lod/lod_cornice_scallop.glb",
+   "tris": 379,
+   "of": "cornice_scallop",
+   "bytes": 14488
+  },
+  "lod_roof_dome_small": {
+   "file": "lod/lod_roof_dome_small.glb",
+   "tris": 570,
+   "of": "roof_dome_small",
+   "bytes": 24148
+  },
+  "lod_awning_striped": {
+   "file": "lod/lod_awning_striped.glb",
+   "tris": 380,
+   "of": "awning_striped",
+   "bytes": 18788
+  },
+  "lod_balcony_curved": {
+   "file": "lod/lod_balcony_curved.glb",
+   "tris": 418,
+   "of": "balcony_curved",
+   "bytes": 19352
+  },
+  "lod_sign_frame": {
+   "file": "lod/lod_sign_frame.glb",
+   "tris": 539,
+   "of": "sign_frame",
+   "bytes": 27420
+  },
+  "lod_lamp_post": {
+   "file": "lod/lod_lamp_post.glb",
+   "tris": 360,
+   "of": "lamp_post",
+   "bytes": 16156
+  },
+  "lod_bench_tufted": {
+   "file": "lod/lod_bench_tufted.glb",
+   "tris": 459,
+   "of": "bench_tufted",
+   "bytes": 23852
+  },
+  "lod_planter_round": {
+   "file": "lod/lod_planter_round.glb",
+   "tris": 418,
+   "of": "planter_round",
+   "bytes": 20004
+  },
+  "lod_hedge_heart": {
+   "file": "lod/lod_hedge_heart.glb",
+   "tris": 418,
+   "of": "hedge_heart",
+   "bytes": 21272
+  },
+  "lod_fence_segment": {
+   "file": "lod/lod_fence_segment.glb",
+   "tris": 266,
+   "of": "fence_segment",
+   "bytes": 15980
+  },
+  "lod_balloon_heart": {
+   "file": "lod/lod_balloon_heart.glb",
+   "tris": 266,
+   "of": "balloon_heart",
+   "bytes": 10880
+  },
+  "lod_fountain_center": {
+   "file": "lod/lod_fountain_center.glb",
+   "tris": 1103,
+   "of": "fountain_center",
+   "bytes": 46928
+  },
+  "lod_paving_tile": {
+   "file": "lod/lod_paving_tile.glb",
+   "tris": 658,
+   "of": "paving_tile",
+   "bytes": 17832
+  },
+  "lod_house_shell": {
+   "file": "lod/lod_house_shell.glb",
+   "tris": 418,
+   "of": "house_shell",
+   "bytes": 25384
+  },
+  "lod_house_shell_wide": {
+   "file": "lod/lod_house_shell_wide.glb",
+   "tris": 459,
+   "of": "house_shell_wide",
+   "bytes": 26896
+  },
+  "lod_facade_win": {
+   "file": "lod/lod_facade_win.glb",
+   "tris": 235,
+   "of": "facade_win",
+   "bytes": 14464
+  },
+  "lod_facade_door": {
+   "file": "lod/lod_facade_door.glb",
+   "tris": 258,
+   "of": "facade_door",
+   "bytes": 15672
+  },
+  "lod_roof_pitched": {
+   "file": "lod/lod_roof_pitched.glb",
+   "tris": 342,
+   "of": "roof_pitched",
+   "bytes": 21992
+  },
+  "lod_gazebo": {
+   "file": "lod/lod_gazebo.glb",
+   "tris": 650,
+   "of": "gazebo",
+   "bytes": 27580
+  },
+  "lod_bridge_small": {
+   "file": "lod/lod_bridge_small.glb",
+   "tris": 594,
+   "of": "bridge_small",
+   "bytes": 28356
+  },
+  "lod_photo_spot_frame": {
+   "file": "lod/lod_photo_spot_frame.glb",
+   "tris": 1406,
+   "of": "photo_spot_frame",
+   "bytes": 67644
+  },
+  "lod_wayfinding_post": {
+   "file": "lod/lod_wayfinding_post.glb",
+   "tris": 1043,
+   "of": "wayfinding_post",
+   "bytes": 34080
+  },
+  "lod_magazine_kiosk": {
+   "file": "lod/lod_magazine_kiosk.glb",
+   "tris": 1105,
+   "of": "magazine_kiosk",
+   "bytes": 68056
+  },
+  "lod_trash_bin_cute": {
+   "file": "lod/lod_trash_bin_cute.glb",
+   "tris": 734,
+   "of": "trash_bin_cute",
+   "bytes": 28876
+  },
+  "lod_mailbox_heart": {
+   "file": "lod/lod_mailbox_heart.glb",
+   "tris": 786,
+   "of": "mailbox_heart",
+   "bytes": 28348
+  },
+  "lod_bike_rack": {
+   "file": "lod/lod_bike_rack.glb",
+   "tris": 702,
+   "of": "bike_rack",
+   "bytes": 34028
+  },
+  "lod_phone_booth_capsule": {
+   "file": "lod/lod_phone_booth_capsule.glb",
+   "tris": 765,
+   "of": "phone_booth_capsule",
+   "bytes": 33220
+  },
+  "lod_vending_pod": {
+   "file": "lod/lod_vending_pod.glb",
+   "tris": 835,
+   "of": "vending_pod",
+   "bytes": 34156
+  },
+  "lod_bubble_car_parked": {
+   "file": "lod/lod_bubble_car_parked.glb",
+   "tris": 855,
+   "of": "bubble_car_parked",
+   "bytes": 38588
+  },
+  "lod_cafe_table_set": {
+   "file": "lod/lod_cafe_table_set.glb",
+   "tris": 765,
+   "of": "cafe_table_set",
+   "bytes": 36304
+  },
+  "lod_mannequin_display": {
+   "file": "lod/lod_mannequin_display.glb",
+   "tris": 949,
+   "of": "mannequin_display",
+   "bytes": 36528
+  },
+  "lod_palm_planter_lux": {
+   "file": "lod/lod_palm_planter_lux.glb",
+   "tris": 915,
+   "of": "palm_planter_lux",
+   "bytes": 53136
+  },
+  "lod_flower_cart": {
+   "file": "lod/lod_flower_cart.glb",
+   "tris": 1158,
+   "of": "flower_cart",
+   "bytes": 52528
+  },
+  "lod_macaron_stand": {
+   "file": "lod/lod_macaron_stand.glb",
+   "tris": 1129,
+   "of": "macaron_stand",
+   "bytes": 43340
+  },
+  "lod_rose_arch": {
+   "file": "lod/lod_rose_arch.glb",
+   "tris": 1047,
+   "of": "rose_arch",
+   "bytes": 47540
+  },
+  "lod_swan_boat": {
+   "file": "lod/lod_swan_boat.glb",
+   "tris": 779,
+   "of": "swan_boat",
+   "bytes": 31732
+  },
+  "lod_birdcage_lamp": {
+   "file": "lod/lod_birdcage_lamp.glb",
+   "tris": 773,
+   "of": "birdcage_lamp",
+   "bytes": 36168
+  },
+  "lod_traffic_light": {
+   "file": "lod/lod_traffic_light.glb",
+   "tris": 428,
+   "of": "traffic_light",
+   "bytes": 16276
+  },
+  "lod_street_sign_post": {
+   "file": "lod/lod_street_sign_post.glb",
+   "tris": 436,
+   "of": "street_sign_post",
+   "bytes": 13108
+  },
+  "lod_street_lamp_tall": {
+   "file": "lod/lod_street_lamp_tall.glb",
+   "tris": 532,
+   "of": "street_lamp_tall",
+   "bytes": 20192
+  },
+  "lod_garden_lamp_low": {
+   "file": "lod/lod_garden_lamp_low.glb",
+   "tris": 315,
+   "of": "garden_lamp_low",
+   "bytes": 12680
+  },
+  "lod_fire_hydrant": {
+   "file": "lod/lod_fire_hydrant.glb",
+   "tris": 524,
+   "of": "fire_hydrant",
+   "bytes": 16044
+  },
+  "lod_bench_simple": {
+   "file": "lod/lod_bench_simple.glb",
+   "tris": 366,
+   "of": "bench_simple",
+   "bytes": 13604
+  },
+  "lod_recycling_bins_triple": {
+   "file": "lod/lod_recycling_bins_triple.glb",
+   "tris": 568,
+   "of": "recycling_bins_triple",
+   "bytes": 21404
+  },
+  "lod_drinking_fountain": {
+   "file": "lod/lod_drinking_fountain.glb",
+   "tris": 420,
+   "of": "drinking_fountain",
+   "bytes": 16352
+  },
+  "lod_bus_stop": {
+   "file": "lod/lod_bus_stop.glb",
+   "tris": 562,
+   "of": "bus_stop",
+   "bytes": 25828
+  },
+  "lod_city_map_totem": {
+   "file": "lod/lod_city_map_totem.glb",
+   "tris": 400,
+   "of": "city_map_totem",
+   "bytes": 17908
+  },
+  "lod_clock_post": {
+   "file": "lod/lod_clock_post.glb",
+   "tris": 569,
+   "of": "clock_post",
+   "bytes": 24412
+  },
+  "lod_street_mailbox": {
+   "file": "lod/lod_street_mailbox.glb",
+   "tris": 238,
+   "of": "street_mailbox",
+   "bytes": 10460
+  },
+  "lod_road_barrier": {
+   "file": "lod/lod_road_barrier.glb",
+   "tris": 382,
+   "of": "road_barrier",
+   "bytes": 11424
+  },
+  "lod_manhole_cover": {
+   "file": "lod/lod_manhole_cover.glb",
+   "tris": 228,
+   "of": "manhole_cover",
+   "bytes": 7580
+  },
+  "lod_car_hatch": {
+   "file": "lod/lod_car_hatch.glb",
+   "tris": 524,
+   "of": "car_hatch",
+   "bytes": 20872
+  },
+  "lod_car_sedan": {
+   "file": "lod/lod_car_sedan.glb",
+   "tris": 524,
+   "of": "car_sedan",
+   "bytes": 20880
+  },
+  "lod_car_suv": {
+   "file": "lod/lod_car_suv.glb",
+   "tris": 548,
+   "of": "car_suv",
+   "bytes": 22464
+  },
+  "lod_car_convertible": {
+   "file": "lod/lod_car_convertible.glb",
+   "tris": 596,
+   "of": "car_convertible",
+   "bytes": 22728
+  },
+  "lod_scooter_moto": {
+   "file": "lod/lod_scooter_moto.glb",
+   "tris": 417,
+   "of": "scooter_moto",
+   "bytes": 18900
+  },
+  "lod_kick_scooter": {
+   "file": "lod/lod_kick_scooter.glb",
+   "tris": 234,
+   "of": "kick_scooter",
+   "bytes": 12328
+  },
+  "lod_bicycle_parked": {
+   "file": "lod/lod_bicycle_parked.glb",
+   "tris": 470,
+   "of": "bicycle_parked",
+   "bytes": 26336
+  },
+  "lod_food_truck_icecream": {
+   "file": "lod/lod_food_truck_icecream.glb",
+   "tris": 740,
+   "of": "food_truck_icecream",
+   "bytes": 30288
+  },
+  "lod_food_truck_crepe": {
+   "file": "lod/lod_food_truck_crepe.glb",
+   "tris": 960,
+   "of": "food_truck_crepe",
+   "bytes": 54052
+  },
+  "lod_popcorn_cart": {
+   "file": "lod/lod_popcorn_cart.glb",
+   "tris": 675,
+   "of": "popcorn_cart",
+   "bytes": 35344
+  },
+  "lod_cotton_candy_cart": {
+   "file": "lod/lod_cotton_candy_cart.glb",
+   "tris": 469,
+   "of": "cotton_candy_cart",
+   "bytes": 31272
+  },
+  "lod_patio_umbrella": {
+   "file": "lod/lod_patio_umbrella.glb",
+   "tris": 258,
+   "of": "patio_umbrella",
+   "bytes": 11752
+  },
+  "lod_bistro_set": {
+   "file": "lod/lod_bistro_set.glb",
+   "tris": 446,
+   "of": "bistro_set",
+   "bytes": 22488
+  },
+  "lod_market_stall": {
+   "file": "lod/lod_market_stall.glb",
+   "tris": 651,
+   "of": "market_stall",
+   "bytes": 35552
+  },
+  "lod_window_flower_box": {
+   "file": "lod/lod_window_flower_box.glb",
+   "tris": 328,
+   "of": "window_flower_box",
+   "bytes": 14404
+  },
+  "lod_string_lights_span": {
+   "file": "lod/lod_string_lights_span.glb",
+   "tris": 518,
+   "of": "string_lights_span",
+   "bytes": 20532
+  },
+  "lod_billboard_fashion": {
+   "file": "lod/lod_billboard_fashion.glb",
+   "tris": 592,
+   "of": "billboard_fashion",
+   "bytes": 38020
+  },
+  "lod_vertical_shop_sign": {
+   "file": "lod/lod_vertical_shop_sign.glb",
+   "tris": 410,
+   "of": "vertical_shop_sign",
+   "bytes": 19108
+  },
+  "lod_info_kiosk": {
+   "file": "lod/lod_info_kiosk.glb",
+   "tris": 525,
+   "of": "info_kiosk",
+   "bytes": 34764
+  },
+  "lod_holo_totem": {
+   "file": "lod/lod_holo_totem.glb",
+   "tris": 434,
+   "of": "holo_totem",
+   "bytes": 18348
+  },
+  "lod_capsule_bench": {
+   "file": "lod/lod_capsule_bench.glb",
+   "tris": 237,
+   "of": "capsule_bench",
+   "bytes": 11496
+  },
+  "lod_selfie_totem": {
+   "file": "lod/lod_selfie_totem.glb",
+   "tris": 445,
+   "of": "selfie_totem",
+   "bytes": 26968
+  },
+  "lod_ferris_wheel_mini": {
+   "file": "lod/lod_ferris_wheel_mini.glb",
+   "tris": 800,
+   "of": "ferris_wheel_mini",
+   "bytes": 33096
+  },
+  "lod_ground_fountain_jets": {
+   "file": "lod/lod_ground_fountain_jets.glb",
+   "tris": 1054,
+   "of": "ground_fountain_jets",
+   "bytes": 39100
+  },
+  "lod_pop_sculpture": {
+   "file": "lod/lod_pop_sculpture.glb",
+   "tris": 448,
+   "of": "pop_sculpture",
+   "bytes": 13956
+  },
+  "lod_red_carpet_set": {
+   "file": "lod/lod_red_carpet_set.glb",
+   "tris": 685,
+   "of": "red_carpet_set",
+   "bytes": 26740
+  },
+  "lod_red_carpet_short": {
+   "file": "lod/lod_red_carpet_short.glb",
+   "tris": 455,
+   "of": "red_carpet_short",
+   "bytes": 17032
+  },
+  "lod_brand_totem": {
+   "file": "lod/lod_brand_totem.glb",
+   "tris": 351,
+   "of": "brand_totem",
+   "bytes": 23188
+  },
+  "lod_valet_stand": {
+   "file": "lod/lod_valet_stand.glb",
+   "tris": 323,
+   "of": "valet_stand",
+   "bytes": 24640
+  },
+  "lod_spotlight_tower": {
+   "file": "lod/lod_spotlight_tower.glb",
+   "tris": 299,
+   "of": "spotlight_tower",
+   "bytes": 12392
+  },
+  "lod_neon_street_sign": {
+   "file": "lod/lod_neon_street_sign.glb",
+   "tris": 455,
+   "of": "neon_street_sign",
+   "bytes": 26412
+  },
+  "lod_queue_rope_line": {
+   "file": "lod/lod_queue_rope_line.glb",
+   "tris": 414,
+   "of": "queue_rope_line",
+   "bytes": 15456
+  },
+  "lod_light_totem": {
+   "file": "lod/lod_light_totem.glb",
+   "tris": 474,
+   "of": "light_totem",
+   "bytes": 18580
+  },
+  "lod_bar_stool_table": {
+   "file": "lod/lod_bar_stool_table.glb",
+   "tris": 456,
+   "of": "bar_stool_table",
+   "bytes": 19068
+  },
+  "lod_casino_building": {
+   "file": "lod/lod_casino_building.glb",
+   "tris": 1530,
+   "of": "casino_building",
+   "bytes": 79776
+  },
+  "lod_pergola_flowers": {
+   "file": "lod/lod_pergola_flowers.glb",
+   "tris": 752,
+   "of": "pergola_flowers",
+   "bytes": 29484
+  },
+  "lod_swing_bench": {
+   "file": "lod/lod_swing_bench.glb",
+   "tris": 522,
+   "of": "swing_bench",
+   "bytes": 19560
+  },
+  "lod_garden_pots_can": {
+   "file": "lod/lod_garden_pots_can.glb",
+   "tris": 532,
+   "of": "garden_pots_can",
+   "bytes": 21692
+  },
+  "lod_picket_fence": {
+   "file": "lod/lod_picket_fence.glb",
+   "tris": 310,
+   "of": "picket_fence",
+   "bytes": 12764
+  },
+  "lod_stepping_stones": {
+   "file": "lod/lod_stepping_stones.glb",
+   "tris": 432,
+   "of": "stepping_stones",
+   "bytes": 10508
+  },
+  "lod_picnic_set": {
+   "file": "lod/lod_picnic_set.glb",
+   "tris": 373,
+   "of": "picnic_set",
+   "bytes": 22176
+  },
+  "lod_playground_slide": {
+   "file": "lod/lod_playground_slide.glb",
+   "tris": 429,
+   "of": "playground_slide",
+   "bytes": 21808
+  },
+  "lod_sidewalk_tree_grate": {
+   "file": "lod/lod_sidewalk_tree_grate.glb",
+   "tris": 462,
+   "of": "sidewalk_tree_grate",
+   "bytes": 15996
+  },
+  "lod_street_planter": {
+   "file": "lod/lod_street_planter.glb",
+   "tris": 328,
+   "of": "street_planter",
+   "bytes": 15228
+  },
+  "lod_tapume_panel": {
+   "file": "lod/lod_tapume_panel.glb",
+   "tris": 225,
+   "of": "tapume_panel",
+   "bytes": 16568
+  },
+  "lod_crane_toy": {
+   "file": "lod/lod_crane_toy.glb",
+   "tris": 420,
+   "of": "crane_toy",
+   "bytes": 23184
+  },
+  "lod_soon_sign": {
+   "file": "lod/lod_soon_sign.glb",
+   "tris": 668,
+   "of": "soon_sign",
+   "bytes": 42352
+  },
+  "lod_sand_pile_wheelbarrow": {
+   "file": "lod/lod_sand_pile_wheelbarrow.glb",
+   "tris": 220,
+   "of": "sand_pile_wheelbarrow",
+   "bytes": 10856
+  },
+  "lod_flower_buckets": {
+   "file": "lod/lod_flower_buckets.glb",
+   "tris": 416,
+   "of": "flower_buckets",
+   "bytes": 21012
+  },
+  "lod_patio_heater": {
+   "file": "lod/lod_patio_heater.glb",
+   "tris": 220,
+   "of": "patio_heater",
+   "bytes": 9224
+  },
+  "lod_charging_station": {
+   "file": "lod/lod_charging_station.glb",
+   "tris": 220,
+   "of": "charging_station",
+   "bytes": 13096
+  },
+  "lod_bike_share_dock": {
+   "file": "lod/lod_bike_share_dock.glb",
+   "tris": 492,
+   "of": "bike_share_dock",
+   "bytes": 19032
+  },
+  "lod_atm_unit": {
+   "file": "lod/lod_atm_unit.glb",
+   "tris": 220,
+   "of": "atm_unit",
+   "bytes": 11064
+  },
+  "lod_post_box_pillar": {
+   "file": "lod/lod_post_box_pillar.glb",
+   "tris": 220,
+   "of": "post_box_pillar",
+   "bytes": 9604
+  },
+  "lod_potted_olive": {
+   "file": "lod/lod_potted_olive.glb",
+   "tris": 302,
+   "of": "potted_olive",
+   "bytes": 10104
+  },
+  "lod_topiary_planter": {
+   "file": "lod/lod_topiary_planter.glb",
+   "tris": 266,
+   "of": "topiary_planter",
+   "bytes": 11900
+  },
+  "lod_fruit_stand": {
+   "file": "lod/lod_fruit_stand.glb",
+   "tris": 493,
+   "of": "fruit_stand",
+   "bytes": 18352
+  },
+  "lod_flower_kiosk": {
+   "file": "lod/lod_flower_kiosk.glb",
+   "tris": 494,
+   "of": "flower_kiosk",
+   "bytes": 23480
+  },
+  "lod_hotdog_cart": {
+   "file": "lod/lod_hotdog_cart.glb",
+   "tris": 337,
+   "of": "hotdog_cart",
+   "bytes": 19944
+  },
+  "lod_coffee_cart": {
+   "file": "lod/lod_coffee_cart.glb",
+   "tris": 300,
+   "of": "coffee_cart",
+   "bytes": 16432
+  },
+  "lod_shop_awning": {
+   "file": "lod/lod_shop_awning.glb",
+   "tris": 242,
+   "of": "shop_awning",
+   "bytes": 8824
+  },
+  "lod_rooftop_water_tank": {
+   "file": "lod/lod_rooftop_water_tank.glb",
+   "tris": 265,
+   "of": "rooftop_water_tank",
+   "bytes": 10788
+  },
+  "lod_rooftop_garden": {
+   "file": "lod/lod_rooftop_garden.glb",
+   "tris": 418,
+   "of": "rooftop_garden",
+   "bytes": 18568
+  },
+  "lod_mural_leaves": {
+   "file": "lod/lod_mural_leaves.glb",
+   "tris": 306,
+   "of": "mural_leaves",
+   "bytes": 16852
+  },
+  "lod_window_display_dress": {
+   "file": "lod/lod_window_display_dress.glb",
+   "tris": 303,
+   "of": "window_display_dress",
+   "bytes": 15536
+  },
+  "lod_window_display_bags": {
+   "file": "lod/lod_window_display_bags.glb",
+   "tris": 228,
+   "of": "window_display_bags",
+   "bytes": 13820
+  },
+  "lod_window_display_shoes": {
+   "file": "lod/lod_window_display_shoes.glb",
+   "tris": 304,
+   "of": "window_display_shoes",
+   "bytes": 17256
+  },
+  "lod_arcade_machine": {
+   "file": "lod/lod_arcade_machine.glb",
+   "tris": 233,
+   "of": "arcade_machine",
+   "bytes": 15332
+  },
+  "lod_neon_arrow_sign": {
+   "file": "lod/lod_neon_arrow_sign.glb",
+   "tris": 224,
+   "of": "neon_arrow_sign",
+   "bytes": 8364
+  },
+  "lod_limo_black": {
+   "file": "lod/lod_limo_black.glb",
+   "tris": 380,
+   "of": "limo_black",
+   "bytes": 16104
+  },
+  "lod_dog_agility": {
+   "file": "lod/lod_dog_agility.glb",
+   "tris": 261,
+   "of": "dog_agility",
+   "bytes": 13292
+  },
+  "lod_picnic_blanket": {
+   "file": "lod/lod_picnic_blanket.glb",
+   "tris": 297,
+   "of": "picnic_blanket",
+   "bytes": 18908
+  },
+  "lod_lake_pier": {
+   "file": "lod/lod_lake_pier.glb",
+   "tris": 342,
+   "of": "lake_pier",
+   "bytes": 19120
+  },
+  "lod_rowboat": {
+   "file": "lod/lod_rowboat.glb",
+   "tris": 220,
+   "of": "rowboat",
+   "bytes": 11804
+  },
+  "lod_scaffold_tower": {
+   "file": "lod/lod_scaffold_tower.glb",
+   "tris": 456,
+   "of": "scaffold_tower",
+   "bytes": 23240
+  },
+  "lod_site_hut": {
+   "file": "lod/lod_site_hut.glb",
+   "tris": 266,
+   "of": "site_hut",
+   "bytes": 19456
+  },
+  "lod_cement_mixer": {
+   "file": "lod/lod_cement_mixer.glb",
+   "tris": 226,
+   "of": "cement_mixer",
+   "bytes": 9924
+  }
+ }
+}

@@ -25,7 +25,7 @@ export function equip(a: Appearance, id: string): Appearance {
   if (item.kind === 'garment') {
     const outfit = { ...a.outfit, [item.slot]: ref }
     if (item.slot === 'dress') delete outfit.top, delete outfit.bottom
-    else delete outfit.dress
+    else if (item.slot === 'top' || item.slot === 'bottom') delete outfit.dress // sapatos/luvas/meias convivem com o vestido
     return { ...a, outfit }
   }
   return { ...a, accessories: [...a.accessories.filter((r) => getCatalogItem(r.id)?.slot !== item.slot), ref] }

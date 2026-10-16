@@ -244,7 +244,7 @@ export function WardrobeTab() {
               <div className="mat-row">
                 <div className="field-label">Estampa</div>
                 <div className="fin-chips">
-                  {[{ id: '', label: 'Liso' }, ...selItem.patterns].map((p) => (
+                  {[{ id: '', label: selItem.defaultPattern ? 'Original' : 'Liso' }, ...(selItem.defaultPattern ? [{ id: 'none', label: 'Liso' }] : []), ...selItem.patterns].map((p) => (
                     <button key={p.id || 'none'} type="button" className="pill" aria-pressed={(selRef?.pattern ?? '') === p.id} onClick={() => setAppearance(setPattern(appearance, selItem, p.id))}>
                       {p.label}
                     </button>

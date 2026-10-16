@@ -588,6 +588,219 @@
       "metal": "brass",
       "leaf": "#5f9a58"
     },
+    "olive": {
+      "label": "Oliveira em vaso",
+      "base": "#b8704a",
+      "accent": "#8f5236",
+      "accent2": "#c9a15a",
+      "soft": "#8a9a6a",
+      "deep": "#3a2a1c",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel",
+      "leaf": "#7f9060"
+    },
+    "bags": {
+      "label": "Sacolas de loja",
+      "base": "#f1ede2",
+      "accent": "#1f1f24",
+      "accent2": "#b8352f",
+      "soft": "#d9c9a8",
+      "deep": "#2f4a6a",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass"
+    },
+    "chalk": {
+      "label": "Lousa de cafe",
+      "base": "#2b302d",
+      "accent": "#8a6038",
+      "accent2": "#f4f0e6",
+      "soft": "#e0b858",
+      "deep": "#1c1d21",
+      "seat": "#a07a48",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "market": {
+      "label": "Feira",
+      "base": "#f1ede2",
+      "accent": "#c9402f",
+      "accent2": "#e0b020",
+      "soft": "#7aa05a",
+      "deep": "#5a3b28",
+      "seat": "#a07a48",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel",
+      "leaf": "#5f9a58"
+    },
+    "buckets": {
+      "label": "Baldes de flor",
+      "base": "#aeb4bb",
+      "accent": "#d9405a",
+      "accent2": "#f2d36b",
+      "soft": "#f4f0e6",
+      "deep": "#4a3220",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel",
+      "leaf": "#5f9a58"
+    },
+    "gold": {
+      "label": "Dourado luxo",
+      "base": "#c9a15a",
+      "accent": "#efe6d4",
+      "accent2": "#1f1f24",
+      "soft": "#f6f0e2",
+      "deep": "#2a2a2e",
+      "seat": "#6a1f2a",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass",
+      "leaf": "#4f7d4a"
+    },
+    "scaffold": {
+      "label": "Andaime",
+      "base": "#b9bfc6",
+      "accent": "#8f969e",
+      "accent2": "#f26a1f",
+      "soft": "#c9a56e",
+      "deep": "#2a2a2c",
+      "seat": "#a07a48",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "cartyel": {
+      "label": "Carrinho amarelo",
+      "base": "#e0b020",
+      "accent": "#b8352f",
+      "accent2": "#f1ede2",
+      "soft": "#c9a56e",
+      "deep": "#2a2a2e",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "mural": {
+      "label": "Mural",
+      "base": "#e8dfc8",
+      "accent": "#c9553a",
+      "accent2": "#2f4a6a",
+      "soft": "#e0b858",
+      "deep": "#2f5d46",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "ad": {
+      "label": "Anuncio",
+      "base": "#f4f0e6",
+      "accent": "#1f1f24",
+      "accent2": "#b8352f",
+      "soft": "#e0b858",
+      "deep": "#2f4a6a",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#fff0c8",
+      "metal": "steel"
+    },
+    "blanket": {
+      "label": "Manta de piquenique",
+      "base": "#f1ede2",
+      "accent": "#b8352f",
+      "accent2": "#2f4a6a",
+      "soft": "#e0b858",
+      "deep": "#3a2a1c",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "rug": {
+      "label": "Tapete",
+      "base": "#7a2a30",
+      "accent": "#c9a15a",
+      "accent2": "#f1ede2",
+      "soft": "#2f4a6a",
+      "deep": "#3a1a1c",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass"
+    },
+    "arcade": {
+      "label": "Fliperama",
+      "base": "#23252f",
+      "accent": "#2f3347",
+      "accent2": "#35e8ff",
+      "soft": "#ff3fb4",
+      "deep": "#101018",
+      "seat": "#3a2f4a",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#35e8ff",
+      "metal": "black_steel",
+      "glow_str": 8.0
+    },
+    "wall_tan": {
+      "label": "Parede/equip",
+      "base": "#d9d3c4",
+      "accent": "#a8a396",
+      "accent2": "#b5502f",
+      "soft": "#f0e8d8",
+      "deep": "#2f3036",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "boat": {
+      "label": "Barco",
+      "base": "#efe6cf",
+      "accent": "#2f4a6a",
+      "accent2": "#b8352f",
+      "soft": "#a07a48",
+      "deep": "#3a2a1c",
+      "seat": "#a07a48",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass"
+    },
+    "pier": {
+      "label": "Deck",
+      "base": "#a07a48",
+      "accent": "#8a6038",
+      "accent2": "#c9a15a",
+      "soft": "#c9b08a",
+      "deep": "#3a2a1c",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
     "lights": {
       "label": "Luzinhas",
       "base": "#2a2a2e",
@@ -3900,6 +4113,2207 @@
         ]
       },
       "note": "monte de areia, sacos de cimento e carrinho de mao",
+      "cull": "props"
+    },
+    "chalkboard_sign": {
+      "file": "props_more/chalkboard_sign.glb",
+      "family": "calcada",
+      "palette": "chalk",
+      "tris": 380,
+      "bytes": 12876,
+      "size": [
+        0.64,
+        0.999,
+        0.358
+      ],
+      "bbox_min": [
+        -0.32,
+        -0.014,
+        -0.179
+      ],
+      "bbox_max": [
+        0.32,
+        0.985,
+        0.179
+      ],
+      "materials": [
+        "accent",
+        "base",
+        "accent2",
+        "soft",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          0.7,
+          1.0,
+          0.4
+        ],
+        "center": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "note": "lousa A-frame de cafe/loja (sandwich board) com letras de giz; base=lousa, accent=madeira, accent2=giz branco, soft=giz amarelo",
+      "cull": "props"
+    },
+    "newspaper_stack": {
+      "file": "props_more/newspaper_stack.glb",
+      "family": "calcada",
+      "palette": "bags",
+      "tris": 350,
+      "bytes": 13084,
+      "size": [
+        0.757,
+        0.17,
+        0.35
+      ],
+      "bbox_min": [
+        -0.22,
+        0.0,
+        -0.19
+      ],
+      "bbox_max": [
+        0.537,
+        0.17,
+        0.16
+      ],
+      "materials": [
+        "base",
+        "soft",
+        "deep",
+        "accent",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "note": "pilha de jornais amarrada com barbante (rasteira)",
+      "cull": "props"
+    },
+    "newspaper_box": {
+      "file": "props_more/newspaper_box.glb",
+      "family": "calcada",
+      "palette": "navy",
+      "tris": 412,
+      "bytes": 16144,
+      "size": [
+        0.58,
+        1.235,
+        0.539
+      ],
+      "bbox_min": [
+        -0.29,
+        0.0,
+        -0.26
+      ],
+      "bbox_max": [
+        0.29,
+        1.235,
+        0.279
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "accent2",
+        "glass",
+        "white",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.32,
+          1.1
+        ],
+        "center": [
+          0,
+          0.55,
+          0
+        ]
+      },
+      "note": "maquina de jornal (caixa azul com janela e fenda de moedas)",
+      "cull": "props"
+    },
+    "flower_buckets": {
+      "file": "props_more/flower_buckets.glb",
+      "family": "calcada",
+      "palette": "buckets",
+      "tris": 1099,
+      "bytes": 34368,
+      "size": [
+        1.498,
+        1.095,
+        0.828
+      ],
+      "bbox_min": [
+        -0.749,
+        -0.0,
+        -0.402
+      ],
+      "bbox_max": [
+        0.749,
+        1.095,
+        0.426
+      ],
+      "materials": [
+        "seat",
+        "base",
+        "trim",
+        "leaf",
+        "accent",
+        "soft",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.5,
+          1.2,
+          0.8
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "expositor de madeira em degraus com baldes de zinco e flores (floricultura de calcada)",
+      "cull": "props"
+    },
+    "patio_heater": {
+      "file": "props_more/patio_heater.glb",
+      "family": "calcada",
+      "palette": "char",
+      "tris": 520,
+      "bytes": 15044,
+      "size": [
+        0.983,
+        2.325,
+        0.965
+      ],
+      "bbox_min": [
+        -0.492,
+        -0.0,
+        -0.483
+      ],
+      "bbox_max": [
+        0.492,
+        2.325,
+        0.483
+      ],
+      "materials": [
+        "base",
+        "deep",
+        "trim",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.4,
+          2.2
+        ],
+        "center": [
+          0,
+          1.1,
+          0
+        ]
+      },
+      "note": "aquecedor de mesa externo (cogumelo de aco com tubo quente)",
+      "cull": "props"
+    },
+    "shopping_bags": {
+      "file": "props_more/shopping_bags.glb",
+      "family": "calcada",
+      "palette": "bags",
+      "tris": 420,
+      "bytes": 15172,
+      "size": [
+        0.696,
+        0.44,
+        0.266
+      ],
+      "bbox_min": [
+        -0.316,
+        0.0,
+        -0.159
+      ],
+      "bbox_max": [
+        0.38,
+        0.44,
+        0.108
+      ],
+      "materials": [
+        "base",
+        "accent2",
+        "deep",
+        "soft",
+        "accent",
+        "white"
+      ],
+      "walkable": false,
+      "note": "3 sacolas de papel de lojas (branca, preta, vermelha) com alcas de corda e papel de seda; usar em bancos",
+      "cull": "props"
+    },
+    "dog_bowl_post": {
+      "file": "props_more/dog_bowl_post.glb",
+      "family": "calcada",
+      "palette": "wood",
+      "tris": 340,
+      "bytes": 14728,
+      "size": [
+        0.651,
+        0.93,
+        0.482
+      ],
+      "bbox_min": [
+        -0.141,
+        -0.01,
+        -0.1
+      ],
+      "bbox_max": [
+        0.51,
+        0.92,
+        0.382
+      ],
+      "materials": [
+        "base",
+        "deep",
+        "trim",
+        "accent2",
+        "white",
+        "accent",
+        "water"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.18,
+          0.9
+        ],
+        "center": [
+          0,
+          0.45,
+          0
+        ]
+      },
+      "note": "argola para amarrar cachorro (poste de madeira) com tigela de agua e osso de placa",
+      "cull": "props"
+    },
+    "charging_station": {
+      "file": "props_more/charging_station.glb",
+      "family": "calcada",
+      "palette": "char",
+      "tris": 520,
+      "bytes": 18764,
+      "size": [
+        0.62,
+        2.338,
+        0.5
+      ],
+      "bbox_min": [
+        -0.31,
+        0.0,
+        -0.25
+      ],
+      "bbox_max": [
+        0.31,
+        2.338,
+        0.25
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "glow",
+        "accent2",
+        "accent"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.42,
+          2.5
+        ],
+        "center": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "note": "estacao publica de carregar celular (totem com tela, portas USB e mini painel solar)",
+      "cull": "props"
+    },
+    "bike_share_dock": {
+      "file": "props_more/bike_share_dock.glb",
+      "family": "calcada",
+      "palette": "forest",
+      "tris": 1296,
+      "bytes": 38964,
+      "size": [
+        3.4,
+        1.645,
+        1.666
+      ],
+      "bbox_min": [
+        -1.7,
+        -0.037,
+        -0.835
+      ],
+      "bbox_max": [
+        1.7,
+        1.607,
+        0.831
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "glow",
+        "accent2",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          3.3,
+          1.2,
+          0.8
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "estacao de bike compartilhada: 4 baias com 3 bicicletas verdes e totem de pagamento",
+      "cull": "props"
+    },
+    "atm_unit": {
+      "file": "props_more/atm_unit.glb",
+      "family": "calcada",
+      "palette": "char",
+      "tris": 520,
+      "bytes": 15788,
+      "size": [
+        1.08,
+        2.26,
+        0.331
+      ],
+      "bbox_min": [
+        -0.54,
+        0.0,
+        -0.0
+      ],
+      "bbox_max": [
+        0.54,
+        2.26,
+        0.331
+      ],
+      "materials": [
+        "base",
+        "deep",
+        "glow",
+        "white",
+        "accent2",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.0,
+          2.2,
+          0.5
+        ],
+        "center": [
+          0,
+          1.1,
+          -0.2
+        ]
+      },
+      "note": "caixa eletronico embutido em parede (costas em y=0): moldura, tela, teclado, fenda e luz verde",
+      "cull": "props"
+    },
+    "post_box_pillar": {
+      "file": "props_more/post_box_pillar.glb",
+      "family": "calcada",
+      "palette": "post_red",
+      "tris": 520,
+      "bytes": 15180,
+      "size": [
+        0.56,
+        1.61,
+        0.56
+      ],
+      "bbox_min": [
+        -0.28,
+        -0.0,
+        -0.28
+      ],
+      "bbox_max": [
+        0.28,
+        1.61,
+        0.28
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "trim",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.3,
+          1.5
+        ],
+        "center": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "note": "caixa de correio de coluna (vermelha ou azul pela paleta) com fenda, brasao e tampa",
+      "cull": "props"
+    },
+    "potted_olive": {
+      "file": "props_more/potted_olive.glb",
+      "family": "calcada",
+      "palette": "olive",
+      "tris": 798,
+      "bytes": 19540,
+      "size": [
+        1.133,
+        2.089,
+        1.07
+      ],
+      "bbox_min": [
+        -0.566,
+        -0.001,
+        -0.535
+      ],
+      "bbox_max": [
+        0.566,
+        2.088,
+        0.535
+      ],
+      "materials": [
+        "base",
+        "deep",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.45,
+          2.0
+        ],
+        "center": [
+          0,
+          1.0,
+          0
+        ]
+      },
+      "note": "oliveira em vaso de terracota (copa prateada de folhas), leve balanco do vento (folha)",
+      "cull": "props"
+    },
+    "topiary_planter": {
+      "file": "props_more/topiary_planter.glb",
+      "family": "calcada",
+      "palette": "gold",
+      "tris": 700,
+      "bytes": 20372,
+      "size": [
+        0.96,
+        2.178,
+        0.96
+      ],
+      "bbox_min": [
+        -0.48,
+        0.0,
+        -0.48
+      ],
+      "bbox_max": [
+        0.48,
+        2.178,
+        0.48
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "deep",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          0.9,
+          1.9,
+          0.9
+        ],
+        "center": [
+          0,
+          0.95,
+          0
+        ]
+      },
+      "note": "jardineira dourada quadrada com topiaria espiral e duas esferas (Avenida da Moda)",
+      "cull": "props"
+    },
+    "cafe_rug": {
+      "file": "props_more/cafe_rug.glb",
+      "family": "calcada",
+      "palette": "rug",
+      "tris": 420,
+      "bytes": 21296,
+      "size": [
+        2.52,
+        0.051,
+        1.5
+      ],
+      "bbox_min": [
+        -1.26,
+        0.0,
+        -0.75
+      ],
+      "bbox_max": [
+        1.26,
+        0.051,
+        0.75
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "accent2"
+      ],
+      "walkable": true,
+      "note": "tapete de entrada de cafe (2.4 x 1.5 m) com borda e franjas; rasteiro",
+      "cull": "props"
+    },
+    "fruit_stand": {
+      "file": "props_more/fruit_stand.glb",
+      "family": "feira",
+      "palette": "market",
+      "tris": 1300,
+      "bytes": 33084,
+      "size": [
+        2.841,
+        2.292,
+        1.153
+      ],
+      "bbox_min": [
+        -1.247,
+        0.002,
+        -0.484
+      ],
+      "bbox_max": [
+        1.594,
+        2.294,
+        0.669
+      ],
+      "materials": [
+        "seat",
+        "accent",
+        "base",
+        "deep",
+        "accent2",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.2,
+          2.2,
+          1.0
+        ],
+        "center": [
+          0,
+          1.1,
+          0
+        ]
+      },
+      "note": "barraca de frutas: mesa de madeira, caixotes de macas/laranjas/limoes, toldo listrado vermelho e creme",
+      "cull": "props"
+    },
+    "flower_kiosk": {
+      "file": "props_more/flower_kiosk.glb",
+      "family": "feira",
+      "palette": "forest",
+      "tris": 1300,
+      "bytes": 38772,
+      "size": [
+        3.3,
+        2.766,
+        2.019
+      ],
+      "bbox_min": [
+        -1.65,
+        -0.0,
+        -0.949
+      ],
+      "bbox_max": [
+        1.65,
+        2.766,
+        1.07
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "trim",
+        "accent",
+        "white",
+        "seat",
+        "leaf",
+        "accent2",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.4,
+          2.6,
+          1.8
+        ],
+        "center": [
+          0,
+          1.3,
+          0
+        ]
+      },
+      "note": "quiosque de flores verde-floresta: balcao, telhado inclinado, baldes laterais e placa dourada",
+      "cull": "props"
+    },
+    "hotdog_cart": {
+      "file": "props_more/hotdog_cart.glb",
+      "family": "feira",
+      "palette": "cartyel",
+      "tris": 892,
+      "bytes": 34712,
+      "size": [
+        2.3,
+        2.734,
+        2.3
+      ],
+      "bbox_min": [
+        -1.15,
+        -0.035,
+        -1.41
+      ],
+      "bbox_max": [
+        1.15,
+        2.699,
+        0.89
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "trim",
+        "glass",
+        "deep",
+        "white",
+        "accent2",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.6,
+          2.4,
+          1.0
+        ],
+        "center": [
+          0,
+          1.2,
+          0
+        ]
+      },
+      "note": "carrinho de cachorro-quente amarelo com guarda-sol listrado, chapa, garrafas de molho e 2 rodas",
+      "cull": "props"
+    },
+    "coffee_cart": {
+      "file": "props_more/coffee_cart.glb",
+      "family": "feira",
+      "palette": "wood",
+      "tris": 792,
+      "bytes": 29680,
+      "size": [
+        1.6,
+        2.235,
+        2.13
+      ],
+      "bbox_min": [
+        -1.1,
+        -0.035,
+        -0.915
+      ],
+      "bbox_max": [
+        0.5,
+        2.2,
+        1.215
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "accent",
+        "seat",
+        "white",
+        "base",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.0,
+          1.7,
+          2.4
+        ],
+        "center": [
+          0,
+          0.85,
+          0
+        ]
+      },
+      "note": "bicicleta-cafe: carga frontal com balcao, maquina de espresso, quadro de menu e guarda-sol pequeno",
+      "cull": "props"
+    },
+    "wall_lamp": {
+      "file": "props_more/wall_lamp.glb",
+      "family": "fachada",
+      "palette": "char",
+      "tris": 360,
+      "bytes": 11668,
+      "size": [
+        0.24,
+        0.52,
+        0.314
+      ],
+      "bbox_min": [
+        -0.12,
+        -0.11,
+        -0.0
+      ],
+      "bbox_max": [
+        0.12,
+        0.41,
+        0.314
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "glow"
+      ],
+      "walkable": false,
+      "note": "arandela de parede com lanterna (glow quente), costas em y=0",
+      "cull": "props"
+    },
+    "door_canopy": {
+      "file": "props_more/door_canopy.glb",
+      "family": "fachada",
+      "palette": "char",
+      "tris": 284,
+      "bytes": 9524,
+      "size": [
+        2.45,
+        0.963,
+        1.025
+      ],
+      "bbox_min": [
+        -1.225,
+        -0.093,
+        -0.0
+      ],
+      "bbox_max": [
+        1.225,
+        0.87,
+        1.025
+      ],
+      "materials": [
+        "glass",
+        "trim"
+      ],
+      "walkable": false,
+      "note": "marquise de vidro sobre a porta (2.4 x 1.0 m) com tirantes ate a parede",
+      "cull": "props"
+    },
+    "door_plate_12": {
+      "file": "props_more/door_plate_12.glb",
+      "family": "fachada",
+      "palette": "luxo",
+      "tris": 412,
+      "bytes": 21520,
+      "size": [
+        0.34,
+        0.92,
+        0.062
+      ],
+      "bbox_min": [
+        -0.17,
+        -0.46,
+        -0.0
+      ],
+      "bbox_max": [
+        0.17,
+        0.46,
+        0.062
+      ],
+      "materials": [
+        "base",
+        "accent2",
+        "white",
+        "deep",
+        "trim",
+        "glow"
+      ],
+      "walkable": false,
+      "note": "placa de porta: numero da casa, interfone com botoes e fenda de correio (costas em y=0)",
+      "cull": "props"
+    },
+    "door_plate_7": {
+      "file": "props_more/door_plate_7.glb",
+      "family": "fachada",
+      "palette": "char",
+      "tris": 348,
+      "bytes": 18696,
+      "size": [
+        0.34,
+        0.92,
+        0.062
+      ],
+      "bbox_min": [
+        -0.17,
+        -0.46,
+        -0.0
+      ],
+      "bbox_max": [
+        0.17,
+        0.46,
+        0.062
+      ],
+      "materials": [
+        "base",
+        "accent2",
+        "white",
+        "deep",
+        "trim",
+        "glow"
+      ],
+      "walkable": false,
+      "note": "placa de porta: numero da casa, interfone com botoes e fenda de correio (costas em y=0)",
+      "cull": "props"
+    },
+    "shop_awning": {
+      "file": "props_more/shop_awning.glb",
+      "family": "fachada",
+      "palette": "carnival",
+      "tris": 640,
+      "bytes": 16248,
+      "size": [
+        3.49,
+        0.727,
+        1.164
+      ],
+      "bbox_min": [
+        -1.745,
+        -0.468,
+        -0.004
+      ],
+      "bbox_max": [
+        1.745,
+        0.259,
+        1.16
+      ],
+      "materials": [
+        "accent",
+        "base",
+        "trim"
+      ],
+      "walkable": false,
+      "note": "toldo de loja listrado (3.4 m) com babado, tirantes e haste; accent = cor da loja (override)",
+      "cull": "props"
+    },
+    "wall_ac_unit": {
+      "file": "props_more/wall_ac_unit.glb",
+      "family": "fachada",
+      "palette": "wall_tan",
+      "tris": 312,
+      "bytes": 13216,
+      "size": [
+        0.8,
+        1.079,
+        0.506
+      ],
+      "bbox_min": [
+        -0.4,
+        -0.804,
+        -0.005
+      ],
+      "bbox_max": [
+        0.4,
+        0.275,
+        0.501
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "accent"
+      ],
+      "walkable": false,
+      "note": "ar-condicionado de parede (split externo) com grade e dreno",
+      "cull": "props"
+    },
+    "rooftop_ac_pair": {
+      "file": "props_more/rooftop_ac_pair.glb",
+      "family": "telhado",
+      "palette": "wall_tan",
+      "tris": 480,
+      "bytes": 21752,
+      "size": [
+        3.0,
+        1.058,
+        1.438
+      ],
+      "bbox_min": [
+        -1.5,
+        0.0,
+        -0.788
+      ],
+      "bbox_max": [
+        1.5,
+        1.058,
+        0.65
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "trim",
+        "accent"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          3.0,
+          1.1,
+          1.3
+        ],
+        "center": [
+          0,
+          0.55,
+          0
+        ]
+      },
+      "note": "duas unidades condensadoras de telhado sobre plataforma com tubulacao",
+      "cull": "props"
+    },
+    "rooftop_water_tank": {
+      "file": "props_more/rooftop_water_tank.glb",
+      "family": "telhado",
+      "palette": "wood",
+      "tris": 700,
+      "bytes": 20028,
+      "size": [
+        2.143,
+        3.976,
+        2.127
+      ],
+      "bbox_min": [
+        -1.072,
+        -0.006,
+        -1.064
+      ],
+      "bbox_max": [
+        1.072,
+        3.97,
+        1.064
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "trim",
+        "accent"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          1.1,
+          4.0
+        ],
+        "center": [
+          0,
+          2.0,
+          0
+        ]
+      },
+      "note": "caixa d'agua de madeira sobre estrutura de aco com escada e teto conico",
+      "cull": "props"
+    },
+    "rooftop_dish": {
+      "file": "props_more/rooftop_dish.glb",
+      "family": "telhado",
+      "palette": "wall_tan",
+      "tris": 308,
+      "bytes": 10524,
+      "size": [
+        1.12,
+        1.497,
+        0.85
+      ],
+      "bbox_min": [
+        -0.56,
+        0.0,
+        -0.25
+      ],
+      "bbox_max": [
+        0.56,
+        1.497,
+        0.6
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "base"
+      ],
+      "walkable": false,
+      "note": "antena parabolica de telhado (prato branco, braco e LNB)",
+      "cull": "props"
+    },
+    "rooftop_antenna": {
+      "file": "props_more/rooftop_antenna.glb",
+      "family": "telhado",
+      "palette": "char",
+      "tris": 258,
+      "bytes": 11028,
+      "size": [
+        1.566,
+        3.014,
+        1.454
+      ],
+      "bbox_min": [
+        -0.771,
+        -0.002,
+        -0.55
+      ],
+      "bbox_max": [
+        0.795,
+        3.012,
+        0.904
+      ],
+      "materials": [
+        "deep",
+        "trim"
+      ],
+      "walkable": false,
+      "note": "mastro de antena TV (yagi) com cabos de estai",
+      "cull": "props"
+    },
+    "rooftop_garden": {
+      "file": "props_more/rooftop_garden.glb",
+      "family": "telhado",
+      "palette": "garden",
+      "tris": 1100,
+      "bytes": 31068,
+      "size": [
+        4.992,
+        2.358,
+        2.992
+      ],
+      "bbox_min": [
+        -2.496,
+        0.004,
+        -1.496
+      ],
+      "bbox_max": [
+        2.496,
+        2.362,
+        1.496
+      ],
+      "materials": [
+        "seat",
+        "accent",
+        "deep",
+        "leaf",
+        "accent2",
+        "soft",
+        "white",
+        "base"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          5.0,
+          1.6,
+          3.0
+        ],
+        "center": [
+          0,
+          0.8,
+          0
+        ]
+      },
+      "note": "jardim de cobertura: deck, canteiros, mini arvores, banco e estrutura de pergola (5 x 3 m)",
+      "cull": "props"
+    },
+    "flag_wall": {
+      "file": "props_more/flag_wall.glb",
+      "family": "fachada",
+      "palette": "navy",
+      "tris": 322,
+      "bytes": 17516,
+      "size": [
+        1.942,
+        1.08,
+        0.241
+      ],
+      "bbox_min": [
+        -0.07,
+        -0.19,
+        -0.0
+      ],
+      "bbox_max": [
+        1.872,
+        0.89,
+        0.241
+      ],
+      "materials": [
+        "trim",
+        "accent",
+        "white",
+        "accent2"
+      ],
+      "walkable": false,
+      "note": "bandeira de parede (mastro inclinado, pano tricolor generico); pano = accent/accent2/white, vento",
+      "cull": "props"
+    },
+    "flag_roof": {
+      "file": "props_more/flag_roof.glb",
+      "family": "telhado",
+      "palette": "char",
+      "tris": 388,
+      "bytes": 20740,
+      "size": [
+        1.772,
+        5.96,
+        0.266
+      ],
+      "bbox_min": [
+        -0.14,
+        0.0,
+        -0.133
+      ],
+      "bbox_max": [
+        1.632,
+        5.96,
+        0.133
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "accent",
+        "white",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.12,
+          6.0
+        ],
+        "center": [
+          0,
+          3.0,
+          0
+        ]
+      },
+      "note": "mastro de bandeira de telhado (6 m) com pano",
+      "cull": "props"
+    },
+    "banner_arm": {
+      "file": "props_more/banner_arm.glb",
+      "family": "poste",
+      "palette": "char",
+      "tris": 336,
+      "bytes": 20136,
+      "size": [
+        0.905,
+        2.17,
+        0.266
+      ],
+      "bbox_min": [
+        -0.455,
+        1.42,
+        -0.09
+      ],
+      "bbox_max": [
+        0.45,
+        3.59,
+        0.176
+      ],
+      "materials": [
+        "trim",
+        "accent",
+        "soft",
+        "white",
+        "accent2"
+      ],
+      "walkable": false,
+      "note": "faixa vertical pendurada em poste de rua (braco em T, pano 0.7 x 2.0 m); gira em Z; origem = eixo do poste; vento",
+      "cull": "props"
+    },
+    "ad_dress": {
+      "file": "props_more/ad_dress.glb",
+      "family": "fachada",
+      "palette": "ad",
+      "tris": 252,
+      "bytes": 15164,
+      "size": [
+        2.5,
+        3.5,
+        0.292
+      ],
+      "bbox_min": [
+        -1.25,
+        -1.75,
+        -0.0
+      ],
+      "bbox_max": [
+        1.25,
+        1.75,
+        0.292
+      ],
+      "materials": [
+        "deep",
+        "glow",
+        "soft",
+        "accent2",
+        "white",
+        "accent"
+      ],
+      "walkable": false,
+      "note": "outdoor de parede: silhueta de vestido (graficos genericos); costas em y=0; 2.4 x 3.4 m com luz de fundo",
+      "cull": "props"
+    },
+    "ad_sun": {
+      "file": "props_more/ad_sun.glb",
+      "family": "fachada",
+      "palette": "ad",
+      "tris": 416,
+      "bytes": 19284,
+      "size": [
+        2.5,
+        3.5,
+        0.286
+      ],
+      "bbox_min": [
+        -1.25,
+        -1.75,
+        -0.0
+      ],
+      "bbox_max": [
+        1.25,
+        1.75,
+        0.286
+      ],
+      "materials": [
+        "deep",
+        "glow",
+        "base",
+        "accent",
+        "soft",
+        "accent2"
+      ],
+      "walkable": false,
+      "note": "outdoor de parede: sol e faixas; costas em y=0; 2.4 x 3.4 m com luz de fundo",
+      "cull": "props"
+    },
+    "ad_lines": {
+      "file": "props_more/ad_lines.glb",
+      "family": "fachada",
+      "palette": "ad",
+      "tris": 288,
+      "bytes": 14252,
+      "size": [
+        2.5,
+        3.5,
+        0.297
+      ],
+      "bbox_min": [
+        -1.25,
+        -1.75,
+        -0.0
+      ],
+      "bbox_max": [
+        1.25,
+        1.75,
+        0.297
+      ],
+      "materials": [
+        "deep",
+        "glow",
+        "soft",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "note": "outdoor de parede: batom e circulo; costas em y=0; 2.4 x 3.4 m com luz de fundo",
+      "cull": "props"
+    },
+    "mural_arches": {
+      "file": "props_more/mural_arches.glb",
+      "family": "fachada",
+      "palette": "mural",
+      "tris": 480,
+      "bytes": 20808,
+      "size": [
+        3.6,
+        2.4,
+        0.056
+      ],
+      "bbox_min": [
+        -1.8,
+        -1.2,
+        -0.0
+      ],
+      "bbox_max": [
+        1.8,
+        1.2,
+        0.056
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "soft",
+        "accent2",
+        "deep"
+      ],
+      "walkable": false,
+      "note": "mural de arcos terracota/azul/ocre; painel de parede 3.6 x 2.4 m, costas em y=0",
+      "cull": "props"
+    },
+    "mural_sunset": {
+      "file": "props_more/mural_sunset.glb",
+      "family": "fachada",
+      "palette": "mural",
+      "tris": 192,
+      "bytes": 12660,
+      "size": [
+        3.6,
+        2.4,
+        0.076
+      ],
+      "bbox_min": [
+        -1.8,
+        -1.2,
+        -0.0
+      ],
+      "bbox_max": [
+        1.8,
+        1.2,
+        0.076
+      ],
+      "materials": [
+        "base",
+        "accent2",
+        "soft",
+        "deep",
+        "accent"
+      ],
+      "walkable": false,
+      "note": "mural de por do sol e faixas; painel de parede 3.6 x 2.4 m, costas em y=0",
+      "cull": "props"
+    },
+    "mural_leaves": {
+      "file": "props_more/mural_leaves.glb",
+      "family": "fachada",
+      "palette": "mural",
+      "tris": 808,
+      "bytes": 25768,
+      "size": [
+        3.6,
+        2.4,
+        0.066
+      ],
+      "bbox_min": [
+        -1.8,
+        -1.2,
+        -0.0
+      ],
+      "bbox_max": [
+        1.8,
+        1.2,
+        0.066
+      ],
+      "materials": [
+        "base",
+        "deep",
+        "soft",
+        "accent",
+        "accent2"
+      ],
+      "walkable": false,
+      "note": "mural de folhas graficas; painel de parede 3.6 x 2.4 m, costas em y=0",
+      "cull": "props"
+    },
+    "window_display_dress": {
+      "file": "props_more/window_display_dress.glb",
+      "family": "vitrine",
+      "palette": "luxo",
+      "tris": 800,
+      "bytes": 22760,
+      "size": [
+        2.989,
+        2.62,
+        0.924
+      ],
+      "bbox_min": [
+        -1.495,
+        0.0,
+        -0.197
+      ],
+      "bbox_max": [
+        1.495,
+        2.62,
+        0.727
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "white",
+        "glow",
+        "accent2"
+      ],
+      "walkable": false,
+      "note": "vitrine de luxo: dois manequins com vestidos, moldura dourada e luz; costas em y=0 (2.8 x 2.5 m, 0.6 de profundidade)",
+      "cull": "props"
+    },
+    "window_display_bags": {
+      "file": "props_more/window_display_bags.glb",
+      "family": "vitrine",
+      "palette": "luxo",
+      "tris": 600,
+      "bytes": 19140,
+      "size": [
+        3.0,
+        2.62,
+        0.6
+      ],
+      "bbox_min": [
+        -1.5,
+        0.0,
+        -0.0
+      ],
+      "bbox_max": [
+        1.5,
+        2.62,
+        0.6
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "white",
+        "glow",
+        "accent2",
+        "accent"
+      ],
+      "walkable": false,
+      "note": "vitrine: bolsas em pedestais de alturas diferentes; 2.8 x 2.5 m",
+      "cull": "props"
+    },
+    "window_display_shoes": {
+      "file": "props_more/window_display_shoes.glb",
+      "family": "vitrine",
+      "palette": "luxo",
+      "tris": 800,
+      "bytes": 26732,
+      "size": [
+        2.983,
+        2.612,
+        0.592
+      ],
+      "bbox_min": [
+        -1.492,
+        0.0,
+        -0.0
+      ],
+      "bbox_max": [
+        1.492,
+        2.612,
+        0.592
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "white",
+        "glow",
+        "accent2",
+        "accent",
+        "soft"
+      ],
+      "walkable": false,
+      "note": "vitrine: pirâmide de sapatos de salto em prateleiras; 2.8 x 2.5 m",
+      "cull": "props"
+    },
+    "arcade_machine": {
+      "file": "props_more/arcade_machine.glb",
+      "family": "neon",
+      "palette": "arcade",
+      "tris": 616,
+      "bytes": 22956,
+      "size": [
+        0.8,
+        1.9,
+        0.989
+      ],
+      "bbox_min": [
+        -0.4,
+        0.0,
+        -0.5
+      ],
+      "bbox_max": [
+        0.4,
+        1.9,
+        0.489
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "glow",
+        "accent2",
+        "soft",
+        "accent",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          0.9,
+          1.9,
+          0.9
+        ],
+        "center": [
+          0,
+          0.95,
+          0
+        ]
+      },
+      "note": "fliperama vertical: gabinete escuro, letreiro e tela em brilho, joystick e botoes (frente -Y)",
+      "cull": "props"
+    },
+    "neon_arrow_sign": {
+      "file": "props_more/neon_arrow_sign.glb",
+      "family": "neon",
+      "palette": "neon",
+      "tris": 592,
+      "bytes": 15556,
+      "size": [
+        1.695,
+        2.496,
+        0.546
+      ],
+      "bbox_min": [
+        -0.8,
+        0.0,
+        -0.273
+      ],
+      "bbox_max": [
+        0.895,
+        2.496,
+        0.273
+      ],
+      "materials": [
+        "deep",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.4,
+          2.8
+        ],
+        "center": [
+          0,
+          1.4,
+          0
+        ]
+      },
+      "note": "seta de neon em poste (indica a entrada do Lounge/Palco), contorno em brilho",
+      "cull": "props"
+    },
+    "gold_planter": {
+      "file": "props_more/gold_planter.glb",
+      "family": "moda",
+      "palette": "gold",
+      "tris": 488,
+      "bytes": 15068,
+      "size": [
+        1.6,
+        1.6,
+        0.66
+      ],
+      "bbox_min": [
+        -0.8,
+        0.0,
+        -0.33
+      ],
+      "bbox_max": [
+        0.8,
+        1.6,
+        0.33
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "deep",
+        "accent",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.5,
+          1.3,
+          0.7
+        ],
+        "center": [
+          0,
+          0.65,
+          0
+        ]
+      },
+      "note": "jardineira dourada longa com cerca-viva aparada e duas esferas (Avenida da Moda)",
+      "cull": "props"
+    },
+    "limo_black": {
+      "file": "props_more/limo_black.glb",
+      "family": "veiculo",
+      "palette": "car_black",
+      "tris": 1000,
+      "bytes": 28180,
+      "size": [
+        2.135,
+        1.66,
+        6.263
+      ],
+      "bbox_min": [
+        -1.067,
+        0.0,
+        -3.123
+      ],
+      "bbox_max": [
+        1.067,
+        1.66,
+        3.14
+      ],
+      "materials": [
+        "base",
+        "glass",
+        "accent2",
+        "trim",
+        "glow",
+        "accent",
+        "deep"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.1,
+          1.5,
+          6.2
+        ],
+        "center": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "note": "limusine preta com friso dourado estacionada (chauffeur car), 6.2 m",
+      "cull": "props"
+    },
+    "dog_park_fence": {
+      "file": "props_more/dog_park_fence.glb",
+      "family": "parque",
+      "palette": "forest",
+      "tris": 488,
+      "bytes": 19564,
+      "size": [
+        3.08,
+        1.305,
+        0.08
+      ],
+      "bbox_min": [
+        -1.54,
+        0.0,
+        -0.04
+      ],
+      "bbox_max": [
+        1.54,
+        1.305,
+        0.04
+      ],
+      "materials": [
+        "base",
+        "deep"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          3.0,
+          1.2,
+          0.1
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "trecho de cerca de cachorródromo (3 m, verde-floresta, malha de tubos)",
+      "cull": "props"
+    },
+    "dog_agility": {
+      "file": "props_more/dog_agility.glb",
+      "family": "parque",
+      "palette": "play",
+      "tris": 688,
+      "bytes": 26852,
+      "size": [
+        4.06,
+        1.127,
+        1.862
+      ],
+      "bbox_min": [
+        -1.8,
+        -0.005,
+        -1.126
+      ],
+      "bbox_max": [
+        2.26,
+        1.122,
+        0.736
+      ],
+      "materials": [
+        "accent2",
+        "accent",
+        "deep",
+        "soft",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          4.5,
+          1.3,
+          2.8
+        ],
+        "center": [
+          0,
+          0.65,
+          0
+        ]
+      },
+      "note": "percurso de agilidade para cachorros: arco-aro, rampa A, tunel e 4 estacas de slalom",
+      "cull": "props"
+    },
+    "outdoor_gym": {
+      "file": "props_more/outdoor_gym.glb",
+      "family": "parque",
+      "palette": "concrete",
+      "tris": 440,
+      "bytes": 18764,
+      "size": [
+        3.2,
+        2.4,
+        2.5
+      ],
+      "bbox_min": [
+        -1.6,
+        0.0,
+        -1.4
+      ],
+      "bbox_max": [
+        1.6,
+        2.4,
+        1.1
+      ],
+      "materials": [
+        "accent",
+        "accent2",
+        "trim",
+        "deep",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          3.0,
+          2.4,
+          1.6
+        ],
+        "center": [
+          0,
+          1.2,
+          0
+        ]
+      },
+      "note": "academia ao ar livre: barra fixa alta, paralelas, banco de abdominal e piso de borracha (3 x 2 m)",
+      "cull": "props"
+    },
+    "picnic_blanket": {
+      "file": "props_more/picnic_blanket.glb",
+      "family": "parque",
+      "palette": "blanket",
+      "tris": 784,
+      "bytes": 38504,
+      "size": [
+        2.17,
+        0.33,
+        2.14
+      ],
+      "bbox_min": [
+        -1.085,
+        0.0,
+        -1.07
+      ],
+      "bbox_max": [
+        1.085,
+        0.33,
+        1.07
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "deep",
+        "seat",
+        "accent2",
+        "white"
+      ],
+      "walkable": true,
+      "note": "manta xadrez de piquenique com cesta e copos; rasteira 2.2 x 2.2",
+      "cull": "props"
+    },
+    "lake_pier": {
+      "file": "props_more/lake_pier.glb",
+      "family": "parque",
+      "palette": "pier",
+      "tris": 900,
+      "bytes": 31152,
+      "size": [
+        2.38,
+        2.56,
+        8.0
+      ],
+      "bbox_min": [
+        -1.19,
+        -0.3,
+        -4.0
+      ],
+      "bbox_max": [
+        1.19,
+        2.26,
+        4.0
+      ],
+      "materials": [
+        "accent",
+        "base",
+        "deep",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.4,
+          0.6,
+          8.0
+        ],
+        "center": [
+          0,
+          0.3,
+          0
+        ]
+      },
+      "note": "pier de madeira (2.4 x 8 m) com postes, guarda-corpo, lanterna e escada; o inicio fica na margem, o resto avanca sobre a agua",
+      "cull": "props"
+    },
+    "rowboat": {
+      "file": "props_more/rowboat.glb",
+      "family": "parque",
+      "palette": "boat",
+      "tris": 532,
+      "bytes": 18768,
+      "size": [
+        3.442,
+        0.619,
+        2.925
+      ],
+      "bbox_min": [
+        -1.721,
+        0.05,
+        -1.462
+      ],
+      "bbox_max": [
+        1.721,
+        0.669,
+        1.462
+      ],
+      "materials": [
+        "base",
+        "seat",
+        "accent",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.2,
+          0.6,
+          3.0
+        ],
+        "center": [
+          0,
+          0.3,
+          0
+        ]
+      },
+      "note": "barco a remo creme com friso azul, bancos e remos (para amarrar ao pier)",
+      "cull": "props"
+    },
+    "scaffold_tower": {
+      "file": "props_more/scaffold_tower.glb",
+      "family": "obra",
+      "palette": "scaffold",
+      "tris": 1200,
+      "bytes": 47076,
+      "size": [
+        2.845,
+        6.453,
+        1.7
+      ],
+      "bbox_min": [
+        -1.4,
+        -0.0,
+        -0.85
+      ],
+      "bbox_max": [
+        1.445,
+        6.453,
+        0.85
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "soft",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.7,
+          6.5,
+          1.7
+        ],
+        "center": [
+          0,
+          3.25,
+          0
+        ]
+      },
+      "note": "torre de andaime galvanizado (2.6 x 1.6 x 6.4 m, 3 niveis com pranchas, escada e travessas em X)",
+      "cull": "props"
+    },
+    "site_hut": {
+      "file": "props_more/site_hut.glb",
+      "family": "obra",
+      "palette": "cone",
+      "tris": 700,
+      "bytes": 28504,
+      "size": [
+        3.445,
+        2.79,
+        7.016
+      ],
+      "bbox_min": [
+        -1.595,
+        0.0,
+        -3.022
+      ],
+      "bbox_max": [
+        1.85,
+        2.79,
+        3.995
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "deep",
+        "soft",
+        "trim",
+        "glass",
+        "accent2",
+        "white",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.6,
+          2.5,
+          6.0
+        ],
+        "center": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "note": "container-barraca de obra laranja (6 x 2.5 m) com porta, janela, tendinha e ar-condicionado",
+      "cull": "props"
+    },
+    "cement_mixer": {
+      "file": "props_more/cement_mixer.glb",
+      "family": "obra",
+      "palette": "cone",
+      "tris": 598,
+      "bytes": 18720,
+      "size": [
+        1.382,
+        1.778,
+        1.521
+      ],
+      "bbox_min": [
+        -0.582,
+        -0.043,
+        -1.001
+      ],
+      "bbox_max": [
+        0.8,
+        1.735,
+        0.52
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "base",
+        "accent"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.3,
+          1.5,
+          1.6
+        ],
+        "center": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "note": "betoneira fofa laranja com tambor listrado, cuba inclinada, 2 rodas e manivela",
+      "cull": "props"
+    },
+    "hopscotch": {
+      "file": "props_more/hopscotch.glb",
+      "family": "parque",
+      "palette": "chalk",
+      "tris": 336,
+      "bytes": 19064,
+      "size": [
+        1.49,
+        0.007,
+        3.337
+      ],
+      "bbox_min": [
+        -0.745,
+        0.001,
+        -1.992
+      ],
+      "bbox_max": [
+        0.745,
+        0.007,
+        1.345
+      ],
+      "materials": [
+        "accent2",
+        "base",
+        "soft",
+        "white"
+      ],
+      "walkable": true,
+      "note": "amarelinha riscada a giz (rasteira): quadrados em 1-2-1-2-1-2-semi-circulo",
+      "cull": "props"
+    },
+    "bird_bath": {
+      "file": "props_more/bird_bath.glb",
+      "family": "parque",
+      "palette": "stone",
+      "tris": 449,
+      "bytes": 14344,
+      "size": [
+        0.833,
+        0.99,
+        0.821
+      ],
+      "bbox_min": [
+        -0.416,
+        -0.0,
+        -0.41
+      ],
+      "bbox_max": [
+        0.416,
+        0.99,
+        0.41
+      ],
+      "materials": [
+        "accent",
+        "base",
+        "water",
+        "deep",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.4,
+          1.0
+        ],
+        "center": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "note": "banho de passaros em pedra com agua e um pardal",
       "cull": "props"
     }
   }

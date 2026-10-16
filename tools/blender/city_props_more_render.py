@@ -61,7 +61,7 @@ for n in names:
                 mx = Vector((max(mx.x, w.x), max(mx.y, w.y), max(mx.z, w.z)))
     roots.append(e)
     sizes.append(max(mx.x - mn.x, mx.y - mn.y, 1.0))
-cell = max(sizes) * 1.15
+cell = float(opt("--cell", max(sizes) * 1.15))
 rows = math.ceil(len(roots) / COLS)
 cols = min(COLS, len(roots))
 for i, e in enumerate(roots):
@@ -95,8 +95,8 @@ s.data.color = lin("#fff1dc")[:3]
 
 W = cell * cols
 H = cell * rows
-dist = max(W * 0.95, H * 1.5) + 4
-tgt = Vector((0, 0, 1.0))
+dist = (max(W * 0.95, H * 1.5) + 4) * float(opt("--k", 1))
+tgt = Vector((0, 0, float(opt("--tz", 1.0))))
 loc = Vector((0, -dist * 1.05, dist * 0.62))
 bpy.ops.object.camera_add(location=loc)
 cam = bpy.context.active_object
