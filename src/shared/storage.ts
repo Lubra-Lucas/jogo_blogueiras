@@ -30,4 +30,5 @@ export const STORAGE_KEYS = {
   profile: 'jb.profile.v1',
   quality: 'jb.quality.v1',
   settings: 'jb.settings.v1',
+  looks: 'jb.looks.v1',
 } as const

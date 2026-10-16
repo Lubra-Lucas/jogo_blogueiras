@@ -1,11 +1,12 @@
 from lib import mkpal
+# Paletas de MUNDO REAL (sem rosa-doce, exceto a suite da Casa dos Sonhos). Espelhadas em src/game/interiors/layouts/*.ts
 PALS = {
- "shared": mkpal("Compartilhado", "#fff0ea", "#f8c3d8", "#f06aa4", "#ead2f2", "#b03a74", "#f6a3c4", "gold", glass="#ffc4dc"),
- "casa": mkpal("Casa dos Sonhos", "#fff0ea", "#f8c3d8", "#f06aa4", "#ead2f2", "#b03a74", "#f6a3c4", "gold", glass="#ffc4dc", glow="#ffd9a0"),
- "cafe": mkpal("Cafe Rose", "#a9e3cb", "#fff3ea", "#e0405a", "#ffd9c9", "#7a2a3a", "#e8697e", "rose_gold", glass="#ffc9c0", glow="#ffe0b0", glow2="#ff6f91"),
- "salao": mkpal("Salao & Spa", "#c1a5ea", "#f3ecfc", "#9461d6", "#e0d0f8", "#4f3480", "#b08ae8", "silver", glass="#e3ccff", glow="#ffe8f6"),
- "boutique": mkpal("Boutique", "#9fcbf3", "#fffaf6", "#5a9de0", "#d2e6fb", "#2f5a8f", "#8fb8ec", "champagne", glass="#cfe6ff", glow="#fff0c8"),
- "joalheria": mkpal("Joalheria", "#1b1820", "#2f2a38", "#8a2f4a", "#4a4256", "#0f0d12", "#6a2444", "champagne", glass="#b8a2d0", glow="#ffe2a0", white="#e4d3ae", sheen=0.25),
- "estudio": mkpal("Estudio de Fotos", "#ffc2a8", "#fff3ea", "#ff7f6b", "#ffe0cf", "#a8483a", "#ff9d86", "chrome", glass="#ffd5c4", glow="#fff0d0"),
- "palco": mkpal("Palco Neon", "#2a1250", "#6a2d9c", "#ff4fd0", "#1b2a6a", "#150a30", "#8a3cc0", "silver", glass="#ff8be8", glow="#ff5ff0", glow2="#4ff0ff", white="#f6e8ff", glow_str=4.0),
+ "shared": mkpal("Compartilhado", "#efe6da", "#d9ccb8", "#a8553b", "#e0d4c0", "#3a3128", "#d9ccb6", "gold", glass="#dfe6e6", glow="#ffe9c4", leaf="#5f8a5e"),
+ "casa": mkpal("Casa dos Sonhos", "#f1e1dc", "#e3bcc4", "#b9677d", "#efd6d4", "#6e4350", "#e8c0c8", "gold", glass="#f3d9de", glow="#ffe3b8", white="#fbf5f0", leaf="#5f8a5e"),
+ "cafe": mkpal("Cafe Rose", "#8fa88c", "#f1e6d2", "#a8553b", "#d9c3a0", "#4a3426", "#9bb39a", "rose_gold", glass="#d8e6dd", glow="#ffe2ae", glow2="#ffb27a", white="#f6efe0", leaf="#5f8a5e"),
+ "salao": mkpal("Salao & Spa", "#b9ae9f", "#f2ece0", "#2b2a29", "#d8cfc2", "#3b3835", "#c9bfae", "gold", glass="#dfe6e6", glow="#ffeccf", white="#f6f1e8", leaf="#5f8a5e"),
+ "boutique": mkpal("Boutique", "#efe8da", "#2a2826", "#b08a5a", "#d9ccb8", "#1f1d1c", "#d8c8ae", "champagne", glass="#e3ebee", glow="#fff0cf", white="#fbf7ef", leaf="#5f8a5e"),
+ "joalheria": mkpal("Joalheria", "#17151a", "#26222b", "#6e1f33", "#3a343f", "#0c0b0e", "#6e1f33", "champagne", glass="#cdd5df", glow="#ffe6b0", white="#e6d8b8", leaf="#4f7a55", sheen=0.25),
+ "estudio": mkpal("Estudio de Fotos", "#8b8d90", "#f1f1ef", "#c79a6b", "#c9cbcd", "#1e1f21", "#4a4c50", "chrome", glass="#dbe3e8", glow="#fff3df", glow2="#ffd9a8", white="#fafafa", leaf="#5f8a5e"),
+ "palco": mkpal("Palco Neon", "#1e212c", "#2a3350", "#3b6bff", "#3a3f52", "#0d0f14", "#2b3558", "silver", glass="#9fd8ff", glow="#ff4fd0", glow2="#38e8ff", white="#e8ecf6", leaf="#4f7a55", glow_str=4.0),
 }

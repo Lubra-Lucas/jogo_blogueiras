@@ -17,6 +17,7 @@ bpy.ops.wm.read_factory_settings(use_empty=True)
 mods = {"shared": importlib.import_module("r_shared")}
 if ROOM != "shared":
     mods[ROOM] = importlib.import_module("r_" + ROOM)
+importlib.import_module("r_more")  # pecas extras
 SC = bpy.context.scene
 lib.build_mats(PALS[ROOM])
 BUILT = {}

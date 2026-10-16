@@ -1,3 +1,5 @@
+import { interiorBridge } from '../game/interiors/interiorBridge'
+import { useInteriorStore } from '../game/interiors/interiorStore'
 import { useEffect, useRef } from 'react'
 import { CITY } from '../game/world/city/layout'
 import { usePlayerStore } from '../state/playerStore'
@@ -8,6 +10,7 @@ const MINI_RADIUS_M = 85
 
 /** Minimapa redondo (canto superior direito, abaixo do FPS). Toque/clique abre o mapa grande; M tambem. */
 export function Minimap() {
+  const inside = useInteriorStore((s) => s.roomId !== null) // dentro de um interior o minimapa some
   const mini = useRef<HTMLCanvasElement>(null)
   const big = useRef<HTMLCanvasElement>(null)
   const open = useUiStore((st) => st.bigMapOpen)
@@ -37,7 +40,10 @@ export function Minimap() {
       raf = requestAnimationFrame(loop)
       if (now - last < 50) return
       last = now
-      const p = usePlayerStore.getState()
+      const ps = usePlayerStore.getState()
+      // dentro de um interior o mapa mostra a porta da loja
+      const mp = interiorBridge.active ? interiorBridge.mapPos : null
+      const p = mp ? { position: { x: mp.x, z: mp.z }, yaw: ps.yaw } : ps
       const m = mini.current
       if (m) {
         const css = m.clientWidth
@@ -67,9 +73,9 @@ export function Minimap() {
 
   return (
     <>
-      <button type="button" className="minimap" aria-label="Abrir mapa da cidade" onClick={() => setOpen(true)}>
+      {!inside && <button type="button" className="minimap" aria-label="Abrir mapa da cidade" onClick={() => setOpen(true)}>
         <canvas ref={mini} />
-      </button>
+      </button>}
       {open && (
         <div className="bigmap" onClick={() => setOpen(false)}>
           <div className="bigmap__panel" onClick={(e) => e.stopPropagation()}>

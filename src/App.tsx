@@ -21,6 +21,7 @@ import { ShopHost } from './ui/shop/ShopHost'
 import { useShopStore } from './ui/shop/shopStore'
 import { MarketHost, useMarketUi } from './ui/market'
 import { FastTravelFade } from './game/navigation/FastTravelFade'
+import { InteriorUi } from './ui/interiors/InteriorUi'
 
 const tier = getQuality()
 const settings = QUALITY_SETTINGS[tier]
@@ -64,6 +65,7 @@ export default function App() {
         {isTouch && !driving && <Joystick />}
         <InteractionPrompt />
         <SitPrompt />
+        <InteriorUi />
         <VehicleUi />
         <MinigameHost />
         <ShopHost />

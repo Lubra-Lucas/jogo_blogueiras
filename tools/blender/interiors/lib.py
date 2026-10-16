@@ -261,26 +261,48 @@ def flower(loc, r, petal, center="trim", n=6, rot=(0, 0, 0)):
     return P
 
 
+def leaf_blade(bm, base, az, el, L, W, droop=.9, fold=.12, n=6):
+    """folha em arco: fita afilada que sobe a `el` rad, tomba com `droop` e tem dobra central. base = (x,y,z)."""
+    dx, dy = cos(az), sin(az)
+    px, py = -dy, dx
+    rows = []
+    for i in range(n + 1):
+        t = i / n
+        h = L * t * cos(el * (1 - .55 * t))
+        z = L * (t * sin(el) - droop * t * t * .55)
+        w = W * (sin(pi * min(1.0, t ** .72)) ** .8) * (1 - .25 * t)
+        c = (base[0] + dx * h, base[1] + dy * h, base[2] + z)
+        row = [bm.verts.new((c[0] - px * w, c[1] - py * w, c[2] - w * fold * .6)),
+               bm.verts.new((c[0], c[1], c[2] + w * fold)),
+               bm.verts.new((c[0] + px * w, c[1] + py * w, c[2] - w * fold * .6))]
+        rows.append(row)
+    for i in range(n):
+        for k in range(2):
+            try:
+                bm.faces.new([rows[i][k], rows[i][k + 1], rows[i + 1][k + 1], rows[i + 1][k]])
+            except ValueError:
+                pass
+
+
 def potted_plant_parts(h=1.0, pot_r=.22, leaves=9, pot_mat="white", seed=1):
+    """vaso de ceramica com folhagem arqueada (folhas afiladas, comprimentos e inclinacoes variados)"""
     import random
     rnd = random.Random(seed)
-    P = [ck.lathe([(0, 0), (pot_r * .75, 0), (pot_r, pot_r * 1.15), (pot_r * 1.05, pot_r * 1.45), (pot_r * .9, pot_r * 1.45), (0, pot_r * 1.25)], pot_mat, n=22, smooth=1),
-         ck.cyl(pot_r * 1.08, .03, (0, 0, pot_r * 1.42), "trim", n=22, bevel=.01, seg=2)]
+    pr = pot_r
+    pot = [(0, 0), (pr * .62, 0), (pr * .8, pr * .12), (pr * 1.0, pr * .75), (pr * 1.06, pr * 1.3), (pr * 1.0, pr * 1.52), (pr * .88, pr * 1.5), (pr * .84, pr * 1.36), (0, pr * 1.3)]
+    P = [ck.lathe(pot, pot_mat, n=26, smooth=1),
+         ck.cyl(pr * 1.04, .022, (0, 0, pr * .42), "trim", n=26, bevel=.008, seg=2),
+         ck.cyl(pr * .86, .02, (0, 0, pr * 1.34), "deep", n=22)]
     bm = bmesh.new()
-    for k in range(leaves):
-        a = 2 * pi * k / leaves + rnd.random() * .5
-        tilt = .35 + rnd.random() * .6
-        ll = h * (.45 + rnd.random() * .35)
-        # folha = elipsoide achatado inclinado
-        bl = ck.bm_sphere(ll * .36, ll * .06, ll, 8, 5)
-        for v in bl.verts:
-            x, y, z = v.co.x, v.co.y, v.co.z + ll * .5
-            x2 = x * cos(tilt) + z * sin(tilt)
-            z2 = -x * sin(tilt) + z * cos(tilt)
-            v.co.x = x2 * cos(a) - y * sin(a)
-            v.co.y = x2 * sin(a) + y * cos(a)
-            v.co.z = z2
-        merge(bm, bl, (0, 0, pot_r * 1.4))
+    zb = pr * 1.36
+    total = max(7, leaves + 5)
+    for k in range(total):
+        a = 2 * pi * k / total + rnd.random() * .45
+        tall = k % 3 == 0
+        el = (1.15 + rnd.random() * .25) if tall else (.55 + rnd.random() * .5)
+        ll = h * ((.72 + rnd.random() * .25) if tall else (.45 + rnd.random() * .3))
+        ww = ll * (.12 + rnd.random() * .04)
+        leaf_blade(bm, (.02 * cos(a), .02 * sin(a), zb), a, el, ll, ww, droop=.7 + rnd.random() * .8, n=6)
     P.append(obj(bm, "leaf"))
     return P
 

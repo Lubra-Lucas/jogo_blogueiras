@@ -21,7 +21,7 @@ export function SitPrompt() {
   if (!nearest) return null
   return (
     <div className={`sit-prompt${stacked ? ' sit-prompt--stacked' : ''}`} key={nearest.id} role="status">
-      <span className="sit-name">Banco</span>
+      <span className="sit-name">{nearest.label ?? 'Banco'}</span>
       {isTouch ? (
         <button type="button" className="sit-btn" onClick={() => useSitStore.getState().sitDown(nearest)}>
           Sentar

@@ -3,9 +3,12 @@ import { locate } from '../game/world/city/layout'
 import { usePlayerStore } from '../state/playerStore'
 import { useProfileStore } from '../state/profileStore'
 import { useChatStore } from '../state/chatStore'
+import { interiorBridge } from '../game/interiors/interiorBridge'
+import { useInteriorStore } from '../game/interiors/interiorStore'
 
 /** Rotulo persistente da area atual + aviso "Você está em: ..." ao entrar em outra. */
 export function AreaInfo() {
+  const inside = useInteriorStore((s) => s.roomId !== null)
   const [name, setName] = useState('')
   const [toast, setToast] = useState<{ key: number; name: string } | null>(null)
 
@@ -19,6 +22,7 @@ export function AreaInfo() {
       raf = requestAnimationFrame(loop)
       const st = usePlayerStore.getState()
       if (!st.body) return // jogador ainda nao nasceu
+      if (interiorBridge.active) return // dentro de um interior a area continua a da porta
       const p = st.position
       const loc = locate(p.x, p.z)
       const n = loc.name
@@ -41,6 +45,7 @@ export function AreaInfo() {
     return () => cancelAnimationFrame(raf)
   }, [])
 
+  if (inside) return null // o nome da sala vem do InteriorUi; sem avisos de areas da cidade
   return (
     <>
       {name && <div className="hud-area">{name}</div>}

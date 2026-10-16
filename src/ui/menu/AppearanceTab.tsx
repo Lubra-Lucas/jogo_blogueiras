@@ -1,146 +1,110 @@
-import { useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { useAppearanceStore } from '../../state/appearanceStore'
-import { FINISH_LABELS, type Appearance, type SuitFinish } from '../../shared/appearance'
-import { BODY_SINGLES, FACE_MORPHS, MORPH_LABELS, MORPH_PAIRS, pairValue, withPairValue } from '../../game/character/morphConfig'
-import { hairList } from '../../game/character/outfit'
-import { RARITY_COLORS, tagsOf } from '../../game/character/itemTags'
-import { BipolarSlider, Slider, Swatches } from './controls'
-import { IconCheck, IconSave, IconUndo } from './icons'
-import { SLOT_ICONS } from './icons'
+import { IconSave } from './icons'
 import type { StageFocus } from './CharacterPreview'
+import { BodySection, BrowsSection, EyesSection, FaceSection, HairSection, LipsSection, LooksSection, MakeupSection, NailsSection, SkinSection } from './appearance/sections'
+import { CIconBody, CIconBrow, CIconCompare, CIconDice, CIconEye, CIconFace, CIconHair, CIconLips, CIconLooks, CIconMakeup, CIconNail, CIconRedo, CIconSkin, CIconUndo } from './appearance/icons'
+import { randomLook } from './appearance/random'
+import './appearance/appearance.css'
 
-type Section = 'rosto' | 'corpo' | 'pele' | 'cabelo'
-const SECTIONS: Array<{ id: Section; label: string; focus: StageFocus }> = [
-  { id: 'rosto', label: 'Rosto', focus: 'face' },
-  { id: 'corpo', label: 'Corpo', focus: 'body' },
-  { id: 'pele', label: 'Pele & Maquiagem', focus: 'face' },
-  { id: 'cabelo', label: 'Cabelo', focus: 'hair' },
+type Cat = 'looks' | 'rosto' | 'olhos' | 'sobrancelhas' | 'labios' | 'maquiagem' | 'pele' | 'corpo' | 'cabelo' | 'unhas'
+
+/** Categorias do criador: o enquadramento da camera acompanha (close no rosto ao editar rosto/maquiagem). */
+const CATS: Array<{ id: Cat; label: string; focus: StageFocus; icon: ReactNode; view: () => ReactNode }> = [
+  { id: 'looks', label: 'Looks', focus: 'body', icon: <CIconLooks />, view: () => <LooksSection /> },
+  { id: 'rosto', label: 'Rosto', focus: 'face', icon: <CIconFace />, view: () => <FaceSection /> },
+  { id: 'olhos', label: 'Olhos', focus: 'eyes', icon: <CIconEye />, view: () => <EyesSection /> },
+  { id: 'sobrancelhas', label: 'Sobrancelhas', focus: 'eyes', icon: <CIconBrow />, view: () => <BrowsSection /> },
+  { id: 'labios', label: 'Lábios', focus: 'mouth', icon: <CIconLips />, view: () => <LipsSection /> },
+  { id: 'maquiagem', label: 'Maquiagem', focus: 'face', icon: <CIconMakeup />, view: () => <MakeupSection /> },
+  { id: 'pele', label: 'Pele', focus: 'torso', icon: <CIconSkin />, view: () => <SkinSection /> },
+  { id: 'corpo', label: 'Corpo', focus: 'body', icon: <CIconBody />, view: () => <BodySection /> },
+  { id: 'cabelo', label: 'Cabelo', focus: 'hair', icon: <CIconHair />, view: () => <HairSection /> },
+  { id: 'unhas', label: 'Unhas', focus: 'hands', icon: <CIconNail />, view: () => <NailsSection /> },
 ]
 
-const SKIN_TONES = ['#fbe3d6', '#efcdbd', '#e3b89a', '#cf9a74', '#a87050', '#7a4a30', '#5a3422']
-const LIP_COLORS = ['#da7076', '#e8909a', '#c93c5f', '#a8566e', '#ff6fa5', '#b0243a', '#8a4a5a', '#e9b3a8']
-const SUIT_COLORS = ['#f39ab3', '#ffb3d1', '#c8a4ff', '#9fd8f5', '#9ff0d0', '#ffe9a8', '#16141a', '#ffffff']
-const HAIR_COLORS = ['#f0d78c', '#d8b46e', '#c08a4e', '#816b58', '#3a2417', '#16110e', '#e8dcc8', '#e0587e', '#8f6bf0', '#4fb7e8']
-
 export function AppearanceTab({ onFocus }: { onFocus: (f: StageFocus) => void }) {
-  const [section, setSection] = useState<Section>('rosto')
+  const [cat, setCat] = useState<Cat>('rosto')
   const appearance = useAppearanceStore((s) => s.appearance)
   const saved = useAppearanceStore((s) => s.saved)
-  const setAppearance = useAppearanceStore((s) => s.setAppearance)
+  const past = useAppearanceStore((s) => s.past.length)
+  const future = useAppearanceStore((s) => s.future.length)
+  const compare = useAppearanceStore((s) => s.compare)
+  const setCompare = useAppearanceStore((s) => s.setCompare)
   const save = useAppearanceStore((s) => s.save)
   const revert = useAppearanceStore((s) => s.revert)
+  const undo = useAppearanceStore((s) => s.undo)
+  const redo = useAppearanceStore((s) => s.redo)
   const [justSaved, setJustSaved] = useState(false)
 
   const dirty = JSON.stringify(appearance) !== JSON.stringify(saved)
-  const patch = (p: Partial<Appearance>) => setAppearance({ ...appearance, ...p })
-  const setMorph = (name: string, v: number) => patch({ morphs: { ...appearance.morphs, [name]: v } })
-  const lips = appearance.lips ?? { color: '#da7076', gloss: 0.5 }
+  const cur = CATS.find((c) => c.id === cat)!
 
-  const go = (s: Section) => {
-    setSection(s)
-    onFocus(SECTIONS.find((x) => x.id === s)!.focus)
+  // ao sair da aba, o antes/depois desliga
+  useEffect(() => () => useAppearanceStore.getState().setCompare(false), [])
+  // Ctrl+Z / Ctrl+Shift+Z (fora de campos de texto)
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.ctrlKey || e.metaKey) || e.code !== 'KeyZ') return
+      const t = e.target
+      if (t instanceof HTMLElement && /^(INPUT|TEXTAREA)$/.test(t.tagName) && (t as HTMLInputElement).type !== 'range') return
+      e.preventDefault()
+      if (e.shiftKey) useAppearanceStore.getState().redo()
+      else useAppearanceStore.getState().undo()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const go = (c: (typeof CATS)[number]) => {
+    setCat(c.id)
+    onFocus(c.focus)
   }
 
   return (
-    <>
-      <div className="pills" role="tablist" aria-label="Seções da aparência">
-        {SECTIONS.map((s) => (
-          <button key={s.id} type="button" className="pill" aria-pressed={section === s.id} onClick={() => go(s.id)}>
-            {s.label}
+    <div className="cc">
+      <div className="cc__rail" role="tablist" aria-label="Categorias da aparência">
+        {CATS.map((c) => (
+          <button key={c.id} type="button" role="tab" className="cc__cat" aria-selected={cat === c.id} onClick={() => go(c)}>
+            {c.icon}
+            <span>{c.label}</span>
           </button>
         ))}
       </div>
 
-      <div className="panel">
-        {section === 'rosto' && (
-          <>
-            <h3>Rosto</h3>
-            {FACE_MORPHS.map((n) => (
-              <Slider key={n} label={MORPH_LABELS[n]} value={appearance.morphs[n] ?? 0} onChange={(v) => setMorph(n, v)} />
-            ))}
-          </>
-        )}
-
-        {section === 'corpo' && (
-          <>
-            <h3>Corpo</h3>
-            {MORPH_PAIRS.map((p) => (
-              <BipolarSlider key={p.id} label={p.label} minusLabel={p.minusLabel} plusLabel={p.plusLabel} value={pairValue(p, appearance.morphs)} onChange={(v) => patch({ morphs: withPairValue(p, appearance.morphs, v) })} />
-            ))}
-            {BODY_SINGLES.map((n) => (
-              <Slider key={n} label={MORPH_LABELS[n]} value={appearance.morphs[n] ?? 0} onChange={(v) => setMorph(n, v)} />
-            ))}
-          </>
-        )}
-
-        {section === 'pele' && (
-          <>
-            <h3>Pele &amp; Maquiagem</h3>
-            <div className="field-label">Tom de pele</div>
-            <Swatches colors={SKIN_TONES} value={appearance.skin.tone} onChange={(tone) => patch({ skin: { tone } })} label="Tom de pele" />
-            <div className="field-label">Batom</div>
-            <Swatches colors={LIP_COLORS} value={lips.color} onChange={(color) => patch({ lips: { ...lips, color } })} label="Cor do batom" />
-            <Slider label="Brilho dos lábios" value={lips.gloss} onChange={(gloss) => patch({ lips: { ...lips, gloss } })} />
-            <div className="field-label">Base do corpo</div>
-            <Swatches colors={SUIT_COLORS} value={appearance.suit.color} onChange={(color) => patch({ suit: { ...appearance.suit, color } })} label="Cor da base" />
-            <div className="field-label">Acabamento</div>
-            <div className="fin-chips">
-              {(Object.keys(FINISH_LABELS) as SuitFinish[]).map((f) => (
-                <button key={f} type="button" className="pill" aria-pressed={appearance.suit.finish === f} onClick={() => patch({ suit: { ...appearance.suit, finish: f } })}>
-                  {FINISH_LABELS[f]}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-
-        {section === 'cabelo' && (
-          <>
-            <h3>Cabelo</h3>
-            <div className="grid">
-              <button type="button" className="card" aria-pressed={!appearance.hair.id} onClick={() => patch({ hair: { ...appearance.hair, id: null } })}>
-                <span className="card__icon">{SLOT_ICONS.hair({ style: { color: '#b8b2c4' } })}</span>
-                Sem cabelo
-              </button>
-              {hairList().map((h) => (
-                <button
-                  key={h.id}
-                  type="button"
-                  className="card"
-                  style={{ ['--rar' as string]: RARITY_COLORS[tagsOf(h.id).rarity] }}
-                  aria-pressed={appearance.hair.id === h.id}
-                  onClick={() => patch({ hair: { id: h.id, color: h.defaultColor } })}
-                >
-                  <span className="card__icon">{SLOT_ICONS.hair({ style: { color: h.defaultColor } })}</span>
-                  {h.label}
-                  {appearance.hair.id === h.id && (
-                    <span className="card__eq">
-                      <IconCheck />
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-            <div className="field-label">Cor do cabelo</div>
-            <Swatches colors={HAIR_COLORS} value={appearance.hair.color} onChange={(color) => patch({ hair: { ...appearance.hair, color } })} label="Cor do cabelo" />
-          </>
-        )}
+      <div className="cc__tools" role="toolbar" aria-label="Ferramentas">
+        <button type="button" className="cc__tool" disabled={!past} onClick={undo} title="Desfazer (Ctrl+Z)">
+          <CIconUndo />
+          <span>Desfazer</span>
+        </button>
+        <button type="button" className="cc__tool" disabled={!future} onClick={redo} title="Refazer (Ctrl+Shift+Z)">
+          <CIconRedo />
+          <span>Refazer</span>
+        </button>
+        <button type="button" className="cc__tool" aria-pressed={compare} disabled={!dirty && !compare} onClick={() => setCompare(!compare)} title="Alterna entre o look salvo e o atual">
+          <CIconCompare />
+          <span>{compare ? 'Vendo o salvo' : 'Antes/depois'}</span>
+        </button>
+        <button type="button" className="cc__tool" onClick={() => useAppearanceStore.getState().setAppearance(randomLook(useAppearanceStore.getState().appearance, 'all'))} title="Sorteia rosto, corpo, cabelo e maquiagem">
+          <CIconDice />
+          <span>Aleatório</span>
+        </button>
       </div>
 
-      <div className="actions">
+      <div className="cc__body" key={cat}>
+        <h3 className="cc__title">{cur.label}</h3>
+        {cur.view()}
+      </div>
+
+      <div className="actions cc__foot">
         <button type="button" className="btn btn--primary" disabled={!dirty} onClick={() => (save(), setJustSaved(true), window.setTimeout(() => setJustSaved(false), 1800))}>
           <IconSave /> {justSaved && !dirty ? 'Salvo!' : 'Salvar'}
         </button>
         <button type="button" className="btn" disabled={!dirty} onClick={revert}>
-          <IconUndo /> Desfazer
+          Voltar ao salvo
         </button>
-        {(section === 'rosto' || section === 'corpo') && (
-          <button type="button" className="btn" onClick={() => patch({ morphs: Object.fromEntries(Object.entries(appearance.morphs).filter(([k]) => (section === 'rosto') !== !FACE_MORPHS.includes(k))) })}>
-            Zerar {section === 'rosto' ? 'rosto' : 'corpo'}
-          </button>
-        )}
         {dirty && <span className="unsaved">Alterações não salvas</span>}
       </div>
-    </>
+    </div>
   )
 }

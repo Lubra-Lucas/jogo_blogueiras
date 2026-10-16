@@ -133,13 +133,13 @@ PIECES = {}
 
 
 def piece(id, label, slot, anchor, bone, notes="", tags=(), formality=0.5, rarity="comum", metal="gold",
-          defaults=None, mlabels=None, mount=None, finger=None):
+          defaults=None, mlabels=None, mount=None, finger=None, extra=None, finish=None, canon=False):
     """tags: styles (romantico/y2k/gala/casual/goth/praia/rococo/esportivo); formality 0..1; rarity comum/raro/épico/lendário;
     defaults: per-slot default colours; mlabels: per-slot label overrides; mount: Blender-space dir used by hair_fit.py"""
     def deco(fn):
         PIECES[id] = dict(id=id, label=label, slot=slot, anchor=Vector(anchor), bone=bone, notes=notes, fn=fn, tags=list(tags),
                           formality=formality, rarity=rarity, metal=metal, defaults=defaults or {}, mlabels=mlabels or {},
-                          mount=mount, finger=finger)
+                          mount=mount, finger=finger, extra=extra or {}, finish=finish or {}, canon=canon)
         return fn
     return deco
 
@@ -660,7 +660,8 @@ def cocktail_ring():
 
 
 # ============================================================ collection 2 (extra modules)
-for _mod in ("pieces_helpers.py", "pieces_neck.py", "pieces_ears.py", "pieces_head.py", "pieces_hand.py"):
+for _mod in ("pieces_helpers.py", "pieces_neck.py", "pieces_ears.py", "pieces_head.py", "pieces_hand.py",
+             "acc_helpers.py", "pieces_hats.py", "pieces_glasses.py", "pieces_bags.py", "pieces_body.py"):
     _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), _mod)
     if os.path.exists(_p): exec(compile(open(_p, encoding="utf-8").read(), _p, "exec"), globals())
 
@@ -674,13 +675,38 @@ SLOT_INFO = {
     "ribbon": {"label": "Fita de cetim", "kind": "satin", "default": "#1a1a1f", "suggested": ["#1a1a1f", "#f3ead7", "#14213d", "#6e1423", "#0f6b4f", "#c19a6b", "#ff5fa8"]},
 }
 
+MAT_DEFAULT = {"metal": dict(rough=0.14), "gem": dict(rough=0.03, alpha=0.0),
+               "pearl": dict(rough=0.2, coat=1.0, coat_rough=0.05, sheen=1.0, sheen_rough=0.3, sheen_tint="#ffc8e6"),
+               "ribbon": dict(rough=0.38, coat=0.0, coat_rough=0.1, sheen=1.0, sheen_rough=0.3, sheen_tint="#ffffff")}
+
+
 def style_mats(mats, spec):
     pal = dict(DEFAULT_PALETTE); pal.update(spec['defaults']); pal["metal"] = METALS[spec['metal']]
     for sl, m in mats.items():
         b = m.node_tree.nodes["Principled BSDF"]; b.inputs["Base Color"].default_value = hexc(pal[sl])
         if sl == "gem": b.inputs["Emission Color"].default_value = hexc(pal[sl])
+        f = dict(MAT_DEFAULT[sl]); f.update(spec['finish'].get(sl, {}))
+        b.inputs["Roughness"].default_value = f.get("rough", 0.3)
+        if sl in ("pearl", "ribbon"):
+            b.inputs["Coat Weight"].default_value = f.get("coat", 0.0); b.inputs["Coat Roughness"].default_value = f.get("coat_rough", 0.1)
+            b.inputs["Sheen Weight"].default_value = (1.0 if f.get("sheen", 1.0) >= 0.5 else 0.0); b.inputs["Sheen Roughness"].default_value = f.get("sheen_rough", 0.3)
+            b.inputs["Sheen Tint"].default_value = hexc(f.get("sheen_tint", "#ffffff"))
+        if sl == "gem":
+            b.inputs["Transmission Weight"].default_value = f.get("transmission", 0.85)
+            b.inputs["Emission Strength"].default_value = f.get("emission", 0.25)
+        if sl == "metal": b.inputs["Metallic"].default_value = f.get("metallic", 1.0)
 
 
+PLACEMENT_SLOTS = {
+    "hat": {"bone": "mixamorig:Head", "max": 1, "note": "one per character; covering hats carry hairClip (squeeze hair into the ellipsoid), headbands/crowns carry hairMount (+hairFit.lift)"},
+    "glasses": {"bone": "mixamorig:Head", "max": 1, "note": "sit on the face; no hair interaction; compatible with every hat"},
+    "bag": {"bone": "mixamorig:RightHand | mixamorig:Spine2", "max": 1, "note": "hand bags: RightHand (bagSide R, carry hand); body bags: Spine2 (crossbody carry body, backpack carry back)"},
+    "belt": {"bone": "mixamorig:Spine", "max": 1, "note": "waist ring at z~1.02, conformed to the morph envelope"},
+    "scarf": {"bone": "mixamorig:Spine2", "max": 1, "note": "neck band + chest tails; hide choker/short neck pieces when worn"},
+    "brooch": {"bone": "mixamorig:Spine2", "max": 1, "note": "left chest pin"},
+    "ankle": {"bone": "mixamorig:LeftFoot + RightFoot", "max": 1, "note": "attachments for both ankles (mesh symmetric)"},
+    "neck": {"max": 1, "note": "(existing) initial_necklace_a/l/m/s use Spine2 like the long necklaces"},
+    "ears": {"max": 1, "note": "(existing) ear_climbers"}, "wrist": {"max": 2, "note": "(existing) sport_watch, friendship_bracelet"}}
 report = {}
 catalog = []
 ids = argv or list(PIECES.keys())
@@ -699,7 +725,8 @@ for pid in PIECES:
     Pc, attaches = spec['fn']()
     # localize: model coords -> anchor frame.  Anchor = first attachment's frame for limb pieces (already canonical),
     # world pieces: subtract anchor position.
-    if spec['slot'] in ("wrist", "finger"):
+    LIMB = spec['slot'] in ("wrist", "finger") or spec['canon']
+    if LIMB:
         shift = Matrix.Identity(4)
     else:
         shift = Matrix.Translation(-spec['anchor'])
@@ -712,7 +739,7 @@ for pid in PIECES:
     tris = tri_count(ob)
     placements = []
     for bone, P0, R in attaches:
-        P_anchor = P0 if spec['slot'] in ("wrist", "finger") else spec['anchor']
+        P_anchor = P0 if LIMB else spec['anchor']
         placements.append(attach_local(bone, P_anchor, R))
     entry = {
         "id": pid, "label": spec['label'], "slot": spec['slot'], "file": "jewelry/%s.glb" % pid,
@@ -724,6 +751,10 @@ for pid in PIECES:
     }
     if spec['mount'] is not None: entry["hairMount"] = [round(x, 4) for x in Vector(spec['mount']).normalized()]
     if spec['finger']: entry["finger"] = spec['finger']
+    if spec['extra']: entry.update(spec['extra'])
+    if spec['finish']:
+        for sl, f in spec['finish'].items():
+            if sl in entry["materials"]: entry["materials"][sl]["finish"] = f
     catalog.append(entry)
     print("[jewelry]", pid, "tris", tris, "bytes", size, "slots", Pc.slots)
     bpy.data.objects.remove(ob)
@@ -744,6 +775,7 @@ doc = {
     "metals": METALS,
     "slots": SLOT_INFO,
     "bones": {"mixamorig:Head": "head/ears", "mixamorig:Neck": "chokers", "mixamorig:Spine2": "long necklaces", "mixamorig:*Hand": "wrists", "mixamorig:*Hand{Ring,Middle}1": "rings"},
+    "placementSlots": PLACEMENT_SLOTS,
     "pieces": catalog,
 }
 try: doc["hairFit"] = json.load(open(jpath, encoding="utf-8"))["hairFit"]

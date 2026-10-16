@@ -6,14 +6,17 @@ import { useAppearanceStore } from '../../state/appearanceStore'
 import { Character } from '../../game/character/Character'
 import type { AnimDriver } from '../../game/character/animation/CharacterAnimation'
 
-export type StageFocus = 'body' | 'face' | 'hair' | 'torso'
+export type StageFocus = 'body' | 'face' | 'hair' | 'torso' | 'eyes' | 'mouth' | 'hands'
 
 /** Enquadramentos: altura do alvo (m) e distancia da camera (m). */
-const FRAMES: Record<StageFocus, { y: number; d: number }> = {
+const FRAMES: Record<StageFocus, { y: number; d: number; x?: number }> = {
   body: { y: 0.9, d: 3.7 },
   torso: { y: 1.18, d: 2.1 },
   hair: { y: 1.42, d: 1.75 },
   face: { y: 1.47, d: 0.95 },
+  eyes: { y: 1.4, d: 0.72 },
+  mouth: { y: 1.35, d: 0.72 },
+  hands: { y: 0.82, d: 1.15, x: 0.3 },
 }
 
 const IDLE: AnimDriver = { clip: 'idle' }
@@ -23,16 +26,17 @@ interface Rot {
 }
 
 function Stage({ focus, rot }: { focus: StageFocus; rot: MutableRefObject<Rot> }) {
-  const appearance = useAppearanceStore((s) => s.appearance)
+  const appearance = useAppearanceStore((s) => (s.compare ? s.saved : s.appearance))
   const group = useRef<Group>(null)
-  const cur = useRef({ y: FRAMES[focus].y, d: FRAMES[focus].d })
+  const cur = useRef({ y: FRAMES[focus].y, d: FRAMES[focus].d, x: FRAMES[focus].x ?? 0 })
   useFrame(({ camera }, dt) => {
     const f = FRAMES[focus]
     const k = 1 - Math.exp(-7 * Math.min(dt, 0.05))
     cur.current.y = MathUtils.lerp(cur.current.y, f.y, k)
     cur.current.d = MathUtils.lerp(cur.current.d, f.d, k)
-    camera.position.set(0, cur.current.y + 0.04, cur.current.d)
-    camera.lookAt(0, cur.current.y, 0)
+    cur.current.x = MathUtils.lerp(cur.current.x, f.x ?? 0, k)
+    camera.position.set(cur.current.x, cur.current.y + 0.04, cur.current.d)
+    camera.lookAt(cur.current.x, cur.current.y, 0)
     if (group.current) group.current.rotation.y = MathUtils.lerp(group.current.rotation.y, rot.current.yaw, 1 - Math.exp(-14 * Math.min(dt, 0.05)))
   })
   return (

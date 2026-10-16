@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useAppearanceStore } from '../../state/appearanceStore'
 import { SLOT_NAMES, itemsForSlot, useCatalogStore, type CatalogItem, type ItemSlot } from '../../game/character/catalog'
-import { equip, equippedRef, isEquipped, recolor, unequip } from '../../game/character/outfit'
+import { equip, equippedRef, isEquipped, recolor, setPattern, unequip } from '../../game/character/outfit'
 import { RARITY_COLORS, RARITY_LABELS, STYLE_LABELS, tagsOf } from '../../game/character/itemTags'
 import { FINISH_NAMES } from '../../game/character/fabric'
 import { getWearable } from '../../game/character/items'
@@ -32,9 +32,11 @@ const CATEGORIES: Category[] = [
   { id: 'gloves', label: 'Luvas', slots: ['gloves'], icon: 'gloves' },
   { id: 'legwear', label: 'Meias', slots: ['legwear'], icon: 'legwear' },
   { id: 'shoes', label: 'Sapatos', slots: ['shoes'], icon: 'shoes' },
-  { id: 'jewelry', label: 'Joias', slots: ['neck', 'ears', 'head', 'wrist', 'finger'], icon: 'neck' },
-  { id: 'acc', label: 'Acessórios', slots: [], locked: true, icon: 'star' },
-  { id: 'bag', label: 'Bolsa', slots: [], locked: true, icon: 'bag' },
+  { id: 'jewelry', label: 'Joias', slots: ['neck', 'ears', 'head', 'wrist', 'finger', 'anklet', 'brooch'], icon: 'neck' },
+  { id: 'hat', label: 'Chapéus', slots: ['hat'], icon: 'hat' },
+  { id: 'glasses', label: 'Óculos', slots: ['glasses'], icon: 'glasses' },
+  { id: 'acc', label: 'Cintos e lenços', slots: ['belt', 'scarf'], icon: 'belt' },
+  { id: 'bag', label: 'Bolsas', slots: ['bag'], icon: 'bag' },
 ]
 
 function CategoryIcon({ c }: { c: Category }) {
@@ -61,7 +63,7 @@ export function WardrobeTab() {
   useEffect(() => endTryOn, [])
 
   const cat = CATEGORIES.find((c) => c.id === catId)!
-  const slots = cat.id === 'jewelry' && jewelSlot !== 'all' ? [jewelSlot] : cat.slots
+  const slots = (cat.id === 'jewelry' || cat.id === 'acc') && jewelSlot !== 'all' && cat.slots.includes(jewelSlot as ItemSlot) ? [jewelSlot as ItemSlot] : cat.slots
   const list = slots.flatMap((sl) => itemsForSlot(sl, items))
   const hasItems = (c: Category) => c.slots.some((sl) => itemsForSlot(sl, items).length > 0)
   const wornIn = (c: Category) => c.slots.some((sl) => equippedRef(appearance, sl))
@@ -87,7 +89,7 @@ export function WardrobeTab() {
         {CATEGORIES.map((c) => {
           const locked = c.locked || !hasItems(c)
           return (
-            <button key={c.id} type="button" className={`slot${locked ? ' slot--locked' : ''}`} aria-pressed={catId === c.id} title={locked ? `${c.label} (em breve)` : c.label} onClick={() => (setCatId(c.id), setSelected(null))}>
+            <button key={c.id} type="button" className={`slot${locked ? ' slot--locked' : ''}`} aria-pressed={catId === c.id} title={locked ? `${c.label} (em breve)` : c.label} onClick={() => (setCatId(c.id), setSelected(null), setJewelSlot('all'))}>
               <CategoryIcon c={c} />
               {locked && <IconLock className="slot__lock" />}
               {!locked && wornIn(c) && <span className="slot__dot" />}
@@ -99,7 +101,7 @@ export function WardrobeTab() {
       <div className="wd__main">
         <div className="panel">
           <h3>{cat.label}</h3>
-          {cat.id === 'jewelry' && (
+          {(cat.id === 'jewelry' || cat.id === 'acc') && (
             <div className="pills">
               <button type="button" className="pill" aria-pressed={jewelSlot === 'all'} onClick={() => setJewelSlot('all')}>
                 Todas
@@ -238,6 +240,18 @@ export function WardrobeTab() {
                 )}
               </div>
             ))}
+            {selItem.patterns && selItem.patterns.length > 0 && (
+              <div className="mat-row">
+                <div className="field-label">Estampa</div>
+                <div className="fin-chips">
+                  {[{ id: '', label: 'Liso' }, ...selItem.patterns].map((p) => (
+                    <button key={p.id || 'none'} type="button" className="pill" aria-pressed={(selRef?.pattern ?? '') === p.id} onClick={() => setAppearance(setPattern(appearance, selItem, p.id))}>
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             <button type="button" className="btn btn--danger" onClick={() => setAppearance(unequip(appearance, selItem.slot))}>
               Retirar
             </button>

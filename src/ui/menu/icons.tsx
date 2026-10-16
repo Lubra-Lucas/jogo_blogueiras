@@ -117,6 +117,49 @@ const IconRing = make(
   </>,
 )
 
+const IconHat = make(
+  <>
+    <path d="M7 13c0-4 2-7 5-7s5 3 5 7" />
+    <path d="M2.500 16c0-1.800 4-3 9.500-3s9.500 1.200 9.500 3c0 1.600-4 2.600-9.500 2.600S2.500 17.600 2.500 16z" />
+    <path d="M7.200 12.200c3 1 7 1 9.600 0" />
+  </>,
+)
+const IconGlasses = make(
+  <>
+    <circle cx="7" cy="14" r="3.800" />
+    <circle cx="17" cy="14" r="3.800" />
+    <path d="M10.800 13.500c.8-.8 1.600-.8 2.400 0M3.200 13 2 9.500M20.800 13 22 9.500" />
+  </>,
+)
+const IconHandbag = make(
+  <>
+    <path d="M4.500 9h15l1.200 11H3.300z" />
+    <path d="M8.500 9V7a3.500 3.500 0 0 1 7 0v2" />
+    <path d="M10 13.500h4" />
+  </>,
+)
+const IconBelt = make(
+  <>
+    <path d="M2.500 9.500h19v5h-19z" />
+    <rect x="9.500" y="8" width="5" height="8" rx="1.200" />
+    <path d="M12 12h.01M5 12h.01M19 12h.01" />
+  </>,
+)
+const IconScarf = make(<path d="M5 4c3 2 11 2 14 0v5c-3 2-11 2-14 0zM9 11l-1 9 3-2 1 3 1-12M15 12l1 8 3-2" />)
+const IconAnklet = make(
+  <>
+    <path d="M7 4v8c0 3 1 5 2 8h6c1-3 2-5 2-8V4" />
+    <path d="M7.500 15.500c3 1.500 6 1.500 9 0" />
+    <circle cx="12" cy="18.200" r="1.200" />
+  </>,
+)
+const IconBrooch = make(
+  <>
+    <path d="m12 3 2.200 4.600 5 .7-3.600 3.500.9 5L12 14.400 7.500 16.800l.9-5L4.800 8.300l5-.7z" />
+    <path d="M12 17v4" />
+  </>,
+)
+
 export const SLOT_ICONS: Record<ItemSlot, (p: P) => ReactNode> = {
   hair: IconHair,
   top: IconTop,
@@ -130,4 +173,11 @@ export const SLOT_ICONS: Record<ItemSlot, (p: P) => ReactNode> = {
   head: IconCrown,
   wrist: IconWrist,
   finger: IconRing,
+  hat: IconHat,
+  glasses: IconGlasses,
+  bag: IconHandbag,
+  belt: IconBelt,
+  scarf: IconScarf,
+  anklet: IconAnklet,
+  brooch: IconBrooch,
 }

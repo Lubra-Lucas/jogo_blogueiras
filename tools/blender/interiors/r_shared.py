@@ -187,12 +187,12 @@ def rug_heart():
 
 @piece(R, "plant_potted", tags=["plant", "decor"], col="cyl", mount="floor", note="vaso grande com folhagem (prefira Meshy para hero)")
 def plant_potted():
-    return potted_plant_parts(1.0, .26, 11, "white")
+    return potted_plant_parts(.8, .24, 9, "white")
 
 
 @piece(R, "plant_small", tags=["plant", "decor", "tabletop"], col=None, mount="tabletop", note="vasinho de mesa")
 def plant_small():
-    return potted_plant_parts(.32, .09, 8, "accent", seed=4)
+    return potted_plant_parts(.24, .085, 6, "accent", seed=4)
 
 
 @piece(R, "wall_sconce", tags=["light", "wall"], col=None, mount="wall", lights=[dict(pos=(0, -.18, 2.1), color="#ffd9a0", range=3.0, intensity=0.8)],

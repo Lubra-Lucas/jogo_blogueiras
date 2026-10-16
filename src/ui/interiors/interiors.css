@@ -1,0 +1,101 @@
+/* ===== Interiores jogaveis ===== */
+.in-label {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  color: var(--ui-ink);
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.05rem;
+  pointer-events: none;
+}
+.in-label svg { color: var(--ui-gold); }
+
+.in-prompt {
+  position: fixed;
+  left: 50%;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 121;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-family: var(--f-sans);
+  font-weight: 800;
+  color: var(--ui-ink);
+  background: var(--ui-glass-2);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--ui-line);
+  box-shadow: var(--sh-2), inset 0 0 0 1px rgba(201, 154, 46, 0.35);
+  white-space: nowrap;
+  animation: in-pop 0.28s ease-out;
+}
+.in-text { display: inline-flex; align-items: center; gap: 8px; font-size: 1rem; }
+.in-key {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 0.85rem;
+  background: linear-gradient(180deg, #fff, #efe6ea);
+  box-shadow: 0 2px 0 var(--ui-gold-soft), inset 0 1px 0 #fff;
+}
+.in-btn {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1.02rem;
+  cursor: pointer;
+}
+.in-msg {
+  position: fixed;
+  left: 50%;
+  top: 22%;
+  transform: translateX(-50%);
+  z-index: 125;
+  max-width: min(88vw, 420px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 22px;
+  border-radius: var(--r-l);
+  text-align: center;
+  color: var(--ui-ink);
+  font-family: var(--f-sans);
+  pointer-events: none;
+  animation: in-pop 0.3s ease-out;
+}
+.in-msg b { font-family: var(--f-serif); font-size: 1.2rem; font-style: italic; }
+.in-msg span { font-size: 0.9rem; color: var(--ui-ink-2); font-weight: 700; }
+.in-dark {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: radial-gradient(ellipse at center, #1c1730 0%, #0a0814 100%);
+  transition: opacity 1.1s ease-in-out;
+}
+@keyframes in-pop { from { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.95); } }
+@media (prefers-reduced-motion: reduce) {
+  .in-prompt, .in-msg { animation: none; }
+  .in-dark { transition-duration: 0.3s; }
+}

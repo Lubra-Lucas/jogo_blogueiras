@@ -7,7 +7,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 DOLL = os.path.join(REPO, "public", "assets", "characters", "doll_base.glb")
 OUT = os.path.join(REPO, "public", "assets", "jewelry")
-SHOTS = r"C:\Users\user\AppData\Local\Temp\claude\shots\jewelry2"
+SHOTS = os.environ.get("JEWEL_SHOTS", r"C:\Users\user\AppData\Local\Temp\claude\shots\jewelry2")
 os.makedirs(OUT, exist_ok=True); os.makedirs(SHOTS, exist_ok=True)
 
 

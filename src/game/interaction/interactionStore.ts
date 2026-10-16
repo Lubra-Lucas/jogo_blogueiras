@@ -3,6 +3,7 @@ import { useMinigameStore } from '../minigames/minigameStore'
 import { minigamesAtPoi } from '../../ui/minigames/registry'
 import { shopsAtPoi } from '../../ui/shop/registry'
 import { useShopStore } from '../../ui/shop/shopStore'
+import { enterRoom } from '../interiors/interiorStore'
 
 export interface NearbyMinigame {
   id: string
@@ -21,6 +22,8 @@ export interface NearbyPoi {
   minigames: NearbyMinigame[]
   /** lojas desta porta (vem depois dos minijogos nas teclas E/R/T) */
   shops?: NearbyShop[]
+  /** a porta tem interior jogavel (game/interiors): "Entrar" vem primeiro (tecla E) */
+  interior?: boolean
 }
 
 interface InteractionState {
@@ -39,17 +42,28 @@ export function poiShops(poiId: string): NearbyShop[] {
   return shopsAtPoi(poiId).map((s) => ({ id: s.id, label: s.label }))
 }
 
-/** [E] (index 0), [R] (index 1)... / toque: abre um minijogo da porta mais próxima. */
+/** [E] (index 0), [R] (index 1)... / toque: "Entrar" (se houver interior), minijogos e lojas da porta mais próxima, nessa ordem. */
 export function interact(index = 0): boolean {
   if (useShopStore.getState().open) return false
   const near = useInteractionStore.getState().nearby
-  const g = near?.minigames[index]
+  if (!near) return false
+  let i = index
+  if (near.interior) {
+    if (i === 0) {
+      void enterRoom(near.id)
+      return true
+    }
+    i -= 1
+  }
+  const g = near.minigames[i]
   if (g) {
     useMinigameStore.getState().open(g.id)
     return true
   }
-  const shop = near?.shops?.[index - (near?.minigames.length ?? 0)]
+  const shop = near.shops?.[i - near.minigames.length]
   if (!shop) return false
   useShopStore.getState().openShop(shop.id as never)
   return true
 }
+
+if (import.meta.env.DEV && typeof window !== 'undefined') (window as unknown as Record<string, unknown>).__ia = useInteractionStore

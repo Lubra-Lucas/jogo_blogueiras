@@ -3,8 +3,8 @@ import type { Appearance } from '../../shared/appearance'
 const A = `${import.meta.env.BASE_URL}assets/characters/`
 
 /** Bases (malhas) disponiveis: `appearance.base` -> arquivos. */
-export const BASES: Record<Appearance['base'], { glb: string; meta: string; mask: string; mask2: string }> = {
-  doll: { glb: `${A}doll_base.glb`, meta: `${A}doll_base.json`, mask: `${A}doll_mask.png`, mask2: `${A}doll_mask2.png` },
+export const BASES: Record<Appearance['base'], { glb: string; meta: string; mask: string; mask2: string; mask3: string; mask4: string }> = {
+  doll: { glb: `${A}doll_base.glb`, meta: `${A}doll_base.json`, mask: `${A}doll_mask.png`, mask2: `${A}doll_mask2.png`, mask3: `${A}doll_mask3.png`, mask4: `${A}doll_mask4.png` },
 }
 
 export interface MorphMeta {

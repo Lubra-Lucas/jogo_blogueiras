@@ -6,6 +6,8 @@ import { resolveDestination, type Destination } from './destinations'
 import { findPath, graphStats, pathLength, type Pt } from './pathfinder'
 import { hasLineOfSight, hasWorld, isFree } from './probe'
 import { navBridge, navStore } from './navStore'
+import { interiorBridge } from '../interiors/interiorBridge'
+import { findRoomPath } from '../interiors/nav'
 
 export { navStore } from './navStore'
 export type NavResult = 'arrived' | 'cancelled' | 'failed'
@@ -115,6 +117,14 @@ export function navigateTo(poiId: string): Promise<NavResult> {
  * alvo reto de sempre); senao calcula um caminho e comeca a segui-lo (true).
  */
 export function navigateToPoint(x: number, z: number, run: boolean): boolean {
+  if (interiorBridge.active && interiorBridge.room) {
+    // dentro de um interior: grade propria da sala (game/interiors/nav.ts), nao o grafo da cidade
+    const q = usePlayerStore.getState().position
+    const path = findRoomPath(interiorBridge.room, q.x, q.z, x, z)
+    if (!path || path.length === 0) return false
+    void begin({ id: null, name: null, x, z, yaw: null }, path, run)
+    return true
+  }
   if (!hasWorld()) return false
   const p = usePlayerStore.getState().position
   if (hasLineOfSight(p.x, p.z, x, z, 0.45)) return false

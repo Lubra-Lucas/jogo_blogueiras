@@ -69,7 +69,7 @@ export const RIM_COLORS: ReadonlyArray<{ id: string; nome: string; hex: string }
   { id: 'branco', nome: 'Branco', hex: '#f4f0e6' },
 ]
 
-const model = (slug: string) => `${import.meta.env.BASE_URL}assets/vehicles/${slug}.glb`
+const model = (slug: string) => `${import.meta.env?.BASE_URL ?? "/"}assets/vehicles/${slug}.glb`
 const pick = (...ids: string[]) => ids.map((i) => BODY_COLORS.find((c) => c.id === i)?.hex ?? '#cccccc')
 
 export const CARS: CarSpec[] = [

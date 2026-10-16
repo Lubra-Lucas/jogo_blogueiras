@@ -18,6 +18,8 @@ import { placeStartCars } from './spawn'
 import { pad, kbd, resetInput, resolveInput, touch, vin } from './vehicleInput'
 import { setRadioStation, vehicleAudio } from './vehicleAudio'
 import { useCarAsset } from './useCarAsset'
+import { carTestHook } from './sim/testHook'
+import { CARTEST, CarTest } from './CarTest'
 import { useQualityShadows } from './useQuality'
 
 const NEAR = 2.6 // m da borda do carro para aparecer "Dirigir"
@@ -71,7 +73,13 @@ function VehicleKeys() {
     let kbdLeft = false
     let kbdRight = false
     const onDown = (e: KeyboardEvent) => {
-      if (isTyping(e.target) || e.ctrlKey || e.metaKey || e.altKey) return
+      if (e.ctrlKey || e.metaKey || e.altKey) return
+      if (isTyping(e.target)) {
+        // campo de texto "esquecido" com foco (chat/celular ja fechados) engolia W/A/S/D: dirigindo, devolve o foco ao jogo
+        const ui = useUiStore.getState()
+        if (!driveBridge.active || ui.menuOpen || ui.chatOpen || ui.phoneOpen || useMinigameStore.getState().active) return
+        ;(e.target as HTMLElement).blur()
+      }
       const st = useVehicleStore.getState()
       if (e.code === 'KeyF' && !e.repeat) {
         if (blocked()) return
@@ -114,6 +122,10 @@ function VehicleKeys() {
       kbdLeft = kbdRight = false
       resetInput()
     }
+    const onHidden = () => {
+      if (document.hidden) reset()
+    }
+    document.addEventListener('visibilitychange', onHidden)
     window.addEventListener('keydown', onDown, true)
     window.addEventListener('keyup', onUp, true)
     window.addEventListener('blur', reset)
@@ -121,6 +133,7 @@ function VehicleKeys() {
       window.removeEventListener('keydown', onDown, true)
       window.removeEventListener('keyup', onUp, true)
       window.removeEventListener('blur', reset)
+      document.removeEventListener('visibilitychange', onHidden)
       reset()
     }
   }, [])
@@ -227,7 +240,7 @@ export function VehicleSystem() {
   usePad()
   useEffect(() => {
     // dev/testes: window.__veh (estado dos carros)
-    if (import.meta.env.DEV || new URLSearchParams(window.location.search).has('cars')) (window as unknown as Record<string, unknown>).__veh = { store: useVehicleStore, drive, bridge: driveBridge, enterCar, exitCar, vin, kbd }
+    if (import.meta.env.DEV || new URLSearchParams(window.location.search).has('cars')) (window as unknown as Record<string, unknown>).__veh = { store: useVehicleStore, drive, bridge: driveBridge, enterCar, exitCar, vin, kbd, hook: carTestHook }
   }, [])
 
   // carros iniciais: espera as colisoes da cidade existirem
@@ -279,6 +292,7 @@ export function VehicleSystem() {
       <Headlights />
       <GpsRoute />
       <Knockables />
+      {CARTEST && <CarTest />}
     </>
   )
 }

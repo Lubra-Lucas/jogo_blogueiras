@@ -4,6 +4,8 @@ import { CITY } from '../world/city/layout'
 import { usePlayerStore } from '../../state/playerStore'
 import { driveBridge } from '../vehicles/driveStore'
 import { useMinigameStore } from '../minigames/minigameStore'
+import { interiorBridge } from '../interiors/interiorBridge'
+import { hasInterior } from '../interiors/interiorStore'
 import { interact, poiMinigames, poiShops, useInteractionStore, type NearbyPoi } from './interactionStore'
 
 /** Distancia (m) ate a porta para aparecer o aviso. */
@@ -41,14 +43,14 @@ export function InteractionTrigger() {
     if (acc < 0.12) return
     acc = 0
     let best: NearbyPoi | null = null
-    if (!useMinigameStore.getState().active && !driveBridge.active) {
+    if (!useMinigameStore.getState().active && !driveBridge.active && !interiorBridge.active) {
       const p = usePlayerStore.getState().position
       let bd = INTERACT_RADIUS * INTERACT_RADIUS
       for (const d of DOORS) {
         const dd = (d.x - p.x) ** 2 + (d.z - p.z) ** 2
         if (dd < bd) {
           bd = dd
-          best = { id: d.id, name: d.name, minigames: poiMinigames(d.id), shops: poiShops(d.id) }
+          best = { id: d.id, name: d.name, minigames: poiMinigames(d.id), shops: poiShops(d.id), interior: hasInterior(d.id) }
         }
       }
     }

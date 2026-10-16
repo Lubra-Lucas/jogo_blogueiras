@@ -69,6 +69,55 @@
   "mixamorig:*Hand": "wrists",
   "mixamorig:*Hand{Ring,Middle}1": "rings"
  },
+ "placementSlots": {
+  "hat": {
+   "bone": "mixamorig:Head",
+   "max": 1,
+   "note": "one per character; covering hats carry hairClip (squeeze hair into the ellipsoid), headbands/crowns carry hairMount (+hairFit.lift)"
+  },
+  "glasses": {
+   "bone": "mixamorig:Head",
+   "max": 1,
+   "note": "sit on the face; no hair interaction; compatible with every hat"
+  },
+  "bag": {
+   "bone": "mixamorig:RightHand | mixamorig:Spine2",
+   "max": 1,
+   "note": "hand bags: RightHand (bagSide R, carry hand); body bags: Spine2 (crossbody carry body, backpack carry back)"
+  },
+  "belt": {
+   "bone": "mixamorig:Spine",
+   "max": 1,
+   "note": "waist ring at z~1.02, conformed to the morph envelope"
+  },
+  "scarf": {
+   "bone": "mixamorig:Spine2",
+   "max": 1,
+   "note": "neck band + chest tails; hide choker/short neck pieces when worn"
+  },
+  "brooch": {
+   "bone": "mixamorig:Spine2",
+   "max": 1,
+   "note": "left chest pin"
+  },
+  "ankle": {
+   "bone": "mixamorig:LeftFoot + RightFoot",
+   "max": 1,
+   "note": "attachments for both ankles (mesh symmetric)"
+  },
+  "neck": {
+   "max": 1,
+   "note": "(existing) initial_necklace_a/l/m/s use Spine2 like the long necklaces"
+  },
+  "ears": {
+   "max": 1,
+   "note": "(existing) ear_climbers"
+  },
+  "wrist": {
+   "max": 2,
+   "note": "(existing) sport_watch, friendship_bracelet"
+  }
+ },
  "pieces": [
   {
    "id": "pearl_choker",
@@ -98,7 +147,7 @@
     }
    ],
    "triangles": 2582,
-   "bytes": 51212,
+   "bytes": 51228,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -112,7 +161,7 @@
     },
     "pearl": {
      "slot": "pearl",
-     "label": "Perola",
+     "label": "Pérola",
      "default": "#fdf3ee"
     }
    },
@@ -153,7 +202,7 @@
     }
    ],
    "triangles": 754,
-   "bytes": 16972,
+   "bytes": 17068,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -259,7 +308,7 @@
     }
    ],
    "triangles": 528,
-   "bytes": 11968,
+   "bytes": 11984,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -268,7 +317,7 @@
     },
     "pearl": {
      "slot": "pearl",
-     "label": "Perola",
+     "label": "Pérola",
      "default": "#fdf3ee"
     }
    },
@@ -406,7 +455,7 @@
     }
    ],
    "triangles": 844,
-   "bytes": 19688,
+   "bytes": 19704,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -420,7 +469,7 @@
     },
     "pearl": {
      "slot": "pearl",
-     "label": "Perola",
+     "label": "Pérola",
      "default": "#fdf3ee"
     }
    },
@@ -461,7 +510,7 @@
     }
    ],
    "triangles": 2716,
-   "bytes": 54316,
+   "bytes": 54332,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -475,7 +524,7 @@
     },
     "pearl": {
      "slot": "pearl",
-     "label": "Perola",
+     "label": "Pérola",
      "default": "#fdf3ee"
     }
    },
@@ -517,7 +566,7 @@
     }
    ],
    "triangles": 490,
-   "bytes": 12276,
+   "bytes": 12372,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -710,7 +759,7 @@
     }
    ],
    "triangles": 3036,
-   "bytes": 58852,
+   "bytes": 58868,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -724,7 +773,7 @@
     },
     "pearl": {
      "slot": "pearl",
-     "label": "Perola",
+     "label": "Pérola",
      "default": "#fdf3ee"
     }
    },
@@ -854,7 +903,7 @@
     }
    ],
    "triangles": 686,
-   "bytes": 16072,
+   "bytes": 16088,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -868,7 +917,7 @@
     },
     "pearl": {
      "slot": "pearl",
-     "label": "Perola",
+     "label": "Pérola",
      "default": "#fdf3ee"
     }
    },
@@ -909,7 +958,7 @@
     }
    ],
    "triangles": 1386,
-   "bytes": 30180,
+   "bytes": 30272,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1067,7 +1116,7 @@
     }
    ],
    "triangles": 1246,
-   "bytes": 25964,
+   "bytes": 26064,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1117,7 +1166,7 @@
     }
    ],
    "triangles": 2536,
-   "bytes": 51012,
+   "bytes": 51100,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1178,7 +1227,7 @@
     }
    ],
    "triangles": 1826,
-   "bytes": 38740,
+   "bytes": 38832,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1443,7 +1492,7 @@
     }
    ],
    "triangles": 1510,
-   "bytes": 31180,
+   "bytes": 31256,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1548,7 +1597,7 @@
     }
    ],
    "triangles": 3504,
-   "bytes": 68324,
+   "bytes": 68340,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1604,7 +1653,7 @@
     }
    ],
    "triangles": 3668,
-   "bytes": 72004,
+   "bytes": 72020,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1710,7 +1759,7 @@
     }
    ],
    "triangles": 1482,
-   "bytes": 32992,
+   "bytes": 33084,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1771,7 +1820,7 @@
     }
    ],
    "triangles": 664,
-   "bytes": 14312,
+   "bytes": 14328,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1873,7 +1922,7 @@
     }
    ],
    "triangles": 800,
-   "bytes": 19440,
+   "bytes": 19532,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -1985,7 +2034,7 @@
     }
    ],
    "triangles": 704,
-   "bytes": 16520,
+   "bytes": 16608,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -2041,7 +2090,7 @@
     }
    ],
    "triangles": 508,
-   "bytes": 11804,
+   "bytes": 11820,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -2245,7 +2294,7 @@
     }
    ],
    "triangles": 900,
-   "bytes": 21068,
+   "bytes": 21156,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -2357,7 +2406,7 @@
     }
    ],
    "triangles": 2398,
-   "bytes": 49468,
+   "bytes": 49484,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -2418,7 +2467,7 @@
     }
    ],
    "triangles": 3346,
-   "bytes": 66280,
+   "bytes": 66296,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -2478,7 +2527,7 @@
     }
    ],
    "triangles": 3448,
-   "bytes": 68352,
+   "bytes": 68444,
    "materials": {
     "gem": {
      "slot": "gem",
@@ -2539,7 +2588,7 @@
     }
    ],
    "triangles": 1020,
-   "bytes": 21628,
+   "bytes": 21700,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -2600,7 +2649,7 @@
     }
    ],
    "triangles": 2158,
-   "bytes": 43716,
+   "bytes": 43732,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -2773,7 +2822,7 @@
     }
    ],
    "triangles": 678,
-   "bytes": 15832,
+   "bytes": 15908,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -2834,7 +2883,7 @@
     }
    ],
    "triangles": 2798,
-   "bytes": 56320,
+   "bytes": 56408,
    "materials": {
     "gem": {
      "slot": "gem",
@@ -2951,7 +3000,7 @@
     }
    ],
    "triangles": 768,
-   "bytes": 18008,
+   "bytes": 18024,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -3012,7 +3061,7 @@
     }
    ],
    "triangles": 626,
-   "bytes": 15340,
+   "bytes": 15356,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -3092,7 +3141,7 @@
     }
    ],
    "triangles": 1722,
-   "bytes": 35156,
+   "bytes": 35172,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -3167,7 +3216,7 @@
     }
    ],
    "triangles": 2866,
-   "bytes": 56900,
+   "bytes": 56992,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -3247,7 +3296,7 @@
     }
    ],
    "triangles": 1122,
-   "bytes": 26020,
+   "bytes": 26036,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -3392,7 +3441,7 @@
     }
    ],
    "triangles": 2864,
-   "bytes": 57860,
+   "bytes": 57948,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -3472,7 +3521,7 @@
     }
    ],
    "triangles": 530,
-   "bytes": 12968,
+   "bytes": 12984,
    "materials": {
     "metal": {
      "slot": "metal",
@@ -3782,6 +3831,2867 @@
    ],
    "formality": 0.7,
    "rarity": "épico"
+  },
+  {
+   "id": "sun_hat",
+   "label": "Chapéu de aba larga",
+   "slot": "hat",
+   "file": "jewelry/sun_hat.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 3904,
+   "bytes": 72676,
+   "materials": {
+    "pearl": {
+     "slot": "pearl",
+     "label": "Fita",
+     "default": "#f6efe3",
+     "finish": {
+      "rough": 0.4,
+      "coat": 0.0,
+      "sheen": 0.0,
+      "sheen_tint": "#ffffff"
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Tecido",
+     "default": "#dcc08a",
+     "finish": {
+      "rough": 0.9,
+      "sheen": 0.0,
+      "sheen_rough": 0.6
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "wide floppy straw brim (r~0.27 m) with a satin band and side bow; covers the hair above z=1.47 (hairClip)",
+   "tags": [
+    "praia",
+    "romantico",
+    "casual"
+   ],
+   "formality": 0.35,
+   "rarity": "comum",
+   "hairMount": [
+    0.0,
+    -0.2079,
+    0.9781
+   ],
+   "hairClip": {
+    "center": [
+     0.0,
+     0.0,
+     0.0075
+    ],
+    "radii": [
+     0.124,
+     0.172,
+     0.118
+    ],
+    "minY": 0.03,
+    "soft": 0.02,
+    "bind": {
+     "center": [
+      0.0,
+      1.44,
+      0.0195
+     ],
+     "radii": [
+      0.124,
+      0.172,
+      0.118
+     ],
+     "minY": 1.47
+    }
+   }
+  },
+  {
+   "id": "beret",
+   "label": "Boina",
+   "slot": "hat",
+   "file": "jewelry/beret.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2380,
+   "bytes": 45224,
+   "materials": {
+    "pearl": {
+     "slot": "pearl",
+     "label": "Pompom / forro",
+     "default": "#2b1d1f"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Lã",
+     "default": "#7a1f33",
+     "finish": {
+      "rough": 0.95,
+      "sheen": 0.0,
+      "sheen_rough": 0.8
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "soft wool beret, tilted to the left, nub on top; covers the crown (hairClip)",
+   "tags": [
+    "casual",
+    "romantico",
+    "gala"
+   ],
+   "formality": 0.5,
+   "rarity": "comum",
+   "hairMount": [
+    0.0,
+    -0.2079,
+    0.9781
+   ],
+   "hairClip": {
+    "center": [
+     0.0,
+     0.0,
+     0.0075
+    ],
+    "radii": [
+     0.124,
+     0.172,
+     0.118
+    ],
+    "minY": 0.05,
+    "soft": 0.02,
+    "bind": {
+     "center": [
+      0.0,
+      1.44,
+      0.0195
+     ],
+     "radii": [
+      0.124,
+      0.172,
+      0.118
+     ],
+     "minY": 1.49
+    }
+   }
+  },
+  {
+   "id": "baseball_cap",
+   "label": "Boné",
+   "slot": "hat",
+   "file": "jewelry/baseball_cap.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 3688,
+   "bytes": 70080,
+   "materials": {
+    "gem": {
+     "slot": "gem",
+     "label": "Emblema",
+     "default": "#c1121f"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Aba / costura",
+     "default": "#1f2d4a",
+     "finish": {
+      "rough": 0.6,
+      "coat": 0.0,
+      "sheen": 0.0,
+      "sheen_tint": "#ffffff"
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Tecido",
+     "default": "#1f2d4a",
+     "finish": {
+      "rough": 0.75,
+      "sheen": 0.0,
+      "sheen_rough": 0.6
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "6-panel cap, curved visor in front, button on top, little heart patch; hairClip covers the crown",
+   "tags": [
+    "esportivo",
+    "casual",
+    "y2k"
+   ],
+   "formality": 0.12,
+   "rarity": "comum",
+   "hairMount": [
+    0.0,
+    -0.2079,
+    0.9781
+   ],
+   "hairClip": {
+    "center": [
+     0.0,
+     0.0,
+     0.0075
+    ],
+    "radii": [
+     0.124,
+     0.172,
+     0.118
+    ],
+    "minY": 0.045,
+    "soft": 0.02,
+    "bind": {
+     "center": [
+      0.0,
+      1.44,
+      0.0195
+     ],
+     "radii": [
+      0.124,
+      0.172,
+      0.118
+     ],
+     "minY": 1.485
+    }
+   }
+  },
+  {
+   "id": "bucket_hat",
+   "label": "Chapéu bucket",
+   "slot": "hat",
+   "file": "jewelry/bucket_hat.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 3648,
+   "bytes": 68692,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Costura",
+     "default": "#ffffff"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Tecido",
+     "default": "#c8b78c",
+     "finish": {
+      "rough": 0.85,
+      "sheen": 0.0,
+      "sheen_rough": 0.6
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "soft bucket hat with a short down-sloping brim, stitch ridges and two metal eyelets; hairClip covers the crown",
+   "tags": [
+    "casual",
+    "y2k",
+    "praia",
+    "esportivo"
+   ],
+   "formality": 0.12,
+   "rarity": "comum",
+   "hairMount": [
+    0.0,
+    -0.2079,
+    0.9781
+   ],
+   "hairClip": {
+    "center": [
+     0.0,
+     0.0,
+     0.0075
+    ],
+    "radii": [
+     0.124,
+     0.172,
+     0.118
+    ],
+    "minY": 0.03,
+    "soft": 0.02,
+    "bind": {
+     "center": [
+      0.0,
+      1.44,
+      0.0195
+     ],
+     "radii": [
+      0.124,
+      0.172,
+      0.118
+     ],
+     "minY": 1.47
+    }
+   }
+  },
+  {
+   "id": "fedora",
+   "label": "Chapéu fedora",
+   "slot": "hat",
+   "file": "jewelry/fedora.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 3424,
+   "bytes": 64020,
+   "materials": {
+    "pearl": {
+     "slot": "pearl",
+     "label": "Fita",
+     "default": "#2a1d17",
+     "finish": {
+      "rough": 0.35,
+      "coat": 0.0,
+      "sheen": 0.0,
+      "sheen_tint": "#ffffff"
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Feltro",
+     "default": "#d2b48c",
+     "finish": {
+      "rough": 0.85,
+      "sheen": 0.0,
+      "sheen_rough": 0.6
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "felt fedora: pinched crown with centre dent, snap brim, satin band with bow; hairClip covers the crown",
+   "tags": [
+    "gala",
+    "casual",
+    "goth"
+   ],
+   "formality": 0.65,
+   "rarity": "raro",
+   "hairMount": [
+    0.0,
+    -0.2079,
+    0.9781
+   ],
+   "hairClip": {
+    "center": [
+     0.0,
+     0.0,
+     0.0075
+    ],
+    "radii": [
+     0.124,
+     0.172,
+     0.118
+    ],
+    "minY": 0.03,
+    "soft": 0.02,
+    "bind": {
+     "center": [
+      0.0,
+      1.44,
+      0.0195
+     ],
+     "radii": [
+      0.124,
+      0.172,
+      0.118
+     ],
+     "minY": 1.47
+    }
+   }
+  },
+  {
+   "id": "cowboy_hat",
+   "label": "Chapéu de cowboy fofo",
+   "slot": "hat",
+   "file": "jewelry/cowboy_hat.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 3442,
+   "bytes": 66044,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Detalhe",
+     "default": "#c1121f"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Fita",
+     "default": "#4a2f1b",
+     "finish": {
+      "rough": 0.4,
+      "coat": 0.0,
+      "sheen": 0.0,
+      "sheen_tint": "#ffffff"
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Feltro",
+     "default": "#b98a5a",
+     "finish": {
+      "rough": 0.8,
+      "sheen": 0.0,
+      "sheen_rough": 0.6
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "pastel felt cowboy hat: tall creased crown, brim curled up at the sides, band with a gold star concho; hairClip covers the crown",
+   "tags": [
+    "casual",
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.3,
+   "rarity": "raro",
+   "hairMount": [
+    0.0,
+    -0.2079,
+    0.9781
+   ],
+   "hairClip": {
+    "center": [
+     0.0,
+     0.0,
+     0.0075
+    ],
+    "radii": [
+     0.124,
+     0.172,
+     0.118
+    ],
+    "minY": 0.03,
+    "soft": 0.02,
+    "bind": {
+     "center": [
+      0.0,
+      1.44,
+      0.0195
+     ],
+     "radii": [
+      0.124,
+      0.172,
+      0.118
+     ],
+     "minY": 1.47
+    }
+   }
+  },
+  {
+   "id": "beanie",
+   "label": "Gorro de lã",
+   "slot": "hat",
+   "file": "jewelry/beanie.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 4796,
+   "bytes": 88588,
+   "materials": {
+    "pearl": {
+     "slot": "pearl",
+     "label": "Barra / pompom",
+     "default": "#efe6d2",
+     "finish": {
+      "rough": 0.95,
+      "coat": 0.0,
+      "sheen": 0.0,
+      "sheen_rough": 0.8,
+      "sheen_tint": "#ffffff"
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Lã",
+     "default": "#5d6b3f",
+     "finish": {
+      "rough": 0.95,
+      "sheen": 0.0,
+      "sheen_rough": 0.8
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "ribbed wool beanie with a folded cuff and a pompom; slouches a little to the back; hairClip covers the crown",
+   "tags": [
+    "casual",
+    "esportivo",
+    "goth"
+   ],
+   "formality": 0.1,
+   "rarity": "comum",
+   "hairMount": [
+    0.0,
+    -0.2079,
+    0.9781
+   ],
+   "hairClip": {
+    "center": [
+     0.0,
+     0.0,
+     0.0075
+    ],
+    "radii": [
+     0.124,
+     0.172,
+     0.118
+    ],
+    "minY": 0.015,
+    "soft": 0.02,
+    "bind": {
+     "center": [
+      0.0,
+      1.44,
+      0.0195
+     ],
+     "radii": [
+      0.124,
+      0.172,
+      0.118
+     ],
+     "minY": 1.455
+    }
+   }
+  },
+  {
+   "id": "feather_tiara",
+   "label": "Tiara de penas",
+   "slot": "hat",
+   "file": "jewelry/feather_tiara.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1844,
+   "bytes": 40816,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Pérolas",
+     "default": "#fbf3e6"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Penas",
+     "default": "#f6efe6",
+     "finish": {
+      "rough": 0.6,
+      "sheen": 0.0,
+      "sheen_rough": 0.4
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "thin metal band over the front crown carrying a fan of 7 opaque feathers, pearls and a crystal; rides on the hair (hairFit lift)",
+   "tags": [
+    "gala",
+    "romantico",
+    "rococo"
+   ],
+   "formality": 0.9,
+   "rarity": "épico",
+   "hairMount": [
+    0.0,
+    -0.5592,
+    0.829
+   ]
+  },
+  {
+   "id": "fascinator",
+   "label": "Fascinator com véu",
+   "slot": "hat",
+   "file": "jewelry/fascinator.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2680,
+   "bytes": 53828,
+   "materials": {
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Véu e pluma",
+     "default": "#1a1a1f",
+     "finish": {
+      "rough": 0.55,
+      "coat": 0.0,
+      "sheen": 0.0,
+      "sheen_tint": "#ffffff"
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Base e flor",
+     "default": "#14213d",
+     "finish": {
+      "rough": 0.45,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "pillbox base tilted on the upper-left front of the head, silk flower, feather and a short netted veil that stops above the brows (opaque mesh)",
+   "tags": [
+    "gala",
+    "rococo",
+    "romantico"
+   ],
+   "formality": 0.95,
+   "rarity": "épico",
+   "hairMount": [
+    0.3263,
+    -0.5221,
+    0.788
+   ]
+  },
+  {
+   "id": "big_flower_crown",
+   "label": "Coroa de flores grande",
+   "slot": "hat",
+   "file": "jewelry/big_flower_crown.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 3092,
+   "bytes": 61512,
+   "materials": {
+    "gem": {
+     "slot": "gem",
+     "label": "Miolo",
+     "default": "#f2b830"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Pétalas",
+     "default": "#fbf6ea"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Folhas",
+     "default": "#4f7f45"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "oversized peonies and roses on a leafy ring around the crown (7 big blooms + buds + leaves); rides on the hair (hairFit lift)",
+   "tags": [
+    "romantico",
+    "praia",
+    "gala"
+   ],
+   "formality": 0.5,
+   "rarity": "raro",
+   "hairMount": [
+    0.0,
+    -0.4679,
+    0.8838
+   ]
+  },
+  {
+   "id": "cat_ears",
+   "label": "Orelhinhas de gato",
+   "slot": "hat",
+   "file": "jewelry/cat_ears.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 756,
+   "bytes": 15940,
+   "materials": {
+    "pearl": {
+     "slot": "pearl",
+     "label": "Interior",
+     "default": "#ffb3cf",
+     "finish": {
+      "rough": 0.6,
+      "coat": 0.0,
+      "sheen": 0.0,
+      "sheen_tint": "#ffffff"
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Orelhas",
+     "default": "#1a1a1f",
+     "finish": {
+      "rough": 0.55,
+      "sheen": 0.0,
+      "sheen_rough": 0.4
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "slim satin headband with two rounded cat ears (pink inner) and a tiny bell bow; rides on the hair (hairFit lift)",
+   "tags": [
+    "y2k",
+    "casual",
+    "romantico"
+   ],
+   "formality": 0.1,
+   "rarity": "comum",
+   "hairMount": [
+    0.2614,
+    -0.3116,
+    0.9135
+   ]
+  },
+  {
+   "id": "cat_eye_sunglasses",
+   "label": "Óculos de sol gatinho",
+   "slot": "glasses",
+   "file": "jewelry/cat_eye_sunglasses.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2440,
+   "bytes": 47428,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Lentes",
+     "default": "#2d2a30"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Armação",
+     "default": "#1a1a1f",
+     "finish": {
+      "rough": 0.22,
+      "coat": 0.6,
+      "coat_rough": 0.05,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "acetate cat-eye frame with lifted outer corners, dark lenses, gold hinge studs",
+   "tags": [
+    "casual",
+    "y2k",
+    "romantico"
+   ],
+   "formality": 0.5,
+   "rarity": "comum",
+   "faceFit": {
+    "eyeX": 0.058,
+    "eyeZ": 1.394,
+    "note": "lens centres measured on the doll face; frame sits 7.5 mm off the brow/nose, no clipping at any face morph"
+   }
+  },
+  {
+   "id": "aviator_sunglasses",
+   "label": "Óculos aviador",
+   "slot": "glasses",
+   "file": "jewelry/aviator_sunglasses.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1630,
+   "bytes": 32072,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Lentes",
+     "default": "#3d4a3f"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "thin gold wire aviator with double bridge bar and teardrop green-grey lenses",
+   "tags": [
+    "casual",
+    "esportivo"
+   ],
+   "formality": 0.4,
+   "rarity": "comum",
+   "faceFit": {
+    "eyeX": 0.058,
+    "eyeZ": 1.394,
+    "note": "lens centres measured on the doll face; frame sits 7.5 mm off the brow/nose, no clipping at any face morph"
+   }
+  },
+  {
+   "id": "round_glasses",
+   "label": "Óculos redondo",
+   "slot": "glasses",
+   "file": "jewelry/round_glasses.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1490,
+   "bytes": 29460,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Lentes",
+     "default": "#eaf2ff"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "thin gold wire round frame, clear lenses, gold temples",
+   "tags": [
+    "casual",
+    "romantico",
+    "gala"
+   ],
+   "formality": 0.6,
+   "rarity": "comum",
+   "faceFit": {
+    "eyeX": 0.058,
+    "eyeZ": 1.394,
+    "note": "lens centres measured on the doll face; frame sits 7.5 mm off the brow/nose, no clipping at any face morph"
+   }
+  },
+  {
+   "id": "heart_sunglasses",
+   "label": "Óculos de coração",
+   "slot": "glasses",
+   "file": "jewelry/heart_sunglasses.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1736,
+   "bytes": 34688,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Lentes",
+     "default": "#ffb3d1"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Armação",
+     "default": "#ff7fb5",
+     "finish": {
+      "rough": 0.22,
+      "coat": 0.6,
+      "coat_rough": 0.05,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "puffy acetate heart frames with rose lenses",
+   "tags": [
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.2,
+   "rarity": "raro",
+   "faceFit": {
+    "eyeX": 0.058,
+    "eyeZ": 1.394,
+    "note": "lens centres measured on the doll face; frame sits 7.5 mm off the brow/nose, no clipping at any face morph"
+   }
+  },
+  {
+   "id": "y2k_shield_glasses",
+   "label": "Óculos shield Y2K",
+   "slot": "glasses",
+   "file": "jewelry/y2k_shield_glasses.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1164,
+   "bytes": 24776,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#d9dde6"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Lente espelhada",
+     "default": "#7fb8ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Cristais",
+     "default": "#eaf2ff"
+    }
+   },
+   "defaultMetal": "silver",
+   "notes": "single wrap-around mirrored shield lens, rimless, metal top bar, hinge studs and tiny crystals",
+   "tags": [
+    "y2k",
+    "esportivo"
+   ],
+   "formality": 0.2,
+   "rarity": "raro",
+   "faceFit": {
+    "eyeX": 0.058,
+    "eyeZ": 1.394,
+    "note": "lens centres measured on the doll face; frame sits 7.5 mm off the brow/nose, no clipping at any face morph"
+   }
+  },
+  {
+   "id": "elegant_optical_glasses",
+   "label": "Óculos de grau elegante",
+   "slot": "glasses",
+   "file": "jewelry/elegant_optical_glasses.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1640,
+   "bytes": 33188,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Aro de metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Lentes",
+     "default": "#f4f8ff"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Armação",
+     "default": "#7a4a22",
+     "finish": {
+      "rough": 0.22,
+      "coat": 0.6,
+      "coat_rough": 0.05,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "browline optical frame: tortoise acetate brow bar, thin gold lower rim, clear lenses",
+   "tags": [
+    "gala",
+    "casual",
+    "romantico"
+   ],
+   "formality": 0.7,
+   "rarity": "comum",
+   "faceFit": {
+    "eyeX": 0.058,
+    "eyeZ": 1.394,
+    "note": "lens centres measured on the doll face; frame sits 7.5 mm off the brow/nose, no clipping at any face morph"
+   }
+  },
+  {
+   "id": "structured_handbag",
+   "label": "Bolsa de mão estruturada",
+   "slot": "bag",
+   "file": "jewelry/structured_handbag.glb",
+   "bone": "mixamorig:RightHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      -0.01084,
+      0.05163,
+      0.00457
+     ],
+     "quaternion": [
+      -0.63453,
+      -0.21128,
+      -0.7361,
+      0.10436
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 750,
+   "bytes": 18120,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Fecho",
+     "default": "#eaf2ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Alça / detalhe",
+     "default": "#1a1a1f",
+     "finish": {
+      "rough": 0.4,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Couro / tecido",
+     "default": "#1a1a1f",
+     "finish": {
+      "rough": 0.32,
+      "coat": 0.5,
+      "coat_rough": 0.12,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "rigid top-handle trapezoid bag (27x19x11 cm) with front flap, twist-lock and gold feet; right hand grips the handle",
+   "tags": [
+    "gala",
+    "casual",
+    "romantico"
+   ],
+   "formality": 0.8,
+   "rarity": "raro",
+   "bagSide": "R",
+   "carry": "hand"
+  },
+  {
+   "id": "clutch_bag",
+   "label": "Bolsa clutch",
+   "slot": "bag",
+   "file": "jewelry/clutch_bag.glb",
+   "bone": "mixamorig:RightHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      -0.01084,
+      0.05163,
+      0.00457
+     ],
+     "quaternion": [
+      -0.63453,
+      -0.21128,
+      -0.7361,
+      0.10436
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2128,
+   "bytes": 42208,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Fecho",
+     "default": "#c1121f"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Pérolas",
+     "default": "#fbf3e6",
+     "finish": {
+      "rough": 0.2,
+      "coat": 1.0,
+      "coat_rough": 0.05,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "metallic envelope clutch (24x13 cm) hanging from a short gold chain loop held in the hand; crystal clasp",
+   "tags": [
+    "gala",
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.95,
+   "rarity": "raro",
+   "bagSide": "R",
+   "carry": "hand"
+  },
+  {
+   "id": "mini_bag",
+   "label": "Mini bag",
+   "slot": "bag",
+   "file": "jewelry/mini_bag.glb",
+   "bone": "mixamorig:RightHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      -0.01084,
+      0.05163,
+      0.00457
+     ],
+     "quaternion": [
+      -0.63453,
+      -0.21128,
+      -0.7361,
+      0.10436
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 758,
+   "bytes": 18000,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Fecho",
+     "default": "#ff5fa8"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Alça / detalhe",
+     "default": "#ffffff",
+     "finish": {
+      "rough": 0.4,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Couro / tecido",
+     "default": "#f4b6c8",
+     "finish": {
+      "rough": 0.32,
+      "coat": 0.5,
+      "coat_rough": 0.12,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "tiny pastel top-handle bag (17x12 cm) with twist lock and a little bow charm",
+   "tags": [
+    "romantico",
+    "y2k",
+    "casual"
+   ],
+   "formality": 0.5,
+   "rarity": "comum",
+   "bagSide": "R",
+   "carry": "hand"
+  },
+  {
+   "id": "heart_bag",
+   "label": "Bolsa coração",
+   "slot": "bag",
+   "file": "jewelry/heart_bag.glb",
+   "bone": "mixamorig:RightHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      -0.01084,
+      0.05163,
+      0.00457
+     ],
+     "quaternion": [
+      -0.63453,
+      -0.21128,
+      -0.7361,
+      0.10436
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1376,
+   "bytes": 28972,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Fecho",
+     "default": "#eaf2ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Alça / detalhe",
+     "default": "#fff3f7",
+     "finish": {
+      "rough": 0.4,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Couro / tecido",
+     "default": "#b3122b",
+     "finish": {
+      "rough": 0.32,
+      "coat": 0.5,
+      "coat_rough": 0.12,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "puffy quilted heart bag (20 cm) with a short gold chain handle",
+   "tags": [
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.45,
+   "rarity": "raro",
+   "bagSide": "R",
+   "carry": "hand"
+  },
+  {
+   "id": "straw_beach_bag",
+   "label": "Bolsa de praia de palha",
+   "slot": "bag",
+   "file": "jewelry/straw_beach_bag.glb",
+   "bone": "mixamorig:RightHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      -0.01084,
+      0.05163,
+      0.00457
+     ],
+     "quaternion": [
+      -0.63453,
+      -0.21128,
+      -0.7361,
+      0.10436
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2508,
+   "bytes": 48716,
+   "materials": {
+    "gem": {
+     "slot": "gem",
+     "label": "Laço",
+     "default": "#ff7fc0"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Couro / alça",
+     "default": "#8a5a2b",
+     "finish": {
+      "rough": 0.55,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Palha",
+     "default": "#d9b36a",
+     "finish": {
+      "rough": 0.9,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "woven straw tote (38x30 cm) with leather-trim top, two rope handles and a ribbon tie",
+   "tags": [
+    "praia",
+    "casual"
+   ],
+   "formality": 0.15,
+   "rarity": "comum",
+   "bagSide": "R",
+   "carry": "hand"
+  },
+  {
+   "id": "shopping_bag",
+   "label": "Sacola de compras",
+   "slot": "bag",
+   "file": "jewelry/shopping_bag.glb",
+   "bone": "mixamorig:RightHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      -0.01084,
+      0.05163,
+      0.00457
+     ],
+     "quaternion": [
+      -0.63453,
+      -0.21128,
+      -0.7361,
+      0.10436
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 920,
+   "bytes": 21124,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Corda",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Emblema",
+     "default": "#c1121f"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Papel de seda",
+     "default": "#ffffff",
+     "finish": {
+      "rough": 0.8,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Papel",
+     "default": "#d9c3a0",
+     "finish": {
+      "rough": 0.25,
+      "coat": 0.6,
+      "coat_rough": 0.1,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "glossy paper shopping bag (26x33x11 cm) with gold rope handles, heart emblem and a tuft of tissue paper",
+   "tags": [
+    "casual",
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.2,
+   "rarity": "comum",
+   "bagSide": "R",
+   "carry": "hand"
+  },
+  {
+   "id": "crossbody_bag",
+   "label": "Bolsa tiracolo",
+   "slot": "bag",
+   "file": "jewelry/crossbody_bag.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.00036,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1416,
+   "bytes": 30092,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Fecho",
+     "default": "#eaf2ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Alça / detalhe",
+     "default": "#a8743f",
+     "finish": {
+      "rough": 0.4,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Couro / tecido",
+     "default": "#a8743f",
+     "finish": {
+      "rough": 0.32,
+      "coat": 0.5,
+      "coat_rough": 0.12,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "crossbody: strap over the RIGHT shoulder crossing chest and back (conformed to the torso incl. bustBig), small quilted bag on the LEFT hip; rigid on Spine2",
+   "tags": [
+    "casual",
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.45,
+   "rarity": "comum",
+   "bagSide": "L-hip",
+   "carry": "body"
+  },
+  {
+   "id": "mini_backpack",
+   "label": "Mochila pequena",
+   "slot": "bag",
+   "file": "jewelry/mini_backpack.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.00036,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1174,
+   "bytes": 25496,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Zíperes",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Detalhe",
+     "default": "#ffffff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Alças",
+     "default": "#3d4a2a",
+     "finish": {
+      "rough": 0.4,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Tecido",
+     "default": "#566b3a",
+     "finish": {
+      "rough": 0.32,
+      "coat": 0.5,
+      "coat_rough": 0.12,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "mini backpack (18x22x8 cm) on the back, two shoulder straps over the shoulders and under the arms; rigid on Spine2",
+   "tags": [
+    "casual",
+    "esportivo",
+    "y2k"
+   ],
+   "formality": 0.2,
+   "rarity": "comum",
+   "bagSide": "R",
+   "carry": "back"
+  },
+  {
+   "id": "thin_gold_belt",
+   "label": "Cinto fino dourado",
+   "slot": "belt",
+   "file": "jewelry/thin_gold_belt.glb",
+   "bone": "mixamorig:Spine",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine",
+     "position": [
+      0.0,
+      0.09136,
+      0.035
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 622,
+   "bytes": 13496,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "slim 9 mm gold waist belt with a rhombus buckle and a crystal",
+   "tags": [
+    "gala",
+    "romantico",
+    "casual"
+   ],
+   "formality": 0.75,
+   "rarity": "comum",
+   "beltNote": "conformed to base+weightUp+hipsWide+buttBig+bustBig envelope (7-12 mm off the base waist at morph 0)"
+  },
+  {
+   "id": "chain_belt",
+   "label": "Cinto corrente",
+   "slot": "belt",
+   "file": "jewelry/chain_belt.glb",
+   "bone": "mixamorig:Spine",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine",
+     "position": [
+      0.0,
+      0.09136,
+      0.035
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 3668,
+   "bytes": 69840,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Coração",
+     "default": "#c1121f"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Pérolas",
+     "default": "#fbf3e6"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "two gold chains: a waist chain and a looser hip swag with a heart charm and pearls",
+   "tags": [
+    "y2k",
+    "casual",
+    "praia"
+   ],
+   "formality": 0.4,
+   "rarity": "raro",
+   "beltNote": "conformed to base+weightUp+hipsWide+buttBig+bustBig envelope (7-12 mm off the base waist at morph 0)"
+  },
+  {
+   "id": "leather_belt",
+   "label": "Cinto de couro com fivela",
+   "slot": "belt",
+   "file": "jewelry/leather_belt.glb",
+   "bone": "mixamorig:Spine",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine",
+     "position": [
+      0.0,
+      0.09136,
+      0.035
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 772,
+   "bytes": 16480,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Couro / cetim",
+     "default": "#6b3f1f",
+     "finish": {
+      "rough": 0.38,
+      "coat": 0.4,
+      "coat_rough": 0.15,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "26 mm leather belt, gold rectangular buckle, keeper loop and a tail with punched holes",
+   "tags": [
+    "casual",
+    "esportivo",
+    "goth"
+   ],
+   "formality": 0.35,
+   "rarity": "comum",
+   "beltNote": "conformed to base+weightUp+hipsWide+buttBig+bustBig envelope (7-12 mm off the base waist at morph 0)"
+  },
+  {
+   "id": "satin_sash",
+   "label": "Faixa de cetim com laço",
+   "slot": "belt",
+   "file": "jewelry/satin_sash.glb",
+   "bone": "mixamorig:Spine",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine",
+     "position": [
+      0.0,
+      0.09136,
+      0.035
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1378,
+   "bytes": 27496,
+   "materials": {
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Cetim",
+     "default": "#6e1423",
+     "finish": {
+      "rough": 0.35,
+      "coat": 0.0,
+      "sheen": 1.0,
+      "sheen_rough": 0.25,
+      "sheen_tint": "#ffffff"
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "46 mm satin sash with a side bow and two draped tails (conformed to the left hip)",
+   "tags": [
+    "gala",
+    "romantico"
+   ],
+   "formality": 0.8,
+   "rarity": "raro",
+   "beltNote": "conformed to base+weightUp+hipsWide+buttBig+bustBig envelope (7-12 mm off the base waist at morph 0)"
+  },
+  {
+   "id": "silk_scarf",
+   "label": "Lenço de seda no pescoço",
+   "slot": "scarf",
+   "file": "jewelry/silk_scarf.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.00036,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2812,
+   "bytes": 54468,
+   "materials": {
+    "pearl": {
+     "slot": "pearl",
+     "label": "Bolinhas / borda",
+     "default": "#fff6ea"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Seda",
+     "default": "#1f2d4a",
+     "finish": {
+      "rough": 0.35,
+      "coat": 0.0,
+      "sheen": 1.0,
+      "sheen_rough": 0.25,
+      "sheen_tint": "#ffffff"
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "folded silk scarf tied at the front-left with a small knot and two draped tails; polka-dot trim",
+   "tags": [
+    "romantico",
+    "gala",
+    "casual"
+   ],
+   "formality": 0.65,
+   "rarity": "comum",
+   "scarfNote": "rigid on Spine2 (tails drape on the chest, conformed to base+bustBig); neck band clears the neck by 5 mm"
+  },
+  {
+   "id": "short_scarf",
+   "label": "Cachecol curto",
+   "slot": "scarf",
+   "file": "jewelry/short_scarf.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.00036,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2644,
+   "bytes": 50392,
+   "materials": {
+    "pearl": {
+     "slot": "pearl",
+     "label": "Listras",
+     "default": "#c1121f",
+     "finish": {
+      "rough": 0.95,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Lã",
+     "default": "#f1e6d6",
+     "finish": {
+      "rough": 0.95,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "chunky ribbed knit scarf wrapped twice around the neck with one short fringed tail on the chest",
+   "tags": [
+    "casual",
+    "esportivo",
+    "goth"
+   ],
+   "formality": 0.2,
+   "rarity": "comum",
+   "scarfNote": "rigid on Spine2 (tails drape on the chest, conformed to base+bustBig); neck band clears the neck by 5 mm"
+  },
+  {
+   "id": "flower_brooch",
+   "label": "Broche de flor",
+   "slot": "brooch",
+   "file": "jewelry/flower_brooch.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.00036,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 490,
+   "bytes": 12576,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Pétalas",
+     "default": "#fbf3e6"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "pearl-petal flower pin with crystal centre and two gold leaves, pinned on the left chest (conformed to bustBig)",
+   "tags": [
+    "gala",
+    "romantico"
+   ],
+   "formality": 0.85,
+   "rarity": "raro"
+  },
+  {
+   "id": "bow_brooch",
+   "label": "Broche de laço",
+   "slot": "brooch",
+   "file": "jewelry/bow_brooch.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.00036,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 328,
+   "bytes": 10460,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Pérola",
+     "default": "#fbf3e6"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Cetim",
+     "default": "#1a1a1f",
+     "finish": {
+      "rough": 0.35,
+      "coat": 0.0,
+      "sheen": 1.0,
+      "sheen_rough": 0.25,
+      "sheen_tint": "#ffffff"
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "satin bow pin with a crystal knot and a short pearl drop, left chest (conformed to bustBig)",
+   "tags": [
+    "romantico",
+    "casual",
+    "gala"
+   ],
+   "formality": 0.6,
+   "rarity": "comum"
+  },
+  {
+   "id": "anklet",
+   "label": "Tornozeleira",
+   "slot": "ankle",
+   "file": "jewelry/anklet.glb",
+   "bone": "mixamorig:LeftFoot",
+   "attachments": [
+    {
+     "bone": "mixamorig:LeftFoot",
+     "position": [
+      0.00033,
+      0.01123,
+      -0.00318
+     ],
+     "quaternion": [
+      -0.00396,
+      -0.22663,
+      -0.97382,
+      0.01701
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "bone": "mixamorig:RightFoot",
+     "position": [
+      -0.00033,
+      0.01123,
+      -0.00318
+     ],
+     "quaternion": [
+      -0.00396,
+      0.22663,
+      0.97382,
+      0.01701
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 842,
+   "bytes": 18980,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Pérola",
+     "default": "#fbf3e6"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "fine gold chain ring with a star charm and pearls, both ankles; symmetric about its own axis so left and right share the mesh",
+   "tags": [
+    "praia",
+    "y2k",
+    "romantico"
+   ],
+   "formality": 0.3,
+   "rarity": "comum"
+  },
+  {
+   "id": "ear_climbers",
+   "label": "Brincos ear climber",
+   "slot": "ears",
+   "file": "jewelry/ear_climbers.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.12176,
+      0.0012
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1032,
+   "bytes": 22984,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#d9dde6"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Pérola",
+     "default": "#fbf3e6"
+    }
+   },
+   "defaultMetal": "silver",
+   "notes": "star and crystal climbers crawling 5 cm up the side of the head from the lobe, pearl stud at the lobe (head has no ears; hidden by most hair)",
+   "tags": [
+    "y2k",
+    "gala",
+    "romantico"
+   ],
+   "formality": 0.55,
+   "rarity": "raro"
+  },
+  {
+   "id": "initial_necklace_a",
+   "label": "Colar com inicial A",
+   "slot": "neck",
+   "file": "jewelry/initial_necklace_a.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.10636,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1626,
+   "bytes": 40732,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "fine gold chain with a letter A pendant (extruded font letter, 12 mm) + tiny crystal accent; letters A, L, M, S exist - see notes",
+   "tags": [
+    "casual",
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.35,
+   "rarity": "comum"
+  },
+  {
+   "id": "initial_necklace_l",
+   "label": "Colar com inicial L",
+   "slot": "neck",
+   "file": "jewelry/initial_necklace_l.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.10636,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1502,
+   "bytes": 37364,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "fine gold chain with a letter L pendant (extruded font letter, 12 mm) + tiny crystal accent; letters A, L, M, S exist - see notes",
+   "tags": [
+    "casual",
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.35,
+   "rarity": "comum"
+  },
+  {
+   "id": "initial_necklace_m",
+   "label": "Colar com inicial M",
+   "slot": "neck",
+   "file": "jewelry/initial_necklace_m.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.10636,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1718,
+   "bytes": 42696,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "fine gold chain with a letter M pendant (extruded font letter, 12 mm) + tiny crystal accent; letters A, L, M, S exist - see notes",
+   "tags": [
+    "casual",
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.35,
+   "rarity": "comum"
+  },
+  {
+   "id": "initial_necklace_s",
+   "label": "Colar com inicial S",
+   "slot": "neck",
+   "file": "jewelry/initial_necklace_s.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.10636,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1886,
+   "bytes": 46844,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#eaf2ff"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "fine gold chain with a letter S pendant (extruded font letter, 12 mm) + tiny crystal accent; letters A, L, M, S exist - see notes",
+   "tags": [
+    "casual",
+    "romantico",
+    "y2k"
+   ],
+   "formality": 0.35,
+   "rarity": "comum"
+  },
+  {
+   "id": "sport_watch",
+   "label": "Relógio esportivo",
+   "slot": "wrist",
+   "file": "jewelry/sport_watch.glb",
+   "bone": "mixamorig:LeftHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:LeftHand",
+     "position": [
+      -0.0148,
+      -0.01604,
+      0.00041
+     ],
+     "quaternion": [
+      -0.0043,
+      -0.99886,
+      -0.04751,
+      0.00015
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      0.0148,
+      -0.01604,
+      0.00041
+     ],
+     "quaternion": [
+      0.04751,
+      -0.00015,
+      0.0043,
+      0.99886
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 856,
+   "bytes": 19104,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Caixa",
+     "default": "#d9dde6"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Tela",
+     "default": "#1b2a49"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Pulseira de silicone",
+     "default": "#1a1a1f",
+     "finish": {
+      "rough": 0.45,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "silver",
+   "notes": "silicone-strap digital sport watch: rounded-square case, dark screen, two side buttons, buckle with a keeper",
+   "tags": [
+    "esportivo",
+    "casual"
+   ],
+   "formality": 0.1,
+   "rarity": "comum"
+  },
+  {
+   "id": "friendship_bracelet",
+   "label": "Pulseira de fita da amizade",
+   "slot": "wrist",
+   "file": "jewelry/friendship_bracelet.glb",
+   "bone": "mixamorig:LeftHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:LeftHand",
+     "position": [
+      -0.01529,
+      -0.01395,
+      0.00165
+     ],
+     "quaternion": [
+      -0.0043,
+      -0.99886,
+      -0.04751,
+      0.00015
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      0.01529,
+      -0.01395,
+      0.00165
+     ],
+     "quaternion": [
+      0.04751,
+      -0.00015,
+      0.0043,
+      0.99886
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2356,
+   "bytes": 50540,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Fio 3",
+     "default": "#4fc3f7",
+     "finish": {
+      "rough": 0.9,
+      "transmission": 0.0,
+      "emission": 0.0
+     }
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Fio 2",
+     "default": "#ffe36e",
+     "finish": {
+      "rough": 0.9,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Fio 1",
+     "default": "#ff5fa8",
+     "finish": {
+      "rough": 0.9,
+      "coat": 0.0,
+      "sheen": 0.0
+     }
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "braided chevron thread bracelet (5 rows) tied with a knot and two tails, plus three small gold beads",
+   "tags": [
+    "praia",
+    "casual",
+    "y2k"
+   ],
+   "formality": 0.05,
+   "rarity": "comum"
   }
  ],
  "hairFit": {
@@ -3862,6 +6772,61 @@
     0.0,
     0.848,
     0.53
+   ],
+   "sun_hat": [
+    0.0,
+    0.978,
+    0.208
+   ],
+   "beret": [
+    0.0,
+    0.978,
+    0.208
+   ],
+   "baseball_cap": [
+    0.0,
+    0.978,
+    0.208
+   ],
+   "bucket_hat": [
+    0.0,
+    0.978,
+    0.208
+   ],
+   "fedora": [
+    0.0,
+    0.978,
+    0.208
+   ],
+   "cowboy_hat": [
+    0.0,
+    0.978,
+    0.208
+   ],
+   "beanie": [
+    0.0,
+    0.978,
+    0.208
+   ],
+   "feather_tiara": [
+    0.0,
+    0.829,
+    0.559
+   ],
+   "fascinator": [
+    0.326,
+    0.788,
+    0.522
+   ],
+   "big_flower_crown": [
+    0.0,
+    0.884,
+    0.468
+   ],
+   "cat_ears": [
+    0.261,
+    0.914,
+    0.312
    ]
   },
   "lift": {
@@ -3880,7 +6845,18 @@
     "pearl_veil": 0.0038,
     "star_diadem": 0.0991,
     "pearl_hairpins": 0.0699,
-    "head_chain": 0.0864
+    "head_chain": 0.0864,
+    "sun_hat": 0.0477,
+    "beret": 0.0477,
+    "baseball_cap": 0.0477,
+    "bucket_hat": 0.0477,
+    "fedora": 0.0477,
+    "cowboy_hat": 0.0477,
+    "beanie": 0.0477,
+    "feather_tiara": 0.0932,
+    "fascinator": 0.0805,
+    "big_flower_crown": 0.0788,
+    "cat_ears": 0.0484
    },
    "hair_caramelCurls": {
     "tiara": 0.081,
@@ -3897,7 +6873,18 @@
     "pearl_veil": 0.0417,
     "star_diadem": 0.081,
     "pearl_hairpins": 0.0771,
-    "head_chain": 0.0851
+    "head_chain": 0.0851,
+    "sun_hat": 0.0876,
+    "beret": 0.0876,
+    "baseball_cap": 0.0876,
+    "bucket_hat": 0.0876,
+    "fedora": 0.0876,
+    "cowboy_hat": 0.0876,
+    "beanie": 0.0876,
+    "feather_tiara": 0.0835,
+    "fascinator": 0.072,
+    "big_flower_crown": 0.0878,
+    "cat_ears": 0.0774
    },
    "hair_platinumUndercut": {
     "tiara": 0.0537,
@@ -3914,7 +6901,18 @@
     "pearl_veil": 0.0745,
     "star_diadem": 0.0537,
     "pearl_hairpins": 0.0463,
-    "head_chain": 0.0479
+    "head_chain": 0.0479,
+    "sun_hat": 0.0355,
+    "beret": 0.0355,
+    "baseball_cap": 0.0355,
+    "bucket_hat": 0.0355,
+    "fedora": 0.0355,
+    "cowboy_hat": 0.0355,
+    "beanie": 0.0355,
+    "feather_tiara": 0.0524,
+    "fascinator": 0.0486,
+    "big_flower_crown": 0.0448,
+    "cat_ears": 0.0419
    },
    "hair_meshy_updo": {
     "tiara": 0.0086,
@@ -3931,7 +6929,18 @@
     "pearl_veil": 0.1571,
     "star_diadem": 0.0086,
     "pearl_hairpins": 0.012,
-    "head_chain": 0.0081
+    "head_chain": 0.0081,
+    "sun_hat": 0.0,
+    "beret": 0.0,
+    "baseball_cap": 0.0,
+    "bucket_hat": 0.0,
+    "fedora": 0.0,
+    "cowboy_hat": 0.0,
+    "beanie": 0.0,
+    "feather_tiara": 0.0051,
+    "fascinator": 0.0056,
+    "big_flower_crown": 0.0044,
+    "cat_ears": 0.0034
    }
   }
  }

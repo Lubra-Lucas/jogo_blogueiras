@@ -14,7 +14,7 @@ export function InteractionPrompt() {
   const shopOpen = useShopStore((s) => s.open)
   if (!nearby || active || shopOpen) return null
   const shops = nearby.shops ?? []
-  if (nearby.minigames.length === 0 && shops.length === 0) {
+  if (nearby.minigames.length === 0 && shops.length === 0 && !nearby.interior) {
     return (
       <div className="ia-prompt ia-prompt--soon" key={nearby.id} role="status">
         <span className="ia-name">{nearby.name}</span>
@@ -22,8 +22,9 @@ export function InteractionPrompt() {
       </div>
     )
   }
-  const entries = [...nearby.minigames.map((g) => ({ id: g.id, label: g.label })), ...shops.map((s) => ({ id: `shop:${s.id}`, label: s.label }))]
-  const single = entries.length === 1
+  const enter = nearby.interior ? [{ id: 'enter', label: 'Entrar' }] : []
+  const entries = [...enter, ...nearby.minigames.map((g) => ({ id: g.id, label: g.label })), ...shops.map((s) => ({ id: `shop:${s.id}`, label: s.label }))]
+  const single = entries.length === 1 && !nearby.interior
   return (
     <div className="ia-prompt" key={nearby.id} role="status">
       <span className="ia-name">{nearby.name}</span>

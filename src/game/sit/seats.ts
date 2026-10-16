@@ -44,7 +44,14 @@ export interface Seat {
   /** ponto de aproximacao/saida: a frente do banco, fora do colisor */
   ax: number
   az: number
+  /** texto aviso (padrao "Banco") */
+  label?: string
+  /** assento de interior: sem contorno de banco da cidade ao ir ate ele */
+  simple?: boolean
 }
+
+/** Assentos dos interiores (game/interiors); preenchido ao entrar numa sala e esvaziado ao sair. */
+export const EXTRA_SEATS: Seat[] = []
 
 // Mesmas regras de Props.tsx para saber de qual conjunto cada banco da cidade vem (copia; nao exportadas la).
 const isY2k = (x: number, z: number) => Math.hypot(x, z) < 82 || (x > 20 && Math.abs(z) < 70)

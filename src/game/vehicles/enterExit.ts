@@ -43,6 +43,9 @@ export function enterCar(uid: string) {
   if (!inst || st.drivingUid) return
   resetInput()
   clearMoveTarget()
+  // campo de texto com foco engole as teclas de direcao
+  const ae = document.activeElement
+  if (ae instanceof HTMLElement && (ae.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName))) ae.blur()
   bump()
   driveBridge.active = true
   driveBridge.yaw = inst.yaw

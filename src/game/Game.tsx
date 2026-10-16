@@ -23,6 +23,8 @@ import { SitController } from './sit/SitController'
 import { LifeDriver } from './world/life/LifeDriver'
 import { NavigationRunner } from './navigation/NavigationRunner'
 import { VehicleSystem } from './vehicles/VehicleSystem'
+import { InteriorHost } from './interiors/InteriorHost'
+import { useInteriorStore } from './interiors/interiorStore'
 
 const VIEW = getViewMode()
 const MAP_MODE = new URLSearchParams(window.location.search).get('map') === '1'
@@ -32,6 +34,8 @@ export function Game({ tier }: { tier: QualityTier }) {
   const q = QUALITY_SETTINGS[tier]
   const scene = useThree((s) => s.scene)
   const gl = useThree((s) => s.gl)
+  // dentro de um interior (game/interiors) a cidade, o ceu e o sol ficam ocultos: so a sala e desenhada
+  const inside = useInteriorStore((s) => s.roomId !== null)
   useEffect(() => {
     gl.toneMappingExposure = 0.88
   }, [gl])
@@ -45,7 +49,9 @@ export function Game({ tier }: { tier: QualityTier }) {
 
   return (
     <>
-      <Sky />
+      <group visible={!inside}>
+        <Sky />
+      </group>
 
       {/* Estudio procedural (sem HDR/CDN): da reflexo para o ouro e a gema */}
       <Environment
@@ -66,7 +72,9 @@ export function Game({ tier }: { tier: QualityTier }) {
       </Environment>
 
       {/* hemisferio, nevoa e exposicao agora vem do ciclo dia/noite (world/environment/EnvironmentDriver) */}
-      <SunFollow castShadow={q.shadows} mapSize={q.shadowMapSize} />
+      <group visible={!inside}>
+        <SunFollow castShadow={q.shadows} mapSize={q.shadowMapSize} />
+      </group>
 
       {VIEW ? (
         <>
@@ -79,9 +87,14 @@ export function Game({ tier }: { tier: QualityTier }) {
       ) : (
         <>
           <Physics timeStep="vary" gravity={[0, -9.81, 0]} debug={DEBUG_PHYSICS}>
-            <City shadows={q.shadows} propDist={MAP_MODE ? 1e5 : q.propDist} buildingDist={MAP_MODE ? 1e5 : q.buildingDist} />
+            <group visible={!inside}>
+              <City shadows={q.shadows} propDist={MAP_MODE ? 1e5 : q.propDist} buildingDist={MAP_MODE ? 1e5 : q.buildingDist} />
+            </group>
             <PlayerController shadows={q.shadows} />
-            <VehicleSystem />
+            <group visible={!inside}>
+              <VehicleSystem />
+            </group>
+            <InteriorHost />
             <NavigationRunner />
             {/* depois do PlayerController: useFrame na ordem de montagem */}
             {MAP_MODE ? <MapCamera /> : <ThirdPersonCamera />}
@@ -95,10 +108,13 @@ export function Game({ tier }: { tier: QualityTier }) {
           <PhotoCapture />
           <InteractionTrigger />
           <SitController />
-          <LifeDriver />
+          <group visible={!inside}>
+            <LifeDriver />
+          </group>
         </>
       )}
       <Sparkles
+        visible={!inside}
         count={q.sparkles}
         scale={[9, 5, 9]}
         position={[0, 2.8, 0]}

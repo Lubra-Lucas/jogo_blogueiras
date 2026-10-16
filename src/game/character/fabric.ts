@@ -33,6 +33,11 @@ function tex(name: string, srgb: boolean, repeat: number): Texture {
   return t
 }
 
+/** Textura de arquivo de assets/garments/tex/ (estampas proprias), com repeticao. */
+export function fabricTex(name: string, srgb: boolean, repeat: number): Texture {
+  return tex(name, srgb, repeat)
+}
+
 /** Reaplica quando uma textura termina de carregar. */
 export function onFabricTextureLoad(f: () => void): () => void {
   listeners.add(f)
@@ -108,7 +113,7 @@ export function applyFinish(m: MeshPhysicalMaterial, finish: string, color: stri
 }
 
 /** Material de joia por slot: metal (espelhado), gem (cristal translucido), pearl, ribbon (cetim). */
-export function applyJewelMaterial(m: MeshPhysicalMaterial, slot: string, color: string): void {
+export function applyJewelMaterial(m: MeshPhysicalMaterial, slot: string, color: string, fin?: Record<string, number | string>): void {
   m.emissive.set('#000000')
   m.emissiveIntensity = 0
   m.transmission = 0
@@ -126,9 +131,32 @@ export function applyJewelMaterial(m: MeshPhysicalMaterial, slot: string, color:
     m.clearcoat = 1
     m.emissive.set(color)
     m.emissiveIntensity = 0.12
+  } else if (slot === 'lens' || slot === 'glass') {
+    // lente de oculos: translucida, levemente tingida
+    applyFinish(m, 'latex', color)
+    m.roughness = 0.04
+    m.clearcoat = 1
+    m.transparent = true
+    m.opacity = 0.42
+    m.depthWrite = false
   } else if (slot === 'pearl') {
     applyFinish(m, 'pearl', color)
     m.sheen = 1
     m.clearcoat = 1
   } else applyFinish(m, 'satin', color)
+  if (fin) {
+    // parametros do manifesto por slot (palha, tecido, couro...): nao forca cetim
+    const n = (k: string) => (typeof fin[k] === 'number' ? (fin[k] as number) : undefined)
+    if (n('rough') !== undefined) m.roughness = n('rough')!
+    if (slot !== 'gem' || n('coat') !== undefined) m.clearcoat = n('coat') ?? 0
+    if (n('coat_rough') !== undefined) m.clearcoatRoughness = n('coat_rough')!
+    if (n('sheen') !== undefined) m.sheen = n('sheen')!
+    if (n('sheen_rough') !== undefined) m.sheenRoughness = n('sheen_rough')!
+    if (typeof fin.sheen_tint === 'string') m.sheenColor.set(fin.sheen_tint)
+    if (n('transmission') !== undefined) m.transmission = n('transmission')!
+    if (n('emission') !== undefined) {
+      m.emissive.set(color)
+      m.emissiveIntensity = n('emission')!
+    }
+  }
 }

@@ -7,7 +7,8 @@ import { cameraIntent, intent, isPointerClaimed, setMoveTarget } from '../input/
 import { useInteractionStore } from '../interaction/interactionStore'
 import { useMinigameStore } from '../minigames/minigameStore'
 import { CITY } from '../world/city/layout'
-import { BENCHES, KINDS, SEATS, type Seat } from './seats'
+import { BENCHES, EXTRA_SEATS, KINDS, SEATS, type Seat } from './seats'
+import { useInteriorStore } from '../interiors/interiorStore'
 import { useSitStore } from './sitStore'
 import { driveBridge } from '../vehicles/driveStore'
 
@@ -57,6 +58,15 @@ const _c = new Vector3() // destino atual da etapa 'corner'
 /** Manda a personagem para o assento: se estiver atras do banco, contorna pela ponta antes. Senta ao chegar. */
 function routeToSeat(seat: Seat, run: boolean) {
   const p = usePlayerStore.getState().position
+  if (seat.simple) {
+    // assento de interior (game/interiors): vai direto ao ponto de aproximacao livre
+    _o.set(seat.ax, 0, seat.az)
+    stage = 'final'
+    _c.copy(_o)
+    setMoveTarget(_o, run)
+    useSitStore.setState({ pending: seat, pendingStamp: intent.targetSetAt })
+    return
+  }
   const b = seat.bench
   const k = KINDS[b.kind]
   const dx = p.x - b.x
@@ -88,6 +98,19 @@ function pickSeat(ray: Raycaster): Seat | null {
   let bt = Infinity
   const ro = ray.ray.origin
   const rd = ray.ray.direction
+  // assentos de interiores: esfera de 0,5 m em torno do assento
+  for (const s of EXTRA_SEATS) {
+    const ox = s.x - ro.x
+    const oy = s.y - 0.1 - ro.y
+    const oz = s.z - ro.z
+    const tca = ox * rd.x + oy * rd.y + oz * rd.z
+    if (tca < 0) continue
+    const d2 = ox * ox + oy * oy + oz * oz - tca * tca
+    if (d2 < 0.3 * 0.3 && tca < bt) {
+      bt = tca
+      best = s
+    }
+  }
   for (const b of BENCHES) {
     if (Math.abs(b.x - ro.x) > PICK_RANGE || Math.abs(b.z - ro.z) > PICK_RANGE) continue
     const k = KINDS[b.kind]
@@ -237,6 +260,16 @@ export function SitController() {
           best = s
         }
       }
+      for (const s of EXTRA_SEATS) {
+        const dd = (s.x - p.x) ** 2 + (s.z - p.z) ** 2
+        if (dd < bd) {
+          bd = dd
+          best = s
+        }
+      }
+      // ponto de uso de interior (balcao, porta de saida...) mais perto que o assento: o aviso e dele
+      const ip = useInteriorStore.getState().prompt
+      if (best && ip && ip.d2 < bd) best = null
       // se uma porta (cafe...) esta mais perto que o assento, o aviso e dela
       const door = useInteractionStore.getState().nearby
       const poi = door && POIS.get(door.id)

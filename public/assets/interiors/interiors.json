@@ -67,103 +67,103 @@
    "label": "Compartilhado",
    "palette": {
     "label": "Compartilhado",
-    "base": "#fff0ea",
-    "accent": "#f8c3d8",
-    "accent2": "#f06aa4",
-    "soft": "#ead2f2",
-    "deep": "#b03a74",
-    "fabric": "#f6a3c4",
+    "base": "#efe6da",
+    "accent": "#d9ccb8",
+    "accent2": "#a8553b",
+    "soft": "#e0d4c0",
+    "deep": "#3a3128",
+    "fabric": "#d9ccb6",
     "metal": "gold",
-    "glass": "#ffc4dc",
-    "glow": "#ffd9a0",
+    "glass": "#dfe6e6",
+    "glow": "#ffe9c4",
     "white": "#fffaf6",
-    "leaf": "#a8dcc0"
+    "leaf": "#5f8a5e"
    }
   },
   "casa": {
    "label": "Casa dos Sonhos",
    "palette": {
     "label": "Casa dos Sonhos",
-    "base": "#fff0ea",
-    "accent": "#f8c3d8",
-    "accent2": "#f06aa4",
-    "soft": "#ead2f2",
-    "deep": "#b03a74",
-    "fabric": "#f6a3c4",
+    "base": "#f1e1dc",
+    "accent": "#e3bcc4",
+    "accent2": "#b9677d",
+    "soft": "#efd6d4",
+    "deep": "#6e4350",
+    "fabric": "#e8c0c8",
     "metal": "gold",
-    "glass": "#ffc4dc",
-    "glow": "#ffd9a0",
-    "white": "#fffaf6",
-    "leaf": "#a8dcc0"
+    "glass": "#f3d9de",
+    "glow": "#ffe3b8",
+    "white": "#fbf5f0",
+    "leaf": "#5f8a5e"
    }
   },
   "cafe": {
    "label": "Cafe Rose",
    "palette": {
     "label": "Cafe Rose",
-    "base": "#a9e3cb",
-    "accent": "#fff3ea",
-    "accent2": "#e0405a",
-    "soft": "#ffd9c9",
-    "deep": "#7a2a3a",
-    "fabric": "#e8697e",
+    "base": "#8fa88c",
+    "accent": "#f1e6d2",
+    "accent2": "#a8553b",
+    "soft": "#d9c3a0",
+    "deep": "#4a3426",
+    "fabric": "#9bb39a",
     "metal": "rose_gold",
-    "glass": "#ffc9c0",
-    "glow": "#ffe0b0",
-    "white": "#fffaf6",
-    "leaf": "#a8dcc0",
-    "glow2": "#ff6f91"
+    "glass": "#d8e6dd",
+    "glow": "#ffe2ae",
+    "white": "#f6efe0",
+    "leaf": "#5f8a5e",
+    "glow2": "#ffb27a"
    }
   },
   "salao": {
    "label": "Salao & Spa",
    "palette": {
     "label": "Salao & Spa",
-    "base": "#c1a5ea",
-    "accent": "#f3ecfc",
-    "accent2": "#9461d6",
-    "soft": "#e0d0f8",
-    "deep": "#4f3480",
-    "fabric": "#b08ae8",
-    "metal": "silver",
-    "glass": "#e3ccff",
-    "glow": "#ffe8f6",
-    "white": "#fffaf6",
-    "leaf": "#a8dcc0"
+    "base": "#b9ae9f",
+    "accent": "#f2ece0",
+    "accent2": "#2b2a29",
+    "soft": "#d8cfc2",
+    "deep": "#3b3835",
+    "fabric": "#c9bfae",
+    "metal": "gold",
+    "glass": "#dfe6e6",
+    "glow": "#ffeccf",
+    "white": "#f6f1e8",
+    "leaf": "#5f8a5e"
    }
   },
   "boutique": {
    "label": "Boutique",
    "palette": {
     "label": "Boutique",
-    "base": "#9fcbf3",
-    "accent": "#fffaf6",
-    "accent2": "#5a9de0",
-    "soft": "#d2e6fb",
-    "deep": "#2f5a8f",
-    "fabric": "#8fb8ec",
+    "base": "#efe8da",
+    "accent": "#2a2826",
+    "accent2": "#b08a5a",
+    "soft": "#d9ccb8",
+    "deep": "#1f1d1c",
+    "fabric": "#d8c8ae",
     "metal": "champagne",
-    "glass": "#cfe6ff",
-    "glow": "#fff0c8",
-    "white": "#fffaf6",
-    "leaf": "#a8dcc0"
+    "glass": "#e3ebee",
+    "glow": "#fff0cf",
+    "white": "#fbf7ef",
+    "leaf": "#5f8a5e"
    }
   },
   "joalheria": {
    "label": "Joalheria",
    "palette": {
     "label": "Joalheria",
-    "base": "#1b1820",
-    "accent": "#2f2a38",
-    "accent2": "#8a2f4a",
-    "soft": "#4a4256",
-    "deep": "#0f0d12",
-    "fabric": "#6a2444",
+    "base": "#17151a",
+    "accent": "#26222b",
+    "accent2": "#6e1f33",
+    "soft": "#3a343f",
+    "deep": "#0c0b0e",
+    "fabric": "#6e1f33",
     "metal": "champagne",
-    "glass": "#b8a2d0",
-    "glow": "#ffe2a0",
-    "white": "#e4d3ae",
-    "leaf": "#a8dcc0",
+    "glass": "#cdd5df",
+    "glow": "#ffe6b0",
+    "white": "#e6d8b8",
+    "leaf": "#4f7a55",
     "sheen": 0.25
    }
   },
@@ -171,35 +171,36 @@
    "label": "Estudio de Fotos",
    "palette": {
     "label": "Estudio de Fotos",
-    "base": "#ffc2a8",
-    "accent": "#fff3ea",
-    "accent2": "#ff7f6b",
-    "soft": "#ffe0cf",
-    "deep": "#a8483a",
-    "fabric": "#ff9d86",
+    "base": "#8b8d90",
+    "accent": "#f1f1ef",
+    "accent2": "#c79a6b",
+    "soft": "#c9cbcd",
+    "deep": "#1e1f21",
+    "fabric": "#4a4c50",
     "metal": "chrome",
-    "glass": "#ffd5c4",
-    "glow": "#fff0d0",
-    "white": "#fffaf6",
-    "leaf": "#a8dcc0"
+    "glass": "#dbe3e8",
+    "glow": "#fff3df",
+    "white": "#fafafa",
+    "leaf": "#5f8a5e",
+    "glow2": "#ffd9a8"
    }
   },
   "palco": {
    "label": "Palco Neon",
    "palette": {
     "label": "Palco Neon",
-    "base": "#2a1250",
-    "accent": "#6a2d9c",
-    "accent2": "#ff4fd0",
-    "soft": "#1b2a6a",
-    "deep": "#150a30",
-    "fabric": "#8a3cc0",
+    "base": "#1e212c",
+    "accent": "#2a3350",
+    "accent2": "#3b6bff",
+    "soft": "#3a3f52",
+    "deep": "#0d0f14",
+    "fabric": "#2b3558",
     "metal": "silver",
-    "glass": "#ff8be8",
-    "glow": "#ff5ff0",
-    "white": "#f6e8ff",
-    "leaf": "#a8dcc0",
-    "glow2": "#4ff0ff",
+    "glass": "#9fd8ff",
+    "glow": "#ff4fd0",
+    "white": "#e8ecf6",
+    "leaf": "#4f7a55",
+    "glow2": "#38e8ff",
     "glow_str": 4.0
    }
   }
@@ -255,7 +256,7 @@
   "shared/floor_parquet": {
    "file": "shared/floor_parquet.glb",
    "tris": 876,
-   "bytes": 44180,
+   "bytes": 44196,
    "size": [
     2.0,
     0.036,
@@ -302,7 +303,7 @@
   "shared/floor_medallion": {
    "file": "shared/floor_medallion.glb",
    "tris": 2444,
-   "bytes": 66820,
+   "bytes": 66824,
    "size": [
     2.0,
     0.056,
@@ -351,7 +352,7 @@
   "shared/wall_panel": {
    "file": "shared/wall_panel.glb",
    "tris": 4788,
-   "bytes": 92764,
+   "bytes": 92784,
    "size": [
     2.0,
     3.2,
@@ -398,7 +399,7 @@
   "shared/wall_panel_wide": {
    "file": "shared/wall_panel_wide.glb",
    "tris": 8000,
-   "bytes": 152088,
+   "bytes": 152108,
    "size": [
     4.0,
     3.2,
@@ -477,7 +478,7 @@
   "shared/crown_2m": {
    "file": "shared/crown_2m.glb",
    "tris": 1368,
-   "bytes": 27940,
+   "bytes": 27956,
    "size": [
     2.0,
     0.165,
@@ -510,7 +511,7 @@
   "shared/wall_arch_door": {
    "file": "shared/wall_arch_door.glb",
    "tris": 3620,
-   "bytes": 78924,
+   "bytes": 78944,
    "size": [
     3.21,
     3.2,
@@ -573,7 +574,7 @@
   "shared/wall_window_curtains": {
    "file": "shared/wall_window_curtains.glb",
    "tris": 6392,
-   "bytes": 144392,
+   "bytes": 144428,
    "size": [
     3.0,
     3.2,
@@ -672,7 +673,7 @@
   "shared/rug_round": {
    "file": "shared/rug_round.glb",
    "tris": 2268,
-   "bytes": 60472,
+   "bytes": 60476,
    "size": [
     2.0,
     0.041,
@@ -707,7 +708,7 @@
   "shared/rug_heart": {
    "file": "shared/rug_heart.glb",
    "tris": 1884,
-   "bytes": 31680,
+   "bytes": 31684,
    "size": [
     1.975,
     0.04,
@@ -740,26 +741,27 @@
   },
   "shared/plant_potted": {
    "file": "shared/plant_potted.glb",
-   "tris": 1408,
-   "bytes": 32360,
+   "tris": 1568,
+   "bytes": 37780,
    "size": [
-    0.944,
-    1.054,
-    0.864
+    1.133,
+    0.737,
+    1.22
    ],
    "bbox_min": [
-    -0.403,
+    -0.518,
     0.0,
-    -0.447
+    -0.672
    ],
    "bbox_max": [
-    0.542,
-    1.054,
-    0.417
+    0.615,
+    0.737,
+    0.549
    ],
    "materials": [
     "white.012",
     "trim.012",
+    "deep.012",
     "leaf.012"
    ],
    "mount": "floor",
@@ -771,12 +773,12 @@
    "hero": false,
    "collider": {
     "type": "cylinder",
-    "radius": 0.472,
-    "height": 1.054,
+    "radius": 0.61,
+    "height": 0.737,
     "center": [
-     0.07,
-     0.527,
-     -0.015
+     0.048,
+     0.368,
+     -0.061
     ]
    },
    "note": "vaso grande com folhagem (prefira Meshy para hero)",
@@ -784,26 +786,27 @@
   },
   "shared/plant_small": {
    "file": "shared/plant_small.glb",
-   "tris": 1216,
-   "bytes": 28060,
+   "tris": 1496,
+   "bytes": 35860,
    "size": [
-    0.25,
-    0.301,
-    0.319
+    0.38,
+    0.228,
+    0.332
    ],
    "bbox_min": [
-    -0.097,
+    -0.191,
     0.0,
-    -0.152
+    -0.17
    ],
    "bbox_max": [
-    0.153,
-    0.301,
-    0.167
+    0.189,
+    0.228,
+    0.162
    ],
    "materials": [
     "accent.013",
     "trim.013",
+    "deep.013",
     "leaf.013"
    ],
    "mount": "tabletop",
@@ -820,7 +823,7 @@
   "shared/wall_sconce": {
    "file": "shared/wall_sconce.glb",
    "tris": 572,
-   "bytes": 17944,
+   "bytes": 17960,
    "size": [
     0.18,
     0.51,
@@ -866,7 +869,7 @@
   "shared/mirror_wall_oval": {
    "file": "shared/mirror_wall_oval.glb",
    "tris": 3996,
-   "bytes": 95448,
+   "bytes": 95452,
    "size": [
     1.339,
     1.829,
@@ -953,7 +956,7 @@
   "shared/shelf_wall": {
    "file": "shared/shelf_wall.glb",
    "tris": 1948,
-   "bytes": 43084,
+   "bytes": 43108,
    "size": [
     1.2,
     0.42,
@@ -1038,7 +1041,7 @@
   "casa/bed_canopy": {
    "file": "casa/bed_canopy.glb",
    "tris": 12104,
-   "bytes": 258672,
+   "bytes": 258708,
    "size": [
     2.104,
     2.39,
@@ -1120,7 +1123,7 @@
   "casa/nightstand_pink": {
    "file": "casa/nightstand_pink.glb",
    "tris": 1144,
-   "bytes": 31964,
+   "bytes": 31996,
    "size": [
     0.57,
     0.759,
@@ -1183,7 +1186,7 @@
   "casa/lamp_table_pink": {
    "file": "casa/lamp_table_pink.glb",
    "tris": 1376,
-   "bytes": 31296,
+   "bytes": 31316,
    "size": [
     0.388,
     0.57,
@@ -1231,7 +1234,7 @@
   "casa/vanity_hollywood": {
    "file": "casa/vanity_hollywood.glb",
    "tris": 6980,
-   "bytes": 157888,
+   "bytes": 157940,
    "size": [
     1.6,
     2.317,
@@ -1427,7 +1430,7 @@
   "casa/sofa_capitone": {
    "file": "casa/sofa_capitone.glb",
    "tris": 4128,
-   "bytes": 98296,
+   "bytes": 98316,
    "size": [
     2.2,
     1.119,
@@ -1562,7 +1565,7 @@
   "casa/coffee_table_heart": {
    "file": "casa/coffee_table_heart.glb",
    "tris": 2404,
-   "bytes": 48432,
+   "bytes": 48452,
    "size": [
     0.987,
     0.451,
@@ -1610,7 +1613,7 @@
   "casa/table_side_round": {
    "file": "casa/table_side_round.glb",
    "tris": 2932,
-   "bytes": 69280,
+   "bytes": 69324,
    "size": [
     0.519,
     0.776,
@@ -1657,7 +1660,7 @@
   "casa/chandelier_crystal": {
    "file": "casa/chandelier_crystal.glb",
    "tris": 4592,
-   "bytes": 128744,
+   "bytes": 128760,
    "size": [
     1.16,
     1.405,
@@ -1704,7 +1707,7 @@
   "casa/balloons_hearts": {
    "file": "casa/balloons_hearts.glb",
    "tris": 2662,
-   "bytes": 57584,
+   "bytes": 57608,
    "size": [
     0.959,
     2.373,
@@ -1739,7 +1742,7 @@
   "casa/bookshelf_pink": {
    "file": "casa/bookshelf_pink.glb",
    "tris": 4872,
-   "bytes": 101720,
+   "bytes": 101756,
    "size": [
     1.279,
     2.072,
@@ -1791,7 +1794,7 @@
   "casa/tv_console": {
    "file": "casa/tv_console.glb",
    "tris": 2064,
-   "bytes": 48820,
+   "bytes": 48856,
    "size": [
     1.66,
     1.307,
@@ -1857,7 +1860,7 @@
   "casa/clawfoot_tub": {
    "file": "casa/clawfoot_tub.glb",
    "tris": 3836,
-   "bytes": 94944,
+   "bytes": 94980,
    "size": [
     1.845,
     1.036,
@@ -1920,7 +1923,7 @@
   "casa/bath_vanity_sink": {
    "file": "casa/bath_vanity_sink.glb",
    "tris": 1668,
-   "bytes": 41532,
+   "bytes": 41588,
    "size": [
     1.28,
     1.03,
@@ -1986,7 +1989,7 @@
   "casa/wardrobe_glass_lit": {
    "file": "casa/wardrobe_glass_lit.glb",
    "tris": 6900,
-   "bytes": 152756,
+   "bytes": 152808,
    "size": [
     1.56,
     2.764,
@@ -2068,7 +2071,7 @@
   "casa/closet_shoe_wall": {
    "file": "casa/closet_shoe_wall.glb",
    "tris": 7220,
-   "bytes": 182432,
+   "bytes": 182484,
    "size": [
     1.68,
     2.38,
@@ -2151,7 +2154,7 @@
   "casa/closet_island": {
    "file": "casa/closet_island.glb",
    "tris": 4832,
-   "bytes": 116156,
+   "bytes": 116212,
    "size": [
     1.46,
     1.003,
@@ -2218,7 +2221,7 @@
   "casa/clothes_rail_gold": {
    "file": "casa/clothes_rail_gold.glb",
    "tris": 1852,
-   "bytes": 49560,
+   "bytes": 49580,
    "size": [
     1.51,
     1.88,
@@ -2269,7 +2272,7 @@
   "cafe/floor_checker_small": {
    "file": "cafe/floor_checker_small.glb",
    "tris": 516,
-   "bytes": 27040,
+   "bytes": 27056,
    "size": [
     2.0,
     0.036,
@@ -2316,7 +2319,7 @@
   "cafe/counter_service": {
    "file": "cafe/counter_service.glb",
    "tris": 4200,
-   "bytes": 97816,
+   "bytes": 97848,
    "size": [
     2.521,
     0.937,
@@ -2380,7 +2383,7 @@
   "cafe/display_case_pastry": {
    "file": "cafe/display_case_pastry.glb",
    "tris": 6852,
-   "bytes": 172044,
+   "bytes": 172104,
    "size": [
     1.66,
     1.43,
@@ -2460,7 +2463,7 @@
   "cafe/espresso_machine": {
    "file": "cafe/espresso_machine.glb",
    "tris": 1810,
-   "bytes": 44520,
+   "bytes": 44552,
    "size": [
     0.66,
     0.49,
@@ -2512,7 +2515,7 @@
   "cafe/register_retro": {
    "file": "cafe/register_retro.glb",
    "tris": 1556,
-   "bytes": 39168,
+   "bytes": 39180,
    "size": [
     0.44,
     0.41,
@@ -2564,7 +2567,7 @@
   "cafe/menu_board": {
    "file": "cafe/menu_board.glb",
    "tris": 3396,
-   "bytes": 70192,
+   "bytes": 70204,
    "size": [
     0.965,
     1.295,
@@ -2601,7 +2604,7 @@
   "cafe/bistro_table_round": {
    "file": "cafe/bistro_table_round.glb",
    "tris": 1860,
-   "bytes": 43476,
+   "bytes": 43492,
    "size": [
     0.821,
     0.766,
@@ -2779,7 +2782,7 @@
   "cafe/cake_stand_dome": {
    "file": "cafe/cake_stand_dome.glb",
    "tris": 2320,
-   "bytes": 54372,
+   "bytes": 54424,
    "size": [
     0.444,
     0.55,
@@ -2816,7 +2819,7 @@
   "cafe/cupcake_tower": {
    "file": "cafe/cupcake_tower.glb",
    "tris": 5264,
-   "bytes": 128052,
+   "bytes": 128104,
    "size": [
     0.672,
     0.834,
@@ -2854,7 +2857,7 @@
   "cafe/macaron_plate": {
    "file": "cafe/macaron_plate.glb",
    "tris": 2232,
-   "bytes": 69996,
+   "bytes": 70032,
    "size": [
     0.432,
     0.186,
@@ -2890,7 +2893,7 @@
   "cafe/coffee_set_tray": {
    "file": "cafe/coffee_set_tray.glb",
    "tris": 1016,
-   "bytes": 29408,
+   "bytes": 29428,
    "size": [
     0.543,
     0.245,
@@ -2925,7 +2928,7 @@
   "cafe/pendant_lamp_cafe": {
    "file": "cafe/pendant_lamp_cafe.glb",
    "tris": 1116,
-   "bytes": 28552,
+   "bytes": 28548,
    "size": [
     0.519,
     1.14,
@@ -3028,7 +3031,7 @@
   "cafe/back_bar_shelves": {
    "file": "cafe/back_bar_shelves.glb",
    "tris": 3608,
-   "bytes": 89800,
+   "bytes": 89844,
    "size": [
     2.46,
     2.5,
@@ -3081,7 +3084,7 @@
   "cafe/vase_roses": {
    "file": "cafe/vase_roses.glb",
    "tris": 776,
-   "bytes": 20736,
+   "bytes": 20768,
    "size": [
     0.184,
     0.305,
@@ -3117,7 +3120,7 @@
   "cafe/sign_neon_cup": {
    "file": "cafe/sign_neon_cup.glb",
    "tris": 1060,
-   "bytes": 35224,
+   "bytes": 35220,
    "size": [
     0.9,
     0.792,
@@ -3164,7 +3167,7 @@
   "salao/floor_pearl_tile": {
    "file": "salao/floor_pearl_tile.glb",
    "tris": 252,
-   "bytes": 13436,
+   "bytes": 13456,
    "size": [
     2.006,
     0.035,
@@ -3274,7 +3277,7 @@
   "salao/mirror_station_lit": {
    "file": "salao/mirror_station_lit.glb",
    "tris": 5388,
-   "bytes": 111568,
+   "bytes": 111608,
    "size": [
     1.46,
     2.319,
@@ -3356,7 +3359,7 @@
   "salao/washbasin_chair": {
    "file": "salao/washbasin_chair.glb",
    "tris": 1864,
-   "bytes": 44500,
+   "bytes": 44532,
    "size": [
     0.961,
     1.187,
@@ -3421,7 +3424,7 @@
   "salao/manicure_table": {
    "file": "salao/manicure_table.glb",
    "tris": 2624,
-   "bytes": 71940,
+   "bytes": 71976,
    "size": [
     1.24,
     1.165,
@@ -3575,7 +3578,7 @@
   "salao/product_shelf_glass": {
    "file": "salao/product_shelf_glass.glb",
    "tris": 4700,
-   "bytes": 118220,
+   "bytes": 118240,
    "size": [
     1.26,
     2.188,
@@ -3657,7 +3660,7 @@
   "salao/spa_massage_bed": {
    "file": "salao/spa_massage_bed.glb",
    "tris": 2568,
-   "bytes": 59520,
+   "bytes": 59540,
    "size": [
     2.056,
     0.73,
@@ -3738,7 +3741,7 @@
   "salao/towel_warmer_rack": {
    "file": "salao/towel_warmer_rack.glb",
    "tris": 2244,
-   "bytes": 51496,
+   "bytes": 51520,
    "size": [
     0.89,
     1.62,
@@ -3787,7 +3790,7 @@
   "salao/sofa_waiting_pearl": {
    "file": "salao/sofa_waiting_pearl.glb",
    "tris": 3028,
-   "bytes": 71256,
+   "bytes": 71276,
    "size": [
     1.8,
     1.058,
@@ -3863,7 +3866,7 @@
   "salao/reception_desk_curved": {
    "file": "salao/reception_desk_curved.glb",
    "tris": 4320,
-   "bytes": 98316,
+   "bytes": 98356,
    "size": [
     2.448,
     1.271,
@@ -3931,7 +3934,7 @@
   "salao/dryer_hood_chair": {
    "file": "salao/dryer_hood_chair.glb",
    "tris": 2686,
-   "bytes": 66984,
+   "bytes": 66980,
    "size": [
     0.84,
     1.81,
@@ -3994,7 +3997,7 @@
   "salao/spa_decor_set": {
    "file": "salao/spa_decor_set.glb",
    "tris": 1264,
-   "bytes": 31504,
+   "bytes": 31540,
    "size": [
     0.5,
     0.343,
@@ -4032,7 +4035,7 @@
   "salao/chandelier_orbs": {
    "file": "salao/chandelier_orbs.glb",
    "tris": 1604,
-   "bytes": 40492,
+   "bytes": 40508,
    "size": [
     0.979,
     1.612,
@@ -4079,7 +4082,7 @@
   "salao/trolley_salon": {
    "file": "salao/trolley_salon.glb",
    "tris": 1736,
-   "bytes": 48616,
+   "bytes": 48644,
    "size": [
     0.512,
     1.01,
@@ -4129,27 +4132,27 @@
   },
   "salao/sign_scissors_neon": {
    "file": "salao/sign_scissors_neon.glb",
-   "tris": 1068,
-   "bytes": 34812,
+   "tris": 1472,
+   "bytes": 41512,
    "size": [
-    0.9,
-    0.7,
-    0.069
+    0.702,
+    0.702,
+    0.079
    ],
    "bbox_min": [
-    -0.45,
-    1.85,
+    -0.351,
+    1.849,
     -0.03
    ],
    "bbox_max": [
-    0.45,
-    2.55,
-    0.039
+    0.351,
+    2.551,
+    0.049
    ],
    "materials": [
-    "deep.015",
-    "glow2.015",
-    "glow.015"
+    "deep.020",
+    "trim.020",
+    "glow.020"
    ],
    "mount": "wall",
    "tags": [
@@ -4166,18 +4169,18 @@
       2.3,
       0.2
      ],
-     "color": "#ffe8f6",
+     "color": "#ffeccf",
      "range": 3,
      "intensity": 0.5
     }
    ],
-   "note": "letreiro de neon de tesoura + coracao para a parede do salao (z 1.9 a 2.6)",
+   "note": "letreiro elegante: aro de latao com tesoura em fio de luz quente (substitui o neon rosa)",
    "room": "salao"
   },
   "boutique/floor_blue_diamond": {
    "file": "boutique/floor_blue_diamond.glb",
    "tris": 280,
-   "bytes": 15352,
+   "bytes": 15368,
    "size": [
     2.0,
     0.044,
@@ -4225,7 +4228,7 @@
   "boutique/rack_round_carousel": {
    "file": "boutique/rack_round_carousel.glb",
    "tris": 3908,
-   "bytes": 97448,
+   "bytes": 97488,
    "size": [
     1.045,
     1.839,
@@ -4289,7 +4292,7 @@
   "boutique/rack_wall_rail": {
    "file": "boutique/rack_wall_rail.glb",
    "tris": 1840,
-   "bytes": 44528,
+   "bytes": 44564,
    "size": [
     1.9,
     1.595,
@@ -4327,7 +4330,7 @@
   "boutique/mannequin_gown": {
    "file": "boutique/mannequin_gown.glb",
    "tris": 2720,
-   "bytes": 61884,
+   "bytes": 61900,
    "size": [
     1.32,
     1.85,
@@ -4373,7 +4376,7 @@
   "boutique/dress_form_stand": {
    "file": "boutique/dress_form_stand.glb",
    "tris": 1390,
-   "bytes": 32544,
+   "bytes": 32540,
    "size": [
     0.469,
     1.637,
@@ -4416,7 +4419,7 @@
   "boutique/table_display_round": {
    "file": "boutique/table_display_round.glb",
    "tris": 4224,
-   "bytes": 86488,
+   "bytes": 86524,
    "size": [
     1.319,
     1.406,
@@ -4464,7 +4467,7 @@
   "boutique/table_display_long": {
    "file": "boutique/table_display_long.glb",
    "tris": 3524,
-   "bytes": 73724,
+   "bytes": 73764,
    "size": [
     1.6,
     1.017,
@@ -4516,7 +4519,7 @@
   "boutique/fitting_room_curtain": {
    "file": "boutique/fitting_room_curtain.glb",
    "tris": 4352,
-   "bytes": 101564,
+   "bytes": 101576,
    "size": [
     1.857,
     2.832,
@@ -4597,7 +4600,7 @@
   "boutique/mirror_trifold_stand": {
    "file": "boutique/mirror_trifold_stand.glb",
    "tris": 2176,
-   "bytes": 60648,
+   "bytes": 60688,
    "size": [
     1.524,
     2.189,
@@ -4673,7 +4676,7 @@
   "boutique/checkout_counter": {
    "file": "boutique/checkout_counter.glb",
    "tris": 5156,
-   "bytes": 109012,
+   "bytes": 109056,
    "size": [
     1.92,
     1.381,
@@ -4741,7 +4744,7 @@
   "boutique/shoe_wall_shelf": {
    "file": "boutique/shoe_wall_shelf.glb",
    "tris": 3956,
-   "bytes": 96448,
+   "bytes": 96508,
    "size": [
     1.45,
     1.5,
@@ -4839,7 +4842,7 @@
   "boutique/shopping_bags_set": {
    "file": "boutique/shopping_bags_set.glb",
    "tris": 1932,
-   "bytes": 44132,
+   "bytes": 44148,
    "size": [
     0.571,
     0.549,
@@ -4876,7 +4879,7 @@
   "boutique/hat_tree_gold": {
    "file": "boutique/hat_tree_gold.glb",
    "tris": 2434,
-   "bytes": 57888,
+   "bytes": 57924,
    "size": [
     0.851,
     1.65,
@@ -4924,7 +4927,7 @@
   "boutique/chandelier_drum_crystal": {
    "file": "boutique/chandelier_drum_crystal.glb",
    "tris": 4120,
-   "bytes": 129920,
+   "bytes": 129940,
    "size": [
     0.952,
     1.045,
@@ -4970,7 +4973,7 @@
   "boutique/sign_marquee_heart": {
    "file": "boutique/sign_marquee_heart.glb",
    "tris": 1988,
-   "bytes": 46092,
+   "bytes": 46112,
    "size": [
     0.903,
     0.82,
@@ -5332,7 +5335,7 @@
   "joalheria/counter_checkout_black": {
    "file": "joalheria/counter_checkout_black.glb",
    "tris": 4176,
-   "bytes": 99956,
+   "bytes": 99960,
    "size": [
     1.92,
     1.313,
@@ -5508,7 +5511,7 @@
   "joalheria/loveseat_velvet_tufted": {
    "file": "joalheria/loveseat_velvet_tufted.glb",
    "tris": 3196,
-   "bytes": 75092,
+   "bytes": 75096,
    "size": [
     1.6,
     1.138,
@@ -5928,7 +5931,7 @@
   "estudio/floor_peach_gloss": {
    "file": "estudio/floor_peach_gloss.glb",
    "tris": 300,
-   "bytes": 14716,
+   "bytes": 14748,
    "size": [
     2.0,
     0.036,
@@ -5975,7 +5978,7 @@
   "estudio/backdrop_roll_stand": {
    "file": "estudio/backdrop_roll_stand.glb",
    "tris": 680,
-   "bytes": 28288,
+   "bytes": 28328,
    "size": [
     3.745,
     2.885,
@@ -6039,7 +6042,7 @@
   "estudio/softbox_light_stand": {
    "file": "estudio/softbox_light_stand.glb",
    "tris": 396,
-   "bytes": 18772,
+   "bytes": 18792,
    "size": [
     0.902,
     2.322,
@@ -6096,7 +6099,7 @@
   "estudio/ring_light_stand": {
    "file": "estudio/ring_light_stand.glb",
    "tris": 1440,
-   "bytes": 46072,
+   "bytes": 46092,
    "size": [
     0.724,
     2.043,
@@ -6154,7 +6157,7 @@
   "estudio/camera_tripod_pro": {
    "file": "estudio/camera_tripod_pro.glb",
    "tris": 1580,
-   "bytes": 44256,
+   "bytes": 44296,
    "size": [
     0.811,
     1.618,
@@ -6216,7 +6219,7 @@
   "estudio/flower_giant_prop": {
    "file": "estudio/flower_giant_prop.glb",
    "tris": 3728,
-   "bytes": 88380,
+   "bytes": 88448,
    "size": [
     1.011,
     1.807,
@@ -6265,7 +6268,7 @@
   "estudio/chair_heart_pose": {
    "file": "estudio/chair_heart_pose.glb",
    "tris": 1932,
-   "bytes": 45308,
+   "bytes": 45324,
    "size": [
     0.79,
     1.313,
@@ -6326,7 +6329,7 @@
   "estudio/sign_neon_camera": {
    "file": "estudio/sign_neon_camera.glb",
    "tris": 976,
-   "bytes": 33452,
+   "bytes": 33456,
    "size": [
     1.0,
     0.75,
@@ -6372,27 +6375,28 @@
   },
   "estudio/screen_changing_folding": {
    "file": "estudio/screen_changing_folding.glb",
-   "tris": 3720,
-   "bytes": 72960,
+   "tris": 1848,
+   "bytes": 39568,
    "size": [
+    1.741,
     1.75,
-    1.76,
-    0.051
+    0.266
    ],
    "bbox_min": [
-    -0.295,
-    0.05,
-    -0.02
+    -0.869,
+    0.0,
+    -0.136
    ],
    "bbox_max": [
-    1.455,
-    1.81,
-    0.031
+    0.872,
+    1.75,
+    0.131
    ],
    "materials": [
-    "fabric.008",
-    "trim.008",
-    "white.008"
+    "fabric.001",
+    "accent2.001",
+    "soft.001",
+    "trim.001"
    ],
    "mount": "floor",
    "tags": [
@@ -6404,14 +6408,14 @@
    "collider": {
     "type": "box",
     "size": [
+     1.741,
      1.75,
-     1.76,
-     0.051
+     0.266
     ],
     "center": [
-     0.58,
-     0.93,
-     0.005
+     0.002,
+     0.875,
+     -0.003
     ]
    },
    "use": [
@@ -6420,7 +6424,7 @@
      "pos": [
       0,
       0,
-      0.8
+      0.9
      ],
      "face": [
       0,
@@ -6429,13 +6433,13 @@
      "label": "Trocar de roupa"
     }
    ],
-   "note": "biombo dobravel de 3 paineis em tecido coral com moldura cromada (1.8 x 1.8)",
+   "note": "biombo de 3 paineis em zigue-zague com moldura de madeira e tecido linho (1.8 x 1.75)",
    "room": "estudio"
   },
   "estudio/desk_monitor_station": {
    "file": "estudio/desk_monitor_station.glb",
    "tris": 2672,
-   "bytes": 58848,
+   "bytes": 58956,
    "size": [
     1.4,
     1.4,
@@ -6504,7 +6508,7 @@
   "estudio/chair_swivel_pink": {
    "file": "estudio/chair_swivel_pink.glb",
    "tris": 552,
-   "bytes": 21124,
+   "bytes": 21144,
    "size": [
     0.623,
     0.88,
@@ -6562,7 +6566,7 @@
   "estudio/umbrella_reflector_stand": {
    "file": "estudio/umbrella_reflector_stand.glb",
    "tris": 532,
-   "bytes": 21052,
+   "bytes": 21076,
    "size": [
     1.12,
     2.513,
@@ -6619,7 +6623,7 @@
   "estudio/posing_blocks_set": {
    "file": "estudio/posing_blocks_set.glb",
    "tris": 1848,
-   "bytes": 43236,
+   "bytes": 43284,
    "size": [
     1.739,
     0.608,
@@ -6681,7 +6685,7 @@
   "estudio/polaroid_wall_string": {
    "file": "estudio/polaroid_wall_string.glb",
    "tris": 2832,
-   "bytes": 59900,
+   "bytes": 59988,
    "size": [
     2.035,
     0.394,
@@ -6720,7 +6724,7 @@
   "estudio/balloon_arch_pastel": {
    "file": "estudio/balloon_arch_pastel.glb",
    "tris": 6000,
-   "bytes": 116088,
+   "bytes": 116172,
    "size": [
     2.62,
     2.343,
@@ -6919,7 +6923,7 @@
   "palco/truss_lights_rig": {
    "file": "palco/truss_lights_rig.glb",
    "tris": 1988,
-   "bytes": 75460,
+   "bytes": 75464,
    "size": [
     4.016,
     0.538,
@@ -7105,7 +7109,7 @@
   "palco/speaker_stack_neon": {
    "file": "palco/speaker_stack_neon.glb",
    "tris": 2452,
-   "bytes": 63584,
+   "bytes": 63588,
    "size": [
     0.65,
     1.702,
@@ -7235,7 +7239,7 @@
   "palco/stool_bar_neon": {
    "file": "palco/stool_bar_neon.glb",
    "tris": 1392,
-   "bytes": 37444,
+   "bytes": 37448,
    "size": [
     0.456,
     0.79,
@@ -7294,7 +7298,7 @@
   "palco/sofa_lounge_curved": {
    "file": "palco/sofa_lounge_curved.glb",
    "tris": 3168,
-   "bytes": 75880,
+   "bytes": 75884,
    "size": [
     2.4,
     1.05,
@@ -7383,7 +7387,7 @@
   "palco/table_lounge_glow": {
    "file": "palco/table_lounge_glow.glb",
    "tris": 916,
-   "bytes": 22812,
+   "bytes": 22816,
    "size": [
     1.04,
     0.415,
@@ -7478,7 +7482,7 @@
   "palco/neon_arch_gate": {
    "file": "palco/neon_arch_gate.glb",
    "tris": 2316,
-   "bytes": 57124,
+   "bytes": 57128,
    "size": [
     2.68,
     2.99,
@@ -7587,7 +7591,7 @@
   "palco/stage_curtain_velvet": {
    "file": "palco/stage_curtain_velvet.glb",
    "tris": 2880,
-   "bytes": 67336,
+   "bytes": 67340,
    "size": [
     4.2,
     2.98,
@@ -7623,7 +7627,7 @@
   "palco/neon_stars_cluster": {
    "file": "palco/neon_stars_cluster.glb",
    "tris": 1490,
-   "bytes": 36440,
+   "bytes": 36444,
    "size": [
     1.041,
     1.478,
@@ -7670,7 +7674,7 @@
   "palco/led_wall_panel_2m": {
    "file": "palco/led_wall_panel_2m.glb",
    "tris": 1888,
-   "bytes": 72612,
+   "bytes": 72632,
    "size": [
     2.06,
     2.115,
@@ -7720,7 +7724,7 @@
   "palco/pouf_lounge_neon": {
    "file": "palco/pouf_lounge_neon.glb",
    "tris": 1272,
-   "bytes": 37904,
+   "bytes": 37908,
    "size": [
     0.627,
     0.415,
@@ -7773,6 +7777,1605 @@
     }
    ],
    "note": "pufe redondo ameixa com aro neon (0.6 m)",
+   "room": "palco"
+  },
+  "shared/wall_panel_light": {
+   "file": "shared/wall_panel_light.glb",
+   "tris": 468,
+   "bytes": 12476,
+   "size": [
+    2.0,
+    3.2,
+    0.15
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -0.1
+   ],
+   "bbox_max": [
+    1.0,
+    3.2,
+    0.05
+   ],
+   "materials": [
+    "base.019",
+    "accent.019",
+    "trim.019",
+    "deep.019",
+    "soft.019"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     3.2,
+     0.15
+    ],
+    "center": [
+     0.0,
+     1.6,
+     -0.025
+    ]
+   },
+   "note": "parede leve 2 m x 3.2 m (<1.5k tris): lambri raso + rodape, sem molduras pesadas",
+   "room": "shared"
+  },
+  "shared/rug_rect": {
+   "file": "shared/rug_rect.glb",
+   "tris": 132,
+   "bytes": 5076,
+   "size": [
+    2.4,
+    0.03,
+    1.6
+   ],
+   "bbox_min": [
+    -1.2,
+    0.0,
+    -0.8
+   ],
+   "bbox_max": [
+    1.2,
+    0.03,
+    0.8
+   ],
+   "materials": [
+    "soft.020",
+    "accent.020",
+    "base.020"
+   ],
+   "mount": "floor",
+   "tags": [
+    "rug",
+    "decor"
+   ],
+   "walkable": true,
+   "hero": false,
+   "note": "tapete retangular 2.4 x 1.6 com borda",
+   "room": "shared"
+  },
+  "shared/floor_lamp_arc": {
+   "file": "shared/floor_lamp_arc.glb",
+   "tris": 560,
+   "bytes": 17764,
+   "size": [
+    0.948,
+    1.899,
+    0.4
+   ],
+   "bbox_min": [
+    -0.2,
+    0.0,
+    -0.2
+   ],
+   "bbox_max": [
+    0.748,
+    1.899,
+    0.2
+   ],
+   "materials": [
+    "deep.021",
+    "trim.021",
+    "white.021",
+    "glow.021"
+   ],
+   "mount": "floor",
+   "tags": [
+    "light",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.474,
+    "height": 1.899,
+    "center": [
+     0.274,
+     0.95,
+     -0.0
+    ]
+   },
+   "lights": [
+    {
+     "pos": [
+      0.5,
+      2.0,
+      0
+     ],
+     "color": "#ffe3b8",
+     "range": 4,
+     "intensity": 0.8
+    }
+   ],
+   "note": "luminaria de piso em arco com cupula de tecido",
+   "room": "shared"
+  },
+  "casa/vanity_mirror_wall": {
+   "file": "casa/vanity_mirror_wall.glb",
+   "tris": 1780,
+   "bytes": 37188,
+   "size": [
+    1.401,
+    1.922,
+    0.1
+   ],
+   "bbox_min": [
+    -0.7,
+    0.31,
+    -0.06
+   ],
+   "bbox_max": [
+    0.7,
+    2.232,
+    0.04
+   ],
+   "materials": [
+    "mirror.020",
+    "trim.020",
+    "glow.020",
+    "base.020"
+   ],
+   "mount": "wall",
+   "tags": [
+    "mirror",
+    "wall",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.6,
+      0.2
+     ],
+     "color": "#ffe8c8",
+     "range": 3,
+     "intensity": 0.8
+    }
+   ],
+   "note": "espelho de parede 1.1 x 1.7 m com lampadas de camarim",
+   "room": "casa"
+  },
+  "casa/art_canvas_large": {
+   "file": "casa/art_canvas_large.glb",
+   "tris": 1200,
+   "bytes": 27600,
+   "size": [
+    1.34,
+    0.94,
+    0.083
+   ],
+   "bbox_min": [
+    -0.67,
+    1.23,
+    -0.055
+   ],
+   "bbox_max": [
+    0.67,
+    2.17,
+    0.028
+   ],
+   "materials": [
+    "trim.021",
+    "white.021",
+    "soft.021",
+    "accent2.021",
+    "accent.021"
+   ],
+   "mount": "wall",
+   "tags": [
+    "decor",
+    "wall"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "tela abstrata 1.3 x 0.9 m em moldura de latao",
+   "room": "casa"
+  },
+  "casa/bed_bench": {
+   "file": "casa/bed_bench.glb",
+   "tris": 684,
+   "bytes": 16972,
+   "size": [
+    1.5,
+    0.497,
+    0.5
+   ],
+   "bbox_min": [
+    -0.75,
+    0.0,
+    -0.25
+   ],
+   "bbox_max": [
+    0.75,
+    0.497,
+    0.25
+   ],
+   "materials": [
+    "fabric.022",
+    "white.022",
+    "trim.022"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.5,
+     0.497,
+     0.5
+    ],
+    "center": [
+     0.0,
+     0.249,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.47,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Sentar"
+    }
+   ],
+   "note": "banco estofado de pe de cama 1.5 m com pes dourados",
+   "room": "casa"
+  },
+  "casa/bookcase_open": {
+   "file": "casa/bookcase_open.glb",
+   "tris": 4860,
+   "bytes": 99196,
+   "size": [
+    1.2,
+    2.0,
+    0.34
+   ],
+   "bbox_min": [
+    -0.6,
+    0.0,
+    -0.17
+   ],
+   "bbox_max": [
+    0.6,
+    2.0,
+    0.17
+   ],
+   "materials": [
+    "base.023",
+    "soft.023",
+    "accent.023",
+    "fabric.023",
+    "white.023",
+    "accent2.023",
+    "deep.023",
+    "leaf.023"
+   ],
+   "mount": "floor",
+   "tags": [
+    "shelf",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.2,
+     2.0,
+     0.34
+    ],
+    "center": [
+     0.0,
+     1.0,
+     -0.0
+    ]
+   },
+   "note": "estante aberta 1.2 m com livros, vasos e objetos (2.0 m)",
+   "room": "casa"
+  },
+  "cafe/coffee_bag_shelf": {
+   "file": "cafe/coffee_bag_shelf.glb",
+   "tris": 2296,
+   "bytes": 61096,
+   "size": [
+    1.6,
+    1.015,
+    0.285
+   ],
+   "bbox_min": [
+    -0.8,
+    0.975,
+    -0.005
+   ],
+   "bbox_max": [
+    0.8,
+    1.99,
+    0.28
+   ],
+   "materials": [
+    "soft",
+    "deep",
+    "accent2",
+    "white",
+    "base",
+    "glass",
+    "trim",
+    "accent",
+    "leaf",
+    "glow"
+   ],
+   "mount": "wall",
+   "tags": [
+    "shelf",
+    "wall",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "estante de parede 1.6 m com sacas de cafe e potes de graos (alt. 1.0-2.0 m)",
+   "room": "cafe"
+  },
+  "cafe/chalkboard_aframe": {
+   "file": "cafe/chalkboard_aframe.glb",
+   "tris": 1188,
+   "bytes": 26672,
+   "size": [
+    0.64,
+    1.08,
+    0.564
+   ],
+   "bbox_min": [
+    -0.32,
+    0.01,
+    -0.282
+   ],
+   "bbox_max": [
+    0.32,
+    1.09,
+    0.282
+   ],
+   "materials": [
+    "soft",
+    "deep",
+    "white",
+    "accent2"
+   ],
+   "mount": "floor",
+   "tags": [
+    "sign",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.64,
+     1.08,
+     0.564
+    ],
+    "center": [
+     0.0,
+     0.55,
+     -0.0
+    ]
+   },
+   "note": "cavalete de giz 0.6 x 1.05 m com cardapio do dia",
+   "room": "cafe"
+  },
+  "cafe/croissant_basket": {
+   "file": "cafe/croissant_basket.glb",
+   "tris": 1168,
+   "bytes": 35352,
+   "size": [
+    0.384,
+    0.15,
+    0.384
+   ],
+   "bbox_min": [
+    -0.192,
+    0.0,
+    -0.192
+   ],
+   "bbox_max": [
+    0.192,
+    0.15,
+    0.192
+   ],
+   "materials": [
+    "deep.020",
+    "soft.020"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "food",
+    "decor",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "cesta de vime com croissants (0.38 m)",
+   "room": "cafe"
+  },
+  "cafe/hanging_planter": {
+   "file": "cafe/hanging_planter.glb",
+   "tris": 2476,
+   "bytes": 67756,
+   "size": [
+    0.341,
+    1.453,
+    0.369
+   ],
+   "bbox_min": [
+    -0.168,
+    -1.452,
+    -0.178
+   ],
+   "bbox_max": [
+    0.173,
+    0.001,
+    0.192
+   ],
+   "materials": [
+    "white.001",
+    "trim.001",
+    "leaf.001"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "plant",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "vaso suspenso com hera pendente (pende 1.2 m)",
+   "room": "cafe"
+  },
+  "salao/product_wall": {
+   "file": "salao/product_wall.glb",
+   "tris": 3600,
+   "bytes": 102456,
+   "size": [
+    2.06,
+    1.5,
+    0.24
+   ],
+   "bbox_min": [
+    -1.03,
+    0.75,
+    -0.0
+   ],
+   "bbox_max": [
+    1.03,
+    2.25,
+    0.24
+   ],
+   "materials": [
+    "deep",
+    "white",
+    "glow",
+    "trim",
+    "accent2",
+    "accent",
+    "glass",
+    "soft"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "shelf",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "parede de produtos de cabelo 2.0 m, 3 niveis com frascos e iluminacao",
+   "room": "salao"
+  },
+  "salao/robe_stand": {
+   "file": "salao/robe_stand.glb",
+   "tris": 1212,
+   "bytes": 33112,
+   "size": [
+    0.98,
+    1.741,
+    0.433
+   ],
+   "bbox_min": [
+    -0.49,
+    0.0,
+    -0.217
+   ],
+   "bbox_max": [
+    0.49,
+    1.741,
+    0.217
+   ],
+   "materials": [
+    "deep.001",
+    "trim.001",
+    "white.001",
+    "soft.001",
+    "accent.001"
+   ],
+   "mount": "floor",
+   "tags": [
+    "decor",
+    "textile"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.49,
+    "height": 1.741,
+    "center": [
+     0.0,
+     0.87,
+     -0.0
+    ]
+   },
+   "note": "cabide de pe com dois roupoes macios (alt. 1.7 m)",
+   "room": "salao"
+  },
+  "salao/towel_stack": {
+   "file": "salao/towel_stack.glb",
+   "tris": 496,
+   "bytes": 12744,
+   "size": [
+    0.34,
+    0.35,
+    0.22
+   ],
+   "bbox_min": [
+    -0.17,
+    0.0,
+    -0.11
+   ],
+   "bbox_max": [
+    0.17,
+    0.35,
+    0.11
+   ],
+   "materials": [
+    "white.018",
+    "accent.018",
+    "soft.018",
+    "leaf.018"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "decor",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "pilha de toalhas dobradas (0.35 m)",
+   "room": "salao"
+  },
+  "salao/nail_polish_rack": {
+   "file": "salao/nail_polish_rack.glb",
+   "tris": 2400,
+   "bytes": 76632,
+   "size": [
+    1.039,
+    0.619,
+    0.127
+   ],
+   "bbox_min": [
+    -0.519,
+    1.141,
+    0.003
+   ],
+   "bbox_max": [
+    0.519,
+    1.759,
+    0.13
+   ],
+   "materials": [
+    "deep.002",
+    "trim.002",
+    "accent2.002",
+    "soft.002",
+    "white.002",
+    "accent.002",
+    "fabric.002",
+    "glass.002"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "shelf",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "expositor de esmaltes 1.0 m (3 fileiras)",
+   "room": "salao"
+  },
+  "boutique/bag_shelf_wall": {
+   "file": "boutique/bag_shelf_wall.glb",
+   "tris": 4200,
+   "bytes": 90180,
+   "size": [
+    1.8,
+    1.61,
+    0.23
+   ],
+   "bbox_min": [
+    -0.9,
+    0.85,
+    -0.0
+   ],
+   "bbox_max": [
+    0.9,
+    2.46,
+    0.23
+   ],
+   "materials": [
+    "accent",
+    "trim",
+    "base",
+    "white",
+    "glow",
+    "accent2",
+    "soft",
+    "fabric",
+    "deep"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "shelf",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "parede de bolsas 1.8 m com 6 nichos iluminados",
+   "room": "boutique"
+  },
+  "boutique/perfume_counter": {
+   "file": "boutique/perfume_counter.glb",
+   "tris": 1232,
+   "bytes": 34364,
+   "size": [
+    1.56,
+    1.209,
+    0.66
+   ],
+   "bbox_min": [
+    -0.78,
+    0.0,
+    -0.33
+   ],
+   "bbox_max": [
+    0.78,
+    1.209,
+    0.33
+   ],
+   "materials": [
+    "accent.017",
+    "trim.017",
+    "glass.017",
+    "soft.017",
+    "accent2.017",
+    "white.017",
+    "fabric.017",
+    "deep.017",
+    "glow.017"
+   ],
+   "mount": "floor",
+   "tags": [
+    "counter",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.56,
+     1.209,
+     0.66
+    ],
+    "center": [
+     0.0,
+     0.604,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "browse",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Ver perfumes"
+    }
+   ],
+   "note": "balcao de perfumaria 1.5 m com tampo de vidro e frascos",
+   "room": "boutique"
+  },
+  "boutique/scarf_carousel": {
+   "file": "boutique/scarf_carousel.glb",
+   "tris": 3792,
+   "bytes": 80916,
+   "size": [
+    0.616,
+    1.69,
+    0.616
+   ],
+   "bbox_min": [
+    -0.308,
+    0.0,
+    -0.308
+   ],
+   "bbox_max": [
+    0.308,
+    1.69,
+    0.308
+   ],
+   "materials": [
+    "deep.018",
+    "trim.018",
+    "accent2.018",
+    "white.018",
+    "soft.018",
+    "accent.018",
+    "fabric.018"
+   ],
+   "mount": "floor",
+   "tags": [
+    "rack",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.308,
+    "height": 1.69,
+    "center": [
+     0.0,
+     0.845,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "browse",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Ver lencos"
+    }
+   ],
+   "note": "giratorio de acessorios com lencos e cintos, 1.6 m",
+   "room": "boutique"
+  },
+  "boutique/sunglasses_stand": {
+   "file": "boutique/sunglasses_stand.glb",
+   "tris": 656,
+   "bytes": 22692,
+   "size": [
+    0.292,
+    0.4,
+    0.287
+   ],
+   "bbox_min": [
+    -0.146,
+    0.0,
+    -0.144
+   ],
+   "bbox_max": [
+    0.146,
+    0.4,
+    0.144
+   ],
+   "materials": [
+    "deep.019",
+    "trim.019"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "decor",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "expositor giratorio de oculos de sol (0.45 m)",
+   "room": "boutique"
+  },
+  "joalheria/diamond_island": {
+   "file": "joalheria/diamond_island.glb",
+   "tris": 1692,
+   "bytes": 49020,
+   "size": [
+    1.515,
+    1.231,
+    1.515
+   ],
+   "bbox_min": [
+    -0.757,
+    0.0,
+    -0.757
+   ],
+   "bbox_max": [
+    0.757,
+    1.231,
+    0.757
+   ],
+   "materials": [
+    "base",
+    "trim",
+    "glow",
+    "fabric",
+    "glass"
+   ],
+   "mount": "floor",
+   "tags": [
+    "display",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.515,
+     1.231,
+     1.515
+    ],
+    "center": [
+     0.0,
+     0.616,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "browse",
+     "pos": [
+      0,
+      0,
+      1.1
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Ver diamantes"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.35,
+      0
+     ],
+     "color": "#ffeccf",
+     "range": 3,
+     "intensity": 0.7
+    }
+   ],
+   "note": "ilha de vitrine octogonal 1.4 m com almofadas de veludo bordo e diamantes lapidados",
+   "room": "joalheria"
+  },
+  "joalheria/necklace_velvet_wall": {
+   "file": "joalheria/necklace_velvet_wall.glb",
+   "tris": 1992,
+   "bytes": 50352,
+   "size": [
+    1.26,
+    1.16,
+    0.154
+   ],
+   "bbox_min": [
+    -0.63,
+    1.12,
+    -0.06
+   ],
+   "bbox_max": [
+    0.63,
+    2.28,
+    0.094
+   ],
+   "materials": [
+    "fabric.018",
+    "trim.018",
+    "glass.018",
+    "glow.018"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "display"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.8,
+      0.2
+     ],
+     "color": "#ffeccf",
+     "range": 2,
+     "intensity": 0.5
+    }
+   ],
+   "note": "painel de veludo bordo 1.2 m com 3 colares expostos",
+   "room": "joalheria"
+  },
+  "joalheria/appraisal_desk": {
+   "file": "joalheria/appraisal_desk.glb",
+   "tris": 972,
+   "bytes": 29300,
+   "size": [
+    1.3,
+    0.989,
+    0.65
+   ],
+   "bbox_min": [
+    -0.65,
+    0.0,
+    -0.325
+   ],
+   "bbox_max": [
+    0.65,
+    0.989,
+    0.325
+   ],
+   "materials": [
+    "base.019",
+    "fabric.019",
+    "trim.019",
+    "white.019",
+    "glow.019",
+    "glass.019",
+    "deep.019"
+   ],
+   "mount": "floor",
+   "tags": [
+    "desk",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.989,
+     0.65
+    ],
+    "center": [
+     0.0,
+     0.495,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "appraise",
+     "pos": [
+      0,
+      0,
+      0.9
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Avaliar uma joia"
+    }
+   ],
+   "note": "mesa de avaliacao 1.3 m com lupa, luminaria e balanca",
+   "room": "joalheria"
+  },
+  "joalheria/gift_box_stack": {
+   "file": "joalheria/gift_box_stack.glb",
+   "tris": 584,
+   "bytes": 13592,
+   "size": [
+    0.3,
+    0.32,
+    0.244
+   ],
+   "bbox_min": [
+    -0.15,
+    -0.002,
+    -0.122
+   ],
+   "bbox_max": [
+    0.15,
+    0.318,
+    0.122
+   ],
+   "materials": [
+    "fabric.020",
+    "trim.020",
+    "white.020",
+    "deep.020"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "decor",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "pilha de caixas de presente bordo e champanhe (0.3 m)",
+   "room": "joalheria"
+  },
+  "estudio/costume_rack": {
+   "file": "estudio/costume_rack.glb",
+   "tris": 1400,
+   "bytes": 47084,
+   "size": [
+    1.536,
+    1.705,
+    0.667
+   ],
+   "bbox_min": [
+    -0.768,
+    -0.005,
+    -0.333
+   ],
+   "bbox_max": [
+    0.768,
+    1.7,
+    0.333
+   ],
+   "materials": [
+    "trim.017",
+    "deep.017",
+    "accent.017",
+    "base.017",
+    "soft.017",
+    "accent2.017",
+    "fabric.017",
+    "white.017"
+   ],
+   "mount": "floor",
+   "tags": [
+    "rack",
+    "wardrobe"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.536,
+     1.705,
+     0.667
+    ],
+    "center": [
+     0.0,
+     0.848,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "browse",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Ver figurinos"
+    }
+   ],
+   "note": "arara de figurinos com rodinhas 1.5 m, 8 pecas em tons neutros",
+   "room": "estudio"
+  },
+  "estudio/prop_trunk": {
+   "file": "estudio/prop_trunk.glb",
+   "tris": 860,
+   "bytes": 21028,
+   "size": [
+    1.0,
+    0.56,
+    0.567
+   ],
+   "bbox_min": [
+    -0.5,
+    0.0,
+    -0.283
+   ],
+   "bbox_max": [
+    0.5,
+    0.56,
+    0.283
+   ],
+   "materials": [
+    "accent2.018",
+    "trim.018",
+    "deep.018"
+   ],
+   "mount": "floor",
+   "tags": [
+    "prop",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.0,
+     0.56,
+     0.567
+    ],
+    "center": [
+     0.0,
+     0.28,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.5,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Sentar no baú"
+    }
+   ],
+   "note": "bau vintage 0.9 m com cantoneiras de latao, usado como banco de cenario",
+   "room": "estudio"
+  },
+  "estudio/pampas_vase": {
+   "file": "estudio/pampas_vase.glb",
+   "tris": 2304,
+   "bytes": 77016,
+   "size": [
+    0.482,
+    1.731,
+    0.463
+   ],
+   "bbox_min": [
+    -0.254,
+    0.0,
+    -0.234
+   ],
+   "bbox_max": [
+    0.228,
+    1.731,
+    0.229
+   ],
+   "materials": [
+    "white.019",
+    "soft.019"
+   ],
+   "mount": "floor",
+   "tags": [
+    "prop",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.241,
+    "height": 1.731,
+    "center": [
+     -0.013,
+     0.865,
+     -0.003
+    ]
+   },
+   "note": "vaso alto de ceramica com capim-dos-pampas (1.5 m)",
+   "room": "estudio"
+  },
+  "estudio/balloon_arch_light": {
+   "file": "estudio/balloon_arch_light.glb",
+   "tris": 1860,
+   "bytes": 37304,
+   "size": [
+    2.671,
+    2.316,
+    0.378
+   ],
+   "bbox_min": [
+    -1.34,
+    -0.06,
+    -0.2
+   ],
+   "bbox_max": [
+    1.331,
+    2.256,
+    0.178
+   ],
+   "materials": [
+    "white.020",
+    "soft.020",
+    "accent2.020",
+    "base.020",
+    "trim.020"
+   ],
+   "mount": "floor",
+   "tags": [
+    "prop",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "arco de baloes leve (1.4k tris) em tons neutros, 2.4 x 2.2 m",
+   "room": "estudio"
+  },
+  "estudio/reflector_panel": {
+   "file": "estudio/reflector_panel.glb",
+   "tris": 448,
+   "bytes": 12212,
+   "size": [
+    0.94,
+    1.708,
+    0.657
+   ],
+   "bbox_min": [
+    -0.47,
+    0.012,
+    -0.252
+   ],
+   "bbox_max": [
+    0.47,
+    1.72,
+    0.406
+   ],
+   "materials": [
+    "trim.021",
+    "white.021",
+    "deep.021"
+   ],
+   "mount": "floor",
+   "tags": [
+    "light",
+    "photo"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.47,
+    "height": 1.708,
+    "center": [
+     0.0,
+     0.866,
+     0.077
+    ]
+   },
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.2,
+      0.3
+     ],
+     "color": "#fff4e6",
+     "range": 4,
+     "intensity": 0.5
+    }
+   ],
+   "note": "rebatedor branco 1.0 m em suporte",
+   "room": "estudio"
+  },
+  "palco/vip_booth": {
+   "file": "palco/vip_booth.glb",
+   "tris": 1404,
+   "bytes": 35232,
+   "size": [
+    2.6,
+    1.08,
+    1.5
+   ],
+   "bbox_min": [
+    -1.3,
+    0.0,
+    -0.7
+   ],
+   "bbox_max": [
+    1.3,
+    1.08,
+    0.8
+   ],
+   "materials": [
+    "fabric.017",
+    "trim.017",
+    "glow2.017",
+    "glow.017",
+    "deep.017",
+    "glass.017"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "lounge",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.6,
+     1.08,
+     1.5
+    ],
+    "center": [
+     0.0,
+     0.54,
+     0.05
+    ]
+   },
+   "sit": [
+    {
+     "id": "s1",
+     "pos": [
+      -0.6,
+      0.48,
+      -0.2
+     ],
+     "face": [
+      0,
+      1
+     ]
+    },
+    {
+     "id": "s2",
+     "pos": [
+      0,
+      0.48,
+      -0.2
+     ],
+     "face": [
+      0,
+      1
+     ]
+    },
+    {
+     "id": "s3",
+     "pos": [
+      0.6,
+      0.48,
+      -0.2
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.6,
+      0.5
+     ],
+     "color": "#4ff0ff",
+     "range": 3,
+     "intensity": 0.7
+    }
+   ],
+   "note": "cabine VIP 2.6 m com sofa em U, mesa baixa e fita de LED",
+   "room": "palco"
+  },
+  "palco/champagne_bucket": {
+   "file": "palco/champagne_bucket.glb",
+   "tris": 804,
+   "bytes": 21608,
+   "size": [
+    0.5,
+    0.45,
+    0.266
+   ],
+   "bbox_min": [
+    -0.25,
+    0.0,
+    -0.133
+   ],
+   "bbox_max": [
+    0.25,
+    0.45,
+    0.133
+   ],
+   "materials": [
+    "trim.018",
+    "deep.018",
+    "glass.018",
+    "white.018"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "decor",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "balde de gelo cromado com garrafa e taças (0.4 m)",
+   "room": "palco"
+  },
+  "palco/cocktail_table_high": {
+   "file": "palco/cocktail_table_high.glb",
+   "tris": 1240,
+   "bytes": 34228,
+   "size": [
+    0.739,
+    1.06,
+    0.739
+   ],
+   "bbox_min": [
+    -0.37,
+    0.0,
+    -0.37
+   ],
+   "bbox_max": [
+    0.37,
+    1.06,
+    0.37
+   ],
+   "materials": [
+    "deep.019",
+    "trim.019",
+    "glow.019",
+    "glow2.019"
+   ],
+   "mount": "floor",
+   "tags": [
+    "table",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.37,
+    "height": 1.06,
+    "center": [
+     0.0,
+     0.53,
+     -0.0
+    ]
+   },
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.0,
+      0
+     ],
+     "color": "#ff4fd0",
+     "range": 2,
+     "intensity": 0.5
+    }
+   ],
+   "note": "mesa alta de coquetel 0.7 m com aro neon",
+   "room": "palco"
+  },
+  "palco/led_column": {
+   "file": "palco/led_column.glb",
+   "tris": 1024,
+   "bytes": 21980,
+   "size": [
+    0.516,
+    2.66,
+    0.516
+   ],
+   "bbox_min": [
+    -0.258,
+    0.0,
+    -0.258
+   ],
+   "bbox_max": [
+    0.258,
+    2.66,
+    0.258
+   ],
+   "materials": [
+    "deep.020",
+    "base.020",
+    "glow.020",
+    "glow2.020"
+   ],
+   "mount": "floor",
+   "tags": [
+    "light",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.258,
+    "height": 2.66,
+    "center": [
+     0.0,
+     1.33,
+     -0.0
+    ]
+   },
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.6,
+      0
+     ],
+     "color": "#4ff0ff",
+     "range": 4,
+     "intensity": 0.8
+    }
+   ],
+   "note": "coluna de LED 2.6 m",
    "room": "palco"
   }
  }

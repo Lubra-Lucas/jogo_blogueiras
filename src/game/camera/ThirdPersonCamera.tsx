@@ -9,6 +9,7 @@ import { usePlayerStore } from '../../state/playerStore'
 import { CAMERA as C } from './config'
 import { navBridge } from '../navigation/navStore'
 import { driveBridge } from '../vehicles/driveStore'
+import { interiorBridge } from '../interiors/interiorBridge'
 
 const PITCH_MIN = MathUtils.degToRad(C.minPitchDeg)
 const PITCH_MAX = MathUtils.degToRad(C.maxPitchDeg)
@@ -63,11 +64,27 @@ export function ThirdPersonCamera() {
       navBridge.cameraSnap = null
     }
 
+    // ---- interior (game/interiors): zoom curto e camera sob o teto ----
+    const inside = interiorBridge.active
+    if (interiorBridge.snapZoom !== null) {
+      rig.targetDist = rig.zoomDist = interiorBridge.snapZoom
+      rig.pitch = MathUtils.degToRad(24)
+      interiorBridge.snapZoom = null
+    }
+
+    if (inside && interiorBridge.overview && interiorBridge.room) {
+      const o = interiorBridge.overview
+      const r = interiorBridge.room
+      camera.position.set(r.ox + o[0], o[1], r.oz + o[2])
+      camera.lookAt(r.ox + o[3], o[4], r.oz + o[5])
+      return
+    }
+
     // ---- consome a intencao ----
     const manualYaw = cameraIntent.yawDelta !== 0 || cameraIntent.keyYaw !== 0
     rig.yaw += cameraIntent.yawDelta + cameraIntent.keyYaw * C.keyRotateSpeed * dt
     rig.pitch = MathUtils.clamp(rig.pitch + cameraIntent.pitchDelta, PITCH_MIN, PITCH_MAX)
-    rig.targetDist = MathUtils.clamp(rig.targetDist * Math.exp(cameraIntent.zoomDelta), C.minDistance, C.maxDistance)
+    rig.targetDist = MathUtils.clamp(rig.targetDist * Math.exp(cameraIntent.zoomDelta), C.minDistance, inside ? interiorBridge.maxDist : C.maxDistance)
     cameraIntent.yawDelta = 0
     cameraIntent.pitchDelta = 0
     cameraIntent.zoomDelta = 0
@@ -128,7 +145,7 @@ export function ThirdPersonCamera() {
     // ---- posiciona a camera ----
     camera.position.set(
       rig.pivot.x + rig.dir.x * rig.dist,
-      Math.max(rig.pivot.y + rig.dir.y * rig.dist, C.minCameraY),
+      Math.min(Math.max(rig.pivot.y + rig.dir.y * rig.dist, C.minCameraY), inside ? interiorBridge.ceiling - 0.2 : Infinity),
       rig.pivot.z + rig.dir.z * rig.dist,
     )
     camera.lookAt(rig.pivot)

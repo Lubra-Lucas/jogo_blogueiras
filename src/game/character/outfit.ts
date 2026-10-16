@@ -56,3 +56,15 @@ export function recolor(a: Appearance, item: CatalogItem, matIndex: number, patc
 }
 
 export const hairList = () => Object.values(WEARABLES).filter((w) => w.slot === 'hair')
+
+/** Escolhe a estampa (id; '' = liso) da roupa equipada no slot do item. */
+export function setPattern(a: Appearance, item: CatalogItem, pattern: string): Appearance {
+  if (item.kind !== 'garment') return a
+  const key = item.slot as keyof Appearance['outfit']
+  const cur = a.outfit[key]
+  if (!cur || cur.id !== item.id) return a
+  const next = { ...cur }
+  if (pattern) next.pattern = pattern
+  else delete next.pattern
+  return { ...a, outfit: { ...a.outfit, [key]: next } }
+}

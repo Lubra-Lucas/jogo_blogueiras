@@ -7,6 +7,7 @@ args = sys.argv[sys.argv.index("--") + 1:]
 room, only = args[0], set(args[1:])
 bpy.ops.wm.read_factory_settings(use_empty=True)
 importlib.import_module("r_" + room)
+importlib.import_module("r_more")  # pecas extras e retrabalhos (paletas de mundo real)
 infos = lib.export_room(room, only or None)
 lib.update_json(room, infos)
 print("TOTAL", sum(i["tris"] for i in infos.values()), "KB", sum(i["bytes"] for i in infos.values()) // 1024)

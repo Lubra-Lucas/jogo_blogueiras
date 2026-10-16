@@ -1,0 +1,10 @@
+{
+ "box": {
+  "x0": -0.11,
+  "x1": 0.11,
+  "y0": 1.28,
+  "y1": 1.5,
+  "size": 1024
+ },
+ "note": "tela frontal: u=(x-x0)/(x1-x0), v=1-(y-y0)/(y1-y0), espaco da malha em repouso; ver src/game/character/makeup/landmarks.ts"
+}

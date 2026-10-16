@@ -20,7 +20,11 @@ function Hold({ flag, cls, children, label }: { flag: Flag; cls: string; childre
       el.classList.toggle('on', v)
     }
     const down = (e: PointerEvent) => {
-      if (id !== null) return
+      // ponteiro anterior perdido (sem pointerup): solta e aceita o novo toque, senao o pedal "morre"
+      if (id !== null) {
+        releasePointer(id)
+        id = null
+      }
       e.preventDefault()
       id = e.pointerId
       claimPointer(id)
@@ -37,11 +41,22 @@ function Hold({ flag, cls, children, label }: { flag: Flag; cls: string; childre
       id = null
       set(false)
     }
+    const away = () => {
+      if (id !== null) {
+        releasePointer(id)
+        id = null
+        set(false)
+      }
+    }
     el.addEventListener('pointerdown', down)
     el.addEventListener('pointerup', up)
     el.addEventListener('pointercancel', up)
     el.addEventListener('lostpointercapture', up)
+    window.addEventListener('blur', away)
+    document.addEventListener('visibilitychange', away)
     return () => {
+      window.removeEventListener('blur', away)
+      document.removeEventListener('visibilitychange', away)
       el.removeEventListener('pointerdown', down)
       el.removeEventListener('pointerup', up)
       el.removeEventListener('pointercancel', up)
@@ -73,7 +88,11 @@ function Wheel() {
       k.style.transform = `translateX(${v * R}px) rotate(${v * 55}deg)`
     }
     const down = (e: PointerEvent) => {
-      if (id !== null) return
+      // ponteiro anterior perdido (sem pointerup): solta e aceita o novo toque, senao o pedal "morre"
+      if (id !== null) {
+        releasePointer(id)
+        id = null
+      }
       e.preventDefault()
       id = e.pointerId
       claimPointer(id)
