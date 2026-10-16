@@ -29,3 +29,5 @@ export const useMinigameStore = create<MinigameState>()((set, get) => ({
 }))
 
 export const isMinigameOpen = () => useMinigameStore.getState().active !== null
+
+if (import.meta.env.DEV && typeof window !== 'undefined') (window as unknown as Record<string, unknown>).__mg = useMinigameStore
