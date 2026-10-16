@@ -65,6 +65,8 @@ export interface Block {
   label?: string
   /** id do POI de loja, se for uma loja */
   shopId?: string
+  /** Centro (kit Y2K): 0 = predio base, 1 = esguio, 2 = largo; para 'box': 0 = loja baixa + torre, 1 = dois andares, 2 = loja larga */
+  variant?: number
 }
 
 export interface Poi {
@@ -459,9 +461,24 @@ function buildCity(): City {
       colorIdx: Math.floor(rnd() * d.palette.length),
       accentIdx: Math.floor(rnd() * d.accent.length),
     }
+    if (d.id === 'centro') centroShape(blk, counters[d.id])
     if (fits(blk, d)) blocks.push(blk)
   }
-
+  /** Centro: dimensoes reais das pecas do kit Y2K (torres redondas / lojas capsula + torre). */
+  const centroShape = (b: Block, n: number) => {
+    b.variant = n % 3
+    if (b.shape === 'cyl') {
+      const v = [{ w: 8.4, h: 15 }, { w: 7.6, h: 19.4 }, { w: 9.4, h: 7.6 }][b.variant]
+      b.w = v.w
+      b.d = v.w
+      b.h = v.h
+    } else {
+      b.shape = 'box'
+      b.w = 10.6
+      b.d = b.variant === 1 ? 6.2 : 9.6
+      b.h = b.variant === 1 ? 10.5 : 15
+    }
+  }
   const sampleAlong = (
     pts: readonly Vec2[],
     spacing: (t: number) => number,
@@ -524,6 +541,22 @@ function buildCity(): City {
         const rot = d.style === 'y2k' ? Math.atan2(-x, -z) : Math.abs(x - cx) > Math.abs(z - cz) ? (x > cx ? -Math.PI / 2 : Math.PI / 2) : z > cz ? Math.PI : 0
         tryAdd(d, x, z, rot)
       }
+    }
+  }
+
+  // Centro: segunda passada com semente propria (nao mexe na sequencia dos outros bairros), preenche celulas vazias
+  const crnd = mulberry32(777)
+  const centro = districts.find((d) => d.id === 'centro')!
+  for (let gi = -6; gi <= 6; gi++) {
+    for (let gj = -6; gj <= 6; gj++) {
+      const x = gi * 12.5 + (crnd() - 0.5) * 2 + ((gj & 1) * 3)
+      const z = gj * 12.5 + (crnd() - 0.5) * 2
+      const rot = Math.atan2(-x, -z)
+      const shape: BlockShape = crnd() < 0.5 ? 'cyl' : 'box'
+      counters.centro = (counters.centro ?? 0) + 1
+      const blk: Block = { id: `centro-${counters.centro}`, x, z, w: 9, d: 9, h: 12, rot, district: 'centro', shape, colorIdx: 0, accentIdx: 0 }
+      centroShape(blk, counters.centro + 1)
+      if (inShape(centro.bounds, x, z, -2) && fits(blk, centro)) blocks.push(blk)
     }
   }
 

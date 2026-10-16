@@ -1,6 +1,8 @@
 import { CullCtx } from './cull'
 import { Surfaces } from './Surfaces'
 import { Buildings } from './Buildings'
+import { KitScene } from './kit'
+import { CENTRO_BUILDINGS, CENTRO_PROPS } from './centro'
 import { Landmarks, Lamps, ShopLabels, Trees } from './Props'
 
 /** Cidade inteira (blockout). Dados em ./layout.ts. */
@@ -10,6 +12,8 @@ export function City({ shadows, propDist, buildingDist }: { shadows: boolean; pr
       <group>
       <Surfaces shadows={shadows} />
       <Buildings shadows={shadows} />
+      <KitScene items={CENTRO_BUILDINGS} shadows={shadows} />
+      <KitScene items={CENTRO_PROPS} shadows={shadows} cull="props" />
       <Trees shadows={shadows} />
       <Lamps shadows={shadows} />
       <Landmarks shadows={shadows} />

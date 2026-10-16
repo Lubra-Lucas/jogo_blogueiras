@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { OrthographicCamera } from '@react-three/drei'
-import type { DirectionalLight, InstancedMesh } from 'three'
+import type { DirectionalLight, InstancedMesh, Mesh } from 'three'
 import { usePlayerStore } from '../../../state/playerStore'
 import { CITY } from './layout'
 
@@ -23,8 +23,8 @@ export function SunFollow({ castShadow, mapSize }: { castShadow: boolean; mapSiz
       <directionalLight
         ref={light}
         position={SUN_OFFSET}
-        intensity={1.9}
-        color="#fff0dc"
+        intensity={2.2}
+        color="#fff1da"
         castShadow={castShadow}
         shadow-mapSize={[mapSize, mapSize]}
         shadow-camera-left={-34}
@@ -70,9 +70,18 @@ export function StatsProbe() {
         const n = m.isInstancedMesh ? m.count : 1
         rows.push([t * n, `${o.type}${m.isInstancedMesh ? 'x' + n : ''} ${Math.round(t)}t`])
       })
+      let kitTris = 0
+      let kitCalls = 0
+      scene.traverse((o) => {
+        const m = o as Mesh
+        if (!o.userData.kit || !m.isMesh || !o.parent?.visible) return
+        kitTris += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3
+        kitCalls++
+      })
+      rows.unshift([1e12, `KIT visivel: ${Math.round(kitTris)} tris em ${kitCalls} malhas`])
       rows.sort((a, b) => b[0] - a[0])
       el.style.whiteSpace = 'pre'
-      el.textContent = `calls ${r.calls} | tris ${r.triangles} | geos ${gl.info.memory.geometries}` + '\n' + rows.slice(0, 12).map((x) => `${Math.round(x[0])} ${x[1]}`).join('\n')
+      el.textContent = `calls ${r.calls} | tris ${r.triangles} | geos ${gl.info.memory.geometries}` + '\n' + rows.slice(0, 12).map((x) => `${x[0] > 1e11 ? '' : Math.round(x[0]) + ' '}${x[1]}`).join('\n')
     }, 500)
     return () => {
       clearInterval(id)

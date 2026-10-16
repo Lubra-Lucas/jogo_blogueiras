@@ -6,51 +6,140 @@
   "pieces": {
     "building_bubble": {
       "file": "kit_y2k/building_bubble.glb",
-      "tris": 10708,
-      "bytes": 265116,
+      "tris": 4864,
+      "bytes": 135548,
       "size": [
-        7.244,
-        11.45,
-        9.197
+        7.71,
+        11.4,
+        8.931
       ],
       "bbox_min": [
-        -3.622,
+        -3.855,
         0.0,
-        -3.622
+        -3.855
       ],
       "bbox_max": [
-        3.622,
-        11.45,
-        5.575
+        3.855,
+        11.4,
+        5.076
       ],
       "materials": [
-        "base",
         "white",
-        "trim",
-        "glow",
-        "glow2",
+        "base",
         "glass",
-        "accent"
+        "trim",
+        "accent",
+        "glow2",
+        "glow",
+        "accent2"
       ],
       "walkable": false,
       "collider": {
         "type": "cylinder",
         "size": [
-          3.5,
-          10.5
+          3.3,
+          11.0
         ],
         "center": [
           0,
-          5.25,
+          5.5,
           0
         ]
       },
       "mount": "torre redonda, centro na origem; porta oval em -Y (frente +Z no GLB)"
     },
+    "building_bubble_tall": {
+      "file": "kit_y2k/building_bubble_tall.glb",
+      "tris": 6160,
+      "bytes": 170200,
+      "size": [
+        6.56,
+        14.8,
+        7.856
+      ],
+      "bbox_min": [
+        -3.28,
+        0.0,
+        -3.28
+      ],
+      "bbox_max": [
+        3.28,
+        14.8,
+        4.576
+      ],
+      "materials": [
+        "white",
+        "base",
+        "glass",
+        "trim",
+        "accent",
+        "glow2",
+        "glow",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          2.7,
+          14.4
+        ],
+        "center": [
+          0,
+          7.2,
+          0
+        ]
+      },
+      "mount": "torre esguia de 4 andares; porta em -Y; placa na frente do 1o andar"
+    },
+    "building_bubble_wide": {
+      "file": "kit_y2k/building_bubble_wide.glb",
+      "tris": 3568,
+      "bytes": 100864,
+      "size": [
+        11.06,
+        8.4,
+        12.006
+      ],
+      "bbox_min": [
+        -5.53,
+        0.0,
+        -5.53
+      ],
+      "bbox_max": [
+        5.53,
+        8.4,
+        6.476
+      ],
+      "materials": [
+        "white",
+        "base",
+        "glass",
+        "trim",
+        "accent",
+        "glow2",
+        "glow",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          4.5,
+          7.4
+        ],
+        "center": [
+          0,
+          3.7,
+          0
+        ]
+      },
+      "mount": "torre larga de 2 andares; porta em -Y"
+    },
     "building_capsule_row": {
       "file": "kit_y2k/building_capsule_row.glb",
       "tris": 3636,
-      "bytes": 81116,
+      "bytes": 81152,
       "size": [
         8.454,
         4.24,
@@ -93,7 +182,7 @@
     "storefront_glass": {
       "file": "kit_y2k/storefront_glass.glb",
       "tris": 2372,
-      "bytes": 64644,
+      "bytes": 64680,
       "size": [
         4.576,
         3.65,
@@ -138,7 +227,7 @@
     "canopy_curved": {
       "file": "kit_y2k/canopy_curved.glb",
       "tris": 1260,
-      "bytes": 37548,
+      "bytes": 37584,
       "size": [
         5.114,
         3.666,
@@ -189,7 +278,7 @@
     "kiosk_pod": {
       "file": "kit_y2k/kiosk_pod.glb",
       "tris": 3380,
-      "bytes": 86616,
+      "bytes": 86648,
       "size": [
         3.92,
         3.4,
@@ -232,7 +321,7 @@
     "holo_sign": {
       "file": "kit_y2k/holo_sign.glb",
       "tris": 1852,
-      "bytes": 43232,
+      "bytes": 43268,
       "size": [
         2.913,
         3.207,
@@ -274,7 +363,7 @@
     "neon_strip": {
       "file": "kit_y2k/neon_strip.glb",
       "tris": 376,
-      "bytes": 9912,
+      "bytes": 9948,
       "size": [
         2.143,
         0.15,
@@ -300,7 +389,7 @@
     "neon_strip_curve": {
       "file": "kit_y2k/neon_strip_curve.glb",
       "tris": 280,
-      "bytes": 9576,
+      "bytes": 9612,
       "size": [
         1.643,
         0.15,
@@ -326,7 +415,7 @@
     "lamp_futuristic": {
       "file": "kit_y2k/lamp_futuristic.glb",
       "tris": 1268,
-      "bytes": 34780,
+      "bytes": 34816,
       "size": [
         1.86,
         4.205,
@@ -365,7 +454,7 @@
     "bench_bubble": {
       "file": "kit_y2k/bench_bubble.glb",
       "tris": 1576,
-      "bytes": 35888,
+      "bytes": 35924,
       "size": [
         2.18,
         1.087,
@@ -405,7 +494,7 @@
     "planter_orb": {
       "file": "kit_y2k/planter_orb.glb",
       "tris": 1560,
-      "bytes": 40092,
+      "bytes": 40128,
       "size": [
         1.3,
         1.9,
@@ -446,7 +535,7 @@
     "floating_platform": {
       "file": "kit_y2k/floating_platform.glb",
       "tris": 1472,
-      "bytes": 39944,
+      "bytes": 39980,
       "size": [
         3.354,
         0.76,
@@ -487,7 +576,7 @@
     "plaza_centerpiece": {
       "file": "kit_y2k/plaza_centerpiece.glb",
       "tris": 6980,
-      "bytes": 185632,
+      "bytes": 185664,
       "size": [
         7.66,
         5.427,
@@ -532,7 +621,7 @@
     "paving_y2k": {
       "file": "kit_y2k/paving_y2k.glb",
       "tris": 1164,
-      "bytes": 24680,
+      "bytes": 24716,
       "size": [
         2.0,
         0.15,
@@ -575,35 +664,45 @@
   ],
   "slotNotes": "recolore por predio trocando a cor de cada material; glow/glow2 sao emissivos (neon); trim = cromo tingido; glass = perolado translucido",
   "metals": {
+    "gold": {
+      "color": "#f1d27a",
+      "roughness": 0.12,
+      "metallic": 1.0
+    },
+    "pearl": {
+      "color": "#f6f0fa",
+      "roughness": 0.16,
+      "metallic": 0.65
+    },
     "chrome_pink": {
       "color": "#f6dfe9",
       "roughness": 0.05,
-      "metallic": 1
+      "metallic": 1.0
     },
     "chrome_lilac": {
       "color": "#e6dcf6",
       "roughness": 0.05,
-      "metallic": 1
+      "metallic": 1.0
     },
     "chrome_blue": {
       "color": "#dcebf8",
       "roughness": 0.05,
-      "metallic": 1
+      "metallic": 1.0
     },
     "chrome_mint": {
       "color": "#dff3ea",
       "roughness": 0.05,
-      "metallic": 1
+      "metallic": 1.0
     },
     "chrome": {
       "color": "#f5f7fb",
       "roughness": 0.05,
-      "metallic": 1
+      "metallic": 1.0
     }
   },
   "palettes": {
     "bubblegum": {
-      "label": "Bubblegum Chrome",
+      "label": "Bubblegum Pearl",
       "base": "#f7c6d9",
       "accent": "#fffaf6",
       "accent2": "#ff8fbf",
@@ -613,19 +712,19 @@
       "glass": "#ff9fe0",
       "glow": "#ff7ad9",
       "glow2": "#7ad9ff",
-      "metal": "chrome_pink"
+      "metal": "pearl"
     },
     "lilac": {
       "label": "Lilac Iridescent",
       "base": "#d9c2f0",
-      "accent": "#f7c6d9",
+      "accent": "#fffaf6",
       "accent2": "#b58cf0",
       "soft": "#c6ddf5",
       "deep": "#5b3f87",
       "white": "#fffaf6",
       "glass": "#b58cff",
       "glow": "#b58cff",
-      "glow2": "#ff9fe0",
+      "glow2": "#7ad9ff",
       "metal": "chrome_lilac"
     },
     "babyblue": {
@@ -638,8 +737,8 @@
       "white": "#fffaf6",
       "glass": "#7fc4ff",
       "glow": "#6fd4ff",
-      "glow2": "#ff9fd0",
-      "metal": "chrome_blue"
+      "glow2": "#ffd36b",
+      "metal": "gold"
     },
     "mint": {
       "label": "Mint Fresh",
@@ -651,8 +750,47 @@
       "white": "#fffaf6",
       "glass": "#7affd0",
       "glow": "#7affd0",
-      "glow2": "#ff9fd0",
-      "metal": "chrome_mint"
+      "glow2": "#b58cff",
+      "metal": "pearl"
+    },
+    "butter": {
+      "label": "Butter Cream",
+      "base": "#fbeeb0",
+      "accent": "#fffaf6",
+      "accent2": "#ffd36b",
+      "soft": "#c6ddf5",
+      "deep": "#8a6a2a",
+      "white": "#fffaf6",
+      "glass": "#ffe58a",
+      "glow": "#ffd36b",
+      "glow2": "#6fd4ff",
+      "metal": "gold"
+    },
+    "peach": {
+      "label": "Peach Fizz",
+      "base": "#ffd5bf",
+      "accent": "#fffaf6",
+      "accent2": "#ff9f8a",
+      "soft": "#e6dcf6",
+      "deep": "#a14a3a",
+      "white": "#fffaf6",
+      "glass": "#ffbfa0",
+      "glow": "#ff9fb0",
+      "glow2": "#7ad9ff",
+      "metal": "gold"
+    },
+    "pearl": {
+      "label": "Pearl White",
+      "base": "#f4f0f8",
+      "accent": "#c6ddf5",
+      "accent2": "#b58cf0",
+      "soft": "#d9c2f0",
+      "deep": "#6a5a8a",
+      "white": "#fffaf6",
+      "glass": "#cfe6ff",
+      "glow": "#9fdcff",
+      "glow2": "#ffb0e0",
+      "metal": "chrome"
     }
   }
 }

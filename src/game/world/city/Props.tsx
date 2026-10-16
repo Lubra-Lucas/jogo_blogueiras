@@ -20,6 +20,7 @@ import {
 } from 'three'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { CITY } from './layout'
+import { CENTRO_R } from './centro'
 import { merge, paint, place, placement } from './geo'
 import { Cull, chunkKey, useCullDist } from './cull'
 
@@ -365,12 +366,13 @@ function KitInstances({ url, items, shadows }: { url: string; items: { x: number
 }
 
 const isY2k = (x: number, z: number) => Math.hypot(x, z) < 82 || (x > 20 && Math.abs(z) < 70)
+const inCentro = (x: number, z: number) => Math.hypot(x, z) < CENTRO_R
 
 export function Lamps({ shadows }: { shadows: boolean }) {
   const sets = useMemo(() => {
-    const lampsY = CITY.lamps.filter((l) => isY2k(l.x, l.z))
+    const lampsY = CITY.lamps.filter((l) => isY2k(l.x, l.z) && !inCentro(l.x, l.z))
     const lampsR = CITY.lamps.filter((l) => !isY2k(l.x, l.z))
-    const benchY = CITY.benches.filter((b) => isY2k(b.x, b.z)).map((b) => ({ x: b.x, z: b.z, rot: b.rot }))
+    const benchY = CITY.benches.filter((b) => isY2k(b.x, b.z) && !inCentro(b.x, b.z)).map((b) => ({ x: b.x, z: b.z, rot: b.rot }))
     const benchR = CITY.benches.filter((b) => !isY2k(b.x, b.z)).map((b) => ({ x: b.x, z: b.z, rot: b.rot }))
     return { lampsY, lampsR, benchY, benchR }
   }, [])

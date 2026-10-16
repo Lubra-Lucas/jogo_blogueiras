@@ -8,6 +8,9 @@ import { Cull, chunkKey, useCullDist } from './cull'
 
 const rbox = (w: number, h: number, d: number, r: number) => new RoundedBoxGeometry(w, h, d, 2, Math.min(r, w / 2 - 0.01, d / 2 - 0.01, h / 2 - 0.01))
 
+/** O Centro usa o kit Y2K (centro.ts / kit.tsx); os demais bairros seguem com o esboco de caixas. */
+const BLOCKS = CITY.blocks.filter((b) => b.district !== 'centro')
+
 interface Parts {
   body: BufferGeometry[]
   glass: BufferGeometry[]
@@ -87,7 +90,7 @@ export function Buildings({ shadows }: { shadows: boolean }) {
   const dist = useCullDist()
   const chunks = useMemo(() => {
     const map = new Map<number, typeof CITY.blocks>()
-    for (const b of CITY.blocks) {
+    for (const b of BLOCKS) {
       const k = chunkKey(b.x, b.z)
       const l = map.get(k)
       if (l) l.push(b)
@@ -121,7 +124,7 @@ export function Buildings({ shadows }: { shadows: boolean }) {
       ))}
 
       <RigidBody type="fixed" colliders={false}>
-        {CITY.blocks.map((b) =>
+        {BLOCKS.map((b) =>
           b.shape === 'cyl' ? (
             <CylinderCollider key={b.id} args={[b.h / 2, b.w / 2]} position={[b.x, b.h / 2, b.z]} />
           ) : (

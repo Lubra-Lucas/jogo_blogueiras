@@ -21,18 +21,26 @@ ROOT = ck.ROOT
 OUT = os.path.join(ROOT, "public", "assets", "city", "kit_y2k")
 
 METALS = {
-    "chrome_pink": ("#f6dfe9", 0.05), "chrome_lilac": ("#e6dcf6", 0.05), "chrome_blue": ("#dcebf8", 0.05),
-    "chrome_mint": ("#dff3ea", 0.05), "chrome": ("#f5f7fb", 0.05),
+    # (cor, rugosidade, metalico): ouro-joia, perola e cromos tingidos (nada de cobre/laranja)
+    "gold": ("#f1d27a", 0.12, 1.0), "pearl": ("#f6f0fa", 0.16, 0.65),
+    "chrome_pink": ("#f6dfe9", 0.05, 1.0), "chrome_lilac": ("#e6dcf6", 0.05, 1.0), "chrome_blue": ("#dcebf8", 0.05, 1.0),
+    "chrome_mint": ("#dff3ea", 0.05, 1.0), "chrome": ("#f5f7fb", 0.05, 1.0),
 }
 PALETTES = {
-    "bubblegum": dict(label="Bubblegum Chrome", base="#f7c6d9", accent="#fffaf6", accent2="#ff8fbf", soft="#d9c2f0", deep="#8a4a9a",
-                      white="#fffaf6", glass="#ff9fe0", glow="#ff7ad9", glow2="#7ad9ff", metal="chrome_pink"),
-    "lilac": dict(label="Lilac Iridescent", base="#d9c2f0", accent="#f7c6d9", accent2="#b58cf0", soft="#c6ddf5", deep="#5b3f87",
-                  white="#fffaf6", glass="#b58cff", glow="#b58cff", glow2="#ff9fe0", metal="chrome_lilac"),
+    "bubblegum": dict(label="Bubblegum Pearl", base="#f7c6d9", accent="#fffaf6", accent2="#ff8fbf", soft="#d9c2f0", deep="#8a4a9a",
+                      white="#fffaf6", glass="#ff9fe0", glow="#ff7ad9", glow2="#7ad9ff", metal="pearl"),
+    "lilac": dict(label="Lilac Iridescent", base="#d9c2f0", accent="#fffaf6", accent2="#b58cf0", soft="#c6ddf5", deep="#5b3f87",
+                  white="#fffaf6", glass="#b58cff", glow="#b58cff", glow2="#7ad9ff", metal="chrome_lilac"),
     "babyblue": dict(label="Baby Blue Pool", base="#c6ddf5", accent="#fffaf6", accent2="#6fb4ff", soft="#d6c4f0", deep="#2f5a8f",
-                     white="#fffaf6", glass="#7fc4ff", glow="#6fd4ff", glow2="#ff9fd0", metal="chrome_blue"),
+                     white="#fffaf6", glass="#7fc4ff", glow="#6fd4ff", glow2="#ffd36b", metal="gold"),
     "mint": dict(label="Mint Fresh", base="#bfe8d6", accent="#fffaf6", accent2="#5fe0b8", soft="#c6ddf5", deep="#2f7a62",
-                 white="#fffaf6", glass="#7affd0", glow="#7affd0", glow2="#ff9fd0", metal="chrome_mint"),
+                 white="#fffaf6", glass="#7affd0", glow="#7affd0", glow2="#b58cff", metal="pearl"),
+    "butter": dict(label="Butter Cream", base="#fbeeb0", accent="#fffaf6", accent2="#ffd36b", soft="#c6ddf5", deep="#8a6a2a",
+                   white="#fffaf6", glass="#ffe58a", glow="#ffd36b", glow2="#6fd4ff", metal="gold"),
+    "peach": dict(label="Peach Fizz", base="#ffd5bf", accent="#fffaf6", accent2="#ff9f8a", soft="#e6dcf6", deep="#a14a3a",
+                  white="#fffaf6", glass="#ffbfa0", glow="#ff9fb0", glow2="#7ad9ff", metal="gold"),
+    "pearl": dict(label="Pearl White", base="#f4f0f8", accent="#c6ddf5", accent2="#b58cf0", soft="#d9c2f0", deep="#6a5a8a",
+                  white="#fffaf6", glass="#cfe6ff", glow="#9fdcff", glow2="#ffb0e0", metal="chrome"),
 }
 SPEC = dict(base=(.1, 1, .03, .5, .4), accent=(.08, 1, .03, .3, .4), accent2=(.06, 1, .02, 0, .4), soft=(.1, 1, .03, .3, .4),
             deep=(.12, 1, .03, 0, .4), white=(.08, 1, .03, .3, .4))
@@ -44,8 +52,8 @@ def pal_mats(pal, suffix=""):
     for slot in ("base", "accent", "accent2", "soft", "deep", "white"):
         r, c, cr, sh, shr = SPEC[slot]
         out[slot] = ck._mk(slot + suffix, P[slot], rough=r, coat=c, coat_rough=cr, sheen=sh, sheen_rough=shr)
-    mc, mr = METALS[P["metal"]]
-    out["trim"] = ck._mk("trim" + suffix, mc, rough=mr, metal=1.0, coat=0.0)
+    mc, mr, mm = METALS[P["metal"]]
+    out["trim"] = ck._mk("trim" + suffix, mc, rough=mr, metal=mm, coat=0.0)
     g = ck._mk("glass" + suffix, P["glass"], rough=0.02, coat=0.0, alpha=0.55, spec=1.0)
     try:
         b = g.node_tree.nodes["Principled BSDF"]
@@ -114,42 +122,66 @@ def porthole(P, R, a, z, rx, rz, glass="glass", ringm="trim"):
 
 
 # ------------------------------------------------------------------------------------------------
-def piece_building_bubble():
+def make_bubble(radii, th=3.0):
+    """Torre fofa em andares de raios diferentes: sacada em anel, faixa de vidro curva, cupula perola com anel luminoso, placa."""
     P = []
-    R, H = 3.0, 9.6
-    prof = [(0, 0), (R + .2, 0), (R + .3, .15), (R + .15, .5)]
-    for f in range(3):
-        z0 = .5 + f * 3.0
-        for q in range(1, 7):
-            t = q / 6
-            prof.append((R - .05 + .55 * sin(pi * t) ** .8 * (1 if f < 2 else 1) - (.35 if q == 6 and f < 2 else 0) * 0, z0 + 3.0 * t))
-        prof.append((R - .35, z0 + 3.0))
-    prof = prof[:-1] + [(R - .5, H - .6), (R - 1.2, H - .2), (R - 2.0, H + .1), (0, H + .15)]
-    P.append(lathe(prof, "base", n=32, smooth=1))
-    P.append(lathe([(0, 0), (R + .45, 0), (R + .5, .12), (R + .4, .28), (0, .3)], "white", n=32, smooth=1))
-    for z in (3.5, 6.5):
-        P.append(tube(ring3(R - .2, z, 28), .1, "trim", minor=6, closed=True))
-        P.append(tube(ring3(R - .18, z + .22, 28), .05, "glow", minor=4, closed=True))
-    P.append(tube(ring3(R + .5, .32, 28), .055, "glow2", minor=4, closed=True))
-    P.append(tube(ring3(R - .75, H - .45, 24), .08, "trim", minor=6, closed=True))
-    for f in range(3):
-        z = 2.0 + f * 3.0
-        for k in range(8):
-            a = 2 * pi * (k + .5 * (f % 2)) / 8
-            if f == 0 and abs(((a + pi / 2 + pi) % (2 * pi)) - pi) < .5:
-                continue
-            porthole(P, R + .55 * .95, a, z, .5, .72)
-    # porta oval frontal
-    a = -pi / 2
-    porthole(P, R + .45, a, 1.9, .8, 1.2, glass="glass")
-    P.append(tube([Vector((.0, -(R + .5), 1.45 + 1.4 * sin(t))) for t in [pi * i / 8 for i in range(9)]], .0, "trim", minor=4)) if False else None
-    P.append(lathe([(0, 0), (1.6, 0), (1.7, .1), (1.5, .22), (0, .24)], "accent", loc=(0, -(R + .9), 0), n=20, smooth=1))
-    # coroa: antena com anel orbital
-    P.append(tube([Vector((0, 0, H)), Vector((0, 0, H + .8)), Vector((0, 0, H + 1.5))], [.12, .07, .04], "trim", minor=6))
-    P.append(sph(.2, (0, 0, H + 1.65), "glow", n=10, rings=6))
-    P.append(tube(ring3(.7, H + .95, 24), .05, "trim", minor=5, closed=True))
-    P.append(tube(ring3(.82, H + .95, 24), .03, "glow2", minor=4, closed=True))
+    z = .0
+    P.append(lathe([(0, 0), (radii[0] + .55, 0), (radii[0] + .6, .1), (radii[0] + .5, .26), (0, .3)], "white", n=24, smooth=0))
+    z = .3
+    for i, R in enumerate(radii):
+        top = z + th
+        prof = [(0, z), (R, z)]
+        for q in range(1, 6):
+            t = q / 5
+            prof.append((R + .16 * sin(pi * t), z + th * t))
+        prof.append((0, top))
+        P.append(lathe(prof, "base", n=24, smooth=0))
+        # faixa de vidro curva (perolada) envolvendo o andar
+        g0, g1 = z + .7, top - .55
+        gp = [(R + .02 + .2 * sin(pi * (zz - z) / th) , zz) for zz in [g0 + (g1 - g0) * k / 4 for k in range(5)]]
+        P.append(lathe(gp + [(gp[-1][0] - .06, g1), (gp[0][0] - .06, g0)], "glass", n=24))
+        for k in range(6):
+            a = 2 * pi * k / 6
+            P.append(cyl(.035, g1 - g0, ((R + .2) * cos(a), (R + .2) * sin(a), (g0 + g1) / 2), "trim", n=4))
+        # sacada em anel no topo de cada andar (exceto o ultimo, que tem a cupula)
+        Rb = R + .85
+        zb = top - .02
+        if i < len(radii) - 1:
+            Rb = R + .6 + (radii[i] - radii[i + 1]) * .5
+            P.append(lathe([(R - .2, zb - .14), (Rb, zb - .14), (Rb + .08, zb - .06), (Rb + .08, zb + .04), (Rb - .05, zb + .1), (R - .2, zb + .1)], "accent", n=24, smooth=0))
+            P.append(tube(ring3(Rb + .02, zb + .24, 24), .045, "trim", minor=4, closed=True))
+            P.append(tube(ring3(Rb - .12, zb - .17, 24), .035, "glow2", minor=4, closed=True))
+        z = top
+    # cupula perola + anel luminoso + coroa
+    R = radii[-1]
+    dome = [(R + .15, z)] + [((R + .15) * cos(pi / 2 * k / 6) ** .9, z + 1.7 * sin(pi / 2 * k / 6)) for k in range(1, 7)]
+    P.append(lathe(dome, "white", n=24, smooth=0))
+    P.append(tube(ring3(R + .12, z + .06, 24), .08, "trim", minor=5, closed=True))
+    P.append(tube(ring3(R * .62, z + 1.28, 24), .045, "glow", minor=4, closed=True))
+    P.append(tube(ring3(R * .33, z + 1.62, 18), .035, "glow2", minor=4, closed=True))
+    P.append(sph(.2, (0, 0, z + 1.9), "glow", n=10, rings=6))
+    # porta oval frontal (-Y) com marquise e placa
+    R0 = radii[0]
+    ell = [Vector((.75 * cos(t), 0, 1.15 * sin(t))) for t in [2 * pi * i / 14 for i in range(14)]]
+    P.append(tube(ell, .07, "trim", minor=4, closed=True, loc=(0, -(R0 + .24), 1.5)))
+    P.append(sph((1.3, .12, 2.0), (0, -(R0 + .18), 1.5), "glass", n=10, rings=5))
+    P.append(lathe([(0, 0), (1.5, 0), (1.55, .08), (1.4, .18), (0, .2)], "accent", loc=(0, -(R0 + .55), 0), n=18, smooth=0))
+    zs = .3 + th - .2
+    P.append(box((2.2, .16, .6), (0, -(R0 + .42), zs + 1.1), "accent2", bevel=.07, seg=2))   # placa (montagem de letreiro)
+    P.append(box((1.8, .08, .3), (0, -(R0 + .52), zs + 1.1), "white", bevel=.04, seg=2))
     return P
+
+
+def piece_building_bubble():
+    return make_bubble([3.0, 2.65, 2.25])
+
+
+def piece_building_bubble_tall():
+    return make_bubble([2.5, 2.3, 2.05, 1.75], th=3.1)
+
+
+def piece_building_bubble_wide():
+    return make_bubble([4.4, 3.5], th=3.0)
 
 
 def piece_building_capsule_row():
@@ -377,7 +409,7 @@ def piece_paving_y2k():
 
 
 PIECES = [
-    ("building_bubble", piece_building_bubble), ("building_capsule_row", piece_building_capsule_row),
+    ("building_bubble", piece_building_bubble), ("building_bubble_tall", piece_building_bubble_tall), ("building_bubble_wide", piece_building_bubble_wide), ("building_capsule_row", piece_building_capsule_row),
     ("storefront_glass", piece_storefront_glass), ("canopy_curved", piece_canopy_curved), ("kiosk_pod", piece_kiosk_pod),
     ("holo_sign", piece_holo_sign), ("neon_strip", piece_neon_strip), ("neon_strip_curve", piece_neon_strip_curve),
     ("lamp_futuristic", piece_lamp_futuristic), ("bench_bubble", piece_bench_bubble), ("planter_orb", piece_planter_orb),
@@ -385,7 +417,9 @@ PIECES = [
 ]
 
 META = {
-    "building_bubble": dict(mount="torre redonda, centro na origem; porta oval em -Y (frente +Z no GLB)", collider=("cylinder", [3.5, 10.5], [0, 5.25, 0])),
+    "building_bubble": dict(mount="torre redonda, centro na origem; porta oval em -Y (frente +Z no GLB)", collider=("cylinder", [3.3, 11.0], [0, 5.5, 0])),
+    "building_bubble_tall": dict(mount="torre esguia de 4 andares; porta em -Y; placa na frente do 1o andar", collider=("cylinder", [2.7, 14.4], [0, 7.2, 0])),
+    "building_bubble_wide": dict(mount="torre larga de 2 andares; porta em -Y", collider=("cylinder", [4.5, 7.4], [0, 3.7, 0])),
     "building_capsule_row": dict(mount="modulo comprido: plano frontal em z=0, corpo ate z=-3.4; encadeie de 8 em 8 m ou use sozinho", collider=("box", [8.2, 4.4, 3.5], [0, 2.2, -1.7])),
     "storefront_glass": dict(mount="vitrine curva 4 m; frente z=0, fundo ~0.8; encaixe em parede/pilares", collider=("box", [4.2, 3.6, 1.1], [0, 1.8, -.3])),
     "canopy_curved": dict(mount="cobertura flutuante sobre 2 postes (colisores so dos postes)", collider=("boxes", [[.5, 3.2, .5, -2.1, 1.6, -.9], [.5, 3.2, .5, 2.1, 1.6, -.9]], None)),
@@ -415,7 +449,7 @@ def export_all(objs):
     kit = {"units": "m", "up": "Y", "front": "+Z", "style": "Y2K pastel futurist (Centro/Praca)", "pieces": {},
            "slots": ["base", "accent", "accent2", "soft", "deep", "white", "trim", "glass", "glow", "glow2", "leaf", "water"],
            "slotNotes": "recolore por predio trocando a cor de cada material; glow/glow2 sao emissivos (neon); trim = cromo tingido; glass = perolado translucido",
-           "metals": {k: dict(color=v[0], roughness=v[1], metallic=1) for k, v in METALS.items()}, "palettes": PALETTES}
+           "metals": {k: dict(color=v[0], roughness=v[1], metallic=v[2]) for k, v in METALS.items()}, "palettes": PALETTES}
     for name, ob in objs.items():
         bpy.ops.object.select_all(action="DESELECT")
         ob.select_set(True)
@@ -439,6 +473,9 @@ def export_all(objs):
         kit["pieces"][name] = info
     with open(os.path.join(OUT, "kit.json"), "w", encoding="utf-8") as f:
         json.dump(kit, f, indent=2, ensure_ascii=False)
+    # copia tipada para o codigo do jogo (colisores, paletas, metais)
+    with open(os.path.join(ROOT, "src", "game", "world", "city", "kitY2k.json"), "w", encoding="utf-8") as f:
+        json.dump(kit, f, indent=1, ensure_ascii=False)
     return kit
 
 
