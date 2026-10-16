@@ -190,9 +190,11 @@ export function createHairMaterial(map: Texture | null, normalMap: Texture | nul
   float hl = dot(sampledDiffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722));
   float hr = clamp(hl / uRefLum, 0.4, 1.3);
   diffuseColor.rgb *= uHair * mix(1.0, hr, 0.85);
+#else
+  diffuseColor.rgb *= uHair;
 #endif`,
       )
   }
-  material.customProgramCacheKey = () => 'doll-hair-v2'
+  material.customProgramCacheKey = () => 'doll-hair-v3'
   return { material, uniforms }
 }

@@ -76,7 +76,7 @@ def tri_arrays(me):
     return tv.reshape(-1, 3)
 
 
-def mesh_from_arrays(name, co, tris):
+def mesh_from_arrays(name, co, tris, uvc=None):
     """fast mesh build from numpy (vertices compacted to the ones used)"""
     used = np.unique(tris)
     remap = np.full(len(co), -1, np.int64); remap[used] = np.arange(len(used))
@@ -88,7 +88,9 @@ def mesh_from_arrays(name, co, tris):
     me.polygons.add(nf)
     me.polygons.foreach_set('loop_start', np.arange(nf, dtype=np.int32) * 3)
     me.polygons.foreach_set('loop_total', np.full(nf, 3, np.int32))
-    me.update(calc_edges=True); me.validate()
+    if uvc is not None:
+        uvl = me.uv_layers.new(name="UVMap"); uvl.data.foreach_set('uv', np.asarray(uvc, np.float32).reshape(-1))
+    me.update(calc_edges=True); me.validate(clean_customdata=False)
     return me
 
 
@@ -209,7 +211,23 @@ def stage_classify():
     bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
     me = o.data
     co = getco(o); tv = tri_arrays(me); nt = len(tv)
+    if OPT.get("half") in ("neg", "pos"):   # "generate" sheets hold two copies side by side along X (hair-only + hair on mannequin): keep one
+        cx = co[tv].mean(1)[:, 0]; kt = cx < 0 if OPT["half"] == "neg" else cx > 0
+        me = mesh_from_arrays("hair_half", co, tv[kt]); o2h = bpy.data.objects.new("hair_half", me); bpy.context.scene.collection.objects.link(o2h)
+        bpy.data.objects.remove(o, do_unlink=True); o = o2h
+        co = getco(o); co[:, 0] -= (co[:, 0].min() + co[:, 0].max()) / 2; setco(o, co)
+        co = getco(o); tv = tri_arrays(me); nt = len(tv); log("half", OPT["half"], "tris", nt)
     H = co[:, 2].max() - co[:, 2].min()
+    # source texture (color=source): per-corner UVs + the source material, carried through the mannequin strip
+    SRC_COL = OPT.get("color") == "source"
+    uvc = src_mat = None
+    if SRC_COL:
+        me.calc_loop_triangles()
+        lt = np.empty(nt * 3, np.int64); me.loop_triangles.foreach_get('loops', lt)
+        uvall = arr(me.uv_layers.active.data, 'uv', 2, np.float32)
+        uvc = uvall[lt].reshape(nt, 3, 2)
+        src_mat = me.materials[0] if len(me.materials) else None
+        log("source material", [m.name for m in me.materials], "uv layers", [u.name for u in me.uv_layers])
     log("verts", len(co), "tris", nt, "bbox", co.min(0).round(3), co.max(0).round(3), "H", round(H, 3))
 
     # ---- colour classification when the source carries colours (grey/skin head vs coloured hair); Meshy "white" exports do not
@@ -244,44 +262,53 @@ def stage_classify():
         return vis
 
     zmin, zmax = co[:, 2].min(), co[:, 2].max()
-    # face ellipse in model fractions (Meshy template): centre 27% of H above the chin-line origin; widths measured on the template
-    fx, fz0, rz = 0.215 / 1.9 * H, zmin + (0.27 + 0.9517) / 1.9 * H, 0.37 / 1.9 * H
-    ell = ((cen[:, 0] / fx) ** 2 + ((cen[:, 2] - fz0) / rz) ** 2 < 1)
-    fwd = -cen[:, 1]                                   # forward = -Y
-    zone = ell & (fwd > -0.12 / 1.9 * H)
+    NOM = OPT.get("nom") == "1"      # wig with no mannequin head (hollow cap): nothing to strip; landmarks from chin=y,z hl=y,z
     D = int(OPT.get("dens", 80))
-    # seed: the lowest sparse tris near x=0 inside the zone
-    cand = np.where(zone & (dens < D * 1.0) & (np.abs(cen[:, 0]) < 0.02 * H))[0]
-    seed = cand[np.argsort(cen[cand, 2])[:5]]
-    log("chin seed", cen[seed[0]].round(3), "density", dens[seed])
-    man = grow((dens < D) & zone, seed)
-    log("sparse flood tris", int(man.sum()))
-    # ---- height-field refinement: the face front is a clean surface fwd = f(x, z); drop flood tris that are off it (hair ribbons)
-    fr = man & (fwd > 0.03 / 1.9 * H)
-    c = np.stack([cen[fr, 0], cen[fr, 2], fwd[fr]], 1)
-    nrm = lambda x, z: (x / fx, (z - fz0) / rz)
-    def basis(x, z, deg=5):
-        xx, zz = nrm(x, z)
-        return np.stack([xx ** i * zz ** j for i in range(deg + 1) for j in range(deg + 1 - i)], 1)
-    sel = np.ones(len(c), bool)
-    for _ in range(10):
-        w = np.linalg.lstsq(basis(c[sel, 0], c[sel, 1]), c[sel, 2], rcond=None)[0]
-        res = basis(c[:, 0], c[:, 1]) @ w - c[:, 2]
-        s = np.abs(res[sel]).mean(); sel = np.abs(res) < max(0.0016 * H, 2.5 * s)
-    allres = basis(cen[:, 0], cen[:, 2]) @ w - fwd
-    on_face = (np.abs(allres) < 0.0032 * H) & (fwd > 0.03 / 1.9 * H) & ell
-    mannequin = man & ((~(fwd > 0.03 / 1.9 * H)) | on_face)          # front must lie on the face surface; back/underside as flooded
-    log("height-field inliers", round(float(sel.mean()), 3), "mannequin tris", int(mannequin.sum()))
-    # landmarks of the mannequin face (chin / hairline / front) BEFORE deleting
-    mv = np.unique(tv[mannequin])
-    mc = co[mv]
-    mid = mc[(np.abs(mc[:, 0]) < 0.02 * H)]
-    chin = mid[np.argmin(mid[:, 2])]
-    hairline = mid[np.argmax(mid[:, 2])]
-    lm = {"chin": chin.tolist(), "hairline": hairline.tolist(), "H": float(H), "zmin": float(zmin), "zmax": float(zmax),
-          "face_halfwidth": float(np.percentile(np.abs(mc[:, 0]), 98))}
-    log("landmarks", {k: (np.round(v, 3).tolist() if isinstance(v, list) else round(v, 3)) for k, v in lm.items()})
-    json.dump(lm, open(os.path.join(CACHE, f"hair_{HID}_lm.json"), "w"))
+    if NOM:
+        mannequin = np.zeros(nt, bool)
+        cy, cz = [float(v) for v in OPT.get("chin", "-0.28,0.38").split(",")]; hy, hz = [float(v) for v in OPT.get("hl", "-0.33,0.80").split(",")]
+        lm = {"chin": [0.0, cy, cz], "hairline": [0.0, hy, hz], "H": float(H), "zmin": float(zmin), "zmax": float(zmax), "face_halfwidth": 0.1}
+        json.dump(lm, open(os.path.join(CACHE, f"hair_{HID}_lm.json"), "w"))
+    else:
+        # face ellipse in model fractions (Meshy template): centre 27% of H above the chin-line origin; widths measured on the template
+        fx, fz0, rz = 0.215 / 1.9 * H, zmin + (0.27 + 0.9517) / 1.9 * H, 0.37 / 1.9 * H
+        ell = ((cen[:, 0] / fx) ** 2 + ((cen[:, 2] - fz0) / rz) ** 2 < 1)
+        fwd = -cen[:, 1]                                   # forward = -Y
+        zone = ell & (fwd > -0.12 / 1.9 * H)
+        D = int(OPT.get("dens", 80))
+        # seed: the lowest sparse tris near x=0 inside the zone
+        cand = np.where(zone & (dens < D * 1.0) & (np.abs(cen[:, 0]) < 0.02 * H))[0]
+        seed = cand[np.argsort(cen[cand, 2])[:5]]
+        log("chin seed", cen[seed[0]].round(3), "density", dens[seed])
+        man = grow((dens < D) & zone, seed)
+        log("sparse flood tris", int(man.sum()))
+        # ---- height-field refinement: the face front is a clean surface fwd = f(x, z); drop flood tris that are off it (hair ribbons)
+        fr = man & (fwd > 0.03 / 1.9 * H)
+        c = np.stack([cen[fr, 0], cen[fr, 2], fwd[fr]], 1)
+        nrm = lambda x, z: (x / fx, (z - fz0) / rz)
+        def basis(x, z, deg=5):
+            xx, zz = nrm(x, z)
+            return np.stack([xx ** i * zz ** j for i in range(deg + 1) for j in range(deg + 1 - i)], 1)
+        sel = np.ones(len(c), bool)
+        for _ in range(10):
+            w = np.linalg.lstsq(basis(c[sel, 0], c[sel, 1]), c[sel, 2], rcond=None)[0]
+            res = basis(c[:, 0], c[:, 1]) @ w - c[:, 2]
+            s = np.abs(res[sel]).mean(); sel = np.abs(res) < max(0.0016 * H, 2.5 * s)
+        allres = basis(cen[:, 0], cen[:, 2]) @ w - fwd
+        on_face = (np.abs(allres) < 0.0032 * H) & (fwd > 0.03 / 1.9 * H) & ell
+        mannequin = man & ((~(fwd > 0.03 / 1.9 * H)) | on_face)          # front must lie on the face surface; back/underside as flooded
+        log("height-field inliers", round(float(sel.mean()), 3), "mannequin tris", int(mannequin.sum()))
+        # landmarks of the mannequin face (chin / hairline / front) BEFORE deleting
+        mv = np.unique(tv[mannequin])
+        mc = co[mv]
+        mid = mc[(np.abs(mc[:, 0]) < 0.02 * H)]
+        chin = mid[np.argmin(mid[:, 2])]
+        hairline = mid[np.argmax(mid[:, 2])]
+        lm = {"chin": chin.tolist(), "hairline": hairline.tolist(), "H": float(H), "zmin": float(zmin), "zmax": float(zmax),
+              "face_halfwidth": float(np.percentile(np.abs(mc[:, 0]), 98))}
+        log("landmarks", {k: (np.round(v, 3).tolist() if isinstance(v, list) else round(v, 3)) for k, v in lm.items()})
+        json.dump(lm, open(os.path.join(CACHE, f"hair_{HID}_lm.json"), "w"))
+
     # delete mannequin (+2 rings of neighbours so no sliver edge is left), then tiny loose parts
     dele = grow(np.ones(nt, bool), np.where(mannequin)[0]) if False else mannequin.copy()
     for _ in range(int(OPT.get("grow", 2))):
@@ -293,7 +320,7 @@ def stage_classify():
         # only grow into sparse tris (hair ribbons next to the face stay)
         dele |= nb & (dens < D * 1.6) & ~dele
     keep = ~dele
-    me2 = mesh_from_arrays("hair_hi", co, tv[keep])
+    me2 = mesh_from_arrays("hair_hi", co, tv[keep], uvc[keep] if SRC_COL else None)
     # loose parts smaller than 1500 tris (mannequin crumbs, stray hair bits)
     o2 = bpy.data.objects.new("hair_hi", me2); bpy.context.scene.collection.objects.link(o2)
     bpy.data.objects.remove(o, do_unlink=True)
@@ -313,9 +340,15 @@ def stage_classify():
         lab = new
     tl = lab[tv2[:, 0]]
     ids, cn = np.unique(tl, return_counts=True)
-    small = ids[cn < 1500]
+    small = ids[cn < int(OPT.get("minc", 1500))]
     log("components", len(ids), "small removed", len(small), "tris kept", int((~np.isin(tl, small)).sum()))
-    me3 = mesh_from_arrays("hair_hi", co2, tv2[~np.isin(tl, small)])
+    kk = ~np.isin(tl, small)
+    uv2 = None
+    if SRC_COL:
+        me2.calc_loop_triangles(); lt2 = np.empty(nt2 * 3, np.int64); me2.loop_triangles.foreach_get('loops', lt2)
+        uv2 = arr(me2.uv_layers.active.data, 'uv', 2, np.float32)[lt2].reshape(nt2, 3, 2)[kk]
+    me3 = mesh_from_arrays("hair_hi", co2, tv2[kk], uv2)
+    if SRC_COL and src_mat: me3.materials.append(src_mat)
     o3 = bpy.data.objects.new("hair_hi", me3); bpy.context.scene.collection.objects.link(o3)
     bpy.data.objects.remove(o2, do_unlink=True)
     o3.name = "hair_hi"; o3.data.name = "hair_hi"
@@ -413,6 +446,15 @@ def stage_fit():
     SHIFT, XS = float(OPT.get("shift", 0.045)), float(OPT.get("xs", 0.08))
     wz = (1.42 - P[:, 2]) / 0.17; wz = np.clip(wz, 0, 1); wz = wz * wz * (3 - 2 * wz)
     P[:, 1] += wz * SHIFT; P[:, 0] *= 1 - wz * XS
+    # ---- strip=<m>: the source still carries its mannequin head -> drop every tri whose 3 verts lie inside / within <m> of the doll head
+    if "strip" in OPT:
+        SM = float(OPT["strip"]); tvh = tri_arrays(hair.data)
+        sd0, _, _ = signed_dist(bvh, P, 0.15); sd0 = np.where(np.isfinite(sd0), sd0, 1.0)
+        kp = ~(sd0[tvh] < SM).all(1)
+        me_n = mesh_from_arrays("hair_hi", P, tvh[kp]); hair_n = bpy.data.objects.new("hair_hi", me_n); bpy.context.scene.collection.objects.link(hair_n)
+        log("strip", SM, "tris", len(tvh), "->", int(kp.sum()))
+        bpy.data.objects.remove(hair, do_unlink=True); hair = hair_n
+        P = getco(hair)
     # ---- push out of the doll (arms lowered): margin + smooth falloff, 2 passes
     MARGIN = float(OPT.get("margin", 0.005))
     e = edges_of(hair)
@@ -493,6 +535,22 @@ def stage_decimate():
     log(f"decimate done {time.time()-t0:.0f}s")
 
 
+# ====================================================================== lowpoly (replaces decimate+bake for small untextured sources)
+def stage_lowpoly():
+    t0 = time.time()
+    bpy.ops.wm.open_mainfile(filepath=blend(2))
+    for o in list(bpy.data.objects):
+        if o.name != "hair_hi": bpy.data.objects.remove(o, do_unlink=True)
+    lo = bpy.data.objects["hair_hi"]; lo.name = "hair_lo"; lo.data.name = "hair_lo"
+    smooth_normals(lo)
+    mat = bpy.data.materials.new(f"hair_{HID}"); mat.use_nodes = True
+    bs = mat.node_tree.nodes['Principled BSDF']; bs.inputs['Roughness'].default_value = 0.4
+    lo.data.materials.clear(); lo.data.materials.append(mat)
+    json.dump({"meanColorHex": OPT.get("hex", "#c8c8c8"), "meanLuminanceLinear": 1.0, "coverage": 1.0}, open(os.path.join(CACHE, f"hair_{HID}_tex.json"), "w"))
+    bpy.ops.wm.save_as_mainfile(filepath=blend(4))
+    log(f"lowpoly done {time.time()-t0:.0f}s tris", len(lo.data.polygons))
+
+
 # ====================================================================== bake
 def stage_bake():
     t0 = time.time()
@@ -531,7 +589,7 @@ def stage_bake():
     nt.links.new(sc_.outputs[2], mx1.inputs[6]); nt.links.new(ao_c.outputs[0], mx1.inputs[7])
     nt.links.new(mx1.outputs[2], bs.inputs['Base Color'])
     bs.inputs['Roughness'].default_value = 0.5
-    hi.data.materials.clear(); hi.data.materials.append(mh)
+    if OPT.get("color") != "source": hi.data.materials.clear(); hi.data.materials.append(mh)
 
     def bake_pass(kind, name, cs, samples, color_only=False, margin=16):
         img = bpy.data.images.new(name, TEX, TEX, alpha=False)
@@ -719,6 +777,6 @@ def stage_render(src=None, tag="R"):
     log("renders ->", SHOTS)
 
 
-STAGE = {"classify": stage_classify, "fit": stage_fit, "decimate": stage_decimate, "bake": stage_bake, "skin": stage_skin, "export": stage_export, "render": stage_render}
+STAGE = {"classify": stage_classify, "fit": stage_fit, "decimate": stage_decimate, "bake": stage_bake, "lowpoly": stage_lowpoly, "skin": stage_skin, "export": stage_export, "render": stage_render}
 for st in stages:
     STAGE[st]()

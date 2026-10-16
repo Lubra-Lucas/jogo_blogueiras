@@ -1,4 +1,4 @@
-import { forwardRef, Suspense, use, useEffect, useImperativeHandle, useMemo } from 'react'
+import { forwardRef, Suspense, use, useEffect, useImperativeHandle, useDeferredValue, useMemo } from 'react'
 import { useGLTF, useTexture } from '@react-three/drei'
 import { Color, MeshPhysicalMaterial, NoColorSpace, Skeleton, type Bone, type Group, type MeshStandardMaterial, type Object3D, type SkinnedMesh, type Texture } from 'three'
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
@@ -109,7 +109,9 @@ function applyMorphs(mesh: SkinnedMesh, morphs: Record<string, number>) {
 function CharacterImpl({ appearance, shadows = false, handle }: CharacterProps & { handle: React.Ref<CharacterHandle> }) {
   use(loadBaseMeta(appearance.base))
   const base = BASES[appearance.base]
-  const hairDef = getWearable(appearance.hair.id)
+  // useDeferredValue: ao trocar o cabelo (GLB carregado sob demanda) o anterior fica ate o novo estar pronto, sem suspender o personagem
+  const hairId = useDeferredValue(appearance.hair.id)
+  const hairDef = getWearable(hairId)
   const o = appearance.outfit
   const itemRefs = o.dress ? [o.dress, o.shoes] : [o.top, o.bottom, o.shoes]
   const defs: Array<{ def: WearableDef; color: string }> = []
@@ -214,6 +216,8 @@ export const Character = forwardRef<CharacterHandle, CharacterProps>(function Ch
 })
 
 // pre-carrega os GLB e mascaras (cache do drei)
-useGLTF.preload([BASES.doll.glb, ...Object.values(WEARABLES).map((w) => w.glb)])
+// so a base e o cabelo padrao sao pre-carregados; os demais carregam sob demanda ao selecionar
+const DEFAULT_HAIR_ID = 'hair.meshyUpdo'
+useGLTF.preload([BASES.doll.glb, ...Object.values(WEARABLES).filter((w) => w.kind !== 'hair' || w.id === DEFAULT_HAIR_ID).map((w) => w.glb)])
 useTexture.preload([BASES.doll.mask, BASES.doll.mask2])
 void loadBaseMeta('doll')

@@ -39,6 +39,9 @@ export const WEARABLES: Record<string, WearableDef> = {
     texture: 'own',
     refLum: 0.157,
   },
+  // GLBs sem textura (malha lisa): a cor do cabelo vem so do uniforme uHair
+  'hair.platinumUndercut': { id: 'hair.platinumUndercut', slot: 'hair', glb: `${A}hair_platinumUndercut.glb`, kind: 'hair', defaultColor: '#e8dcc8', label: 'Undercut platinado', texture: 'own' },
+  'hair.caramelCurls': { id: 'hair.caramelCurls', slot: 'hair', glb: `${A}hair_caramelCurls.glb`, kind: 'hair', defaultColor: '#c08a4e', label: 'Cachos caramelo', texture: 'own' },
 }
 
 /** Estilos de cabelo disponiveis (ordem do registro), para o seletor do editor. */
