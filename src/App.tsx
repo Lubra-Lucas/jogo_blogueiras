@@ -6,6 +6,7 @@ import { getQuality, QUALITY_SETTINGS } from './game/systems/quality'
 import { initDeviceDetection, useDeviceStore } from './game/systems/device'
 import { Hud } from './ui/Hud'
 import { Joystick } from './ui/Joystick'
+import { EmoteMenu } from './ui/EmoteMenu'
 import { FullscreenButton } from './ui/FullscreenButton'
 import { EditorPanel, editorEnabled } from './ui/EditorPanel'
 
@@ -34,6 +35,7 @@ export default function App() {
       </Suspense>
       <div className="ui-layer">
         <Hud />
+        {!new URLSearchParams(window.location.search).get('view') && <EmoteMenu />}
         {editorEnabled() && <EditorPanel />}
         {isTouch && <FullscreenButton />}
         {isTouch && <Joystick />}

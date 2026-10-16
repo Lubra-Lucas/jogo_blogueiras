@@ -9,6 +9,7 @@ import { CAMERA } from '../camera/config'
 import { PLAYER as C } from './config'
 import { useAppearanceStore } from '../../state/appearanceStore'
 import { Character } from '../character/Character'
+import { useEmoteStore } from '../character/animation/emoteStore'
 
 type Rapier = ReturnType<typeof useRapier>
 type CharacterController = ReturnType<Rapier['world']['createCharacterController']>
@@ -129,6 +130,8 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       }
     }
 
+    if (wantsMove) useEmoteStore.getState().stop() // andar cancela aplaudir/dancar
+
     // ---- aceleracao / desaceleracao (independente de frame rate) ----
     const k = wantsMove ? C.accel : C.decel
     const a = 1 - Math.exp(-k * dt)
@@ -200,7 +203,7 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       <group ref={visual} position={[sim.pos.x, sim.pos.y, sim.pos.z]}>
         {/* a posicao do controle e o centro da capsula: os pes ficam meia-altura + raio abaixo */}
         <group position={[0, -(C.halfHeight + C.radius), 0]}>
-          <Character appearance={appearance} shadows={shadows} />
+          <Character appearance={appearance} shadows={shadows} anim="player" />
         </group>
       </group>
     </>

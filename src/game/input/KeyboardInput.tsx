@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { EMOTES, useEmoteStore } from '../character/animation/emoteStore'
 import { setKeyboardAxis, setKeyboardCameraYaw } from './intent'
 
 const KEY_MAP: Record<string, 'up' | 'down' | 'left' | 'right'> = {
@@ -42,6 +43,11 @@ export function KeyboardInput() {
       const dir = KEY_MAP[e.code]
       if (dir) e.preventDefault()
       if (e.repeat) return
+      const emote = EMOTES.find((m) => e.code === `Digit${m.key}` || e.code === `Numpad${m.key}`)
+      if (emote) {
+        useEmoteStore.getState().trigger(emote.id)
+        return
+      }
       if (dir) down[dir] = true
       else if (e.code === 'KeyQ') camL = true
       else if (e.code === 'KeyE') camR = true

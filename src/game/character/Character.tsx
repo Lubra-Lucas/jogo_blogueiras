@@ -9,6 +9,7 @@ import { applyBodyLook, createBodyMaterial, createHairMaterial } from './dollMat
 import { getWearable, itemColor, WEARABLES, type WearableDef } from './items'
 import { applyRestPose } from './pose'
 import { ensureTangents } from './tangents'
+import { CharacterAnimation, type AnimDriver } from './animation/CharacterAnimation'
 
 export interface CharacterHandle {
   /** raiz (pes em y=0, olhando para +Z) */
@@ -22,6 +23,8 @@ export interface CharacterProps {
   appearance: Appearance
   /** projeta sombra (qualidade medium/high) */
   shadows?: boolean
+  /** animacao: 'player' (estados do jogo) ou { clip, t } (visualizador); omitido = so a pose de repouso */
+  anim?: AnimDriver
 }
 
 interface Rig extends CharacterHandle {
@@ -106,7 +109,7 @@ function applyMorphs(mesh: SkinnedMesh, morphs: Record<string, number>) {
   for (const name in dict) inf[dict[name]] = morphs[name] ?? 0
 }
 
-function CharacterImpl({ appearance, shadows = false, handle }: CharacterProps & { handle: React.Ref<CharacterHandle> }) {
+function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterProps & { handle: React.Ref<CharacterHandle> }) {
   use(loadBaseMeta(appearance.base))
   const base = BASES[appearance.base]
   // useDeferredValue: ao trocar o cabelo (GLB carregado sob demanda) o anterior fica ate o novo estar pronto, sem suspender o personagem
@@ -199,7 +202,12 @@ function CharacterImpl({ appearance, shadows = false, handle }: CharacterProps &
     [rig],
   )
 
-  return <primitive object={rig.root} />
+  return (
+    <>
+      <primitive object={rig.root} />
+      {anim && <CharacterAnimation rig={rig} driver={anim} />}
+    </>
+  )
 }
 
 /**

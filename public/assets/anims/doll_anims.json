@@ -1,0 +1,27 @@
+{
+  "walk": {
+    "duration": 1.167,
+    "speed": 0.855,
+    "loop": true
+  },
+  "desfile": {
+    "duration": 1.167,
+    "speed": 0.86,
+    "loop": true
+  },
+  "clap": {
+    "duration": 1.167,
+    "speed": 0.0,
+    "loop": true
+  },
+  "dance_twerk": {
+    "duration": 15.2,
+    "speed": 0.0,
+    "loop": true
+  },
+  "walk_start": {
+    "duration": 1.867,
+    "speed": 0.753,
+    "loop": false
+  }
+}

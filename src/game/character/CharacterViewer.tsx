@@ -4,6 +4,8 @@ import { OrbitControls } from '@react-three/drei'
 import type { Group } from 'three'
 import { useAppearanceStore } from '../../state/appearanceStore'
 import { Character } from './Character'
+import type { AnimDriver } from './animation/CharacterAnimation'
+import type { ClipName } from './animation/animator'
 
 export type ViewMode = 'character' | 'face'
 
@@ -38,6 +40,11 @@ export function CharacterViewer({ mode, shadows }: { mode: ViewMode; shadows: bo
   }
   // ?yaw=graus gira a plataforma (so com ?still=1): vista de costas = 180
   const yaw = ((Number(q.get('yaw')) || 0) * Math.PI) / 180
+  // ?anim=idle|walk|desfile|clap|dance[&t=segundos]: anima a boneca (com t, congela naquele instante: capturas)
+  const animParam = q.get('anim')
+  const tParam = q.get('t')
+  const clip = (animParam === 'dance' ? 'dance_twerk' : animParam) as ClipName | null
+  const anim: AnimDriver | undefined = clip ? { clip, t: tParam !== null ? Number(tParam) : undefined } : undefined
   const f = { cam: num('cam') ?? base.cam, target: num('at') ?? base.target }
 
   useLayoutEffect(() => {
@@ -76,7 +83,7 @@ export function CharacterViewer({ mode, shadows }: { mode: ViewMode; shadows: bo
   return (
     <>
       <group ref={turntable} position={[0, 0.03, 0]} rotation={[0, yaw, 0]}>
-        <Character appearance={appearance} shadows={shadows} />
+        <Character appearance={appearance} shadows={shadows} anim={anim} />
       </group>
       <OrbitControls
         makeDefault

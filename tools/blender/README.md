@@ -121,3 +121,9 @@ Depuracao visual: `python tools/blender/debug_landmarks.py saida.png` (Python do
 - MakeHuman system assets (targets, malha base, olhos, cilios, sobrancelhas, cabelo, pele): **CC0**.
 - MPFB (extensao do Blender): GPL - usada so como ferramenta; os arquivos gerados contem apenas assets CC0.
 - Os scripts deste diretorio fazem parte do projeto.
+
+## Animacoes do Mixamo
+`retarget_mixamo.py` -> `public/assets/anims/doll_anims.glb` (ver docs/ARCHITECTURE.md, "Animacoes"). Entrada: FBX em `E:/Jogo Blog/`
+(Catwalk Walk, Catwalk Walking, Clapping, Dancing Twerk, Female Start Walking), esqueleto de `.cache/meshyB_4.blend`.
+`blender -b --factory-startup -noaudio --python tools/blender/retarget_mixamo.py -- build --render` (renders de conferencia em
+`...\shots\anim\retarget_*.png`). Para um clipe novo, adicione uma entrada em `CLIPS` (e em `CLIP_SPEED` se for de passo).
