@@ -31,16 +31,28 @@ FPS = 30
 Q_EPS = 0.0012   # tolerancia de reducao (componentes do quaternion; ~0.14 graus)
 P_EPS = 0.0004   # m
 
-# nome do clipe -> (arquivo, ciclico, "no lugar" (remove deriva do Hips), usa pernas/passos)
+# nome do clipe -> arquivo, loop (cicla), xy ("drift" = remove deriva linear do Hips; "start" = so subtrai o frame 0, mantem o movimento
+# horizontal do quadril, usado em sentar/levantar), grupo do arquivo (core = sempre carregado; emotes = sob demanda), q_eps (reducao)
 CLIPS = {
-    "walk":       dict(file="Catwalk Walking.fbx", loop=True, inplace=True),
-    "desfile":    dict(file="Catwalk Walk.fbx", loop=True, inplace=True, window=(40, 200, 26, 52)),  # ciclo de passos dentro do desfile de 15 s
-    "clap":       dict(file="Clapping.fbx", loop=True, inplace=True),
-    "dance_twerk": dict(file="Dancing Twerk.fbx", loop=True, inplace=True),
-    "walk_normal": dict(file="Female Walk.fbx", loop=True, inplace=True),
-    "sit":        dict(file="Female Sitting Pose.fbx", loop=False, inplace=True),
-    "jump":       dict(file="Jump.fbx", loop=False, inplace=True),
-    "walk_start": dict(file="Female Start Walking.fbx", loop=False, inplace=False),
+    # --- core: locomocao / idle / sentar ---
+    "idle":        dict(file="Breathing Idle.fbx", loop=True, xy="drift", group="core"),
+    "walk_normal": dict(file="Female Walk.fbx", loop=True, xy="drift", group="core"),
+    "desfile":     dict(file="Catwalk Walk.fbx", loop=True, xy="drift", group="core", window=(40, 200, 26, 52)),  # ciclo de passos dentro do desfile de 15 s
+    "stand_to_sit": dict(file="Stand To Sit.fbx", loop=False, xy="start", group="core"),
+    "sit_to_stand": dict(file="Sit To Stand.fbx", loop=False, xy="start", group="core"),
+    "run_turn":    dict(file="Running Turn 180.fbx", loop=False, xy="drift0", group="core"),
+    # --- emotes (doll_anims_emotes.glb) ---
+    "clap":        dict(file="Standing Clap.fbx", loop=True, xy="drift", group="emotes"),
+    "dance_twerk": dict(file="Dancing Twerk.fbx", loop=True, xy="drift", group="emotes", q_eps=0.002),
+    "jump":        dict(file="Jump.fbx", loop=False, xy="drift", group="emotes"),
+    "wave":        dict(file="Waving.fbx", loop=False, xy="start", group="emotes"),
+    "kiss":        dict(file="Blow A Kiss.fbx", loop=False, xy="start", group="emotes"),
+    "bow":         dict(file="Quick Formal Bow.fbx", loop=False, xy="start", group="emotes"),
+    "laugh":       dict(file="Laughing.fbx", loop=False, xy="start", group="emotes"),
+    "cry":         dict(file="Crying.fbx", loop=False, xy="start", group="emotes"),
+    "point":       dict(file="Pointing.fbx", loop=False, xy="start", group="emotes"),
+    "thankful":    dict(file="Thankful.fbx", loop=False, xy="start", group="emotes"),
+    "texting":     dict(file="Texting While Standing.fbx", loop=True, xy="drift", group="emotes", q_eps=0.002),
 }
 only = [a for a in argv if a in CLIPS]
 if only: CLIPS = {k: v for k, v in CLIPS.items() if k in only}
@@ -244,10 +256,12 @@ def process_clip(name, cfg):
     speed = float(np.linalg.norm(drift)) * hip_ratio / dur if dur > 0 else 0.0
     info["speed_mps"] = round(speed, 3)
     hp = HP.copy()
-    if cfg["inplace"]:
+    if cfg["xy"] == "drift":
         t = np.arange(n_use) / max(end, 1)
         hp[:, :2] = HP[:, :2] - HP[0, :2] - np.outer(t, drift)
         hp[:, :2] -= hp[:, :2].mean(axis=0)
+    elif cfg["xy"] == "drift0":  # sem deslocamento horizontal nenhum (a rotacao do Hips segue no clipe)
+        hp[:, :2] = 0
     else:
         hp[:, :2] = HP[:, :2] - HP[0, :2]
     hip_pos = np.zeros((n_use, 3))
@@ -262,8 +276,9 @@ def process_clip(name, cfg):
             hip_pos[i] = hip_pos[i] * (1 - w) + hip_pos[0] * w
     cleanup_src(arm)
     info.update(frames=n_use, duration=round(dur, 3), hip_ratio=round(hip_ratio, 3), src_frames=N)
+    info['fps'] = bpy.context.scene.render.fps
     log(name, info)
-    return dict(WQ=WQ, hip_pos=hip_pos, info=info, n=n_use)
+    return dict(WQ=WQ, hip_pos=hip_pos, info=info, n=n_use, q_eps=cfg.get('q_eps', Q_EPS))
 
 
 # ---------------------------------------------------------------- pose helpers (Blender, para render) e glTF
@@ -327,7 +342,7 @@ def write_glb(clips, path):
             q = np.array([[gl[i][n].x, gl[i][n].y, gl[i][n].z, gl[i][n].w] for i in range(n_use)])
             for i in range(1, n_use):
                 if np.dot(q[i], q[i - 1]) < 0: q[i] = -q[i]
-            kept = rdp(times, q, Q_EPS)
+            kept = rdp(times, q, cd['q_eps'])
             tk = times[kept].astype(np.float32)
             samplers.append(dict(input=add(tk, 5126, "SCALAR", True), output=add(q[kept], 5126, "VEC4"), interpolation="LINEAR"))
             channels.append(dict(sampler=len(samplers) - 1, target=dict(node=gname[n], path="rotation")))
@@ -395,9 +410,9 @@ def render_stage(clips):
     pose_all(doll, None)
     for cname, cd in clips.items():
         info = cd["info"]
-        picks = {"walk_normal": [0.3], "sit": [0.0], "jump": [0.3, 0.5], "walk": [0.3, 0.6], "desfile": [0.3, 0.9], "clap": [0.5], "dance_twerk": [1.0], "walk_start": [0.4]}.get(cname, [0.5])
+        picks = {"walk_normal": [0.3], "desfile": [0.3], "stand_to_sit": [0.0, 0.8, 99], "sit_to_stand": [0.0, 99], "idle": [1.0], "dance_twerk": [1.0]}.get(cname, [0.5, 99])
         for t in picks:
-            i = min(cd["n"] - 1, int(round(t * FPS)))
+            i = cd["n"] - 1 if t == 99 else min(cd["n"] - 1, int(round(t * FPS)))
             pose_all(doll, cd, i)
             for az, tag in ((0, "f"), (90, "s")):
                 shot(f"retarget_{cname}_t{int(t*10)}_{tag}.png", az, (0, 0, 0.85), 4.2, 50)
@@ -424,8 +439,11 @@ def main():
     if STAGE == "render":
         render_stage(clips); return
     os.makedirs(OUT_DIR, exist_ok=True)
-    write_glb(clips, os.path.join(OUT_DIR, "doll_anims.glb"))
-    meta = {k: dict(duration=v["info"]["duration"], speed=v["info"]["speed_mps"], loop=CLIPS[k]["loop"]) for k, v in clips.items()}
+    meta = {}
+    for grp, fn in (("core", "doll_anims_core.glb"), ("emotes", "doll_anims_emotes.glb")):
+        sub = {k: v for k, v in clips.items() if CLIPS[k]["group"] == grp}
+        if sub: write_glb(sub, os.path.join(OUT_DIR, fn))
+    meta = {k: dict(file=("doll_anims_core.glb" if CLIPS[k]["group"] == "core" else "doll_anims_emotes.glb"), duration=v["info"]["duration"], speed=v["info"]["speed_mps"], loop=CLIPS[k]["loop"]) for k, v in clips.items()}
     with open(os.path.join(OUT_DIR, "doll_anims.json"), "w") as f: json.dump(meta, f, indent=2)
     if "--render" in argv: render_stage(clips)
 

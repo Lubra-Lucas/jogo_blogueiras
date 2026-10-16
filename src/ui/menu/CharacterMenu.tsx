@@ -5,9 +5,8 @@ import { CharacterPreview, type StageFocus } from './CharacterPreview'
 import { ProfileTab } from './ProfileTab'
 import { AppearanceTab } from './AppearanceTab'
 import { WardrobeTab } from './WardrobeTab'
-import { QuestsTab } from './QuestsTab'
 import { SettingsTab } from './SettingsTab'
-import { IconBrush, IconClose, IconGear, IconHanger, IconScroll, IconUser } from './icons'
+import { IconBrush, IconClose, IconGear, IconHanger, IconUser } from './icons'
 import './menu.css'
 
 /** `?editor=1` (ou `?view=character`) abre o menu direto na aba Aparencia. */
@@ -17,11 +16,10 @@ export function editorEnabled(): boolean {
 }
 
 const TABS: Array<{ id: MenuTab; label: string; color: string; icon: ReactNode; stage: boolean }> = [
-  { id: 'perfil', label: 'Perfil', color: '#f08fb8', icon: <IconUser />, stage: true },
-  { id: 'aparencia', label: 'Aparência', color: '#a98bf0', icon: <IconBrush />, stage: true },
-  { id: 'guardaroupa', label: 'Guarda-roupa', color: '#3fbfa3', icon: <IconHanger />, stage: true },
-  { id: 'missoes', label: 'Missões', color: '#e8a93a', icon: <IconScroll />, stage: false },
-  { id: 'config', label: 'Ajustes', color: '#5aa8e8', icon: <IconGear />, stage: false },
+  { id: 'perfil', label: 'Perfil', color: '#d9789f', icon: <IconUser />, stage: true },
+  { id: 'aparencia', label: 'Aparência', color: '#7d63b0', icon: <IconBrush />, stage: true },
+  { id: 'guardaroupa', label: 'Guarda-roupa', color: '#3a9f8a', icon: <IconHanger />, stage: true },
+  { id: 'config', label: 'Ajustes', color: '#4b8fcf', icon: <IconGear />, stage: false },
 ]
 
 const isTyping = (t: EventTarget | null) => t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))
@@ -137,7 +135,6 @@ export function CharacterMenu() {
               {tab === 'perfil' && <ProfileTab />}
               {tab === 'aparencia' && <AppearanceTab onFocus={setFocus} />}
               {tab === 'guardaroupa' && <WardrobeTab />}
-              {tab === 'missoes' && <QuestsTab />}
               {tab === 'config' && <SettingsTab />}
             </div>
           </div>

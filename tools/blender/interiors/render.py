@@ -137,7 +137,7 @@ def plane(size, loc, mat):
 mod = mods.get(ROOM)
 LIGHT = getattr(mod, "LIGHT", "#ffd9b8")
 if MODE == "vig":
-    world("#8d7b8c", 0.8)
+    world(*getattr(mod, "WORLD", ("#8d7b8c", 0.8)))
     mods[ROOM].VIG(put)
     cam = getattr(mod, "CAM", ((2.6, -5.2, 1.6), (-0.3, 0.6, 1.1), 26))
     camera(*cam)
@@ -145,7 +145,7 @@ if MODE == "vig":
     area((-2.5, -3.5, 2.4), (0, 0, 1), "#ffd0e0", 350, 3)
     area((3.5, -4.5, 2.0), (0, 0, 1), "#fff0e0", 300, 3)
     point((0, 0.5, 1.2), LIGHT, 120, .3)
-    setup_render(1400, 1000, OUTDIR + "%s_vig_%s.png" % (ROOM, TAG), exposure=getattr(mod, "EXPO", 0.0))
+    setup_render(1400, 1000, OUTDIR + "%s_vig_%s.png" % (ROOM, TAG), exposure=getattr(mod, "EXPO", -0.45))
 else:
     world("#8d7b8c", 1.0)
     fm = ck.make_mat("lineup_floor", "#9a8fa6", rough=.35, coat=.3, coat_rough=.1)

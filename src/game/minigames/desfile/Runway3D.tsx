@@ -306,18 +306,18 @@ function Director({ appearance, moods }: { appearance: Appearance; moods: Record
           const g = store.lastGrade?.grade ?? 'miss'
           const f = POSE_FRAMES[s.handled % POSE_FRAMES.length]
           s.handled = store.poses.length
-          setAnim(g === 'miss' ? { clip: 'idle' } : { pose: f.id })
+          setAnim(g === 'miss' ? { clip: 'idle' } : f.clip ? { clip: f.clip } : { pose: f.id })
           if (g !== 'miss') setBurst({ id: s.handled, perfect: g === 'perfect' })
           s.punch = g === 'perfect' ? 1 : g === 'good' ? 0.5 : 0
           playSfx(g === 'perfect' ? 'combo' : g === 'good' ? 'tip' : 'bad')
           s.mode = 'hold'
-          s.holdUntil = s.t + 1.25
+          s.holdUntil = s.t + (f.clip && g !== 'miss' ? 2.4 : 1.25)
         }
       } else if (s.mode === 'hold' && s.t >= s.holdUntil) {
-        setAnim({ clip: 'idle' })
+        setAnim({ clip: s.handled >= 3 ? 'bow' : 'idle' }) // fecha a passarela com a reverência
         if (s.handled >= 3) {
           s.mode = 'end'
-          s.next = s.t + 0.7
+          s.next = s.t + 2.6
           store.setRunStage('done')
         } else {
           s.mode = 'queue'

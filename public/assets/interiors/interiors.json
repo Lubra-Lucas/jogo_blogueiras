@@ -114,6 +114,94 @@
     "leaf": "#a8dcc0",
     "glow2": "#ff6f91"
    }
+  },
+  "salao": {
+   "label": "Salao & Spa",
+   "palette": {
+    "label": "Salao & Spa",
+    "base": "#c1a5ea",
+    "accent": "#f3ecfc",
+    "accent2": "#9461d6",
+    "soft": "#e0d0f8",
+    "deep": "#4f3480",
+    "fabric": "#b08ae8",
+    "metal": "silver",
+    "glass": "#e3ccff",
+    "glow": "#ffe8f6",
+    "white": "#fffaf6",
+    "leaf": "#a8dcc0"
+   }
+  },
+  "boutique": {
+   "label": "Boutique",
+   "palette": {
+    "label": "Boutique",
+    "base": "#9fcbf3",
+    "accent": "#fffaf6",
+    "accent2": "#5a9de0",
+    "soft": "#d2e6fb",
+    "deep": "#2f5a8f",
+    "fabric": "#8fb8ec",
+    "metal": "champagne",
+    "glass": "#cfe6ff",
+    "glow": "#fff0c8",
+    "white": "#fffaf6",
+    "leaf": "#a8dcc0"
+   }
+  },
+  "joalheria": {
+   "label": "Joalheria",
+   "palette": {
+    "label": "Joalheria",
+    "base": "#1b1820",
+    "accent": "#2f2a38",
+    "accent2": "#8a2f4a",
+    "soft": "#4a4256",
+    "deep": "#0f0d12",
+    "fabric": "#6a2444",
+    "metal": "champagne",
+    "glass": "#b8a2d0",
+    "glow": "#ffe2a0",
+    "white": "#e4d3ae",
+    "leaf": "#a8dcc0",
+    "sheen": 0.25
+   }
+  },
+  "estudio": {
+   "label": "Estudio de Fotos",
+   "palette": {
+    "label": "Estudio de Fotos",
+    "base": "#ffc2a8",
+    "accent": "#fff3ea",
+    "accent2": "#ff7f6b",
+    "soft": "#ffe0cf",
+    "deep": "#a8483a",
+    "fabric": "#ff9d86",
+    "metal": "chrome",
+    "glass": "#ffd5c4",
+    "glow": "#fff0d0",
+    "white": "#fffaf6",
+    "leaf": "#a8dcc0"
+   }
+  },
+  "palco": {
+   "label": "Palco Neon",
+   "palette": {
+    "label": "Palco Neon",
+    "base": "#2a1250",
+    "accent": "#6a2d9c",
+    "accent2": "#ff4fd0",
+    "soft": "#1b2a6a",
+    "deep": "#150a30",
+    "fabric": "#8a3cc0",
+    "metal": "silver",
+    "glass": "#ff8be8",
+    "glow": "#ff5ff0",
+    "white": "#f6e8ff",
+    "leaf": "#a8dcc0",
+    "glow2": "#4ff0ff",
+    "glow_str": 4.0
+   }
   }
  },
  "pieces": {
@@ -778,7 +866,7 @@
   "shared/mirror_wall_oval": {
    "file": "shared/mirror_wall_oval.glb",
    "tris": 3996,
-   "bytes": 95340,
+   "bytes": 95448,
    "size": [
     1.339,
     1.829,
@@ -1143,7 +1231,7 @@
   "casa/vanity_hollywood": {
    "file": "casa/vanity_hollywood.glb",
    "tris": 6980,
-   "bytes": 157780,
+   "bytes": 157888,
    "size": [
     1.6,
     2.317,
@@ -3072,6 +3160,4620 @@
    ],
    "note": "letreiro neon de xicara com vapor e coracao, z 1.75 a 2.45",
    "room": "cafe"
+  },
+  "salao/floor_pearl_tile": {
+   "file": "salao/floor_pearl_tile.glb",
+   "tris": 252,
+   "bytes": 13436,
+   "size": [
+    2.006,
+    0.035,
+    2.006
+   ],
+   "bbox_min": [
+    -1.006,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.035,
+    1.006
+   ],
+   "materials": [
+    "accent",
+    "base",
+    "white",
+    "trim"
+   ],
+   "mount": "floor",
+   "tags": [
+    "floor",
+    "tile"
+   ],
+   "walkable": true,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.006,
+     0.035,
+     2.006
+    ],
+    "center": [
+     -0.003,
+     0.018,
+     0.003
+    ]
+   },
+   "note": "piso perola com losangos lilas e fios de prata 2x2 m",
+   "room": "salao"
+  },
+  "salao/chair_styling_hydraulic": {
+   "file": "salao/chair_styling_hydraulic.glb",
+   "tris": 2080,
+   "bytes": 53556,
+   "size": [
+    0.774,
+    1.225,
+    0.913
+   ],
+   "bbox_min": [
+    -0.387,
+    0.015,
+    -0.405
+   ],
+   "bbox_max": [
+    0.387,
+    1.24,
+    0.508
+   ],
+   "materials": [
+    "trim.001",
+    "deep.001",
+    "mirror.001",
+    "fabric.001"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "chair",
+    "salon",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.456,
+    "height": 1.225,
+    "center": [
+     0.0,
+     0.627,
+     0.051
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.56,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Sentar para o penteado"
+    }
+   ],
+   "note": "cadeira de salao hidraulica lilas com base estrela cromada e apoio de pe (assento 0.5 m)",
+   "room": "salao"
+  },
+  "salao/mirror_station_lit": {
+   "file": "salao/mirror_station_lit.glb",
+   "tris": 5388,
+   "bytes": 111568,
+   "size": [
+    1.46,
+    2.319,
+    0.56
+   ],
+   "bbox_min": [
+    -0.73,
+    0.03,
+    -0.28
+   ],
+   "bbox_max": [
+    0.73,
+    2.349,
+    0.28
+   ],
+   "materials": [
+    "trim.002",
+    "base.002",
+    "white.002",
+    "accent.002",
+    "mirror.002",
+    "glow.002",
+    "accent2.002",
+    "glass.002",
+    "soft.002"
+   ],
+   "mount": "floor",
+   "tags": [
+    "salon",
+    "station",
+    "mirror",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.46,
+     2.319,
+     0.56
+    ],
+    "center": [
+     0.0,
+     1.19,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "style",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Estacao de espelho"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.6,
+      0.2
+     ],
+     "color": "#fff0f8",
+     "range": 3,
+     "intensity": 1.0
+    }
+   ],
+   "note": "estacao com espelho retangular iluminado por lampadas, bancada com gavetas e acessorios (1.4 x 0.5 x 2.2)",
+   "room": "salao"
+  },
+  "salao/washbasin_chair": {
+   "file": "salao/washbasin_chair.glb",
+   "tris": 1864,
+   "bytes": 44500,
+   "size": [
+    0.961,
+    1.187,
+    1.475
+   ],
+   "bbox_min": [
+    -0.45,
+    0.0,
+    -0.9
+   ],
+   "bbox_max": [
+    0.511,
+    1.187,
+    0.575
+   ],
+   "materials": [
+    "trim.003",
+    "fabric.003",
+    "base.003",
+    "white.003",
+    "glass.003"
+   ],
+   "mount": "floor",
+   "tags": [
+    "salon",
+    "seat",
+    "wash"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.961,
+     1.187,
+     1.475
+    ],
+    "center": [
+     0.031,
+     0.594,
+     -0.162
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.56,
+      0.1
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Lavar cabelo"
+    }
+   ],
+   "note": "lavatorio de salao: cadeira reclinavel lilas com cuba de ceramica e ducha (1.0 x 1.7 x 1.1)",
+   "room": "salao"
+  },
+  "salao/manicure_table": {
+   "file": "salao/manicure_table.glb",
+   "tris": 2624,
+   "bytes": 71940,
+   "size": [
+    1.24,
+    1.165,
+    0.644
+   ],
+   "bbox_min": [
+    -0.62,
+    0.005,
+    -0.32
+   ],
+   "bbox_max": [
+    0.62,
+    1.17,
+    0.324
+   ],
+   "materials": [
+    "white.004",
+    "base.004",
+    "trim.004",
+    "accent.004",
+    "fabric.004",
+    "glow2.004",
+    "glass.004",
+    "accent2.004",
+    "soft.004",
+    "deep.004"
+   ],
+   "mount": "floor",
+   "tags": [
+    "salon",
+    "table",
+    "nails"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.24,
+     1.165,
+     0.644
+    ],
+    "center": [
+     0.0,
+     0.587,
+     0.002
+    ]
+   },
+   "sit": [
+    {
+     "id": "client",
+     "pos": [
+      0,
+      0.46,
+      0.55
+     ],
+     "face": [
+      0,
+      -1
+     ]
+    },
+    {
+     "id": "tech",
+     "pos": [
+      0,
+      0.46,
+      -0.55
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "use": [
+    {
+     "id": "nails",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Fazer as unhas"
+    }
+   ],
+   "note": "mesa de manicure 1.2 m com apoio de bracos, lampada UV e rack de esmaltes (h 0.75; rack 1.0 m)",
+   "room": "salao"
+  },
+  "salao/stool_salon_round": {
+   "file": "salao/stool_salon_round.glb",
+   "tris": 944,
+   "bytes": 23628,
+   "size": [
+    0.4,
+    0.54,
+    0.396
+   ],
+   "bbox_min": [
+    -0.2,
+    0.0,
+    -0.198
+   ],
+   "bbox_max": [
+    0.2,
+    0.54,
+    0.198
+   ],
+   "materials": [
+    "fabric.005",
+    "trim.005"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "stool",
+    "salon"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.2,
+    "height": 0.54,
+    "center": [
+     0.0,
+     0.27,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.5,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "banquinho redondo de salao lilas com base cromada (assento 0.5)",
+   "room": "salao"
+  },
+  "salao/product_shelf_glass": {
+   "file": "salao/product_shelf_glass.glb",
+   "tris": 4700,
+   "bytes": 118220,
+   "size": [
+    1.26,
+    2.188,
+    0.44
+   ],
+   "bbox_min": [
+    -0.63,
+    0.0,
+    -0.22
+   ],
+   "bbox_max": [
+    0.63,
+    2.188,
+    0.22
+   ],
+   "materials": [
+    "base.006",
+    "trim.006",
+    "accent.006",
+    "glass.006",
+    "glow.006",
+    "accent2.006",
+    "soft.006",
+    "deep.006",
+    "fabric.006"
+   ],
+   "mount": "floor",
+   "tags": [
+    "salon",
+    "shelf",
+    "display",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.26,
+     2.188,
+     0.44
+    ],
+    "center": [
+     0.0,
+     1.094,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "products",
+     "pos": [
+      0,
+      0,
+      0.7
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Ver produtos"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.3,
+      0.2
+     ],
+     "color": "#fff0f8",
+     "range": 2.5,
+     "intensity": 0.6
+    }
+   ],
+   "note": "expositor de produtos 1.2 m com prateleiras de vidro, LED e frascos (h 2.1)",
+   "room": "salao"
+  },
+  "salao/spa_massage_bed": {
+   "file": "salao/spa_massage_bed.glb",
+   "tris": 2568,
+   "bytes": 59520,
+   "size": [
+    2.056,
+    0.73,
+    0.875
+   ],
+   "bbox_min": [
+    -1.106,
+    0.0,
+    -0.5
+   ],
+   "bbox_max": [
+    0.95,
+    0.73,
+    0.375
+   ],
+   "materials": [
+    "base.007",
+    "trim.007",
+    "fabric.007",
+    "soft.007",
+    "white.007",
+    "deep.007"
+   ],
+   "mount": "floor",
+   "tags": [
+    "spa",
+    "bed",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.056,
+     0.73,
+     0.875
+    ],
+    "center": [
+     -0.078,
+     0.365,
+     -0.062
+    ]
+   },
+   "sit": [
+    {
+     "id": "lie",
+     "pos": [
+      0,
+      0.8,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Deitar para massagem"
+    }
+   ],
+   "use": [
+    {
+     "id": "spa",
+     "pos": [
+      0,
+      0,
+      1.3
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Spa"
+    }
+   ],
+   "note": "maca de massagem acolchoada lilas com berco facial, toalha e pedras (2.0 x 0.75 x 0.8)",
+   "room": "salao"
+  },
+  "salao/towel_warmer_rack": {
+   "file": "salao/towel_warmer_rack.glb",
+   "tris": 2244,
+   "bytes": 51496,
+   "size": [
+    0.89,
+    1.62,
+    0.26
+   ],
+   "bbox_min": [
+    -0.445,
+    -0.017,
+    -0.18
+   ],
+   "bbox_max": [
+    0.445,
+    1.604,
+    0.08
+   ],
+   "materials": [
+    "trim.008",
+    "white.008",
+    "accent2.008",
+    "soft.008"
+   ],
+   "mount": "floor",
+   "tags": [
+    "spa",
+    "storage",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.89,
+     1.62,
+     0.26
+    ],
+    "center": [
+     0.0,
+     0.793,
+     -0.05
+    ]
+   },
+   "note": "cremalheira cromada com toalhas dobradas (0.9 x 0.3 x 1.5)",
+   "room": "salao"
+  },
+  "salao/sofa_waiting_pearl": {
+   "file": "salao/sofa_waiting_pearl.glb",
+   "tris": 3028,
+   "bytes": 71256,
+   "size": [
+    1.8,
+    1.058,
+    0.85
+   ],
+   "bbox_min": [
+    -0.9,
+    -0.008,
+    -0.425
+   ],
+   "bbox_max": [
+    0.9,
+    1.05,
+    0.425
+   ],
+   "materials": [
+    "fabric.009",
+    "white.009",
+    "trim.009",
+    "accent2.009",
+    "soft.009"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "waiting",
+    "sofa"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.8,
+     1.058,
+     0.85
+    ],
+    "center": [
+     0.0,
+     0.521,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit_l",
+     "pos": [
+      -0.45,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    },
+    {
+     "id": "sit_r",
+     "pos": [
+      0.45,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "sofa de espera perola/lilas 1.8 m, costas curvas capitone, pes prateados",
+   "room": "salao"
+  },
+  "salao/reception_desk_curved": {
+   "file": "salao/reception_desk_curved.glb",
+   "tris": 4320,
+   "bytes": 98316,
+   "size": [
+    2.448,
+    1.271,
+    1.101
+   ],
+   "bbox_min": [
+    -1.224,
+    0.005,
+    -0.446
+   ],
+   "bbox_max": [
+    1.224,
+    1.276,
+    0.655
+   ],
+   "materials": [
+    "base.010",
+    "white.010",
+    "trim.010",
+    "accent.010",
+    "glow2.010",
+    "deep.010",
+    "leaf.010",
+    "glass.010"
+   ],
+   "mount": "floor",
+   "tags": [
+    "counter",
+    "reception",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.448,
+     1.271,
+     1.101
+    ],
+    "center": [
+     0.0,
+     0.641,
+     0.104
+    ]
+   },
+   "use": [
+    {
+     "id": "reception",
+     "pos": [
+      0,
+      0,
+      0.9
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Recepcao / agendar"
+    }
+   ],
+   "note": "balcao de recepcao curvo 2.4 m lilas com tampo perola, painel iluminado com coracao (h 1.1). Atendente em +Y",
+   "room": "salao"
+  },
+  "salao/dryer_hood_chair": {
+   "file": "salao/dryer_hood_chair.glb",
+   "tris": 2686,
+   "bytes": 66984,
+   "size": [
+    0.84,
+    1.81,
+    0.858
+   ],
+   "bbox_min": [
+    -0.42,
+    0.0,
+    -0.446
+   ],
+   "bbox_max": [
+    0.42,
+    1.81,
+    0.412
+   ],
+   "materials": [
+    "fabric.011",
+    "trim.011",
+    "base.011",
+    "glow2.011"
+   ],
+   "mount": "floor",
+   "tags": [
+    "salon",
+    "seat",
+    "dryer"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.84,
+     1.81,
+     0.858
+    ],
+    "center": [
+     0.0,
+     0.905,
+     -0.017
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "secador de cabine (capacete) com poltrona lilas e anel luminoso (h 1.9)",
+   "room": "salao"
+  },
+  "salao/spa_decor_set": {
+   "file": "salao/spa_decor_set.glb",
+   "tris": 1264,
+   "bytes": 31504,
+   "size": [
+    0.5,
+    0.343,
+    0.3
+   ],
+   "bbox_min": [
+    -0.25,
+    0.0,
+    -0.15
+   ],
+   "bbox_max": [
+    0.25,
+    0.343,
+    0.15
+   ],
+   "materials": [
+    "white.012",
+    "deep.012",
+    "glow.012",
+    "glass.012",
+    "leaf.012",
+    "accent.012"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "spa",
+    "decor",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "conjunto spa: pedras empilhadas, velas, orquidea e frasco de oleo (0.5 m)",
+   "room": "salao"
+  },
+  "salao/chandelier_orbs": {
+   "file": "salao/chandelier_orbs.glb",
+   "tris": 1604,
+   "bytes": 40492,
+   "size": [
+    0.979,
+    1.612,
+    0.984
+   ],
+   "bbox_min": [
+    -0.517,
+    -1.612,
+    -0.571
+   ],
+   "bbox_max": [
+    0.461,
+    0.0,
+    0.413
+   ],
+   "materials": [
+    "trim.013",
+    "glass.013",
+    "glow.013"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "light",
+    "ceiling",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "lights": [
+    {
+     "pos": [
+      0,
+      -1.2,
+      0
+     ],
+     "color": "#fff0f8",
+     "range": 6,
+     "intensity": 1.0
+    }
+   ],
+   "note": "lustre de bolhas de vidro lilas com nucleos luminosos em alturas diferentes (pende 1.6 m, diametro 1.1)",
+   "room": "salao"
+  },
+  "salao/trolley_salon": {
+   "file": "salao/trolley_salon.glb",
+   "tris": 1736,
+   "bytes": 48616,
+   "size": [
+    0.512,
+    1.01,
+    0.407
+   ],
+   "bbox_min": [
+    -0.256,
+    0.005,
+    -0.196
+   ],
+   "bbox_max": [
+    0.256,
+    1.015,
+    0.211
+   ],
+   "materials": [
+    "trim.014",
+    "deep.014",
+    "white.014",
+    "accent2.014",
+    "base.014",
+    "soft.014"
+   ],
+   "mount": "floor",
+   "tags": [
+    "salon",
+    "storage",
+    "cart"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.512,
+     1.01,
+     0.407
+    ],
+    "center": [
+     0.0,
+     0.51,
+     0.008
+    ]
+   },
+   "note": "carrinho auxiliar de salao 3 niveis com frascos e escovas (0.5 x 0.4 x 0.95)",
+   "room": "salao"
+  },
+  "salao/sign_scissors_neon": {
+   "file": "salao/sign_scissors_neon.glb",
+   "tris": 1068,
+   "bytes": 34812,
+   "size": [
+    0.9,
+    0.7,
+    0.069
+   ],
+   "bbox_min": [
+    -0.45,
+    1.85,
+    -0.03
+   ],
+   "bbox_max": [
+    0.45,
+    2.55,
+    0.039
+   ],
+   "materials": [
+    "deep.015",
+    "glow2.015",
+    "glow.015"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "sign",
+    "light"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.3,
+      0.2
+     ],
+     "color": "#ffe8f6",
+     "range": 3,
+     "intensity": 0.5
+    }
+   ],
+   "note": "letreiro de neon de tesoura + coracao para a parede do salao (z 1.9 a 2.6)",
+   "room": "salao"
+  },
+  "boutique/floor_blue_diamond": {
+   "file": "boutique/floor_blue_diamond.glb",
+   "tris": 280,
+   "bytes": 15352,
+   "size": [
+    2.0,
+    0.044,
+    2.0
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.044,
+    1.0
+   ],
+   "materials": [
+    "white",
+    "base",
+    "soft",
+    "trim"
+   ],
+   "mount": "floor",
+   "tags": [
+    "floor",
+    "tile"
+   ],
+   "walkable": true,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.044,
+     2.0
+    ],
+    "center": [
+     0.0,
+     0.022,
+     -0.0
+    ]
+   },
+   "note": "piso marmore branco com losangos azuis e fios champagne 2x2 m",
+   "room": "boutique"
+  },
+  "boutique/rack_round_carousel": {
+   "file": "boutique/rack_round_carousel.glb",
+   "tris": 3908,
+   "bytes": 97448,
+   "size": [
+    1.045,
+    1.839,
+    1.053
+   ],
+   "bbox_min": [
+    -0.518,
+    0.0,
+    -0.526
+   ],
+   "bbox_max": [
+    0.527,
+    1.839,
+    0.527
+   ],
+   "materials": [
+    "trim.001",
+    "accent.001",
+    "white.001",
+    "accent2.001",
+    "soft.001",
+    "fabric.001",
+    "deep.001"
+   ],
+   "mount": "floor",
+   "tags": [
+    "rack",
+    "clothes",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.526,
+    "height": 1.839,
+    "center": [
+     0.004,
+     0.92,
+     0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "browse",
+     "pos": [
+      0,
+      0,
+      0.9
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Ver roupas"
+    }
+   ],
+   "note": "arara redonda giratoria champagne com vestidos pastel (diametro 1.1 m, h 1.8)",
+   "room": "boutique"
+  },
+  "boutique/rack_wall_rail": {
+   "file": "boutique/rack_wall_rail.glb",
+   "tris": 1840,
+   "bytes": 44528,
+   "size": [
+    1.9,
+    1.595,
+    0.34
+   ],
+   "bbox_min": [
+    -0.95,
+    1.03,
+    -0.04
+   ],
+   "bbox_max": [
+    0.95,
+    2.625,
+    0.3
+   ],
+   "materials": [
+    "trim.002",
+    "accent.002",
+    "white.002",
+    "accent2.002",
+    "soft.002",
+    "fabric.002"
+   ],
+   "mount": "wall",
+   "tags": [
+    "rack",
+    "clothes",
+    "wall"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "trilho de parede champagne com roupas e prateleira (1.8 m, z 1.0 a 2.4)",
+   "room": "boutique"
+  },
+  "boutique/mannequin_gown": {
+   "file": "boutique/mannequin_gown.glb",
+   "tris": 2720,
+   "bytes": 61884,
+   "size": [
+    1.32,
+    1.85,
+    1.122
+   ],
+   "bbox_min": [
+    -0.66,
+    0.0,
+    -0.561
+   ],
+   "bbox_max": [
+    0.66,
+    1.85,
+    0.561
+   ],
+   "materials": [
+    "trim.003",
+    "white.003",
+    "base.003",
+    "accent2.003"
+   ],
+   "mount": "floor",
+   "tags": [
+    "mannequin",
+    "decor",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.66,
+    "height": 1.85,
+    "center": [
+     0.0,
+     0.925,
+     -0.0
+    ]
+   },
+   "note": "manequim estilizado com vestido de gala azul (h 1.85)",
+   "room": "boutique"
+  },
+  "boutique/dress_form_stand": {
+   "file": "boutique/dress_form_stand.glb",
+   "tris": 1390,
+   "bytes": 32544,
+   "size": [
+    0.469,
+    1.637,
+    0.508
+   ],
+   "bbox_min": [
+    -0.177,
+    -0.007,
+    -0.254
+   ],
+   "bbox_max": [
+    0.292,
+    1.63,
+    0.254
+   ],
+   "materials": [
+    "trim.004",
+    "fabric.004"
+   ],
+   "mount": "floor",
+   "tags": [
+    "mannequin",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.254,
+    "height": 1.637,
+    "center": [
+     0.057,
+     0.811,
+     -0.0
+    ]
+   },
+   "note": "busto de costura sobre tripe champagne (h 1.6)",
+   "room": "boutique"
+  },
+  "boutique/table_display_round": {
+   "file": "boutique/table_display_round.glb",
+   "tris": 4224,
+   "bytes": 86488,
+   "size": [
+    1.319,
+    1.406,
+    1.319
+   ],
+   "bbox_min": [
+    -0.66,
+    0.0,
+    -0.66
+   ],
+   "bbox_max": [
+    0.66,
+    1.406,
+    0.66
+   ],
+   "materials": [
+    "white.005",
+    "trim.005",
+    "accent2.005",
+    "soft.005",
+    "accent.005",
+    "fabric.005"
+   ],
+   "mount": "floor",
+   "tags": [
+    "table",
+    "display",
+    "boutique"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.66,
+    "height": 1.406,
+    "center": [
+     0.0,
+     0.703,
+     -0.0
+    ]
+   },
+   "note": "mesa expositora redonda 2 niveis com suéteres dobrados e bolsa (diam 1.3, h 1.1)",
+   "room": "boutique"
+  },
+  "boutique/table_display_long": {
+   "file": "boutique/table_display_long.glb",
+   "tris": 3524,
+   "bytes": 73724,
+   "size": [
+    1.6,
+    1.017,
+    0.93
+   ],
+   "bbox_min": [
+    -0.8,
+    -0.002,
+    -0.57
+   ],
+   "bbox_max": [
+    0.8,
+    1.015,
+    0.36
+   ],
+   "materials": [
+    "white.006",
+    "trim.006",
+    "soft.006",
+    "accent2.006",
+    "accent.006",
+    "fabric.006",
+    "deep.006"
+   ],
+   "mount": "floor",
+   "tags": [
+    "table",
+    "display",
+    "boutique"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.6,
+     1.017,
+     0.93
+    ],
+    "center": [
+     0.0,
+     0.506,
+     -0.105
+    ]
+   },
+   "note": "mesa expositora retangular 1.6 m com roupas dobradas e lencos (h 0.85)",
+   "room": "boutique"
+  },
+  "boutique/fitting_room_curtain": {
+   "file": "boutique/fitting_room_curtain.glb",
+   "tris": 4352,
+   "bytes": 101564,
+   "size": [
+    1.857,
+    2.832,
+    1.46
+   ],
+   "bbox_min": [
+    -0.928,
+    -0.004,
+    -0.73
+   ],
+   "bbox_max": [
+    0.928,
+    2.827,
+    0.73
+   ],
+   "materials": [
+    "white.007",
+    "base.007",
+    "trim.007",
+    "fabric.007",
+    "accent2.007",
+    "mirror.007"
+   ],
+   "mount": "floor",
+   "tags": [
+    "fitting",
+    "booth",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.857,
+     2.832,
+     1.46
+    ],
+    "center": [
+     0.0,
+     1.411,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "bench",
+     "pos": [
+      0,
+      0.48,
+      -0.35
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Sentar"
+    }
+   ],
+   "use": [
+    {
+     "id": "change",
+     "pos": [
+      0,
+      0,
+      1.0
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Provador"
+    }
+   ],
+   "note": "provador 1.6 x 1.4 x 2.5 com cortinas amarradas, banco capitone, espelho e cabideiro. Entrada em -Y",
+   "room": "boutique"
+  },
+  "boutique/mirror_trifold_stand": {
+   "file": "boutique/mirror_trifold_stand.glb",
+   "tris": 2176,
+   "bytes": 60648,
+   "size": [
+    1.524,
+    2.189,
+    1.622
+   ],
+   "bbox_min": [
+    -0.762,
+    0.0,
+    -0.96
+   ],
+   "bbox_max": [
+    0.762,
+    2.189,
+    0.662
+   ],
+   "materials": [
+    "white.008",
+    "trim.008",
+    "accent.008",
+    "mirror.008"
+   ],
+   "mount": "floor",
+   "tags": [
+    "mirror",
+    "fitting",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.524,
+     2.189,
+     1.622
+    ],
+    "center": [
+     0.0,
+     1.095,
+     -0.149
+    ]
+   },
+   "use": [
+    {
+     "id": "mirror",
+     "pos": [
+      0,
+      0,
+      1.0
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Provar no espelho"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.2,
+      0.4
+     ],
+     "color": "#fff0d8",
+     "range": 3,
+     "intensity": 0.7
+    }
+   ],
+   "note": "espelho triplo champagne sobre plataforma redonda (h 2.1, plataforma diam 1.5, +0.15)",
+   "room": "boutique"
+  },
+  "boutique/checkout_counter": {
+   "file": "boutique/checkout_counter.glb",
+   "tris": 5156,
+   "bytes": 109012,
+   "size": [
+    1.92,
+    1.381,
+    0.77
+   ],
+   "bbox_min": [
+    -0.96,
+    0.005,
+    -0.385
+   ],
+   "bbox_max": [
+    0.96,
+    1.386,
+    0.385
+   ],
+   "materials": [
+    "white.009",
+    "accent.009",
+    "trim.009",
+    "base.009",
+    "deep.009",
+    "glow2.009",
+    "accent2.009",
+    "soft.009"
+   ],
+   "mount": "floor",
+   "tags": [
+    "counter",
+    "register",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.92,
+     1.381,
+     0.77
+    ],
+    "center": [
+     0.0,
+     0.696,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "pay",
+     "pos": [
+      0,
+      0,
+      0.9
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Pagar"
+    }
+   ],
+   "note": "balcao de caixa 1.8 m branco com paineis champagne, leitor de cartao, sacolas e laco (h 1.0). Atendente em +Y",
+   "room": "boutique"
+  },
+  "boutique/shoe_wall_shelf": {
+   "file": "boutique/shoe_wall_shelf.glb",
+   "tris": 3956,
+   "bytes": 96448,
+   "size": [
+    1.45,
+    1.5,
+    0.33
+   ],
+   "bbox_min": [
+    -0.725,
+    0.85,
+    -0.03
+   ],
+   "bbox_max": [
+    0.725,
+    2.35,
+    0.3
+   ],
+   "materials": [
+    "white.010",
+    "glass.010",
+    "trim.010",
+    "glow.010",
+    "soft.010",
+    "accent.010"
+   ],
+   "mount": "wall",
+   "tags": [
+    "shoes",
+    "display",
+    "wall"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "prateleira de parede com sapatos de salto, 1.4 m (z 0.9 a 2.3)",
+   "room": "boutique"
+  },
+  "boutique/ottoman_tufted_blue": {
+   "file": "boutique/ottoman_tufted_blue.glb",
+   "tris": 1604,
+   "bytes": 39000,
+   "size": [
+    1.003,
+    0.442,
+    0.541
+   ],
+   "bbox_min": [
+    -0.501,
+    0.018,
+    -0.261
+   ],
+   "bbox_max": [
+    0.501,
+    0.46,
+    0.28
+   ],
+   "materials": [
+    "fabric.011",
+    "trim.011"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "pouf"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.003,
+     0.442,
+     0.541
+    ],
+    "center": [
+     0.0,
+     0.239,
+     0.009
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.48,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "otomana retangular capitone azul 1.0 x 0.5 (h 0.45)",
+   "room": "boutique"
+  },
+  "boutique/shopping_bags_set": {
+   "file": "boutique/shopping_bags_set.glb",
+   "tris": 1932,
+   "bytes": 44132,
+   "size": [
+    0.571,
+    0.549,
+    0.407
+   ],
+   "bbox_min": [
+    -0.336,
+    0.0,
+    -0.115
+   ],
+   "bbox_max": [
+    0.235,
+    0.549,
+    0.292
+   ],
+   "materials": [
+    "accent2.012",
+    "trim.012",
+    "white.012",
+    "soft.012",
+    "base.012"
+   ],
+   "mount": "floor",
+   "tags": [
+    "decor",
+    "floor",
+    "bags"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "3 sacolas de papel com alca de fita, laco e papel de seda",
+   "room": "boutique"
+  },
+  "boutique/hat_tree_gold": {
+   "file": "boutique/hat_tree_gold.glb",
+   "tris": 2434,
+   "bytes": 57888,
+   "size": [
+    0.851,
+    1.65,
+    0.821
+   ],
+   "bbox_min": [
+    -0.424,
+    0.0,
+    -0.438
+   ],
+   "bbox_max": [
+    0.427,
+    1.65,
+    0.383
+   ],
+   "materials": [
+    "trim.013",
+    "accent2.013",
+    "white.013",
+    "soft.013",
+    "accent.013",
+    "fabric.013"
+   ],
+   "mount": "floor",
+   "tags": [
+    "decor",
+    "display",
+    "hats"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.425,
+    "height": 1.65,
+    "center": [
+     0.001,
+     0.825,
+     -0.027
+    ]
+   },
+   "note": "arvore de chapeus champagne com 5 chapeus pastel (h 1.7)",
+   "room": "boutique"
+  },
+  "boutique/chandelier_drum_crystal": {
+   "file": "boutique/chandelier_drum_crystal.glb",
+   "tris": 4120,
+   "bytes": 129920,
+   "size": [
+    0.952,
+    1.045,
+    0.948
+   ],
+   "bbox_min": [
+    -0.476,
+    -1.045,
+    -0.474
+   ],
+   "bbox_max": [
+    0.476,
+    0.0,
+    0.474
+   ],
+   "materials": [
+    "trim.014",
+    "glow.014",
+    "glass.014"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "light",
+    "ceiling"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      -0.9,
+      0
+     ],
+     "color": "#fff0d8",
+     "range": 6,
+     "intensity": 1.0
+    }
+   ],
+   "note": "lustre de tambor com cortina de cristais e champagne (pende 1.0 m, diametro 0.9)",
+   "room": "boutique"
+  },
+  "boutique/sign_marquee_heart": {
+   "file": "boutique/sign_marquee_heart.glb",
+   "tris": 1988,
+   "bytes": 46092,
+   "size": [
+    0.903,
+    0.82,
+    0.109
+   ],
+   "bbox_min": [
+    -0.451,
+    1.769,
+    -0.055
+   ],
+   "bbox_max": [
+    0.451,
+    2.589,
+    0.054
+   ],
+   "materials": [
+    "white.015",
+    "glow.015",
+    "trim.015"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "sign",
+    "light"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.2,
+      0.2
+     ],
+     "color": "#fff0d8",
+     "range": 3,
+     "intensity": 0.5
+    }
+   ],
+   "note": "coracao marquise com lampadas em volta (z 1.8 a 2.6)",
+   "room": "boutique"
+  },
+  "joalheria/floor_black_marble": {
+   "file": "joalheria/floor_black_marble.glb",
+   "tris": 576,
+   "bytes": 22596,
+   "size": [
+    2.0,
+    0.04,
+    2.0
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.04,
+    1.0
+   ],
+   "materials": [
+    "base",
+    "trim",
+    "accent2"
+   ],
+   "mount": "floor",
+   "tags": [
+    "floor",
+    "tile"
+   ],
+   "walkable": true,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.04,
+     2.0
+    ],
+    "center": [
+     0.0,
+     0.02,
+     -0.0
+    ]
+   },
+   "note": "piso laca preta brilhante com fios champagne e medalhao 2x2 m",
+   "room": "joalheria"
+  },
+  "joalheria/case_counter_long": {
+   "file": "joalheria/case_counter_long.glb",
+   "tris": 9292,
+   "bytes": 194660,
+   "size": [
+    1.68,
+    1.405,
+    0.7
+   ],
+   "bbox_min": [
+    -0.84,
+    0.01,
+    -0.35
+   ],
+   "bbox_max": [
+    0.84,
+    1.415,
+    0.35
+   ],
+   "materials": [
+    "base.001",
+    "trim.001",
+    "accent.001",
+    "fabric.001",
+    "glass.001",
+    "glow.001",
+    "white.001",
+    "accent2.001"
+   ],
+   "mount": "floor",
+   "tags": [
+    "counter",
+    "display",
+    "jewelry",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.68,
+     1.405,
+     0.7
+    ],
+    "center": [
+     0.0,
+     0.712,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "browse",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Ver joias"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.3,
+      0.1
+     ],
+     "color": "#ffe6b0",
+     "range": 2.5,
+     "intensity": 0.7
+    }
+   ],
+   "note": "vitrine de balcao 1.6 m: base laca preta, vidro iluminado, veludo bordo, bustos, aneis e colares (h 1.4)",
+   "room": "joalheria"
+  },
+  "joalheria/case_tower_glass": {
+   "file": "joalheria/case_tower_glass.glb",
+   "tris": 6796,
+   "bytes": 151996,
+   "size": [
+    0.66,
+    1.895,
+    0.66
+   ],
+   "bbox_min": [
+    -0.33,
+    0.0,
+    -0.33
+   ],
+   "bbox_max": [
+    0.33,
+    1.895,
+    0.33
+   ],
+   "materials": [
+    "base.002",
+    "trim.002",
+    "glass.002",
+    "glow.002",
+    "fabric.002",
+    "white.002",
+    "accent2.002"
+   ],
+   "mount": "floor",
+   "tags": [
+    "display",
+    "jewelry",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.66,
+     1.895,
+     0.66
+    ],
+    "center": [
+     0.0,
+     0.947,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "browse",
+     "pos": [
+      0,
+      0,
+      0.7
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Ver joias"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.5,
+      0.1
+     ],
+     "color": "#ffe6b0",
+     "range": 2.5,
+     "intensity": 0.8
+    }
+   ],
+   "note": "torre de vidro iluminada 0.55 x 0.55 x 1.9 com bustos e colares em 3 niveis",
+   "room": "joalheria"
+  },
+  "joalheria/bust_necklace_stand": {
+   "file": "joalheria/bust_necklace_stand.glb",
+   "tris": 2216,
+   "bytes": 55952,
+   "size": [
+    0.297,
+    0.396,
+    0.178
+   ],
+   "bbox_min": [
+    -0.149,
+    0.0,
+    -0.089
+   ],
+   "bbox_max": [
+    0.149,
+    0.396,
+    0.089
+   ],
+   "materials": [
+    "fabric.003",
+    "trim.003",
+    "white.003",
+    "glass.003"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "jewelry",
+    "tabletop",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "busto de veludo com colar de perolas e pingente de cristal (h 0.4)",
+   "room": "joalheria"
+  },
+  "joalheria/ring_tree_stand": {
+   "file": "joalheria/ring_tree_stand.glb",
+   "tris": 2260,
+   "bytes": 55204,
+   "size": [
+    0.4,
+    0.273,
+    0.271
+   ],
+   "bbox_min": [
+    -0.2,
+    0.0,
+    -0.12
+   ],
+   "bbox_max": [
+    0.2,
+    0.273,
+    0.151
+   ],
+   "materials": [
+    "trim.004",
+    "base.004",
+    "fabric.004",
+    "accent2.004",
+    "glass.004"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "jewelry",
+    "tabletop",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "expositor escalonado com almofadas de veludo e aneis (0.35 x 0.25)",
+   "room": "joalheria"
+  },
+  "joalheria/tray_velvet_jewelry": {
+   "file": "joalheria/tray_velvet_jewelry.glb",
+   "tris": 2140,
+   "bytes": 54056,
+   "size": [
+    0.42,
+    0.068,
+    0.3
+   ],
+   "bbox_min": [
+    -0.21,
+    0.0,
+    -0.15
+   ],
+   "bbox_max": [
+    0.21,
+    0.068,
+    0.15
+   ],
+   "materials": [
+    "trim.005",
+    "fabric.005",
+    "white.005",
+    "glass.005"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "jewelry",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "bandeja de veludo com colar, brincos, pulseira e broche de coracao (0.4 m)",
+   "room": "joalheria"
+  },
+  "joalheria/counter_checkout_black": {
+   "file": "joalheria/counter_checkout_black.glb",
+   "tris": 4176,
+   "bytes": 99956,
+   "size": [
+    1.92,
+    1.313,
+    0.77
+   ],
+   "bbox_min": [
+    -0.96,
+    0.005,
+    -0.385
+   ],
+   "bbox_max": [
+    0.96,
+    1.318,
+    0.385
+   ],
+   "materials": [
+    "base.006",
+    "accent.006",
+    "trim.006",
+    "deep.006",
+    "glow.006",
+    "accent2.006",
+    "fabric.006",
+    "white.006",
+    "glass.006"
+   ],
+   "mount": "floor",
+   "tags": [
+    "counter",
+    "register",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.92,
+     1.313,
+     0.77
+    ],
+    "center": [
+     0.0,
+     0.661,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "pay",
+     "pos": [
+      0,
+      0,
+      0.9
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Pagar"
+    }
+   ],
+   "note": "balcao de caixa 1.8 m laca preta com frente canelada dourada, leitor, caixa de presente com fita (h 1.05). Atendente em +Y",
+   "room": "joalheria"
+  },
+  "joalheria/chandelier_gold_cascade": {
+   "file": "joalheria/chandelier_gold_cascade.glb",
+   "tris": 6316,
+   "bytes": 190524,
+   "size": [
+    1.32,
+    1.44,
+    1.32
+   ],
+   "bbox_min": [
+    -0.66,
+    -1.44,
+    -0.66
+   ],
+   "bbox_max": [
+    0.66,
+    0.0,
+    0.66
+   ],
+   "materials": [
+    "trim.007",
+    "glow.007",
+    "glass.007"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "light",
+    "ceiling",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "lights": [
+    {
+     "pos": [
+      0,
+      -1.2,
+      0
+     ],
+     "color": "#ffe2a0",
+     "range": 7,
+     "intensity": 1.2
+    }
+   ],
+   "note": "lustre grande dourado com 8 bracos, velas luminosas e cascata de cristais (pende 1.5 m, diametro 1.3)",
+   "room": "joalheria"
+  },
+  "joalheria/armchair_velvet_wing": {
+   "file": "joalheria/armchair_velvet_wing.glb",
+   "tris": 2620,
+   "bytes": 64392,
+   "size": [
+    0.85,
+    1.362,
+    0.83
+   ],
+   "bbox_min": [
+    -0.425,
+    -0.008,
+    -0.4
+   ],
+   "bbox_max": [
+    0.425,
+    1.354,
+    0.43
+   ],
+   "materials": [
+    "fabric.008",
+    "trim.008"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "lounge"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.85,
+     1.362,
+     0.83
+    ],
+    "center": [
+     0.0,
+     0.673,
+     0.015
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "poltrona orelhao de veludo bordo com tachas douradas (0.85 x 0.8 x 1.1)",
+   "room": "joalheria"
+  },
+  "joalheria/loveseat_velvet_tufted": {
+   "file": "joalheria/loveseat_velvet_tufted.glb",
+   "tris": 3196,
+   "bytes": 75092,
+   "size": [
+    1.6,
+    1.138,
+    0.853
+   ],
+   "bbox_min": [
+    -0.8,
+    -0.008,
+    -0.425
+   ],
+   "bbox_max": [
+    0.8,
+    1.13,
+    0.428
+   ],
+   "materials": [
+    "fabric.009",
+    "trim.009",
+    "accent2.009"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "lounge"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.6,
+     1.138,
+     0.853
+    ],
+    "center": [
+     0.0,
+     0.561,
+     0.002
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit_l",
+     "pos": [
+      -0.38,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    },
+    {
+     "id": "sit_r",
+     "pos": [
+      0.38,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "namoradeira capitone bordo 1.6 m, costas curvas, pes dourados",
+   "room": "joalheria"
+  },
+  "joalheria/safe_heart_vault": {
+   "file": "joalheria/safe_heart_vault.glb",
+   "tris": 3168,
+   "bytes": 73832,
+   "size": [
+    1.06,
+    1.28,
+    0.865
+   ],
+   "bbox_min": [
+    -0.53,
+    0.0,
+    -0.38
+   ],
+   "bbox_max": [
+    0.53,
+    1.28,
+    0.485
+   ],
+   "materials": [
+    "base.010",
+    "trim.010",
+    "accent.010",
+    "accent2.010",
+    "fabric.010"
+   ],
+   "mount": "floor",
+   "tags": [
+    "safe",
+    "decor",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.06,
+     1.28,
+     0.865
+    ],
+    "center": [
+     0.0,
+     0.64,
+     0.052
+    ]
+   },
+   "use": [
+    {
+     "id": "safe",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Abrir cofre"
+    }
+   ],
+   "note": "cofre fofo: corpo preto arredondado com porta redonda dourada, disco de segredo e coracao (1.0 x 0.7 x 1.25)",
+   "room": "joalheria"
+  },
+  "joalheria/table_side_gold_glass": {
+   "file": "joalheria/table_side_gold_glass.glb",
+   "tris": 1232,
+   "bytes": 35012,
+   "size": [
+    0.517,
+    0.702,
+    0.517
+   ],
+   "bbox_min": [
+    -0.259,
+    -0.002,
+    -0.259
+   ],
+   "bbox_max": [
+    0.259,
+    0.7,
+    0.259
+   ],
+   "materials": [
+    "glass.011",
+    "trim.011",
+    "accent2.011"
+   ],
+   "mount": "floor",
+   "tags": [
+    "table",
+    "lounge"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.259,
+    "height": 0.702,
+    "center": [
+     0.0,
+     0.349,
+     -0.0
+    ]
+   },
+   "note": "mesinha lateral redonda dourada com tampo de vidro (0.5 m, h 0.55)",
+   "room": "joalheria"
+  },
+  "joalheria/pedestal_dome_gem": {
+   "file": "joalheria/pedestal_dome_gem.glb",
+   "tris": 1896,
+   "bytes": 48952,
+   "size": [
+    0.517,
+    1.7,
+    0.517
+   ],
+   "bbox_min": [
+    -0.258,
+    0.0,
+    -0.258
+   ],
+   "bbox_max": [
+    0.258,
+    1.7,
+    0.258
+   ],
+   "materials": [
+    "base.012",
+    "trim.012",
+    "fabric.012",
+    "glass.012",
+    "glow.012"
+   ],
+   "mount": "floor",
+   "tags": [
+    "display",
+    "decor",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.258,
+    "height": 1.7,
+    "center": [
+     0.0,
+     0.85,
+     -0.0
+    ]
+   },
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.3,
+      0
+     ],
+     "color": "#ffe6b0",
+     "range": 2,
+     "intensity": 0.5
+    }
+   ],
+   "note": "pedestal de laca preta com redoma de vidro e diamante gigante iluminado (diam 0.5, h 1.5)",
+   "room": "joalheria"
+  },
+  "joalheria/stanchion_rope_pair": {
+   "file": "joalheria/stanchion_rope_pair.glb",
+   "tris": 1408,
+   "bytes": 32940,
+   "size": [
+    1.8,
+    1.01,
+    0.295
+   ],
+   "bbox_min": [
+    -0.9,
+    0.0,
+    -0.148
+   ],
+   "bbox_max": [
+    0.9,
+    1.01,
+    0.148
+   ],
+   "materials": [
+    "trim.013",
+    "fabric.013"
+   ],
+   "mount": "floor",
+   "tags": [
+    "decor",
+    "barrier"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "2 postes dourados com corda de veludo bordo (1.5 m entre postes, h 0.95)",
+   "room": "joalheria"
+  },
+  "joalheria/wall_shadowbox_lit": {
+   "file": "joalheria/wall_shadowbox_lit.glb",
+   "tris": 4384,
+   "bytes": 96456,
+   "size": [
+    1.06,
+    1.0,
+    0.173
+   ],
+   "bbox_min": [
+    -0.53,
+    1.15,
+    -0.073
+   ],
+   "bbox_max": [
+    0.53,
+    2.15,
+    0.1
+   ],
+   "materials": [
+    "base.014",
+    "trim.014",
+    "fabric.014",
+    "glass.014",
+    "glow.014",
+    "accent2.014",
+    "white.014"
+   ],
+   "mount": "wall",
+   "tags": [
+    "display",
+    "wall",
+    "jewelry"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.7,
+      0.2
+     ],
+     "color": "#ffe6b0",
+     "range": 2,
+     "intensity": 0.4
+    }
+   ],
+   "note": "nicho de parede iluminado com colar em bustos (1.0 x 0.2, z 1.2 a 2.1)",
+   "room": "joalheria"
+  },
+  "joalheria/mirror_tryon_stand": {
+   "file": "joalheria/mirror_tryon_stand.glb",
+   "tris": 1304,
+   "bytes": 33876,
+   "size": [
+    0.388,
+    0.661,
+    0.195
+   ],
+   "bbox_min": [
+    -0.194,
+    0.0,
+    -0.097
+   ],
+   "bbox_max": [
+    0.194,
+    0.661,
+    0.097
+   ],
+   "materials": [
+    "trim.015",
+    "mirror.015"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "mirror",
+    "tabletop",
+    "jewelry"
+   ],
+   "walkable": false,
+   "hero": false,
+   "use": [
+    {
+     "id": "tryon",
+     "pos": [
+      0,
+      0,
+      0.6
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Provar joias"
+    }
+   ],
+   "note": "espelho oval de mesa com moldura dourada e pedestal (0.5 m)",
+   "room": "joalheria"
+  },
+  "joalheria/sign_gold_diamond": {
+   "file": "joalheria/sign_gold_diamond.glb",
+   "tris": 444,
+   "bytes": 16772,
+   "size": [
+    0.9,
+    0.7,
+    0.07
+   ],
+   "bbox_min": [
+    -0.45,
+    1.85,
+    -0.03
+   ],
+   "bbox_max": [
+    0.45,
+    2.55,
+    0.04
+   ],
+   "materials": [
+    "accent.016",
+    "glow.016"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "sign",
+    "light"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.2,
+      0.2
+     ],
+     "color": "#ffe2a0",
+     "range": 3,
+     "intensity": 0.5
+    }
+   ],
+   "note": "letreiro neon dourado de diamante com brilhos (z 1.8 a 2.6)",
+   "room": "joalheria"
+  },
+  "estudio/floor_peach_gloss": {
+   "file": "estudio/floor_peach_gloss.glb",
+   "tris": 300,
+   "bytes": 14716,
+   "size": [
+    2.0,
+    0.036,
+    2.0
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.036,
+    1.0
+   ],
+   "materials": [
+    "base",
+    "soft",
+    "trim"
+   ],
+   "mount": "floor",
+   "tags": [
+    "floor",
+    "tile"
+   ],
+   "walkable": true,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.036,
+     2.0
+    ],
+    "center": [
+     0.0,
+     0.018,
+     -0.0
+    ]
+   },
+   "note": "piso pessego laqueado com xadrez coral e juntas cromadas 2x2 m",
+   "room": "estudio"
+  },
+  "estudio/backdrop_roll_stand": {
+   "file": "estudio/backdrop_roll_stand.glb",
+   "tris": 680,
+   "bytes": 28288,
+   "size": [
+    3.745,
+    2.885,
+    1.333
+   ],
+   "bbox_min": [
+    -1.872,
+    0.0,
+    -0.423
+   ],
+   "bbox_max": [
+    1.872,
+    2.885,
+    0.91
+   ],
+   "materials": [
+    "trim.001",
+    "deep.001",
+    "soft.001",
+    "base.001"
+   ],
+   "mount": "floor",
+   "tags": [
+    "photo",
+    "backdrop",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     3.0,
+     2.8,
+     0.2
+    ],
+    "center": [
+     0.0,
+     1.4,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "pose",
+     "pos": [
+      0,
+      0,
+      1.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Sessao de fotos"
+    }
+   ],
+   "note": "fundo infinito de papel pessego em rolo com 2 suportes cromados (3.0 m larg., 2.8 m alt.); area de pose a -Y",
+   "room": "estudio"
+  },
+  "estudio/softbox_light_stand": {
+   "file": "estudio/softbox_light_stand.glb",
+   "tris": 396,
+   "bytes": 18772,
+   "size": [
+    0.902,
+    2.322,
+    0.781
+   ],
+   "bbox_min": [
+    -0.451,
+    -0.003,
+    -0.266
+   ],
+   "bbox_max": [
+    0.451,
+    2.319,
+    0.516
+   ],
+   "materials": [
+    "trim.002",
+    "deep.002",
+    "white.002",
+    "glow.002"
+   ],
+   "mount": "floor",
+   "tags": [
+    "photo",
+    "light"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.451,
+    "height": 2.322,
+    "center": [
+     0.0,
+     1.158,
+     0.125
+    ]
+   },
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.9,
+      0.5
+     ],
+     "color": "#fff4e6",
+     "range": 6,
+     "intensity": 1.2
+    }
+   ],
+   "note": "softbox retangular 0.8 x 0.6 em tripe cromado com haste articulada (h 2.1)",
+   "room": "estudio"
+  },
+  "estudio/ring_light_stand": {
+   "file": "estudio/ring_light_stand.glb",
+   "tris": 1440,
+   "bytes": 46072,
+   "size": [
+    0.724,
+    2.043,
+    0.627
+   ],
+   "bbox_min": [
+    -0.362,
+    -0.003,
+    -0.214
+   ],
+   "bbox_max": [
+    0.362,
+    2.04,
+    0.414
+   ],
+   "materials": [
+    "trim.003",
+    "deep.003",
+    "glow.003",
+    "white.003",
+    "mirror.003"
+   ],
+   "mount": "floor",
+   "tags": [
+    "photo",
+    "light"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.362,
+    "height": 2.043,
+    "center": [
+     0.0,
+     1.019,
+     0.1
+    ]
+   },
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.6,
+      0.3
+     ],
+     "color": "#fff4e6",
+     "range": 5,
+     "intensity": 1.0
+    }
+   ],
+   "note": "ring light 0.5 m com suporte de celular em tripe (h 1.9)",
+   "room": "estudio"
+  },
+  "estudio/camera_tripod_pro": {
+   "file": "estudio/camera_tripod_pro.glb",
+   "tris": 1580,
+   "bytes": 44256,
+   "size": [
+    0.811,
+    1.618,
+    0.702
+   ],
+   "bbox_min": [
+    -0.405,
+    -0.003,
+    -0.238
+   ],
+   "bbox_max": [
+    0.405,
+    1.615,
+    0.463
+   ],
+   "materials": [
+    "trim.004",
+    "deep.004",
+    "accent2.004",
+    "glass.004",
+    "glow.004"
+   ],
+   "mount": "floor",
+   "tags": [
+    "photo",
+    "camera",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.405,
+    "height": 1.618,
+    "center": [
+     0.0,
+     0.806,
+     0.112
+    ]
+   },
+   "use": [
+    {
+     "id": "camera",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Tirar foto"
+    }
+   ],
+   "note": "camera mirrorless rosa/cromada com lente grande em tripe cromado (h 1.5)",
+   "room": "estudio"
+  },
+  "estudio/flower_giant_prop": {
+   "file": "estudio/flower_giant_prop.glb",
+   "tris": 3728,
+   "bytes": 88380,
+   "size": [
+    1.011,
+    1.807,
+    0.875
+   ],
+   "bbox_min": [
+    -0.505,
+    0.0,
+    -0.438
+   ],
+   "bbox_max": [
+    0.505,
+    1.807,
+    0.438
+   ],
+   "materials": [
+    "white.005",
+    "trim.005",
+    "leaf.005",
+    "accent2.005",
+    "accent.005",
+    "soft.005",
+    "glow.005"
+   ],
+   "mount": "floor",
+   "tags": [
+    "prop",
+    "decor",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.505,
+    "height": 1.807,
+    "center": [
+     0.0,
+     0.903,
+     -0.0
+    ]
+   },
+   "note": "flor gigante de cenario (cabeca 1.1 m, h 2.0) com caule, folhas e base redonda",
+   "room": "estudio"
+  },
+  "estudio/chair_heart_pose": {
+   "file": "estudio/chair_heart_pose.glb",
+   "tris": 1932,
+   "bytes": 45308,
+   "size": [
+    0.79,
+    1.313,
+    0.621
+   ],
+   "bbox_min": [
+    -0.395,
+    -0.003,
+    -0.33
+   ],
+   "bbox_max": [
+    0.395,
+    1.31,
+    0.291
+   ],
+   "materials": [
+    "fabric.006",
+    "trim.006"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "prop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.79,
+     1.313,
+     0.621
+    ],
+    "center": [
+     0.0,
+     0.653,
+     -0.019
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.5,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Posar na cadeira"
+    }
+   ],
+   "note": "cadeira de pose com encosto de coracao capitone coral e pernas cromadas (h 1.2)",
+   "room": "estudio"
+  },
+  "estudio/sign_neon_camera": {
+   "file": "estudio/sign_neon_camera.glb",
+   "tris": 976,
+   "bytes": 33452,
+   "size": [
+    1.0,
+    0.75,
+    0.07
+   ],
+   "bbox_min": [
+    -0.5,
+    1.775,
+    -0.03
+   ],
+   "bbox_max": [
+    0.5,
+    2.525,
+    0.04
+   ],
+   "materials": [
+    "deep.007",
+    "glow2.007",
+    "glow.007"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "sign",
+    "light"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.2,
+      0.3
+     ],
+     "color": "#ff7f6b",
+     "range": 3,
+     "intensity": 0.6
+    }
+   ],
+   "note": "letreiro neon de camera com coracao e brilhos (z 1.8 a 2.6)",
+   "room": "estudio"
+  },
+  "estudio/screen_changing_folding": {
+   "file": "estudio/screen_changing_folding.glb",
+   "tris": 3720,
+   "bytes": 72960,
+   "size": [
+    1.75,
+    1.76,
+    0.051
+   ],
+   "bbox_min": [
+    -0.295,
+    0.05,
+    -0.02
+   ],
+   "bbox_max": [
+    1.455,
+    1.81,
+    0.031
+   ],
+   "materials": [
+    "fabric.008",
+    "trim.008",
+    "white.008"
+   ],
+   "mount": "floor",
+   "tags": [
+    "screen",
+    "fitting"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.75,
+     1.76,
+     0.051
+    ],
+    "center": [
+     0.58,
+     0.93,
+     0.005
+    ]
+   },
+   "use": [
+    {
+     "id": "change",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Trocar de roupa"
+    }
+   ],
+   "note": "biombo dobravel de 3 paineis em tecido coral com moldura cromada (1.8 x 1.8)",
+   "room": "estudio"
+  },
+  "estudio/desk_monitor_station": {
+   "file": "estudio/desk_monitor_station.glb",
+   "tris": 2672,
+   "bytes": 58848,
+   "size": [
+    1.4,
+    1.4,
+    0.7
+   ],
+   "bbox_min": [
+    -0.7,
+    0.01,
+    -0.35
+   ],
+   "bbox_max": [
+    0.7,
+    1.41,
+    0.35
+   ],
+   "materials": [
+    "white.009",
+    "trim.009",
+    "base.009",
+    "accent.009",
+    "glow.009",
+    "accent2.009",
+    "soft.009",
+    "fabric.009",
+    "deep.009"
+   ],
+   "mount": "floor",
+   "tags": [
+    "desk",
+    "computer",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.4,
+     1.4,
+     0.7
+    ],
+    "center": [
+     0.0,
+     0.71,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "edit",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Editar fotos"
+    }
+   ],
+   "note": "mesa com monitor grande (grade de fotos), teclado, mouse, luminaria e camera (1.4 x 0.7, h 1.3)",
+   "room": "estudio"
+  },
+  "estudio/chair_swivel_pink": {
+   "file": "estudio/chair_swivel_pink.glb",
+   "tris": 552,
+   "bytes": 21124,
+   "size": [
+    0.623,
+    0.88,
+    0.588
+   ],
+   "bbox_min": [
+    -0.311,
+    0.01,
+    -0.323
+   ],
+   "bbox_max": [
+    0.311,
+    0.89,
+    0.265
+   ],
+   "materials": [
+    "trim.010",
+    "deep.010",
+    "fabric.010"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "office"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.311,
+    "height": 0.88,
+    "center": [
+     0.0,
+     0.45,
+     -0.029
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.5,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "cadeira giratoria coral com base estrela cromada (assento 0.46)",
+   "room": "estudio"
+  },
+  "estudio/umbrella_reflector_stand": {
+   "file": "estudio/umbrella_reflector_stand.glb",
+   "tris": 532,
+   "bytes": 21052,
+   "size": [
+    1.12,
+    2.513,
+    0.702
+   ],
+   "bbox_min": [
+    -0.56,
+    -0.003,
+    -0.238
+   ],
+   "bbox_max": [
+    0.56,
+    2.51,
+    0.463
+   ],
+   "materials": [
+    "trim.011",
+    "deep.011",
+    "mirror.011",
+    "white.011"
+   ],
+   "mount": "floor",
+   "tags": [
+    "photo",
+    "light"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.56,
+    "height": 2.513,
+    "center": [
+     0.0,
+     1.254,
+     0.112
+    ]
+   },
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.8,
+      0.4
+     ],
+     "color": "#fff4e6",
+     "range": 5,
+     "intensity": 0.8
+    }
+   ],
+   "note": "guarda-chuva refletor prateado em tripe (h 2.0, diam 1.1)",
+   "room": "estudio"
+  },
+  "estudio/posing_blocks_set": {
+   "file": "estudio/posing_blocks_set.glb",
+   "tris": 1848,
+   "bytes": 43236,
+   "size": [
+    1.739,
+    0.608,
+    0.909
+   ],
+   "bbox_min": [
+    -0.84,
+    0.0,
+    -0.41
+   ],
+   "bbox_max": [
+    0.9,
+    0.608,
+    0.5
+   ],
+   "materials": [
+    "soft.012",
+    "trim.012",
+    "accent2.012",
+    "white.012"
+   ],
+   "mount": "floor",
+   "tags": [
+    "prop",
+    "platform"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.739,
+     0.608,
+     0.909
+    ],
+    "center": [
+     0.03,
+     0.304,
+     0.045
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0.3,
+      0.42,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "3 plataformas cilindricas pastel de alturas 0.2/0.4/0.6 para poses (diam 0.5 a 0.9)",
+   "room": "estudio"
+  },
+  "estudio/polaroid_wall_string": {
+   "file": "estudio/polaroid_wall_string.glb",
+   "tris": 2832,
+   "bytes": 59900,
+   "size": [
+    2.035,
+    0.394,
+    0.029
+   ],
+   "bbox_min": [
+    -1.001,
+    2.07,
+    0.025
+   ],
+   "bbox_max": [
+    1.034,
+    2.464,
+    0.054
+   ],
+   "materials": [
+    "trim.013",
+    "white.013",
+    "accent2.013",
+    "soft.013",
+    "fabric.013",
+    "base.013",
+    "deep.013",
+    "glow.013"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "varal de polaroids com luzinhas (2.0 m, z 1.5 a 2.5)",
+   "room": "estudio"
+  },
+  "estudio/balloon_arch_pastel": {
+   "file": "estudio/balloon_arch_pastel.glb",
+   "tris": 6000,
+   "bytes": 116088,
+   "size": [
+    2.62,
+    2.343,
+    0.481
+   ],
+   "bbox_min": [
+    -1.286,
+    -0.043,
+    -0.255
+   ],
+   "bbox_max": [
+    1.333,
+    2.3,
+    0.226
+   ],
+   "materials": [
+    "accent2.014",
+    "soft.014",
+    "accent.014",
+    "fabric.014",
+    "white.014"
+   ],
+   "mount": "floor",
+   "tags": [
+    "prop",
+    "decor",
+    "balloon"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "arco organico de baloes pastel (2.4 m larg., 2.2 m alt.)",
+   "room": "estudio"
+  },
+  "estudio/track_spots_ceiling": {
+   "file": "estudio/track_spots_ceiling.glb",
+   "tris": 812,
+   "bytes": 24740,
+   "size": [
+    2.0,
+    0.362,
+    0.215
+   ],
+   "bbox_min": [
+    -1.0,
+    -0.362,
+    -0.107
+   ],
+   "bbox_max": [
+    1.0,
+    0.0,
+    0.107
+   ],
+   "materials": [
+    "trim.015",
+    "glow.015"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "light",
+    "ceiling"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      -0.4,
+      0
+     ],
+     "color": "#fff4e6",
+     "range": 5,
+     "intensity": 0.9
+    }
+   ],
+   "note": "trilho de teto cromado com 4 spots (2.0 m, pende 0.45)",
+   "room": "estudio"
+  },
+  "palco/floor_dance_grid": {
+   "file": "palco/floor_dance_grid.glb",
+   "tris": 2048,
+   "bytes": 38144,
+   "size": [
+    2.0,
+    0.091,
+    2.0
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.091,
+    1.0
+   ],
+   "materials": [
+    "deep",
+    "glow",
+    "glow2",
+    "glass",
+    "trim"
+   ],
+   "mount": "floor",
+   "tags": [
+    "floor",
+    "tile",
+    "dance"
+   ],
+   "walkable": true,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.091,
+     2.0
+    ],
+    "center": [
+     0.0,
+     0.045,
+     -0.0
+    ]
+   },
+   "note": "pista de danca 2x2 m: grade 4x4 de ladrilhos luminosos (glow rosa / glow2 ciano) sob vidro preto, moldura cromada",
+   "room": "palco"
+  },
+  "palco/stage_platform_4m": {
+   "file": "palco/stage_platform_4m.glb",
+   "tris": 8888,
+   "bytes": 175804,
+   "size": [
+    5.0,
+    0.615,
+    2.75
+   ],
+   "bbox_min": [
+    -2.05,
+    0.0,
+    -1.35
+   ],
+   "bbox_max": [
+    2.95,
+    0.615,
+    1.4
+   ],
+   "materials": [
+    "base.001",
+    "trim.001",
+    "deep.001",
+    "soft.001",
+    "glow.001",
+    "glow2.001",
+    "accent2.001"
+   ],
+   "mount": "floor",
+   "tags": [
+    "stage",
+    "platform",
+    "hero"
+   ],
+   "walkable": true,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     5.0,
+     0.615,
+     2.75
+    ],
+    "center": [
+     0.45,
+     0.308,
+     0.025
+    ]
+   },
+   "use": [
+    {
+     "id": "perform",
+     "pos": [
+      0,
+      0.55,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Subir no palco"
+    }
+   ],
+   "note": "palco 4.0 x 2.6 m, altura 0.55 (topo caminhavel), borda neon, escada lateral e saia de cortinas",
+   "room": "palco"
+  },
+  "palco/truss_lights_rig": {
+   "file": "palco/truss_lights_rig.glb",
+   "tris": 1988,
+   "bytes": 75460,
+   "size": [
+    4.016,
+    0.538,
+    0.336
+   ],
+   "bbox_min": [
+    -2.008,
+    -0.57,
+    -0.168
+   ],
+   "bbox_max": [
+    2.008,
+    -0.032,
+    0.168
+   ],
+   "materials": [
+    "trim.002",
+    "deep.002",
+    "glow.002",
+    "glow2.002"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "light",
+    "ceiling",
+    "stage",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "lights": [
+    {
+     "pos": [
+      -1.2,
+      -0.5,
+      0
+     ],
+     "color": "#ff4fd0",
+     "range": 6,
+     "intensity": 1.0
+    },
+    {
+     "pos": [
+      1.2,
+      -0.5,
+      0
+     ],
+     "color": "#4ff0ff",
+     "range": 6,
+     "intensity": 1.0
+    }
+   ],
+   "note": "treliça de palco 4.0 m com 6 refletores PAR coloridos (pende 0.6 m)",
+   "room": "palco"
+  },
+  "palco/disco_ball_mirrored": {
+   "file": "palco/disco_ball_mirrored.glb",
+   "tris": 1924,
+   "bytes": 92932,
+   "size": [
+    0.928,
+    1.495,
+    0.928
+   ],
+   "bbox_min": [
+    -0.464,
+    -1.495,
+    -0.464
+   ],
+   "bbox_max": [
+    0.464,
+    0.0,
+    0.464
+   ],
+   "materials": [
+    "trim.003",
+    "deep.003",
+    "mirror.003"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "light",
+    "ceiling",
+    "decor",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "lights": [
+    {
+     "pos": [
+      0,
+      -1.0,
+      0
+     ],
+     "color": "#ffffff",
+     "range": 8,
+     "intensity": 0.8
+    }
+   ],
+   "note": "globo de espelhos facetado diam 0.9 m com corrente e tampa dourada; pende 1.1 m (gire no jogo)",
+   "room": "palco"
+  },
+  "palco/dj_booth_neon": {
+   "file": "palco/dj_booth_neon.glb",
+   "tris": 10120,
+   "bytes": 209884,
+   "size": [
+    2.52,
+    1.299,
+    0.935
+   ],
+   "bbox_min": [
+    -1.26,
+    0.0,
+    -0.46
+   ],
+   "bbox_max": [
+    1.26,
+    1.299,
+    0.475
+   ],
+   "materials": [
+    "base.004",
+    "soft.004",
+    "trim.004",
+    "glow.004",
+    "glow2.004",
+    "deep.004",
+    "accent2.004"
+   ],
+   "mount": "floor",
+   "tags": [
+    "dj",
+    "stage",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.52,
+     1.299,
+     0.935
+    ],
+    "center": [
+     0.0,
+     0.649,
+     0.007
+    ]
+   },
+   "use": [
+    {
+     "id": "dj",
+     "pos": [
+      0,
+      0,
+      -0.85
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Tocar como DJ"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      0.8,
+      0.5
+     ],
+     "color": "#ff4fd0",
+     "range": 4,
+     "intensity": 0.9
+    }
+   ],
+   "note": "cabine de DJ 2.4 m: painel frontal de LED, 2 toca-discos, mixer, laptop e fone; DJ fica em +Y olhando -Y (h 1.15)",
+   "room": "palco"
+  },
+  "palco/speaker_stack_neon": {
+   "file": "palco/speaker_stack_neon.glb",
+   "tris": 2452,
+   "bytes": 63584,
+   "size": [
+    0.65,
+    1.702,
+    0.566
+   ],
+   "bbox_min": [
+    -0.325,
+    0.03,
+    -0.275
+   ],
+   "bbox_max": [
+    0.325,
+    1.732,
+    0.291
+   ],
+   "materials": [
+    "deep.005",
+    "base.005",
+    "trim.005",
+    "glow.005",
+    "glow2.005"
+   ],
+   "mount": "floor",
+   "tags": [
+    "audio",
+    "stage",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.65,
+     1.702,
+     0.566
+    ],
+    "center": [
+     0.0,
+     0.881,
+     0.008
+    ]
+   },
+   "note": "torre de caixas de som 0.65 x 0.55 x 1.9 com subs, tops, grades cromadas e faixa neon",
+   "room": "palco"
+  },
+  "palco/bar_counter_neon": {
+   "file": "palco/bar_counter_neon.glb",
+   "tris": 2976,
+   "bytes": 69580,
+   "size": [
+    3.14,
+    1.42,
+    0.885
+   ],
+   "bbox_min": [
+    -1.57,
+    0.0,
+    -0.42
+   ],
+   "bbox_max": [
+    1.57,
+    1.42,
+    0.465
+   ],
+   "materials": [
+    "base.006",
+    "soft.006",
+    "trim.006",
+    "glass.006",
+    "glow2.006",
+    "accent.006",
+    "glow.006",
+    "accent2.006"
+   ],
+   "mount": "floor",
+   "tags": [
+    "counter",
+    "bar",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     3.14,
+     1.42,
+     0.885
+    ],
+    "center": [
+     0.0,
+     0.71,
+     0.023
+    ]
+   },
+   "use": [
+    {
+     "id": "bar",
+     "pos": [
+      0,
+      0,
+      0.9
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Pedir drink"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      0.3,
+      0.5
+     ],
+     "color": "#4ff0ff",
+     "range": 3,
+     "intensity": 0.8
+    }
+   ],
+   "note": "balcao de bar 3.0 m: laca ameixa, faixa neon ciano, tampo de vidro iluminado, taças e garrafas. Barman em +Y (h 1.1)",
+   "room": "palco"
+  },
+  "palco/stool_bar_neon": {
+   "file": "palco/stool_bar_neon.glb",
+   "tris": 1392,
+   "bytes": 37444,
+   "size": [
+    0.456,
+    0.79,
+    0.451
+   ],
+   "bbox_min": [
+    -0.228,
+    0.0,
+    -0.226
+   ],
+   "bbox_max": [
+    0.228,
+    0.79,
+    0.226
+   ],
+   "materials": [
+    "fabric.007",
+    "glow2.007",
+    "trim.007",
+    "glow.007"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "stool"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.228,
+    "height": 0.79,
+    "center": [
+     0.0,
+     0.395,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.75,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "banqueta alta com assento ameixa e aro neon (assento 0.74)",
+   "room": "palco"
+  },
+  "palco/sofa_lounge_curved": {
+   "file": "palco/sofa_lounge_curved.glb",
+   "tris": 3168,
+   "bytes": 75880,
+   "size": [
+    2.4,
+    1.05,
+    0.9
+   ],
+   "bbox_min": [
+    -1.2,
+    0.01,
+    -0.45
+   ],
+   "bbox_max": [
+    1.2,
+    1.06,
+    0.45
+   ],
+   "materials": [
+    "fabric.008",
+    "trim.008",
+    "glow2.008",
+    "deep.008",
+    "accent2.008",
+    "base.008"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "lounge",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.4,
+     1.05,
+     0.9
+    ],
+    "center": [
+     0.0,
+     0.535,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "s1",
+     "pos": [
+      -0.6,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    },
+    {
+     "id": "s2",
+     "pos": [
+      0,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    },
+    {
+     "id": "s3",
+     "pos": [
+      0.6,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "sofa lounge 2.4 m ameixa capitone com neon por baixo (h 0.9)",
+   "room": "palco"
+  },
+  "palco/table_lounge_glow": {
+   "file": "palco/table_lounge_glow.glb",
+   "tris": 916,
+   "bytes": 22812,
+   "size": [
+    1.04,
+    0.415,
+    0.64
+   ],
+   "bbox_min": [
+    -0.52,
+    0.0,
+    -0.32
+   ],
+   "bbox_max": [
+    0.52,
+    0.415,
+    0.32
+   ],
+   "materials": [
+    "deep.009",
+    "glow2.009",
+    "trim.009"
+   ],
+   "mount": "floor",
+   "tags": [
+    "table",
+    "lounge"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.04,
+     0.415,
+     0.64
+    ],
+    "center": [
+     0.0,
+     0.207,
+     -0.0
+    ]
+   },
+   "note": "mesa de centro baixa 1.0 x 0.6 (h 0.4) com tampo luminoso e base cromada",
+   "room": "palco"
+  },
+  "palco/sign_neon_heart_big": {
+   "file": "palco/sign_neon_heart_big.glb",
+   "tris": 1628,
+   "bytes": 52892,
+   "size": [
+    1.8,
+    1.434,
+    0.077
+   ],
+   "bbox_min": [
+    -0.9,
+    1.466,
+    -0.03
+   ],
+   "bbox_max": [
+    0.9,
+    2.9,
+    0.047
+   ],
+   "materials": [
+    "deep.010",
+    "glow.010",
+    "glow2.010"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "sign",
+    "light",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.2,
+      0.3
+     ],
+     "color": "#ff4fd0",
+     "range": 4,
+     "intensity": 0.9
+    }
+   ],
+   "note": "letreiro neon: coracao duplo rosa com estrelas ciano e raios (z 1.6 a 2.9, 1.8 m larg.)",
+   "room": "palco"
+  },
+  "palco/neon_arch_gate": {
+   "file": "palco/neon_arch_gate.glb",
+   "tris": 2316,
+   "bytes": 57124,
+   "size": [
+    2.68,
+    2.99,
+    0.358
+   ],
+   "bbox_min": [
+    -1.34,
+    0.0,
+    -0.16
+   ],
+   "bbox_max": [
+    1.34,
+    2.99,
+    0.198
+   ],
+   "materials": [
+    "base.011",
+    "trim.011",
+    "glow.011",
+    "glow2.011"
+   ],
+   "mount": "floor",
+   "tags": [
+    "decor",
+    "entrance",
+    "light"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.2,
+      0.1
+     ],
+     "color": "#ff4fd0",
+     "range": 4,
+     "intensity": 0.8
+    }
+   ],
+   "note": "portal em arco neon 2.6 m larg. x 2.8 m alt. (pilares ameixa, tubo neon rosa/ciano, cortina de contas)",
+   "room": "palco"
+  },
+  "palco/mic_stand_stage": {
+   "file": "palco/mic_stand_stage.glb",
+   "tris": 802,
+   "bytes": 21584,
+   "size": [
+    0.44,
+    1.62,
+    0.433
+   ],
+   "bbox_min": [
+    -0.22,
+    0.0,
+    -0.217
+   ],
+   "bbox_max": [
+    0.22,
+    1.62,
+    0.217
+   ],
+   "materials": [
+    "trim.012",
+    "mirror.012",
+    "deep.012",
+    "glow.012"
+   ],
+   "mount": "floor",
+   "tags": [
+    "stage",
+    "karaoke",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.22,
+    "height": 1.62,
+    "center": [
+     0.0,
+     0.81,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "sing",
+     "pos": [
+      0,
+      0,
+      0.5
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Cantar"
+    }
+   ],
+   "note": "pedestal de microfone cromado com microfone e laco (h 1.6)",
+   "room": "palco"
+  },
+  "palco/stage_curtain_velvet": {
+   "file": "palco/stage_curtain_velvet.glb",
+   "tris": 2880,
+   "bytes": 67336,
+   "size": [
+    4.2,
+    2.98,
+    0.294
+   ],
+   "bbox_min": [
+    -2.1,
+    0.2,
+    0.016
+   ],
+   "bbox_max": [
+    2.1,
+    3.18,
+    0.31
+   ],
+   "materials": [
+    "fabric.013",
+    "accent2.013",
+    "trim.013",
+    "glow2.013"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "stage",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "cortinao de veludo ameixa 4.0 m com franja dourada e cortineira (z 0 a 3.0)",
+   "room": "palco"
+  },
+  "palco/neon_stars_cluster": {
+   "file": "palco/neon_stars_cluster.glb",
+   "tris": 1490,
+   "bytes": 36440,
+   "size": [
+    1.041,
+    1.478,
+    0.43
+   ],
+   "bbox_min": [
+    -0.511,
+    -1.478,
+    -0.215
+   ],
+   "bbox_max": [
+    0.53,
+    0.0,
+    0.215
+   ],
+   "materials": [
+    "trim.014",
+    "glow.014",
+    "glow2.014"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "light",
+    "ceiling",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      -1.0,
+      0
+     ],
+     "color": "#4ff0ff",
+     "range": 5,
+     "intensity": 0.7
+    }
+   ],
+   "note": "cluster de estrelas neon penduradas em alturas diferentes (pende ate 1.5 m, 1.2 m larg.)",
+   "room": "palco"
+  },
+  "palco/led_wall_panel_2m": {
+   "file": "palco/led_wall_panel_2m.glb",
+   "tris": 1888,
+   "bytes": 72612,
+   "size": [
+    2.06,
+    2.115,
+    0.11
+   ],
+   "bbox_min": [
+    -1.03,
+    0.77,
+    -0.05
+   ],
+   "bbox_max": [
+    1.03,
+    2.885,
+    0.06
+   ],
+   "materials": [
+    "deep.015",
+    "glow.015",
+    "accent2.015",
+    "glow2.015",
+    "white.015",
+    "trim.015"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "light",
+    "stage"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.8,
+      0.3
+     ],
+     "color": "#ff4fd0",
+     "range": 4,
+     "intensity": 0.6
+    }
+   ],
+   "note": "painel de LED 2.0 x 2.0 m com pixels grandes rosa/ciano/branco e moldura cromada (z 0.8 a 2.8)",
+   "room": "palco"
+  },
+  "palco/pouf_lounge_neon": {
+   "file": "palco/pouf_lounge_neon.glb",
+   "tris": 1272,
+   "bytes": 37904,
+   "size": [
+    0.627,
+    0.415,
+    0.627
+   ],
+   "bbox_min": [
+    -0.313,
+    0.04,
+    -0.313
+   ],
+   "bbox_max": [
+    0.313,
+    0.455,
+    0.313
+   ],
+   "materials": [
+    "fabric.016",
+    "trim.016",
+    "glow2.016"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "lounge"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.313,
+    "height": 0.415,
+    "center": [
+     0.0,
+     0.247,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.46,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "pufe redondo ameixa com aro neon (0.6 m)",
+   "room": "palco"
   }
  }
 }

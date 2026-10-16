@@ -1,11 +1,11 @@
 /* ===== Menu do personagem "glam RPG": vidro perolado + friso dourado ===== */
 :root {
-  --corpo: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --corpo: var(--f-sans);
   --vidro: rgba(255, 255, 255, 0.66);
   --vidro-forte: rgba(255, 252, 250, 0.86);
   --friso: linear-gradient(135deg, #f3d77a, #c99a2e 45%, #f6e3a1 70%, #c99a2e);
-  --tinta: #4b3350;
-  --tinta-suave: #8a7090;
+  --tinta: var(--ui-ink);
+  --tinta-suave: var(--ui-ink-2);
   --acc: #f08fb8;
   --acc-2: #fbd3e4;
 }
@@ -50,11 +50,11 @@
   box-shadow: 0 20px 70px rgba(70, 30, 90, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
   animation: menu-pop 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
 }
-.menu[data-tab='perfil'] { --acc: #f08fb8; --acc-2: #fbd3e4; }
-.menu[data-tab='aparencia'] { --acc: #a98bf0; --acc-2: #e4dafc; }
-.menu[data-tab='guardaroupa'] { --acc: #3fbfa3; --acc-2: #cdf2e8; }
-.menu[data-tab='missoes'] { --acc: #e8a93a; --acc-2: #fbe9c3; }
-.menu[data-tab='config'] { --acc: #5aa8e8; --acc-2: #d3e8fa; }
+.menu[data-tab='perfil'] { --acc: #d9789f; --acc-2: #f8dbe7; }
+.menu[data-tab='aparencia'] { --acc: #7d63b0; --acc-2: #e4dafc; }
+.menu[data-tab='guardaroupa'] { --acc: #3a9f8a; --acc-2: #d2eee7; }
+.menu[data-tab='missoes'] { --acc: #d99a2b; --acc-2: #f6e6c4; }
+.menu[data-tab='config'] { --acc: #4b8fcf; --acc-2: #d6e6f6; }
 
 .menu__inner {
   flex: 1;
@@ -402,14 +402,15 @@
   transition: transform 0.12s;
 }
 .pcard:hover { transform: scale(1.03); }
-.pcard__face { position: relative; flex: none; width: 54px; height: 54px; border-radius: 50%; overflow: hidden; border: 2.5px solid #f3d77a; background: radial-gradient(circle at 50% 30%, #fff, #fbd3e4); box-shadow: 0 0 0 1.5px #c99a2e; }
-.pcard__face canvas { width: 100%; height: 100%; display: block; }
-.pcard__lvl { position: absolute; right: -3px; bottom: -3px; min-width: 22px; height: 22px; padding: 0 4px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font: 800 11px var(--corpo); color: #fff; background: var(--acc); border: 2px solid #fff; }
+.pcard__face { position: relative; flex: none; width: 54px; height: 54px; border-radius: 50%; overflow: visible; border: 2.5px solid #f3d77a; background: radial-gradient(circle at 50% 30%, #fff, #fbd3e4); box-shadow: 0 0 0 1.5px #c99a2e; }
+.pcard__face canvas { width: 100%; height: 100%; display: block; border-radius: 50%; }
+.pcard__lvl { position: absolute; right: -4px; bottom: -4px; min-width: 24px; height: 24px; padding: 0 5px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font: 800 13px var(--corpo); color: #fff; background: #7d63b0; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(40, 20, 60, 0.5); text-shadow: 0 1px 1px rgba(30, 10, 50, 0.5); }
 .pcard__txt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .pcard__name { font: 800 14px/1.1 var(--corpo); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pcard__title { font: italic 600 11px/1.1 var(--fonte-titulo); color: var(--tinta-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pcard__xp { height: 7px; border-radius: 999px; background: rgba(120, 90, 140, 0.2); overflow: hidden; }
-.pcard__xp i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #f08fb8, #f3d77a); transition: width 0.5s; }
+.pcard__xp { position: relative; height: 10px; border-radius: 999px; background: rgba(70, 48, 76, 0.3); border: 1px solid rgba(201, 154, 46, 0.7); overflow: hidden; }
+.pcard__xp i { position: absolute; left: 0; top: 0; bottom: 0; min-width: 6px; border-radius: 999px; background: linear-gradient(90deg, #d9789f, #f0b860); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35) inset; transition: width 0.5s; }
+.pcard__xp span { position: absolute; inset: 0; text-align: center; font: 800 8px/8px var(--f-sans); color: #fff; text-shadow: 0 1px 1px rgba(40, 20, 50, 0.8); }
 .pcard__coins { display: flex; align-items: center; gap: 4px; font: 800 11px var(--corpo); }
 .pcard__coins .coin-dot { width: 12px; height: 12px; border-width: 1.5px; }
 @media (max-width: 700px) {
@@ -429,46 +430,11 @@
 .gtoast span { font: 700 13px var(--corpo); color: var(--tinta-suave); }
 .gtoast--level { background: linear-gradient(180deg, #fff8d6, #ffd7ea); }
 
-/* ===== chat ===== */
-.chat {
-  position: absolute; left: calc(12px + env(safe-area-inset-left)); bottom: calc(52px + env(safe-area-inset-bottom));
-  width: min(330px, calc(100vw - 24px)); display: flex; flex-direction: column; gap: 6px; pointer-events: none;
-  font-family: var(--corpo); color: var(--tinta); z-index: 6;
-}
-.chat__btn {
-  align-self: flex-start; pointer-events: auto; display: inline-flex; align-items: center; gap: 7px; position: relative;
-  height: 40px; padding: 0 14px; border-radius: 999px; cursor: pointer;
-  font: 800 13px var(--corpo); color: var(--tinta); background: var(--vidro-forte); border: 1.5px solid #d9bf6a; box-shadow: 0 2px 10px rgba(120, 50, 100, 0.3);
-}
-.chat__btn svg { width: 18px; height: 18px; }
-.chat__badge { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: #f0508c; color: #fff; font: 800 11px/18px var(--corpo); text-align: center; }
-.chat__box { pointer-events: auto; display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; background: var(--vidro-forte); backdrop-filter: blur(8px); border: 2px solid #d9bf6a; box-shadow: 0 6px 22px rgba(120, 50, 100, 0.35); animation: menu-pop 0.2s ease both; }
-.chat__head { display: flex; align-items: center; justify-content: space-between; padding: 6px 8px 6px 14px; font: italic 700 15px var(--fonte-titulo); border-bottom: 1px solid rgba(217, 191, 106, 0.6); }
-.chat__list { height: 190px; overflow-y: auto; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; overscroll-behavior: contain; touch-action: pan-y; user-select: text; -webkit-user-select: text; scrollbar-width: thin; }
-.msg { font: 600 13px/1.35 var(--corpo); word-break: break-word; }
-.msg time { font: 600 10px var(--corpo); color: var(--tinta-suave); margin-right: 5px; }
-.msg b { font-weight: 800; margin-right: 4px; }
-.msg--self b { color: #d6558a; }
-.msg--npc b { color: #2fa58a; }
-.msg--system { font-style: italic; color: #8a6d1f; }
-.chat__form { display: flex; gap: 6px; padding: 8px; border-top: 1px solid rgba(217, 191, 106, 0.6); }
-.chat__form input { flex: 1; min-width: 0; height: 38px; padding: 0 12px; border-radius: 999px; border: 1.5px solid #e6cf85; background: #fff; font: 600 14px var(--corpo); color: var(--tinta); outline: none; user-select: text; -webkit-user-select: text; }
-.chat__form input:focus { border-color: #f08fb8; }
-.chat__form .icon-btn { background: linear-gradient(135deg, #f08fb8, #f6b5d0); color: #fff; border-color: #fff; }
-.chat__meta { display: flex; justify-content: space-between; padding: 0 12px 6px; font: 600 11px var(--corpo); color: var(--tinta-suave); }
-.chat__meta .warn { color: #c0405f; font-weight: 800; }
-@media (max-width: 700px) {
-  .chat { top: calc(46px + 58px + 12px + env(safe-area-inset-top)); bottom: auto; width: auto; }
-  .chat--open { top: auto; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); width: auto; z-index: 28; }
-  .chat--open .chat__list { height: 34vh; }
-  .chat--open .chat__form input { font-size: 16px; }
-}
-
 /* balao de fala acima da jogadora (drei Html) */
 .speech {
   max-width: 220px; padding: 6px 12px; border-radius: 16px; text-align: center; pointer-events: none;
   font: 700 13px/1.3 'Nunito', system-ui, sans-serif; color: #4b3350; background: rgba(255, 252, 250, 0.95); border: 2px solid #d9bf6a; box-shadow: 0 3px 12px rgba(120, 50, 100, 0.35);
-  position: absolute; left: 0; bottom: 0; animation: speech-in 0.2s ease both; word-break: break-word; white-space: normal; width: max-content;
+  position: absolute; left: 0; bottom: 0; word-break: break-word; white-space: normal; width: max-content;
 }
 .speech::after { content: ''; position: absolute; left: 50%; bottom: -8px; margin-left: -7px; width: 12px; height: 12px; transform: rotate(45deg); background: rgba(255, 252, 250, 0.95); border-right: 2px solid #d9bf6a; border-bottom: 2px solid #d9bf6a; }
 @keyframes speech-in { from { opacity: 0; transform: translate(-50%, 6px) scale(0.9); } to { opacity: 1; transform: translate(-50%, 0); } }

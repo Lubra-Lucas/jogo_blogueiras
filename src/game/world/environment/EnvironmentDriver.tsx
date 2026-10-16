@@ -7,6 +7,8 @@ import { clock, setWeather, useEnvStore } from './envStore'
 import { env, snapWeather, updateEnv } from './envState'
 import { applyRegistries } from './registry'
 
+if (import.meta.env.DEV) (window as unknown as { __env: typeof env }).__env = env
+
 const HOURS_PER_SEC = 24 / (ENV_CFG.dayMinutes * 60)
 
 function pickWeather(prev: Weather): Weather {

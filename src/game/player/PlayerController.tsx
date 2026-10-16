@@ -10,18 +10,22 @@ import { PLAYER as C } from './config'
 import { useAppearanceStore } from '../../state/appearanceStore'
 import { Character } from '../character/Character'
 import { useEmoteStore } from '../character/animation/emoteStore'
+import { turnState } from '../character/animation/turnState'
 import { SEAT_HIPS_GAP, useSitStore } from '../sit/sitStore'
-import type { Seat } from '../sit/seats'
+import { navBridge } from '../navigation/navStore'
 
 type Rapier = ReturnType<typeof useRapier>
 type CharacterController = ReturnType<Rapier['world']['createCharacterController']>
+
+/** duracao do clipe run_turn (s) */
+const TURN_DUR = 0.67
 
 const SPAWN_Y = 0.03 + C.halfHeight + C.radius + 0.05
 
 /**
  * Jogador local: capsula com character controller cinematico do Rapier.
- * Sem pulo. Sem pathfinding: o click-to-move anda em linha reta
- * (TODO futuro: navmesh para contornar obstaculos).
+ * Sem pulo. O click-to-move anda em linha reta; o desvio de obstaculos (A*) e o fast travel
+ * ficam em game/navigation (que so define alvos sequenciais e pede teletransporte via navBridge).
  */
 export function PlayerController({ shadows }: { shadows: boolean }) {
   const { world } = useRapier()
@@ -44,8 +48,10 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       desired: { x: 0, y: 0, z: 0 },
       moved: false,
       seated: false,
+      turn: -1, // tempo da curva de 180 graus (s); -1 = fora dela
+      turnYaw: 0,
+      sitT: 0,
       groundY: 0,
-      lastSeat: null as Seat | null,
     }),
     [],
   )
@@ -84,26 +90,72 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
     const dt = Math.min(rawDelta, 0.05)
     if (dt <= 0) return
 
-    // ---- sentada: gruda no assento (sem fisica) ate haver comando de movimento ----
-    const seat = useSitStore.getState().seat
+    // ---- teletransporte (fast travel, game/navigation) ----
+    const tp = navBridge.teleport
+    if (tp) {
+      navBridge.teleport = null
+      if (useSitStore.getState().seat) {
+        useSitStore.getState().release()
+        sim.seated = false
+      }
+      sim.pos.set(tp.x, SPAWN_Y + 0.35, tp.z)
+      sim.hv.set(0, 0, 0)
+      sim.vy = 0
+      sim.turn = -1
+      turnState.active = false
+      if (tp.yaw !== null) sim.yaw = tp.yaw
+      navBridge.cameraSnap = sim.yaw + Math.PI // camera atras da jogadora
+      navBridge.faceYaw = null
+      clearMoveTarget()
+      rb.setTranslation(sim.pos, true)
+    }
+
+    // ---- sentada: gruda no assento (sem fisica); os clipes stand_to_sit / sit_to_stand fazem o movimento do quadril ----
+    const sitS = useSitStore.getState()
+    const seat = sitS.seat
     if (seat) {
+      const ci = sitS.clip
       if (!sim.seated) {
         sim.seated = true
+        sim.sitT = 0
         sim.groundY = sim.pos.y
-        sim.lastSeat = seat
         sim.hv.set(0, 0, 0)
         sim.vy = 0
         clearMoveTarget()
         useEmoteStore.getState().stop()
       }
-      if (intent.move.x * intent.move.x + intent.move.y * intent.move.y > 1e-4 || intent.target) {
+      sim.sitT += dt
+      const standing = sitS.phase === 'standing'
+      if (!standing && sim.sitT > 0.5 && (intent.move.x * intent.move.x + intent.move.y * intent.move.y > 1e-4 || intent.target)) {
         useSitStore.getState().standUp()
+        sim.sitT = 0
+        // o clipe de levantar comeca com o quadril sobre o assento: a raiz vai para o assento (o quadril nao se mexe no mundo)
+        sim.pos.x = seat.x
+        sim.pos.z = seat.z
+      }
+      const dur = standing ? ci.outDur : ci.inDur
+      if (standing && sim.sitT >= dur * 0.82) {
+        // terminou de levantar: segue o movimento (o alvo do clique, se houver, continua valendo)
+        useSitStore.getState().release()
+        sim.seated = false
+        sim.pos.y = sim.groundY
+        // o quadril terminou a frente do assento; a raiz acompanha (senao o idle "puxaria" a personagem de volta)
+        const sn2 = Math.sin(seat.yaw)
+        const cs2 = Math.cos(seat.yaw)
+        sim.pos.x += ci.outX * cs2 + ci.outZ * sn2
+        sim.pos.z += -ci.outX * sn2 + ci.outZ * cs2
       } else {
-        const k = 1 - Math.exp(-9 * dt)
-        const ty = sim.groundY + seat.y + SEAT_HIPS_GAP - useSitStore.getState().sitHipsY
-        sim.pos.x += (seat.x - sim.pos.x) * k
-        sim.pos.z += (seat.z - sim.pos.z) * k
-        sim.pos.y += (ty - sim.pos.y) * k
+        // raiz = assento menos o deslocamento do quadril do clipe (assim o quadril termina sobre o assento)
+        const sn = Math.sin(seat.yaw)
+        const cs = Math.cos(seat.yaw)
+        const tx = standing ? seat.x : seat.x - (ci.offX * cs + ci.offZ * sn)
+        const tz = standing ? seat.z : seat.z - (-ci.offX * sn + ci.offZ * cs)
+        const k = 1 - Math.exp(-8 * dt)
+        sim.pos.x += (tx - sim.pos.x) * k
+        sim.pos.z += (tz - sim.pos.z) * k
+        const u = MathUtils.clamp(sim.sitT / dur, 0, 1)
+        const w = standing ? 1 - MathUtils.smoothstep(u, 0.05, 0.75) : MathUtils.smoothstep(u, 0.3, 0.95)
+        sim.pos.y = sim.groundY + (seat.y + SEAT_HIPS_GAP - ci.endY) * w
         const diff = seat.yaw - sim.yaw
         sim.yaw += Math.atan2(Math.sin(diff), Math.cos(diff)) * k
         rb.setTranslation(sim.pos, true)
@@ -119,12 +171,6 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
         ss.yaw = sim.yaw
         return
       }
-    }
-    if (sim.seated) {
-      // levantou: um passo a frente do banco, no chao onde sentou
-      sim.seated = false
-      const ls = sim.lastSeat
-      if (ls) sim.pos.set(ls.ax, sim.groundY, ls.az)
     }
 
     // ---- direcao desejada, relativa a camera ----
@@ -180,6 +226,29 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
 
     if (wantsMove) useEmoteStore.getState().stop() // andar cancela aplaudir/dancar
 
+    // ---- curva de 180 graus correndo: o clipe run_turn gira o quadril; a raiz segura o yaw e troca no fim ----
+    if (sim.turn < 0 && wantsMove) {
+      const hs = Math.hypot(sim.hv.x, sim.hv.z)
+      const ts = Math.hypot(tvx, tvz)
+      if (hs > C.runSpeed * 0.6 && ts > C.runSpeed * 0.6 && (sim.hv.x * tvx + sim.hv.z * tvz) / (hs * ts) < -0.866) {
+        sim.turn = 0
+        sim.turnYaw = Math.atan2(tvx, tvz)
+        turnState.active = true
+      }
+    }
+    if (sim.turn >= 0) {
+      sim.turn += dt
+      const u = sim.turn / TURN_DUR
+      const sc = MathUtils.smoothstep(u, 0.45, 1) // freia na 1a metade, acelera para o lado novo na 2a
+      tvx *= sc
+      tvz *= sc
+      if (u >= 1) {
+        sim.yaw = sim.turnYaw
+        sim.turn = -1
+        turnState.active = false
+      }
+    }
+
     // ---- aceleracao / desaceleracao (independente de frame rate) ----
     const k = wantsMove ? C.accel : C.decel
     const a = 1 - Math.exp(-k * dt)
@@ -213,10 +282,21 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
     rb.setTranslation(sim.pos, true)
 
     // ---- rotacao suave para a direcao do movimento ----
-    if (wantsMove && sim.hv.x * sim.hv.x + sim.hv.z * sim.hv.z > 0.25) {
+    if (sim.turn < 0 && wantsMove && sim.hv.x * sim.hv.x + sim.hv.z * sim.hv.z > 0.25) {
       const diff = Math.atan2(sim.hv.x, sim.hv.z) - sim.yaw
       const wrapped = Math.atan2(Math.sin(diff), Math.cos(diff))
       sim.yaw += wrapped * (1 - Math.exp(-C.turnRate * dt))
+    }
+
+    // ---- vira para a porta ao chegar de uma navegacao (game/navigation) ----
+    if (navBridge.faceYaw !== null) {
+      if (wantsMove || sim.turn >= 0) {
+        navBridge.faceYaw = null
+      } else {
+        const diff = Math.atan2(Math.sin(navBridge.faceYaw - sim.yaw), Math.cos(navBridge.faceYaw - sim.yaw))
+        sim.yaw += diff * (1 - Math.exp(-6 * dt))
+        if (Math.abs(diff) < 0.03) navBridge.faceYaw = null
+      }
     }
 
     // ---- visual ----

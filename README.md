@@ -30,6 +30,12 @@ Abra https://lubra-lucas.github.io/jogo_blogueiras/ no navegador do celular (dep
 - Cada push na branch `main` publica automaticamente no GitHub Pages (workflow em `.github/workflows/deploy.yml`). Nas configuracoes do repositorio, em Pages, selecione "GitHub Actions" como fonte.
 - Endereco publicado: https://lubra-lucas.github.io/jogo_blogueiras/
 
+## Controles e UI
+- **Andar**: WASD/setas (Shift corre), clique no chao, joystick no celular. **Q/E** gira a camera.
+- **C / Tab**: menu da personagem (Perfil, Aparencia com sliders de rosto e corpo, Guarda-roupa com roupas e joias, Ajustes). **P**: celular (Missoes, Blogram, Mensagens, Mapa, Camera). **G**: roda de emotes (numeros 1-9 tambem). **Enter**: chat. **M**: mapa grande.
+- O progresso (perfil, aparencia salva, fotos) fica no `localStorage` do navegador; em Ajustes ha "Resetar save".
+- `?editor=1` abre direto a aba Aparencia; `?stats=1` mostra o FPS.
+
 ## Arquitetura
 
 Veja [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).

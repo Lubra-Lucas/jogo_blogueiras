@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useThree } from '@react-three/fiber'
 import { Matrix3, Raycaster, Vector2, Vector3, type Mesh, type Object3D } from 'three'
 import { isPointerClaimed, setMoveTarget } from './intent'
+import { navigateToPoint } from '../navigation/navigation'
 
 const MAX_MOVE_PX = 6 // acima disso e arrasto de camera, nao clique
 const MAX_HOLD_MS = 300
@@ -79,7 +80,8 @@ export function ClickToMove() {
         now - lastTap.t < DOUBLE_TAP_MS &&
         Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < DOUBLE_TAP_PX
       lastTap = dbl ? { t: -1e9, x: 0, y: 0 } : { t: now, x: e.clientX, y: e.clientY }
-      setMoveTarget(hit.point, dbl)
+      // caminho livre: linha reta de sempre; bloqueado (predio, lago...): desvia pelo A* de game/navigation
+      if (!navigateToPoint(hit.point.x, hit.point.z, dbl)) setMoveTarget(hit.point, dbl)
     }
 
     const onCancel = () => {

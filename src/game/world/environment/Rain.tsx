@@ -125,10 +125,10 @@ export function Rain() {
         uBox: { value: new Vector3(BOX[0], BOX[1], BOX[2]) },
         uSpeed: { value: 24 },
         uLen: { value: 1.25 },
-        uWidth: { value: 0.035 },
+        uWidth: { value: 0.05 },
         uSlant: { value: new Vector2(0.12, 0.05) },
         uColor: { value: new Color('#eef2ff') },
-        uOpacity: { value: 0.55 },
+        uOpacity: { value: 0.9 },
       },
     })
     return { geometry, material }
@@ -166,7 +166,7 @@ export function Rain() {
     u.uTime.value = time.current
     u.uRain.value = env.rain
     u.uColor.value.copy(env.skyHor).lerp(WHITE, 0.62)
-    u.uOpacity.value = 0.5 + 0.2 * env.night
+    u.uOpacity.value = 0.8 + 0.2 * env.night
     if (splash) {
       const s = splash.material.uniforms
       s.uTime.value = time.current

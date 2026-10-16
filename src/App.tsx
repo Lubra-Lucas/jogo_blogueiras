@@ -6,13 +6,16 @@ import { getQuality, QUALITY_SETTINGS } from './game/systems/quality'
 import { initDeviceDetection, useDeviceStore } from './game/systems/device'
 import { Hud } from './ui/Hud'
 import { Joystick } from './ui/Joystick'
-import { EmoteMenu } from './ui/EmoteMenu'
+import { Dock } from './ui/EmoteWheel'
+import { CameraOverlay, Phone, TravelFade } from './ui/phone/Phone'
 import { FullscreenButton } from './ui/FullscreenButton'
 import { CharacterMenu } from './ui/menu/CharacterMenu'
 import { useUiStore } from './state/uiStore'
 import { MinigameHost } from './ui/minigames/MinigameHost'
 import { InteractionPrompt } from './ui/minigames/InteractionPrompt'
 import { SitPrompt } from './ui/sit/SitPrompt'
+import { EnvironmentHud } from './ui/environment/EnvironmentHud'
+import { FastTravelFade } from './game/navigation/FastTravelFade'
 
 const tier = getQuality()
 const settings = QUALITY_SETTINGS[tier]
@@ -42,13 +45,18 @@ export default function App() {
       </Suspense>
       <div className="ui-layer">
         <Hud />
-        {!new URLSearchParams(window.location.search).get('view') && <EmoteMenu />}
+        <EnvironmentHud />
+        {!new URLSearchParams(window.location.search).get('view') && <Dock />}
+        <Phone />
+        <CameraOverlay />
+        <TravelFade />
         <CharacterMenu />
         {isTouch && <FullscreenButton />}
         {isTouch && <Joystick />}
         <InteractionPrompt />
         <SitPrompt />
         <MinigameHost />
+        <FastTravelFade />
       </div>
     </div>
   )

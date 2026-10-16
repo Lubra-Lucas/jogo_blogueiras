@@ -44,6 +44,20 @@ export interface CatalogItem {
 
 const A = `${import.meta.env.BASE_URL}assets/`
 
+/** Rotulos com acento (os manifestos vem sem); id -> nome exibido. */
+const LABEL_OVERRIDES: Record<string, string> = {
+  pearl_choker: 'Gargantilha de pérolas com coração',
+  ribbon_choker: 'Gargantilha de fita com laço',
+  pearl_studs: 'Brincos de pérola',
+  heart_hoops: 'Argolas com coração',
+  hair_bow: 'Laço de cabelo',
+  heart_ring: 'Anel de coração',
+  chandelier_drops: 'Brincos chandelier de cristal',
+  tennis_bracelet: 'Pulseira tênis de cristais',
+  bangle_stack: 'Pulseiras bangle empilhadas',
+}
+const labelOf = (id: string, raw: string) => LABEL_OVERRIDES[id] ?? raw
+
 const GARMENT_SWATCHES = ['#ff6fa5', '#ffb3d1', '#fff1f6', '#c8a4ff', '#b6e3ff', '#9ff0d0', '#ffe9a8', '#e8b84a', '#1d1b22', '#ff3b3b']
 const JEWEL_LABELS: Record<string, string> = { metal: 'Metal', gem: 'Cristal', pearl: 'Pérola', ribbon: 'Fita' }
 const SLOT_LABELS: Record<string, string> = { base: 'Base', trim: 'Detalhe', accent: 'Acento', lining: 'Forro' }
@@ -80,7 +94,7 @@ function parseGarments(j: GarmentJson): CatalogItem[] {
     id: g.id,
     kind: 'garment' as const,
     slot: g.slot,
-    label: g.label,
+    label: labelOf(g.id, g.label),
     glb: `${A}garments/${g.file}`,
     mats: g.slots.map((s) => ({
       id: s,
@@ -99,7 +113,7 @@ function parseJewelry(j: JewelryJson): CatalogItem[] {
     id: p.id,
     kind: 'jewelry' as const,
     slot: p.slot,
-    label: p.label,
+    label: labelOf(p.id, p.label),
     glb: `${A}${p.file}`,
     attachments: p.attachments,
     mats: Object.entries(p.materials).map(([id, m]) => ({

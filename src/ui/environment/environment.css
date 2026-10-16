@@ -1,0 +1,79 @@
+/* ---- relogio + clima (ao lado do minimapa) e painel de testes ?env=1 ---- */
+.env-clock {
+  position: absolute;
+  top: calc(48px + env(safe-area-inset-top));
+  right: calc(10px + clamp(96px, 24vw, 136px) + 8px + env(safe-area-inset-right));
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px 4px 7px;
+  border-radius: 999px;
+  background: rgba(255, 244, 230, 0.82);
+  border: 1px solid var(--ouro);
+  box-shadow: 0 2px 8px rgba(120, 50, 100, 0.25);
+  color: var(--texto);
+  pointer-events: none;
+  user-select: none;
+  transition: background 1.2s, color 1.2s;
+}
+.env-clock--night {
+  background: rgba(48, 44, 98, 0.78);
+  color: #f3eaff;
+}
+.env-clock__icon {
+  width: 26px;
+  height: 26px;
+  flex: none;
+}
+.env-clock__txt {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+.env-clock__time {
+  font: 700 15px/1.1 ui-monospace, 'Nunito', monospace;
+  letter-spacing: 0.04em;
+}
+.env-clock__label {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+.env-dev {
+  position: absolute;
+  left: 12px;
+  top: 120px;
+  width: 230px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(30, 24, 50, 0.82);
+  color: #fff;
+  font: 12px/1.4 system-ui, sans-serif;
+  pointer-events: auto;
+}
+.env-dev input[type='range'] {
+  width: 100%;
+}
+.env-dev__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 6px 0;
+}
+.env-dev button {
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #fff6;
+  background: #fff2;
+  color: #fff;
+  cursor: pointer;
+}
+.env-dev button[data-on='1'] {
+  background: #ff8ac4;
+  color: #301;
+}
+@media (max-width: 480px) {
+  .env-clock__label {
+    display: none;
+  }
+}

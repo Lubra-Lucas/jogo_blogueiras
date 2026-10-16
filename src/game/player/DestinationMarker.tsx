@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import type { Group } from 'three'
 import { intent } from '../input/intent'
+import { navStore } from '../navigation/navStore'
 
 const POP_SECONDS = 0.3
 
@@ -18,7 +19,7 @@ export function DestinationMarker() {
   useFrame(() => {
     const g = group.current
     if (!g) return
-    const target = intent.target
+    const target = navStore.getState().active ? null : intent.target // durante a navegacao, o marcador e o do NavigationRunner
     g.visible = target !== null
     if (!target) return
     const t = (performance.now() - intent.targetSetAt) / 1000

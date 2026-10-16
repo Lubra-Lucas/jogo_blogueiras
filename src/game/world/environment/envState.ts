@@ -27,8 +27,8 @@ interface KF {
 }
 
 const NIGHT: Omit<KF, 'h'> = {
-  top: '#0f1646', mid: '#262d7c', hor: '#6a3f9a', sun: '#aebfff', sunI: 1.5, hemiS: '#8798ee', hemiG: '#463f86', hemiI: 1.0,
-  envI: 0.3, exp: 1.08, fog: '#2c3070', stars: 1, moon: 1, glow: 0, cLit: '#7274bc', cShade: '#2f3374',
+  top: '#0f1646', mid: '#262d7c', hor: '#6a3f9a', sun: '#7f96ff', sunI: 0.3, hemiS: '#5f74d8', hemiG: '#2a2866', hemiI: 0.18,
+  envI: 0.05, exp: 0.92, fog: '#2c3070', stars: 1, moon: 1, glow: 0, cLit: '#7274bc', cShade: '#2f3374',
 }
 const DAY: Omit<KF, 'h'> = {
   top: '#6db1f4', mid: '#a6d3f7', hor: '#e3f1fb', sun: '#fffaf0', sunI: 2.4, hemiS: '#eaf3ff', hemiG: '#c0c6e0', hemiI: 0.42,

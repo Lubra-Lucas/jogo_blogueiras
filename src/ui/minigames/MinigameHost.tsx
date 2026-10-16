@@ -1,3 +1,5 @@
+import { playEmote } from '../../game/character/animation/emoteStore'
+import { useCafeStore } from '../../game/minigames/cafe/store'
 import { useEffect } from 'react'
 import { clearMoveTarget, setKeyboardAxis, setKeyboardCameraYaw, setStickAxis } from '../../game/input/intent'
 import { useMinigameStore } from '../../game/minigames/minigameStore'
@@ -43,7 +45,18 @@ export function MinigameHost() {
     }
   }, [active])
 
-  if (active === 'cafe') return <CafeGame onExit={() => useMinigameStore.getState().close()} />
+  if (active === 'cafe') {
+    return (
+      <CafeGame
+        onExit={() => {
+          // saiu com 2+ estrelas: a personagem no mundo agradece
+          const stars = useCafeStore.getState().results?.stars ?? 0
+          useMinigameStore.getState().close()
+          if (stars >= 2) setTimeout(() => playEmote('thankful', { once: true, silent: true }), 500)
+        }}
+      />
+    )
+  }
   if (active === 'desfile') return <DesfileGame onExit={() => useMinigameStore.getState().close()} />
   return null
 }

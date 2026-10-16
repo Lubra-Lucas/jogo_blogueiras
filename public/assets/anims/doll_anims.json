@@ -1,42 +1,104 @@
 {
-  "walk": {
-    "duration": 1.167,
-    "speed": 0.855,
-    "loop": true
-  },
-  "desfile": {
-    "duration": 1.167,
-    "speed": 0.86,
-    "loop": true
-  },
-  "clap": {
-    "duration": 1.167,
-    "speed": 0.0,
-    "loop": true
-  },
-  "dance_twerk": {
-    "duration": 15.2,
+  "idle": {
+    "file": "doll_anims_core.glb",
+    "duration": 9.933,
     "speed": 0.0,
     "loop": true
   },
   "walk_normal": {
+    "file": "doll_anims_core.glb",
     "duration": 1.167,
     "speed": 1.03,
     "loop": true
   },
-  "sit": {
-    "duration": 0.033,
-    "speed": 0.0,
+  "desfile": {
+    "file": "doll_anims_core.glb",
+    "duration": 1.167,
+    "speed": 0.86,
+    "loop": true
+  },
+  "stand_to_sit": {
+    "file": "doll_anims_core.glb",
+    "duration": 2.233,
+    "speed": 0.176,
     "loop": false
   },
+  "sit_to_stand": {
+    "file": "doll_anims_core.glb",
+    "duration": 2.267,
+    "speed": 0.171,
+    "loop": false
+  },
+  "run_turn": {
+    "file": "doll_anims_core.glb",
+    "duration": 0.667,
+    "speed": 0.044,
+    "loop": false
+  },
+  "clap": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 4.767,
+    "speed": 0.0,
+    "loop": true
+  },
+  "dance_twerk": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 15.2,
+    "speed": 0.0,
+    "loop": true
+  },
   "jump": {
+    "file": "doll_anims_emotes.glb",
     "duration": 2.167,
     "speed": 0.0,
     "loop": false
   },
-  "walk_start": {
-    "duration": 1.867,
-    "speed": 0.753,
+  "wave": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 0.533,
+    "speed": 0.0,
     "loop": false
+  },
+  "kiss": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 4.567,
+    "speed": 0.0,
+    "loop": false
+  },
+  "bow": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 2.733,
+    "speed": 0.0,
+    "loop": false
+  },
+  "laugh": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 9.767,
+    "speed": 0.0,
+    "loop": false
+  },
+  "cry": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 6.267,
+    "speed": 0.0,
+    "loop": false
+  },
+  "point": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 2.767,
+    "speed": 0.0,
+    "loop": false
+  },
+  "thankful": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 3.0,
+    "speed": 0.0,
+    "loop": false
+  },
+  "texting": {
+    "file": "doll_anims_emotes.glb",
+    "duration": 23.567,
+    "speed": 0.0,
+    "loop": true
   }
 }

@@ -7,6 +7,7 @@ import { PLAYER } from '../player/config'
 import { useCameraStore } from '../../state/cameraStore'
 import { usePlayerStore } from '../../state/playerStore'
 import { CAMERA as C } from './config'
+import { navBridge } from '../navigation/navStore'
 
 const PITCH_MIN = MathUtils.degToRad(C.minPitchDeg)
 const PITCH_MAX = MathUtils.degToRad(C.maxPitchDeg)
@@ -52,6 +53,13 @@ export function ThirdPersonCamera() {
     if (dt <= 0) return
     const ps = usePlayerStore.getState()
     const cs = useCameraStore.getState()
+
+    // ---- fast travel: camera atras da jogadora, sem varrer o mapa ----
+    if (navBridge.cameraSnap !== null) {
+      rig.yaw = navBridge.cameraSnap
+      rig.inited = false
+      navBridge.cameraSnap = null
+    }
 
     // ---- consome a intencao ----
     const manualYaw = cameraIntent.yawDelta !== 0 || cameraIntent.keyYaw !== 0

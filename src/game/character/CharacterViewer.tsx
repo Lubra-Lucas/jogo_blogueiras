@@ -43,7 +43,7 @@ export function CharacterViewer({ mode, shadows }: { mode: ViewMode; shadows: bo
   // ?anim=idle|walk|desfile|clap|dance[&t=segundos]: anima a boneca (com t, congela naquele instante: capturas)
   const animParam = q.get('anim')
   const tParam = q.get('t')
-  const clip = (animParam === 'dance' ? 'dance_twerk' : animParam) as ClipName | null
+  const clip = (({ dance: 'dance_twerk', walk: 'walk_normal', sit: 'stand_to_sit' } as Record<string, string>)[animParam ?? ''] ?? animParam) as ClipName | null
   const anim: AnimDriver | undefined = clip ? { clip, t: tParam !== null ? Number(tParam) : undefined } : undefined
   const f = { cam: num('cam') ?? base.cam, target: num('at') ?? base.target }
 

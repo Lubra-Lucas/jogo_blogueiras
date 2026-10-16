@@ -34,8 +34,8 @@ def build_mats(P):
     sp = dict(base=(.18, .9, .04, .9, .3), accent=(.14, 1, .04, .4, .4), accent2=(.08, 1, .02, 0, .4), soft=(.1, 1, .02, .3, .4),
               deep=(.12, 1, .03, 0, .4), white=(.12, 1, .04, .3, .4))
     for s, (r, c, cr, sh, shr) in sp.items():
-        M[s] = ck._mk(s, P[s], rough=r, coat=c, coat_rough=cr, sheen=sh, sheen_rough=shr)
-    M["fabric"] = ck._mk("fabric", P["fabric"], rough=.55, coat=0.0, sheen=1.0, sheen_rough=.35)
+        M[s] = ck._mk(s, P[s], rough=r, coat=c, coat_rough=cr, sheen=sh * P.get("sheen", 1.0), sheen_rough=shr)
+    M["fabric"] = ck._mk("fabric", P["fabric"], rough=.55, coat=0.0, sheen=P.get("sheen", 1.0), sheen_rough=.35)
     mc, mr = METALS[P["metal"]]
     M["trim"] = ck._mk("trim", mc, rough=mr, metal=1.0, coat=0.0)
     M["mirror"] = ck._mk("mirror", "#d8e8f5", rough=.04, metal=.7, coat=0.0, emis="#bcd4ec", emis_str=.35)

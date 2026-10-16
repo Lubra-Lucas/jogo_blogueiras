@@ -30,6 +30,9 @@ export function PlayerCard() {
         <span className="pcard__title">{fameTitle(level)}</span>
         <span className="pcard__xp" title={`${Math.floor(xp)} / ${xpToNext(level)} XP`}>
           <i style={{ width: `${Math.min(100, (xp / xpToNext(level)) * 100)}%` }} />
+          <span>
+            {Math.floor(xp)} / {xpToNext(level)}
+          </span>
         </span>
         <span className="pcard__coins" title={CURRENCY_NAME}>
           <span className="coin-dot" />

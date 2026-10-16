@@ -7,6 +7,7 @@ import { IconLock, IconPencil } from './icons'
 function useStats() {
   const level = useProfileStore((s) => s.level)
   const visited = useProfileStore((s) => s.visited.length)
+  const fame = useProfileStore((s) => s.fame)
   const a = useAppearanceStore((s) => s.appearance)
   const worn = Object.keys(a.outfit).length + a.accessories.length
   const morphs = Object.values(a.morphs).filter((v) => v > 0.05).length
@@ -15,7 +16,7 @@ function useStats() {
     { id: 'Estilo', v: cap(14 + level * 3 + worn * 7), color: '#a98bf0' },
     { id: 'Carisma', v: cap(12 + level * 4 + visited * 2), color: '#f08fb8' },
     { id: 'Beleza', v: cap(20 + level * 2 + morphs * 3 + (a.hair.id ? 6 : 0)), color: '#3fbfa3' },
-    { id: 'Fama', v: cap(level * 5 + visited * 3), color: '#e8a93a' },
+    { id: 'Fama', v: cap(level * 5 + visited * 3 + fame), color: '#e8a93a' },
   ]
 }
 

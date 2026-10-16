@@ -17,8 +17,10 @@ import { ThirdPersonCamera } from './camera/ThirdPersonCamera'
 import { CharacterViewer, getViewMode } from './character/CharacterViewer'
 import { PortraitCapture } from '../ui/PortraitCapture'
 import { ChatBubble } from '../ui/chat/ChatBubble'
+import { PhotoCapture } from '../ui/PhotoCapture'
 import { InteractionTrigger } from './interaction/InteractionTrigger'
 import { SitController } from './sit/SitController'
+import { NavigationRunner } from './navigation/NavigationRunner'
 
 const VIEW = getViewMode()
 const MAP_MODE = new URLSearchParams(window.location.search).get('map') === '1'
@@ -77,6 +79,7 @@ export function Game({ tier }: { tier: QualityTier }) {
           <Physics timeStep="vary" gravity={[0, -9.81, 0]} debug={DEBUG_PHYSICS}>
             <City shadows={q.shadows} propDist={MAP_MODE ? 1e5 : q.propDist} buildingDist={MAP_MODE ? 1e5 : q.buildingDist} />
             <PlayerController shadows={q.shadows} />
+            <NavigationRunner />
             {/* depois do PlayerController: useFrame na ordem de montagem */}
             {MAP_MODE ? <MapCamera /> : <ThirdPersonCamera />}
           </Physics>
@@ -86,6 +89,7 @@ export function Game({ tier }: { tier: QualityTier }) {
           <DestinationMarker />
           <PortraitCapture />
           <ChatBubble />
+          <PhotoCapture />
           <InteractionTrigger />
           <SitController />
         </>

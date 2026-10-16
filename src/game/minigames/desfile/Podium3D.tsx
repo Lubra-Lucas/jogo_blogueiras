@@ -78,7 +78,7 @@ export function Podium3D({ ranking, base }: { ranking: Competitor[]; base: Appea
         const p = SPOTS[i]
         return (
           <group key={c.id}>
-            <Doll appearance={apps[i]} clip={i < 3 ? 'clap' : 'idle'} position={[p.x, p.h, p.z]} scale={i >= 3 ? 0.97 : 1} />
+            <Doll appearance={apps[i]} clip={i === 0 ? 'bow' : i < 4 ? 'clap' : 'cry'} position={[p.x, p.h, p.z]} scale={i >= 3 ? 0.97 : 1} />
             <Label3D text={`${i + 1}º ${c.name}`} position={[p.x, p.h + 1.82, p.z]} height={0.2} bg={c.isPlayer ? '#fff1c4' : '#fffdf6'} italic={false} />
           </group>
         )

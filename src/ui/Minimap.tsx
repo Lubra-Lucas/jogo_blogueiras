@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { CITY } from '../game/world/city/layout'
 import { usePlayerStore } from '../state/playerStore'
+import { useUiStore } from '../state/uiStore'
 import { drawBig, drawMini } from './mapDraw'
 
 const MINI_RADIUS_M = 85
@@ -9,14 +10,20 @@ const MINI_RADIUS_M = 85
 export function Minimap() {
   const mini = useRef<HTMLCanvasElement>(null)
   const big = useRef<HTMLCanvasElement>(null)
-  const [open, setOpen] = useState(() => new URLSearchParams(window.location.search).get('bigmap') === '1')
+  const open = useUiStore((st) => st.bigMapOpen)
+  const setOpen = useUiStore((st) => st.setBigMap)
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('bigmap') === '1') useUiStore.getState().setBigMap(true)
+  }, [])
   const openRef = useRef(open)
   openRef.current = open
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.code === 'KeyM') setOpen((o) => !o)
-      else if (e.code === 'Escape') setOpen(false)
+      const t = e.target
+      if (t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return
+      if (e.code === 'KeyM') useUiStore.getState().setBigMap(!useUiStore.getState().bigMapOpen)
+      else if (e.code === 'Escape') useUiStore.getState().setBigMap(false)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)

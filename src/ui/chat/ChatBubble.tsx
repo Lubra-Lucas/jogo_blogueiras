@@ -4,6 +4,7 @@ import { Html } from '@react-three/drei'
 import type { Group } from 'three'
 import { usePlayerStore } from '../../state/playerStore'
 import { useChatStore } from '../../state/chatStore'
+import './chat.css'
 
 /** Balao de fala acima da cabeca da jogadora com a ultima mensagem (~5 s). Vive dentro do Canvas. */
 export function ChatBubble() {

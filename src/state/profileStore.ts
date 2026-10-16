@@ -42,6 +42,12 @@ interface Saved {
   status: string
   visited: string[]
   done: string[]
+  /** Fama acumulada (minigames) */
+  fame: number
+  /** missao acompanhada (linha sob o minimapa) */
+  tracked: string | null
+  /** XP por profissao (minigames) */
+  professionXp: Record<string, number>
 }
 
 const DEFAULTS: Saved = {
@@ -52,9 +58,12 @@ const DEFAULTS: Saved = {
   xp: 0,
   coins: 50,
   profession: null,
-  status: 'Pronta para brilhar ✨',
+  status: 'Pronta para brilhar',
   visited: [],
   done: [],
+  fame: 0,
+  tracked: null,
+  professionXp: {},
 }
 
 function load(): Saved {
@@ -69,6 +78,9 @@ function load(): Saved {
     coins: Math.max(0, Math.floor(Number(s.coins) || 0)),
     visited: Array.isArray(s.visited) ? s.visited.filter((x) => typeof x === 'string') : [],
     done: Array.isArray(s.done) ? s.done.filter((x) => typeof x === 'string') : [],
+    fame: Math.max(0, Number(s.fame) || 0),
+    tracked: typeof s.tracked === 'string' ? s.tracked : null,
+    professionXp: s.professionXp && typeof s.professionXp === 'object' ? s.professionXp : {},
   }
 }
 
@@ -78,15 +90,22 @@ interface ProfileState extends Saved {
   setStatus: (s: string) => void
   addXp: (n: number) => void
   addCoins: (n: number) => void
+  /** recompensa de minigame (Brilhos, XP, XP de profissao) */
+  grantRewards: (r: { coins?: number; xp?: number; professionXp?: Record<string, number> }) => void
+  addProfessionXp: (name: string, n: number) => void
+  addFame: (n: number) => void
   /** registra que o jogador esteve numa area (id do `locate`); conclui missoes de visita */
   visit: (areaId: string) => void
+  /** conclui uma missao (recompensa + aviso); ignora se ja concluida */
+  completeQuest: (id: string) => void
+  track: (id: string | null) => void
   reset: () => void
 }
 
 let toastId = 0
 const persist = (s: ProfileState) => {
-  const { v, name, named, level, xp, coins, profession, status, visited, done } = s
-  saveJson(STORAGE_KEYS.profile, { v, name, named, level, xp, coins, profession, status, visited, done })
+  const { v, name, named, level, xp, coins, profession, status, visited, done, fame, professionXp, tracked } = s
+  saveJson(STORAGE_KEYS.profile, { v, name, named, level, xp, coins, profession, status, visited, done, fame, professionXp, tracked })
 }
 
 export const useProfileStore = create<ProfileState>()((set, get) => ({
@@ -116,16 +135,35 @@ export const useProfileStore = create<ProfileState>()((set, get) => ({
     set({ coins: Math.max(0, get().coins + n) })
     persist(get())
   },
+  grantRewards: (r) => {
+    if (r.coins) get().addCoins(r.coins)
+    if (r.xp) get().addXp(r.xp)
+    for (const [k, v] of Object.entries(r.professionXp ?? {})) get().addProfessionXp(k, v)
+  },
+  addProfessionXp: (name, n) => {
+    set({ professionXp: { ...get().professionXp, [name]: (get().professionXp[name] ?? 0) + n } })
+    persist(get())
+  },
+  addFame: (n) => {
+    set({ fame: get().fame + n })
+    persist(get())
+  },
   visit: (areaId) => {
     const s = get()
     if (!s.visited.includes(areaId)) set({ visited: [...s.visited, areaId] })
-    for (const q of QUESTS) {
-      if (q.visit !== areaId || get().done.includes(q.id)) continue
-      set({ done: [...get().done, q.id], toast: { id: ++toastId, kind: 'quest', text: `Missão concluída: ${q.title}`, sub: `+${q.xp} XP · +${q.coins} ${CURRENCY_NAME}` } })
-      get().addCoins(q.coins)
-      get().addXp(q.xp)
-      // se subiu de nivel o aviso de nivel substitui o da missao
-    }
+    for (const q of QUESTS) if (q.trigger === 'visit' && q.area === areaId) get().completeQuest(q.id)
+    persist(get())
+  },
+  completeQuest: (id) => {
+    const q = QUESTS.find((x) => x.id === id)
+    if (!q || get().done.includes(id)) return
+    set({ done: [...get().done, id], tracked: get().tracked === id ? null : get().tracked, toast: { id: ++toastId, kind: 'quest', text: `Missão concluída: ${q.title}`, sub: `+${q.xp} XP · +${q.coins} ${CURRENCY_NAME}` } })
+    get().addCoins(q.coins)
+    get().addXp(q.xp) // se subir de nivel, o aviso de nivel substitui o da missao
+    persist(get())
+  },
+  track: (id) => {
+    set({ tracked: id })
     persist(get())
   },
   reset: () => {
@@ -133,3 +171,15 @@ export const useProfileStore = create<ProfileState>()((set, get) => ({
     persist(get())
   },
 }))
+
+// recompensas de minigames acumuladas antes do perfil existir (chave 'jdb.pendingRewards')
+try {
+  const raw = window.localStorage.getItem('jdb.pendingRewards')
+  if (raw) {
+    const r = JSON.parse(raw) as { coins?: number; xp?: number }
+    window.localStorage.removeItem('jdb.pendingRewards')
+    useProfileStore.getState().grantRewards({ coins: Number(r.coins) || 0, xp: Number(r.xp) || 0 })
+  }
+} catch {
+  /* sem storage */
+}

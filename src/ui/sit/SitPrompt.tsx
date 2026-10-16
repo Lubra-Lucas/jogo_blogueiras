@@ -7,9 +7,11 @@ import './sit.css'
 export function SitPrompt() {
   const nearest = useSitStore((s) => s.nearest)
   const seat = useSitStore((s) => s.seat)
+  const phase = useSitStore((s) => s.phase)
   const stacked = useInteractionStore((s) => s.nearby !== null)
   const isTouch = useDeviceStore((s) => s.isTouch)
   if (seat) {
+    if (phase === 'standing') return null
     return (
       <div className={`sit-prompt sit-prompt--hint${stacked ? ' sit-prompt--stacked' : ''}`} role="status">
         <span className="sit-sub">{isTouch ? 'Mova o joystick para levantar' : 'Mova-se (WASD) para levantar'}</span>
