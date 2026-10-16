@@ -5,12 +5,16 @@ export interface QualitySettings {
   shadows: boolean
   shadowMapSize: number
   sparkles: number
+  /** distancia de corte (m) de props pequenos / predios e fim da nevoa */
+  propDist: number
+  buildingDist: number
+  fogFar: number
 }
 
 export const QUALITY_SETTINGS: Record<QualityTier, QualitySettings> = {
-  low: { dpr: 1, shadows: false, shadowMapSize: 512, sparkles: 20 },
-  medium: { dpr: [1, 1.5], shadows: true, shadowMapSize: 1024, sparkles: 40 },
-  high: { dpr: [1, 2], shadows: true, shadowMapSize: 2048, sparkles: 70 },
+  low: { dpr: 1, shadows: false, shadowMapSize: 512, sparkles: 20, propDist: 65, buildingDist: 170, fogFar: 190 },
+  medium: { dpr: [1, 1.5], shadows: true, shadowMapSize: 1024, sparkles: 40, propDist: 85, buildingDist: 215, fogFar: 235 },
+  high: { dpr: [1, 2], shadows: true, shadowMapSize: 2048, sparkles: 70, propDist: 105, buildingDist: 250, fogFar: 270 },
 }
 
 /** Detecta celular / aparelho fraco e devolve o nivel de qualidade. Use ?quality=low|medium|high para forcar. */

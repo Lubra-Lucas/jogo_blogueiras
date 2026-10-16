@@ -1,8 +1,10 @@
+import { spawnFor } from '../world/city/layout'
+
 /** Numeros ajustaveis do jogador. */
 export const PLAYER = {
   radius: 0.28,
   halfHeight: 0.545, // trecho reto; altura total = 2*(0.545+0.28) = 1.65 m (boneca: corpo 1,60 m, coque ate ~1,70 m)
-  spawn: [0, 5] as const, // x, z (y calculado)
+  spawn: spawnFor(new URLSearchParams(window.location.search).get('spawn')), // x, z (y calculado); ?spawn=<id>
   walkSpeed: 3.5,
   runSpeed: 6.5,
   accel: 10, // 1/s, amortecimento exponencial ao acelerar

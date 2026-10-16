@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { usePlayerStore } from '../state/playerStore'
 import { useDeviceStore } from '../game/systems/device'
+import { AreaInfo } from './AreaInfo'
+import { Minimap } from './Minimap'
 
 function useFps() {
   const [fps, setFps] = useState(0)
@@ -31,6 +33,8 @@ export function Hud() {
     <>
       <h1 className="hud-title">Jogo das Blogueiras</h1>
       <div className="hud-fps">{fps} FPS</div>
+      <Minimap />
+      <AreaInfo />
       <p className={`hud-hint${isTouch ? ' hud-hint--touch' : ''}${hasMoved ? ' hud-hint--hidden' : ''}`}>
         {isTouch
           ? 'Joystick para andar (empurre até o fim para correr) · Arraste para girar a câmera · Pinça para zoom · Toque no chão para ir até lá'

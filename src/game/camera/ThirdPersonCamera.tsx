@@ -27,7 +27,7 @@ export function ThirdPersonCamera() {
 
   const rig = useMemo(
     () => ({
-      yaw: 0,
+      yaw: (Number(new URLSearchParams(window.location.search).get('yaw')) || 0) * (Math.PI / 180), // ?yaw=<graus> (so para capturas)
       pitch: MathUtils.degToRad(C.defaultPitchDeg),
       targetDist: C.defaultDistance as number,
       zoomDist: C.defaultDistance as number,

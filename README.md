@@ -41,7 +41,7 @@ Veja [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 3. Camera em terceira pessoa (feito)
 4. Controles mobile (feito)
 5. Personagem: 5a boneca riggada do Meshy com morphs, cores por mascara (pele, macacao, cabelo, batom) e painel de sliders `?editor=1` (feito); 5b animacoes (proximo)
-6. Praca central
-7. Ruas e fachadas
+6. Praca central e cidade em blockout jogavel: 5 bairros, avenidas, parque com lago, minimapa e rotulos de area (feito; falta arte final, interiores e o Bairro Futuro)
+7. Fachadas e interiores das lojas (proximo)
 8. Polimento e qualidade
 9. Base da personalizacao

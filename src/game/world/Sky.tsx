@@ -1,5 +1,6 @@
-import { useMemo } from 'react'
-import { BackSide, Color, ShaderMaterial } from 'three'
+import { useMemo, useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
+import { BackSide, Color, ShaderMaterial, type Mesh } from 'three'
 
 const vertex = /* glsl */ `
   varying vec3 vDir;
@@ -42,8 +43,12 @@ export function Sky() {
     [],
   )
 
+  const mesh = useRef<Mesh>(null)
+  // a cidade e maior que a esfera: o ceu acompanha a camera
+  useFrame(({ camera }) => mesh.current?.position.copy(camera.position))
+
   return (
-    <mesh material={material} renderOrder={-1} frustumCulled={false}>
+    <mesh ref={mesh} material={material} renderOrder={-1} frustumCulled={false}>
       <sphereGeometry args={[300, 32, 16]} />
     </mesh>
   )

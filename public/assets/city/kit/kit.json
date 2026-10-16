@@ -1,0 +1,857 @@
+{
+  "units": "m",
+  "up": "Y",
+  "front": "+Z",
+  "style": "luxury porcelain dollhouse",
+  "pieces": {
+    "wall_plain": {
+      "file": "kit/wall_plain.glb",
+      "tris": 3736,
+      "bytes": 76388,
+      "size": [
+        4.0,
+        4.0,
+        0.75
+      ],
+      "bbox_min": [
+        -2.0,
+        0.0,
+        -0.4
+      ],
+      "bbox_max": [
+        2.0,
+        4.0,
+        0.35
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "white",
+        "trim",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          4,
+          4,
+          0.5
+        ],
+        "center": [
+          0,
+          2,
+          -0.15
+        ]
+      },
+      "mount": "fachada: plano frontal em z=0 (frente +Z no GLB), corpo em z=-0.4..0; empilhe andares a cada 4 m"
+    },
+    "wall_window": {
+      "file": "kit/wall_window.glb",
+      "tris": 3472,
+      "bytes": 79380,
+      "size": [
+        4.0,
+        4.0,
+        0.841
+      ],
+      "bbox_min": [
+        -2.0,
+        0.0,
+        -0.4
+      ],
+      "bbox_max": [
+        2.0,
+        4.0,
+        0.441
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "white",
+        "trim",
+        "glass",
+        "soft",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          4,
+          4,
+          0.5
+        ],
+        "center": [
+          0,
+          2,
+          -0.15
+        ]
+      },
+      "mount": "idem wall_plain"
+    },
+    "wall_door": {
+      "file": "kit/wall_door.glb",
+      "tris": 7680,
+      "bytes": 158468,
+      "size": [
+        4.0,
+        4.0,
+        1.22
+      ],
+      "bbox_min": [
+        -2.0,
+        0.0,
+        -0.4
+      ],
+      "bbox_max": [
+        2.0,
+        4.0,
+        0.82
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "white",
+        "trim",
+        "accent2",
+        "glass"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          4,
+          4,
+          0.5
+        ],
+        "center": [
+          0,
+          2,
+          -0.15
+        ]
+      },
+      "mount": "idem wall_plain; a abertura da porta e solida (colisor cobre a parede inteira, a porta e decorativa)"
+    },
+    "wall_corner": {
+      "file": "kit/wall_corner.glb",
+      "tris": 3036,
+      "bytes": 72964,
+      "size": [
+        1.47,
+        4.0,
+        1.47
+      ],
+      "bbox_min": [
+        -0.735,
+        0.0,
+        -0.935
+      ],
+      "bbox_max": [
+        0.735,
+        4.0,
+        0.535
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "white",
+        "trim",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.7,
+          4
+        ],
+        "center": [
+          0,
+          2,
+          -0.2
+        ]
+      },
+      "mount": "coluna de quina, centro em z=-0.2"
+    },
+    "column_rococo": {
+      "file": "kit/column_rococo.glb",
+      "tris": 3172,
+      "bytes": 83152,
+      "size": [
+        1.447,
+        3.55,
+        1.309
+      ],
+      "bbox_min": [
+        -0.724,
+        0.0,
+        -0.635
+      ],
+      "bbox_max": [
+        0.724,
+        3.55,
+        0.674
+      ],
+      "materials": [
+        "accent",
+        "base",
+        "trim",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.62,
+          3.5
+        ],
+        "center": [
+          0,
+          1.75,
+          0
+        ]
+      },
+      "mount": "livre"
+    },
+    "arch_gate": {
+      "file": "kit/arch_gate.glb",
+      "tris": 6228,
+      "bytes": 127324,
+      "size": [
+        4.38,
+        5.59,
+        0.937
+      ],
+      "bbox_min": [
+        -2.19,
+        0.0,
+        -0.42
+      ],
+      "bbox_max": [
+        2.19,
+        5.59,
+        0.517
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "trim",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.9,
+            3.3,
+            0.9,
+            -1.75,
+            1.65,
+            0
+          ],
+          [
+            0.9,
+            3.3,
+            0.9,
+            1.75,
+            1.65,
+            0
+          ]
+        ],
+        "center": null
+      },
+      "mount": "livre, vao de 2.6 m no centro"
+    },
+    "cornice_scallop": {
+      "file": "kit/cornice_scallop.glb",
+      "tris": 2820,
+      "bytes": 56416,
+      "size": [
+        4.0,
+        0.8,
+        0.763
+      ],
+      "bbox_min": [
+        -2.0,
+        0.15,
+        -0.02
+      ],
+      "bbox_max": [
+        2.0,
+        0.95,
+        0.743
+      ],
+      "materials": [
+        "white",
+        "accent",
+        "base",
+        "trim",
+        "accent2"
+      ],
+      "walkable": false,
+      "mount": "no topo da parede (z do topo da fachada), z=0 da peca fica ao nivel do topo da parede"
+    },
+    "roof_dome_small": {
+      "file": "kit/roof_dome_small.glb",
+      "tris": 3508,
+      "bytes": 92348,
+      "size": [
+        3.23,
+        2.65,
+        3.23
+      ],
+      "bbox_min": [
+        -1.615,
+        0.0,
+        -1.615
+      ],
+      "bbox_max": [
+        1.615,
+        2.65,
+        1.615
+      ],
+      "materials": [
+        "accent",
+        "trim",
+        "base"
+      ],
+      "walkable": false,
+      "mount": "sobre o telhado"
+    },
+    "awning_striped": {
+      "file": "kit/awning_striped.glb",
+      "tris": 3148,
+      "bytes": 55008,
+      "size": [
+        3.792,
+        0.892,
+        1.284
+      ],
+      "bbox_min": [
+        -1.896,
+        -0.025,
+        -0.002
+      ],
+      "bbox_max": [
+        1.896,
+        0.867,
+        1.283
+      ],
+      "materials": [
+        "accent2",
+        "trim",
+        "base"
+      ],
+      "walkable": false,
+      "mount": "encostado na fachada a 2.8 m de altura; costas em z=0"
+    },
+    "balcony_curved": {
+      "file": "kit/balcony_curved.glb",
+      "tris": 3184,
+      "bytes": 82024,
+      "size": [
+        3.175,
+        1.643,
+        1.384
+      ],
+      "bbox_min": [
+        -1.587,
+        -0.518,
+        -0.25
+      ],
+      "bbox_max": [
+        1.587,
+        1.125,
+        1.134
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "trim",
+        "accent2"
+      ],
+      "walkable": false,
+      "mount": "piso da sacada ao nivel do piso do 2o andar (y=4); costas em z=0"
+    },
+    "sign_frame": {
+      "file": "kit/sign_frame.glb",
+      "tris": 4712,
+      "bytes": 118224,
+      "size": [
+        3.28,
+        1.95,
+        0.194
+      ],
+      "bbox_min": [
+        -1.64,
+        -0.867,
+        -0.04
+      ],
+      "bbox_max": [
+        1.64,
+        1.083,
+        0.154
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "accent",
+        "accent2"
+      ],
+      "walkable": false,
+      "mount": "centro-costas na fachada; pivo no centro da elipse"
+    },
+    "lamp_post": {
+      "file": "kit/lamp_post.glb",
+      "tris": 3228,
+      "bytes": 74920,
+      "size": [
+        1.764,
+        4.68,
+        0.87
+      ],
+      "bbox_min": [
+        -0.882,
+        0.0,
+        -0.435
+      ],
+      "bbox_max": [
+        0.882,
+        4.68,
+        0.435
+      ],
+      "materials": [
+        "accent",
+        "trim",
+        "glow",
+        "base"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.35,
+          4.6
+        ],
+        "center": [
+          0,
+          2.3,
+          0
+        ]
+      }
+    },
+    "bench_tufted": {
+      "file": "kit/bench_tufted.glb",
+      "tris": 6280,
+      "bytes": 133492,
+      "size": [
+        2.374,
+        1.204,
+        0.769
+      ],
+      "bbox_min": [
+        -1.187,
+        0.002,
+        -0.371
+      ],
+      "bbox_max": [
+        1.187,
+        1.206,
+        0.398
+      ],
+      "materials": [
+        "seat",
+        "trim",
+        "base",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.0,
+          1.0,
+          0.75
+        ],
+        "center": [
+          0,
+          0.5,
+          0.0
+        ]
+      }
+    },
+    "planter_round": {
+      "file": "kit/planter_round.glb",
+      "tris": 3896,
+      "bytes": 85028,
+      "size": [
+        1.238,
+        1.462,
+        1.238
+      ],
+      "bbox_min": [
+        -0.619,
+        0.0,
+        -0.619
+      ],
+      "bbox_max": [
+        0.619,
+        1.462,
+        0.619
+      ],
+      "materials": [
+        "white",
+        "trim",
+        "accent2",
+        "leaf",
+        "accent",
+        "soft",
+        "base"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.6,
+          1.3
+        ],
+        "center": [
+          0,
+          0.65,
+          0
+        ]
+      }
+    },
+    "hedge_heart": {
+      "file": "kit/hedge_heart.glb",
+      "tris": 3820,
+      "bytes": 85752,
+      "size": [
+        1.272,
+        1.868,
+        0.892
+      ],
+      "bbox_min": [
+        -0.655,
+        0.0,
+        -0.43
+      ],
+      "bbox_max": [
+        0.617,
+        1.868,
+        0.462
+      ],
+      "materials": [
+        "accent",
+        "trim",
+        "leaf",
+        "accent2",
+        "soft",
+        "deep"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.45,
+          1.9
+        ],
+        "center": [
+          0,
+          0.95,
+          0
+        ]
+      }
+    },
+    "fence_segment": {
+      "file": "kit/fence_segment.glb",
+      "tris": 3924,
+      "bytes": 85136,
+      "size": [
+        2.128,
+        1.12,
+        0.228
+      ],
+      "bbox_min": [
+        -1.064,
+        0.0,
+        -0.114
+      ],
+      "bbox_max": [
+        1.064,
+        1.12,
+        0.114
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.1,
+          1.1,
+          0.2
+        ],
+        "center": [
+          0,
+          0.55,
+          0
+        ]
+      }
+    },
+    "balloon_heart": {
+      "file": "kit/balloon_heart.glb",
+      "tris": 1552,
+      "bytes": 34752,
+      "size": [
+        0.943,
+        2.984,
+        0.5
+      ],
+      "bbox_min": [
+        -0.448,
+        -0.03,
+        -0.25
+      ],
+      "bbox_max": [
+        0.494,
+        2.954,
+        0.25
+      ],
+      "materials": [
+        "accent2",
+        "white",
+        "trim"
+      ],
+      "walkable": false,
+      "note": "flutuante; preso por fio, sem colisao"
+    },
+    "fountain_center": {
+      "file": "kit/fountain_center.glb",
+      "tris": 22344,
+      "bytes": 571248,
+      "size": [
+        5.514,
+        4.415,
+        5.514
+      ],
+      "bbox_min": [
+        -2.757,
+        0.0,
+        -2.757
+      ],
+      "bbox_max": [
+        2.757,
+        4.415,
+        2.757
+      ],
+      "materials": [
+        "accent",
+        "white",
+        "trim",
+        "water",
+        "deep",
+        "accent2",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          2.65,
+          1.0
+        ],
+        "center": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "note": "colisor so da bacia; o topo e decorativo"
+    },
+    "paving_tile": {
+      "file": "kit/paving_tile.glb",
+      "tris": 2440,
+      "bytes": 44472,
+      "size": [
+        2.0,
+        0.135,
+        2.0
+      ],
+      "bbox_min": [
+        -1.0,
+        -0.005,
+        -1.0
+      ],
+      "bbox_max": [
+        1.0,
+        0.13,
+        1.0
+      ],
+      "materials": [
+        "trim",
+        "base",
+        "accent",
+        "white",
+        "accent2"
+      ],
+      "walkable": true,
+      "note": "amostra 2x2 m para virar textura/padrao do piso da praca"
+    }
+  },
+  "slots": [
+    "base",
+    "accent",
+    "accent2",
+    "soft",
+    "deep",
+    "seat",
+    "white",
+    "trim",
+    "glass",
+    "glow",
+    "leaf",
+    "water"
+  ],
+  "slotNotes": "geometria exportada com materiais nomeados por slot; recolore por predio trocando a cor de cada material (trim = metal)",
+  "metals": {
+    "gold": {
+      "color": "#f6d878",
+      "roughness": 0.2,
+      "metallic": 1
+    },
+    "rosegold": {
+      "color": "#eaa595",
+      "roughness": 0.22,
+      "metallic": 1
+    },
+    "silver": {
+      "color": "#e3e6ee",
+      "roughness": 0.16,
+      "metallic": 1
+    },
+    "champagne": {
+      "color": "#ecd9a2",
+      "roughness": 0.2,
+      "metallic": 1
+    },
+    "chrome": {
+      "color": "#f5f7fb",
+      "roughness": 0.06,
+      "metallic": 1
+    }
+  },
+  "palettes": {
+    "casa": {
+      "label": "Casa dos Sonhos",
+      "base": "#fff3ea",
+      "accent": "#f7c6d9",
+      "accent2": "#ff8fbf",
+      "soft": "#d9c2f0",
+      "deep": "#8a2f4a",
+      "seat": "#f6a3c4",
+      "white": "#fffaf6",
+      "glass": "#ffb3d1",
+      "glow": "#ffd08a",
+      "metal": "gold"
+    },
+    "cafe": {
+      "label": "Cafe Rose",
+      "base": "#bfe8d6",
+      "accent": "#fff3ea",
+      "accent2": "#e0405a",
+      "soft": "#ffd9c9",
+      "deep": "#8f2a3d",
+      "seat": "#e8697e",
+      "white": "#fffaf6",
+      "glass": "#ffc9c0",
+      "glow": "#ffd9a0",
+      "metal": "rosegold"
+    },
+    "salao": {
+      "label": "Salao & Spa",
+      "base": "#d6c4f0",
+      "accent": "#fff3ea",
+      "accent2": "#a77fd9",
+      "soft": "#f1e6ff",
+      "deep": "#5b3f87",
+      "seat": "#c9a8ee",
+      "white": "#fffaf6",
+      "glass": "#e3ccff",
+      "glow": "#ffe0f0",
+      "metal": "silver"
+    },
+    "boutique": {
+      "label": "Boutique",
+      "base": "#c6ddf5",
+      "accent": "#fffaf6",
+      "accent2": "#7fb2ea",
+      "soft": "#e3efff",
+      "deep": "#2f5a8f",
+      "seat": "#a8c8ef",
+      "white": "#fffaf6",
+      "glass": "#cfe6ff",
+      "glow": "#fff0c8",
+      "metal": "champagne"
+    },
+    "joalheria": {
+      "label": "Joalheria",
+      "base": "#1d1a22",
+      "accent": "#2f2a38",
+      "accent2": "#8a2f4a",
+      "soft": "#4a4256",
+      "deep": "#8a2f4a",
+      "seat": "#3b2f45",
+      "white": "#f3eee8",
+      "glass": "#9a7fb5",
+      "glow": "#ffe2a0",
+      "metal": "champagne"
+    },
+    "estudio": {
+      "label": "Estudio de Fotos",
+      "base": "#ffc2a8",
+      "accent": "#fff3ea",
+      "accent2": "#ff7f6b",
+      "soft": "#ffe0cf",
+      "deep": "#a8483a",
+      "seat": "#ff9d86",
+      "white": "#fffaf6",
+      "glass": "#ffd5c4",
+      "glow": "#fff0d0",
+      "metal": "chrome"
+    },
+    "palco": {
+      "label": "Palco / Boate",
+      "base": "#b04ad8",
+      "accent": "#e9c6ff",
+      "accent2": "#ff4fd0",
+      "soft": "#6a2d9c",
+      "deep": "#3a1466",
+      "seat": "#8a3cc0",
+      "white": "#f6e8ff",
+      "glass": "#ff8be8",
+      "glow": "#ff5ff0",
+      "glow_str": 8.0,
+      "metal": "silver"
+    },
+    "jardim": {
+      "label": "Jardim",
+      "base": "#b9d2a8",
+      "accent": "#fffaf6",
+      "accent2": "#f2d36b",
+      "soft": "#f6e3a1",
+      "deep": "#6b8a58",
+      "seat": "#d6e6a8",
+      "white": "#fffaf6",
+      "glass": "#d6f0d0",
+      "glow": "#fff2b0",
+      "metal": "gold"
+    }
+  }
+}
