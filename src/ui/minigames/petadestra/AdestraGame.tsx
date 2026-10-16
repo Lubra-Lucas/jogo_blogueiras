@@ -309,7 +309,7 @@ function Play({ difficulty, seed, level, paused, look, onFinish }: PlayProps) {
 
       <div className="ad-keys" style={{ gridTemplateColumns: `repeat(${P.pool}, 1fr)` }}>
         {pool.map((c, i) => (
-          <button key={c} type="button" className={`ad-key${hintCmd === c ? ' hint' : ''}`} disabled={s.phase !== 'answer'} onPointerDown={() => input(c)}>
+          <button key={c} type="button" className={`ad-key${hintCmd === c ? ' hint' : ''}`} disabled={s.phase !== 'answer'} onPointerDown={() => input(c)} onClick={(e) => e.detail === 0 && input(c)}>
             <CmdIcon cmd={c} />
             <b>{COMMAND_LABEL[c]}</b>
             <small>{i + 1}</small>

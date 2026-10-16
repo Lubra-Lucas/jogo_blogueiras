@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useMemo, useRef } from 'react'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
 import { Html, useGLTF } from '@react-three/drei'
-import { DoubleSide, Group, Mesh, MeshBasicMaterial, Shape, ShapeGeometry, type Material } from 'three'
+import { DoubleSide, Group, Mesh, MeshBasicMaterial, Shape, ShapeGeometry, Vector3, type Material } from 'three'
 import { usePlayerStore } from '../../state/playerStore'
 import { useSitStore } from '../sit/sitStore'
 import { useEmoteStore } from '../character/animation/emoteStore'
@@ -13,6 +13,9 @@ import { PET_BASE, findPet, loadPetCatalog, usePetCatalog, type PetBreed, type P
 import { usePetStore } from './petStore'
 import { petFree } from './walkable'
 import { petRuntime } from './runtime'
+
+const PET_DEBUG = new URLSearchParams(window.location.search).has('petdebug')
+const _v = new Vector3()
 
 const HAPPY_EMOTES = new Set(['wave', 'kiss', 'thankful', 'clap', 'laugh', 'jump', 'dance', 'bow'])
 
@@ -274,6 +277,13 @@ function PetActor({ id, breed, colors }: { id: string; breed: PetBreed; colors: 
     petRuntime.id = id
     petRuntime.dist = d
     petRuntime.height = breed.meta.height
+    petRuntime.mode = s.mode
+    petRuntime.clip = s.clip
+    if (PET_DEBUG) {
+      _v.set(s.x, breed.meta.height * PET_SCALE * 0.5, s.z).project(state.camera)
+      petRuntime.sx = ((_v.x + 1) / 2) * state.size.width
+      petRuntime.sy = ((1 - _v.y) / 2) * state.size.height
+    }
 
     // tigela
     const bowl = bowlRef.current

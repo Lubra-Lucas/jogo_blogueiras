@@ -196,6 +196,7 @@ export function PetShopScreen() {
                       <button
                         key={s}
                         type="button"
+                        role="tab"
                         className="sh-pill"
                         aria-selected={species === s}
                         onClick={() => {
@@ -381,6 +382,7 @@ function MyPets({ owned, names, breeds, activeId, onGoShop }: { owned: string[];
             </div>
             <div className="pet-row">
               <input
+                key={`${id}:${names[id] ?? ''}`}
                 className="pet-input"
                 defaultValue={names[id] ?? ''}
                 maxLength={14}
