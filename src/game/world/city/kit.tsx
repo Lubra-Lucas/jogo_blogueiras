@@ -11,6 +11,7 @@ import kitLod from './propsLod.json'
 import { merge, paint } from './geo'
 import { Cull, LodCull, chunkKey, useCullDist } from './cull'
 import { nightGlass, registerGlowColor, registerWet } from '../environment/registry'
+import { addGrain } from './grain'
 
 /**
  * Kit Y2K (public/assets/city/kit_y2k + kitY2k.json, gerado por tools/blender/city_kit_y2k.py).
@@ -89,6 +90,9 @@ export function kitMaterials(): Record<Cls, Material> {
   // ambiente: porcelana ganha brilho molhado na chuva, janelas acendem a noite, o brilho (neon/globos/placas) cresce a noite
   registerWet(MATS.por as MeshPhysicalMaterial, { roughWet: 0.12, ccWet: 1, dark: 0.08 })
   registerWet(MATS.cloth as MeshPhysicalMaterial, { roughWet: 0.3, ccWet: 0.6, dark: 0.12 })
+  // graniado procedural (pedra/reboco/madeira) sem UV: so perto, some a ~50 m
+  addGrain(MATS.por, { bump: 0.03, scale: 1.4, tone: 0.09, far: 50 })
+  addGrain(MATS.cloth, { bump: 0.025, scale: 2.2, tone: 0.12, far: 30, channel: 2 })
   nightGlass(MATS.glass as MeshPhysicalMaterial)
   registerGlowColor(MATS.glow as MeshBasicMaterial, 0.8, 1.35)
   return MATS

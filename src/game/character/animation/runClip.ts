@@ -5,7 +5,7 @@ import { AnimationClip, Quaternion, QuaternionKeyframeTrack, Vector3, VectorKeyf
  * derivado do ciclo de caminhada `walk_normal` em tempo de carga: as oscilacoes de cada osso em torno da pose media sao
  * amplificadas (passada maior, bracos soltos), joelhos e cotovelos ganham flexao fixa, o quadril sobe e desce mais (fase de voo)
  * e o tronco gira mais. E um "trote" feminino leve, nao uma corrida de atleta.
- * Quando existir um Mixamo de corrida: adicione-o a CLIPS em tools/blender/retarget_mixamo.py com o nome "run" e o clipe do
+ * Fallback: o GLB agora traz o `run` real do Mixamo (Running (1).fbx); isto so e usado se o clipe faltar.
  * GLB passa a ter prioridade sobre este (animator.ts so gera o procedural se `run` nao existir).
  */
 export interface RunTuning {

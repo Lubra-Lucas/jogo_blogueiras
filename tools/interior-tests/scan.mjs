@@ -1,7 +1,7 @@
 // Varre posicoes ao redor de cada ponto de minijogo/loja e mostra onde [E] ficaria ambiguo (sentar x usar x conversar).
 import { launch, sleep, waitReady } from './cdp.mjs'
 import { enter } from './flow.mjs'
-const c = await launch({ url: 'http://localhost:5175/jogo_blogueiras/' })
+const c = await launch({ url: 'http://localhost:5175/jogo_blogueiras/?quality=low' })
 const S = (e) => c.ev(e)
 try {
   await waitReady(c)
