@@ -76,5 +76,5 @@ export function EnvironmentDriver() {
     }
   })
 
-  return <hemisphereLight ref={hemi} args={['#fff4ea', '#b4bcd8', 0.36]} />
+  return <hemisphereLight ref={hemi} args={['#f4f1ea', '#a8abb6', 0.36]} />
 }

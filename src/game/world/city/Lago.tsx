@@ -154,10 +154,10 @@ function useWaterMaterial(): ShaderMaterial {
           {
             uTime: { value: 0 },
             uR: { value: LAGO.r },
-            uDeep: { value: new Color('#12b3b6') },
-            uMid: { value: new Color('#38cdbd') },
-            uShallow: { value: new Color('#94ecd2') },
-            uSky: { value: new Color('#ffe9f4') },
+            uDeep: { value: new Color('#1c7f93') },
+            uMid: { value: new Color('#3aa3a8') },
+            uShallow: { value: new Color('#8ccfbc') },
+            uSky: { value: new Color('#e6f0f6') },
             uSunDir: { value: new Vector3(0.45, 0.75, 0.35) },
             uMoonDir: { value: new Vector3(-0.4, 0.5, -0.5) },
             uNight: { value: 0 },
@@ -179,7 +179,7 @@ function useWaterMaterial(): ShaderMaterial {
   )
 }
 
-const GOLD = '#f2cf6e'
+const GOLD = '#b38e4f'
 const SKY_WHITE = new Color('#ffffff')
 
 function buildLakeGeos() {
@@ -191,7 +191,7 @@ function buildLakeGeos() {
     new Vector2(r + 0.7, 0.5), new Vector2(r + 1.25, 0.28), new Vector2(r + 1.6, 0.0),
   ]
   const rim = new LatheGeometry(pts, 72, Math.PI + gap, Math.PI * 2 - gap * 2)
-  paint(rim, '#fff4ec')
+  paint(rim, '#cfc8b8')
   rim.translate(LAGO.cx, 0, LAGO.cz)
   // perolas e fio de ouro-joia
   const pearls: BufferGeometry[] = []
@@ -201,7 +201,7 @@ function buildLakeGeos() {
     if (Math.abs(Math.atan2(Math.sin(a - Math.PI * 1.5), Math.cos(a - Math.PI * 1.5))) < gap + 0.1) continue
     const s = new SphereGeometry(0.3, 10, 7)
     s.translate(LAGO.cx + Math.cos(a) * (r + 0.55), 0.74, LAGO.cz + Math.sin(a) * (r + 0.55))
-    pearls.push(paint(s, i % 5 === 0 ? '#ffd9e6' : '#fffaf6'))
+    pearls.push(paint(s, i % 5 === 0 ? '#bfb8a6' : '#d9d3c4'))
   }
   // ilhota: base de grama-menta com friso de perola e ouro
   const R = ISLET.r
@@ -209,10 +209,10 @@ function buildLakeGeos() {
     [new Vector2(0, 0.14), new Vector2(R - 0.5, 0.14), new Vector2(R - 0.2, 0.1), new Vector2(R + 0.05, 0.02), new Vector2(R, -0.2), new Vector2(0, -0.2)],
     40,
   )
-  paint(isl, '#b9ecd2')
+  paint(isl, '#78ac5c')
   isl.translate(ISLET.x, 0, ISLET.z)
   const islRim = new TorusGeometry(R - 0.05, 0.16, 8, 48).rotateX(Math.PI / 2)
-  paint(islRim, '#fff4ec')
+  paint(islRim, '#cfc8b8')
   islRim.translate(ISLET.x, 0.14, ISLET.z)
   // lirios: discos com um recorte e flores-bolha
   const lily: BufferGeometry[] = []
@@ -226,14 +226,14 @@ function buildLakeGeos() {
     if (Math.abs(x - BRIDGE.x) < 3 && z < ISLET.z) continue
     const pr = 0.5 + rnd(i + 9) * 0.45
     const pad = new CircleGeometry(pr, 12, rnd(i + 3) * 6, Math.PI * 1.88).rotateX(-Math.PI / 2)
-    paint(pad, i % 3 === 0 ? '#8fd9ae' : '#a6e6bd')
+    paint(pad, i % 3 === 0 ? '#4f9a58' : '#62ab62')
     pad.translate(x, 0.235, z)
     lily.push(pad)
     if (i % 3 === 1) {
       const f = new SphereGeometry(0.2, 8, 6)
       f.scale(1, 0.8, 1)
       f.translate(x, 0.36, z)
-      lily.push(paint(f, ['#ffc2d9', '#fff0a0', '#ffb199'][i % 3 === 1 ? i % 3 : 0]))
+      lily.push(paint(f, ['#f2b8cf', '#f7e58a', '#fff4f0'][i % 3 === 1 ? i % 3 : 0]))
     }
   }
   // fio de ouro-joia da borda (em cor de vertice, junto com a pedra) + canteiros de flores: tudo numa malha so

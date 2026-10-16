@@ -54,7 +54,7 @@ fácil de entender em 10 segundos, mas tem **habilidade de verdade** e espaço p
 - Interface com as variáveis de `src/ui/tokens.css` (vidro perolado, poucas cores de destaque,
   cantos e sombras consistentes, serifa nos títulos e sans no texto).
 - **Sem emoji** e sem cara de "gerado por IA": ícones desenhados em SVG, no mesmo traço.
-- Estilo boneca de porcelana/vinil brilhante, cores variadas (rosa é só um dos destaques).
+- Estilo boneca de porcelana/vinil brilhante, mas com **paleta de cores do mundo real** (pedra, creme, madeira, metais, azul-marinho, verdes, preto, branco): nada infantilizado. Rosa e tons pastel só como destaque raro.
 - Microanimações satisfatórias (toque, acerto, combo, moedas), sem exagero.
 - Todo texto em **português do Brasil**, com acentos corretos.
 - Conteúdo adequado a um público amplo, com crianças.

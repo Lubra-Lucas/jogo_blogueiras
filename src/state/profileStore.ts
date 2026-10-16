@@ -1,11 +1,21 @@
 import { create } from 'zustand'
 import { loadJson, saveJson, STORAGE_KEYS } from '../shared/storage'
 import { QUESTS } from './quests'
+import { STARTER_ITEMS } from '../game/economy/prices'
+import { emitEconomy } from '../game/economy/events'
+import type { Currency, LedgerEntry } from '../game/economy/types'
 
 /** Nome da moeda do jogo (troque aqui para renomear em toda a UI). */
 export const CURRENCY_NAME = 'Brilhos'
 
-export const PROFESSIONS = ['Barista', 'Cabeleireira', 'Fotógrafa', 'Modelo', 'Estilista'] as const
+/** nivel de profissao (1..10) a partir do XP acumulado: 30*n*(n-1) */
+export function professionLevel(xp: number): number {
+  let n = 1
+  while (n < 10 && xp >= 30 * (n + 1) * n) n++
+  return n
+}
+
+export const PROFESSIONS = ['Barista', 'Cabeleireira', 'Fotógrafa', 'Modelo', 'Estilista', 'DJ', 'Joalheira'] as const
 export const NO_PROFESSION = 'Sem profissão'
 
 /** XP necessario para sair do nivel `level` para o proximo. */
@@ -48,6 +58,12 @@ interface Saved {
   tracked: string | null
   /** XP por profissao (minigames) */
   professionXp: Record<string, number>
+  /** Diamantes (moeda premium) */
+  diamonds: number
+  /** ids de itens possuidos (inventario) */
+  owned: string[]
+  /** extrato: ultimas 50 transacoes (transparencia; NAO e anti-fraude, ver economy/service.ts) */
+  ledger: LedgerEntry[]
 }
 
 const DEFAULTS: Saved = {
@@ -64,6 +80,9 @@ const DEFAULTS: Saved = {
   fame: 0,
   tracked: null,
   professionXp: {},
+  diamonds: 0,
+  owned: [...STARTER_ITEMS],
+  ledger: [],
 }
 
 function load(): Saved {
@@ -81,6 +100,9 @@ function load(): Saved {
     fame: Math.max(0, Number(s.fame) || 0),
     tracked: typeof s.tracked === 'string' ? s.tracked : null,
     professionXp: s.professionXp && typeof s.professionXp === 'object' ? s.professionXp : {},
+    diamonds: Math.max(0, Math.floor(Number(s.diamonds) || 0)),
+    owned: [...new Set([...STARTER_ITEMS, ...(Array.isArray(s.owned) ? s.owned.filter((x) => typeof x === 'string') : [])])],
+    ledger: Array.isArray(s.ledger) ? s.ledger.filter((e) => e && typeof e.amount === 'number').slice(0, 50) : [],
   }
 }
 
@@ -89,7 +111,14 @@ interface ProfileState extends Saved {
   setName: (n: string) => void
   setStatus: (s: string) => void
   addXp: (n: number) => void
-  addCoins: (n: number) => void
+  addCoins: (n: number, reason?: string, opts?: { silent?: boolean }) => void
+  /** entrada de moeda com registro no extrato */
+  /** opts.silent: nao conta como 'ganho' para missoes/conquistas (ex.: vendas no Mercado) */
+  credit: (currency: Currency, n: number, reason: string, opts?: { silent?: boolean }) => void
+  /** saida de moeda; false se saldo insuficiente (nada muda) */
+  debit: (currency: Currency, n: number, reason: string) => boolean
+  /** adiciona item ao inventario */
+  grantItem: (id: string) => void
   /** recompensa de minigame (Brilhos, XP, XP de profissao) */
   grantRewards: (r: { coins?: number; xp?: number; professionXp?: Record<string, number> }) => void
   addProfessionXp: (name: string, n: number) => void
@@ -103,9 +132,11 @@ interface ProfileState extends Saved {
 }
 
 let toastId = 0
+let ledgerId = Date.now()
+const entry = (currency: Currency, amount: number, reason: string, balance: number): LedgerEntry => ({ id: ++ledgerId, t: Date.now(), currency, amount, reason, balance })
 const persist = (s: ProfileState) => {
-  const { v, name, named, level, xp, coins, profession, status, visited, done, fame, professionXp, tracked } = s
-  saveJson(STORAGE_KEYS.profile, { v, name, named, level, xp, coins, profession, status, visited, done, fame, professionXp, tracked })
+  const { v, name, named, level, xp, coins, profession, status, visited, done, fame, professionXp, tracked, diamonds, owned, ledger } = s
+  saveJson(STORAGE_KEYS.profile, { v, name, named, level, xp, coins, profession, status, visited, done, fame, professionXp, tracked, diamonds, owned, ledger })
 }
 
 export const useProfileStore = create<ProfileState>()((set, get) => ({
@@ -130,14 +161,41 @@ export const useProfileStore = create<ProfileState>()((set, get) => ({
     }
     set({ level, xp, toast: level > before ? { id: ++toastId, kind: 'level', text: `Nível ${level}!`, sub: fameTitle(level) } : get().toast })
     persist(get())
+    for (let l = before + 1; l <= level; l++) emitEconomy({ type: 'level', level: l })
   },
-  addCoins: (n) => {
-    set({ coins: Math.max(0, get().coins + n) })
+  addCoins: (n, reason = 'Recompensa', opts) => {
+    const coins = Math.max(0, get().coins + n)
+    set({ coins, ledger: n ? [entry('brilhos', n, reason, coins), ...get().ledger].slice(0, 50) : get().ledger })
+    persist(get())
+    if (n > 0 && !opts?.silent) emitEconomy({ type: 'earn', amount: n })
+  },
+  credit: (currency, n, reason, opts) => {
+    if (!(n > 0)) return
+    if (currency === 'brilhos') return get().addCoins(n, reason, opts)
+    const diamonds = get().diamonds + Math.floor(n)
+    set({ diamonds, ledger: [entry('diamantes', Math.floor(n), reason, diamonds), ...get().ledger].slice(0, 50) })
     persist(get())
   },
+  debit: (currency, n, reason) => {
+    n = Math.floor(n)
+    if (!(n > 0)) return false
+    const key = currency === 'brilhos' ? 'coins' : 'diamonds'
+    const cur = get()[key]
+    if (cur < n) return false
+    set({ [key]: cur - n, ledger: [entry(currency, -n, reason, cur - n), ...get().ledger].slice(0, 50) } as Partial<ProfileState>)
+    persist(get())
+    return true
+  },
+  grantItem: (id) => {
+    if (get().owned.includes(id)) return
+    set({ owned: [...get().owned, id] })
+    persist(get())
+    emitEconomy({ type: 'item', itemId: id })
+  },
   grantRewards: (r) => {
-    if (r.coins) get().addCoins(r.coins)
+    if (r.coins) get().addCoins(r.coins, 'Recompensa de minijogo')
     if (r.xp) get().addXp(r.xp)
+    if (r.coins || r.xp) emitEconomy({ type: 'round' })
     for (const [k, v] of Object.entries(r.professionXp ?? {})) get().addProfessionXp(k, v)
   },
   addProfessionXp: (name, n) => {
@@ -158,7 +216,12 @@ export const useProfileStore = create<ProfileState>()((set, get) => ({
     const q = QUESTS.find((x) => x.id === id)
     if (!q || get().done.includes(id)) return
     set({ done: [...get().done, id], tracked: get().tracked === id ? null : get().tracked, toast: { id: ++toastId, kind: 'quest', text: `Missão concluída: ${q.title}`, sub: `+${q.xp} XP · +${q.coins} ${CURRENCY_NAME}` } })
-    get().addCoins(q.coins)
+    get().addCoins(q.coins, `Missão: ${q.title}`)
+    if (q.rewardItem) get().grantItem(q.rewardItem)
+    if (q.rewardEdition) {
+      const ed = q.rewardEdition
+      void import('../game/market/api').then((m) => m.grantEdition(ed, 'missao_dificil')).catch(() => undefined)
+    }
     get().addXp(q.xp) // se subir de nivel, o aviso de nivel substitui o da missao
     persist(get())
   },
@@ -167,7 +230,7 @@ export const useProfileStore = create<ProfileState>()((set, get) => ({
     persist(get())
   },
   reset: () => {
-    set({ ...DEFAULTS, toast: null })
+    set({ ...DEFAULTS, owned: [...STARTER_ITEMS], ledger: [], toast: null })
     persist(get())
   },
 }))
@@ -183,3 +246,4 @@ try {
 } catch {
   /* sem storage */
 }
+if (import.meta.env.DEV) (window as unknown as { __profile: typeof useProfileStore }).__profile = useProfileStore

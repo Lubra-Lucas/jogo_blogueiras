@@ -280,7 +280,7 @@ def make_material(name, hexcol, finish, tex_dir=None, double=True):
         nt.links.new(tx.outputs['Color'], mix.inputs[6])
         nt.links.new(mix.outputs[2], pb.inputs['Base Color'])
         nt.links.new(tx.outputs['Alpha'], pb.inputs['Alpha'])
-    if f.get('normalTexture') and tex_dir:
+    if f.get('normalTexture') and tex_dir and os.environ.get('KEEP_TEX'):
         img = bpy.data.images.load(os.path.join(tex_dir, f['normalTexture'] + "_n.png")); img.colorspace_settings.name = 'Non-Color'
         tx = nt.nodes.new('ShaderNodeTexImage'); tx.image = img
         nm = nt.nodes.new('ShaderNodeNormalMap'); nm.inputs['Strength'].default_value = 1.0

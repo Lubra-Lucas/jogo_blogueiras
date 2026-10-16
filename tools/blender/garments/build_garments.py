@@ -16,9 +16,12 @@ db = json.load(open(jpath, encoding="utf-8")) if os.path.exists(jpath) else {"ve
 ref = glb_json(os.path.join(REPO, "public", "assets", "characters", "doll_base.glb"))
 for it in ITEMS:
     t1 = time.time()
-    mod = importlib.import_module("g_" + it)
-    G, mats, meta = mod.build(body)
-    ob = to_blender(G, mats, tex)
+    try:
+        mod = importlib.import_module("g_" + it)
+        G, mats, meta = mod.build(body)
+        ob = to_blender(G, mats, tex)
+    except Exception:
+        import traceback; print("[garm] FAILED", it); traceback.print_exc(); sys.stdout.flush(); continue
     path = os.path.join(OUTDIR, it + ".glb")
     sz = export_glb(ob, body.rig, path)
     j = glb_json(path)
@@ -29,4 +32,5 @@ for it in ITEMS:
     meta.update(file=it + ".glb", triangles=G.tri_count(), sizeBytes=sz, morphTargets=ntg)
     db["items"] = [x for x in db["items"] if x["id"] != it] + [meta]
     bpy.data.objects.remove(ob, do_unlink=True)
+    json.dump(db, open(jpath, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 json.dump(db, open(jpath, "w", encoding="utf-8"), ensure_ascii=False, indent=2)

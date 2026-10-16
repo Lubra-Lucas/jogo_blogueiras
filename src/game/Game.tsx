@@ -20,7 +20,9 @@ import { ChatBubble } from '../ui/chat/ChatBubble'
 import { PhotoCapture } from '../ui/PhotoCapture'
 import { InteractionTrigger } from './interaction/InteractionTrigger'
 import { SitController } from './sit/SitController'
+import { LifeDriver } from './world/life/LifeDriver'
 import { NavigationRunner } from './navigation/NavigationRunner'
+import { VehicleSystem } from './vehicles/VehicleSystem'
 
 const VIEW = getViewMode()
 const MAP_MODE = new URLSearchParams(window.location.search).get('map') === '1'
@@ -35,7 +37,7 @@ export function Game({ tier }: { tier: QualityTier }) {
   }, [gl])
 
   useEffect(() => {
-    scene.fog = MAP_MODE ? null : new Fog('#f5bcd6', Math.min(135, q.fogFar * 0.58), q.fogFar)
+    scene.fog = MAP_MODE ? null : new Fog('#c9d6e3', Math.min(135, q.fogFar * 0.58), q.fogFar)
     return () => {
       scene.fog = null
     }
@@ -52,14 +54,14 @@ export function Game({ tier }: { tier: QualityTier }) {
         background={false}
         environmentIntensity={0.4}
       >
-        <Lightformer form="rect" intensity={2.2} color="#ffc4d8" position={[0, 8, 0]} rotation-x={Math.PI / 2} scale={[18, 18, 1]} />
-        <Lightformer form="rect" intensity={3.5} color="#ffd36b" position={[9, 3, 2]} rotation-y={-Math.PI / 2} scale={[14, 3, 1]} />
-        <Lightformer form="rect" intensity={2.4} color="#c9a6ff" position={[-9, 3, -2]} rotation-y={Math.PI / 2} scale={[14, 5, 1]} />
+        <Lightformer form="rect" intensity={2.2} color="#f4efe6" position={[0, 8, 0]} rotation-x={Math.PI / 2} scale={[18, 18, 1]} />
+        <Lightformer form="rect" intensity={3.5} color="#ffe2b0" position={[9, 3, 2]} rotation-y={-Math.PI / 2} scale={[14, 3, 1]} />
+        <Lightformer form="rect" intensity={2.4} color="#c8d8ec" position={[-9, 3, -2]} rotation-y={Math.PI / 2} scale={[14, 5, 1]} />
         <Lightformer form="ring" intensity={2.5} color="#fff2e0" position={[0, 4, -10]} scale={9} />
         <Lightformer form="rect" intensity={1.0} color="#fff3e6" position={[0, -3, 0]} rotation-x={-Math.PI / 2} scale={[40, 40, 1]} />
         <Lightformer form="rect" intensity={1.2} color="#ffffff" position={[0, 14, 0]} rotation-x={Math.PI / 2} scale={[40, 40, 1]} />
         <Lightformer form="rect" intensity={2} color="#d6ecff" position={[0, 2, -14]} scale={[30, 6, 1]} />
-        <Lightformer form="rect" intensity={2} color="#fff0f8" position={[14, 2, 0]} rotation-y={-Math.PI / 2} scale={[30, 6, 1]} />
+        <Lightformer form="rect" intensity={2} color="#f3f1ec" position={[14, 2, 0]} rotation-y={-Math.PI / 2} scale={[30, 6, 1]} />
         <Lightformer form="rect" intensity={1.2} color="#ffe0c0" position={[0, 3, 10]} rotation-y={Math.PI} scale={[12, 4, 1]} />
       </Environment>
 
@@ -79,6 +81,7 @@ export function Game({ tier }: { tier: QualityTier }) {
           <Physics timeStep="vary" gravity={[0, -9.81, 0]} debug={DEBUG_PHYSICS}>
             <City shadows={q.shadows} propDist={MAP_MODE ? 1e5 : q.propDist} buildingDist={MAP_MODE ? 1e5 : q.buildingDist} />
             <PlayerController shadows={q.shadows} />
+            <VehicleSystem />
             <NavigationRunner />
             {/* depois do PlayerController: useFrame na ordem de montagem */}
             {MAP_MODE ? <MapCamera /> : <ThirdPersonCamera />}
@@ -92,6 +95,7 @@ export function Game({ tier }: { tier: QualityTier }) {
           <PhotoCapture />
           <InteractionTrigger />
           <SitController />
+          <LifeDriver />
         </>
       )}
       <Sparkles

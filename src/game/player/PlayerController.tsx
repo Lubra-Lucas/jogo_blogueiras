@@ -13,6 +13,7 @@ import { useEmoteStore } from '../character/animation/emoteStore'
 import { turnState } from '../character/animation/turnState'
 import { SEAT_HIPS_GAP, useSitStore } from '../sit/sitStore'
 import { navBridge } from '../navigation/navStore'
+import { driveBridge, drive, useVehicleStore } from '../vehicles/driveStore'
 
 type Rapier = ReturnType<typeof useRapier>
 type CharacterController = ReturnType<Rapier['world']['createCharacterController']>
@@ -48,6 +49,7 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       desired: { x: 0, y: 0, z: 0 },
       moved: false,
       seated: false,
+      driving: false,
       turn: -1, // tempo da curva de 180 graus (s); -1 = fora dela
       turnYaw: 0,
       sitT: 0,
@@ -108,6 +110,60 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       navBridge.faceYaw = null
       clearMoveTarget()
       rb.setTranslation(sim.pos, true)
+    }
+
+    // ---- dentro de um carro (game/vehicles): a boneca vai sentada no banco do motorista, sem fisica propria ----
+    if (driveBridge.active) {
+      if (!sim.driving) {
+        sim.driving = true
+        sim.hv.set(0, 0, 0)
+        sim.vy = 0
+        sim.turn = -1
+        turnState.active = false
+        clearMoveTarget()
+        useEmoteStore.getState().stop()
+        rb.setEnabled(false)
+      }
+      const ci = useSitStore.getState().clip
+      const sn = Math.sin(driveBridge.yaw)
+      const cs = Math.cos(driveBridge.yaw)
+      const sp = driveBridge.seatPos
+      sim.pos.x = sp.x - (ci.offX * cs + ci.offZ * sn)
+      sim.pos.z = sp.z - (-ci.offX * sn + ci.offZ * cs)
+      sim.pos.y = sp.y + SEAT_HIPS_GAP - ci.endY + C.halfHeight + C.radius
+      sim.yaw = driveBridge.yaw
+      rb.setTranslation(sim.pos, true)
+      const vd = visual.current
+      if (vd) {
+        vd.position.copy(sim.pos)
+        vd.rotation.y = sim.yaw
+        vd.visible = useVehicleStore.getState().camMode !== 2
+      }
+      const sd = usePlayerStore.getState()
+      sd.position.copy(sim.pos)
+      sd.velocity.copy(drive.vel)
+      sd.speed = Math.hypot(drive.vel.x, drive.vel.z)
+      sd.yaw = sim.yaw
+      return
+    }
+    if (sim.driving) {
+      // saiu do carro: aparece ao lado dele
+      sim.driving = false
+      const ex = driveBridge.exitAt
+      driveBridge.exitAt = null
+      rb.setEnabled(true)
+      if (ex) {
+        sim.pos.set(ex.x, SPAWN_Y + 0.05, ex.z)
+        sim.yaw = ex.yaw
+      }
+      sim.hv.set(0, 0, 0)
+      sim.vy = 0
+      clearMoveTarget()
+      rb.setTranslation(sim.pos, true)
+      const sx = usePlayerStore.getState()
+      sx.position.copy(sim.pos)
+      sx.velocity.set(0, 0, 0)
+      sx.speed = 0
     }
 
     // ---- sentada: gruda no assento (sem fisica); os clipes stand_to_sit / sit_to_stand fazem o movimento do quadril ----

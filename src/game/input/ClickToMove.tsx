@@ -3,6 +3,7 @@ import { useThree } from '@react-three/fiber'
 import { Matrix3, Raycaster, Vector2, Vector3, type Mesh, type Object3D } from 'three'
 import { isPointerClaimed, setMoveTarget } from './intent'
 import { navigateToPoint } from '../navigation/navigation'
+import { driveBridge } from '../vehicles/driveStore'
 
 const MAX_MOVE_PX = 6 // acima disso e arrasto de camera, nao clique
 const MAX_HOLD_MS = 300
@@ -36,6 +37,10 @@ export function ClickToMove() {
     let lastTap = { t: -1e9, x: 0, y: 0 }
 
     const onDown = (e: PointerEvent) => {
+      if (driveBridge.active) {
+        down = null // dirigindo: sem click-to-move
+        return
+      }
       if (isPointerClaimed(e.pointerId)) {
         down = null // dedo reservado por outro controle (joystick)
         return

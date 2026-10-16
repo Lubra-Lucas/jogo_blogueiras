@@ -1,796 +1,821 @@
 {
- "units": "m",
- "up": "Y",
- "front": "+Z",
- "style": "Y2K pastel futurist (Centro/Praca)",
- "pieces": {
-  "building_bubble": {
-   "file": "kit_y2k/building_bubble.glb",
-   "tris": 4864,
-   "bytes": 135548,
-   "size": [
-    7.71,
-    11.4,
-    8.931
-   ],
-   "bbox_min": [
-    -3.855,
-    0.0,
-    -3.855
-   ],
-   "bbox_max": [
-    3.855,
-    11.4,
-    5.076
-   ],
-   "materials": [
-    "white",
-    "base",
-    "glass",
-    "trim",
-    "accent",
-    "glow2",
-    "glow",
-    "accent2"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "cylinder",
-    "size": [
-     3.3,
-     11.0
-    ],
-    "center": [
-     0,
-     5.5,
-     0
-    ]
-   },
-   "mount": "torre redonda, centro na origem; porta oval em -Y (frente +Z no GLB)"
+  "units": "m",
+  "up": "Y",
+  "front": "+Z",
+  "style": "Y2K pastel futurist (Centro/Praca)",
+  "pieces": {
+    "building_bubble": {
+      "file": "kit_y2k/building_bubble.glb",
+      "tris": 4864,
+      "bytes": 135548,
+      "size": [
+        7.71,
+        11.4,
+        8.931
+      ],
+      "bbox_min": [
+        -3.855,
+        0.0,
+        -3.855
+      ],
+      "bbox_max": [
+        3.855,
+        11.4,
+        5.076
+      ],
+      "materials": [
+        "white",
+        "base",
+        "glass",
+        "trim",
+        "accent",
+        "glow2",
+        "glow",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          3.3,
+          11.0
+        ],
+        "center": [
+          0,
+          5.5,
+          0
+        ]
+      },
+      "mount": "torre redonda, centro na origem; porta oval em -Y (frente +Z no GLB)"
+    },
+    "building_bubble_tall": {
+      "file": "kit_y2k/building_bubble_tall.glb",
+      "tris": 6160,
+      "bytes": 170200,
+      "size": [
+        6.56,
+        14.8,
+        7.856
+      ],
+      "bbox_min": [
+        -3.28,
+        0.0,
+        -3.28
+      ],
+      "bbox_max": [
+        3.28,
+        14.8,
+        4.576
+      ],
+      "materials": [
+        "white",
+        "base",
+        "glass",
+        "trim",
+        "accent",
+        "glow2",
+        "glow",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          2.7,
+          14.4
+        ],
+        "center": [
+          0,
+          7.2,
+          0
+        ]
+      },
+      "mount": "torre esguia de 4 andares; porta em -Y; placa na frente do 1o andar"
+    },
+    "building_bubble_wide": {
+      "file": "kit_y2k/building_bubble_wide.glb",
+      "tris": 3568,
+      "bytes": 100864,
+      "size": [
+        11.06,
+        8.4,
+        12.006
+      ],
+      "bbox_min": [
+        -5.53,
+        0.0,
+        -5.53
+      ],
+      "bbox_max": [
+        5.53,
+        8.4,
+        6.476
+      ],
+      "materials": [
+        "white",
+        "base",
+        "glass",
+        "trim",
+        "accent",
+        "glow2",
+        "glow",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          4.5,
+          7.4
+        ],
+        "center": [
+          0,
+          3.7,
+          0
+        ]
+      },
+      "mount": "torre larga de 2 andares; porta em -Y"
+    },
+    "building_capsule_row": {
+      "file": "kit_y2k/building_capsule_row.glb",
+      "tris": 3636,
+      "bytes": 81152,
+      "size": [
+        8.454,
+        4.24,
+        4.157
+      ],
+      "bbox_min": [
+        -4.227,
+        0.0,
+        -3.502
+      ],
+      "bbox_max": [
+        4.227,
+        4.24,
+        0.655
+      ],
+      "materials": [
+        "base",
+        "glass",
+        "accent",
+        "trim",
+        "glow",
+        "glow2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          8.2,
+          4.4,
+          3.5
+        ],
+        "center": [
+          0,
+          2.2,
+          -1.7
+        ]
+      },
+      "mount": "modulo comprido: plano frontal em z=0, corpo ate z=-3.4; encadeie de 8 em 8 m ou use sozinho"
+    },
+    "storefront_glass": {
+      "file": "kit_y2k/storefront_glass.glb",
+      "tris": 2372,
+      "bytes": 64680,
+      "size": [
+        4.576,
+        3.65,
+        1.65
+      ],
+      "bbox_min": [
+        -2.288,
+        0.0,
+        -0.8
+      ],
+      "bbox_max": [
+        2.288,
+        3.65,
+        0.85
+      ],
+      "materials": [
+        "glass",
+        "trim",
+        "accent",
+        "glow",
+        "white",
+        "accent2",
+        "soft",
+        "glow2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          4.2,
+          3.6,
+          1.1
+        ],
+        "center": [
+          0,
+          1.8,
+          -0.3
+        ]
+      },
+      "mount": "vitrine curva 4 m; frente z=0, fundo ~0.8; encaixe em parede/pilares"
+    },
+    "canopy_curved": {
+      "file": "kit_y2k/canopy_curved.glb",
+      "tris": 1260,
+      "bytes": 37584,
+      "size": [
+        5.114,
+        3.666,
+        3.24
+      ],
+      "bbox_min": [
+        -2.557,
+        0.0,
+        -1.6
+      ],
+      "bbox_max": [
+        2.557,
+        3.666,
+        1.64
+      ],
+      "materials": [
+        "accent",
+        "trim",
+        "glow",
+        "white",
+        "glow2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.5,
+            3.2,
+            0.5,
+            -2.1,
+            1.6,
+            -0.9
+          ],
+          [
+            0.5,
+            3.2,
+            0.5,
+            2.1,
+            1.6,
+            -0.9
+          ]
+        ],
+        "center": null
+      },
+      "mount": "cobertura flutuante sobre 2 postes (colisores so dos postes)"
+    },
+    "kiosk_pod": {
+      "file": "kit_y2k/kiosk_pod.glb",
+      "tris": 3380,
+      "bytes": 86648,
+      "size": [
+        3.92,
+        3.4,
+        3.92
+      ],
+      "bbox_min": [
+        -1.96,
+        0.0,
+        -1.96
+      ],
+      "bbox_max": [
+        1.96,
+        3.4,
+        1.96
+      ],
+      "materials": [
+        "accent2",
+        "trim",
+        "glow",
+        "white",
+        "glass",
+        "soft",
+        "base",
+        "glow2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          1.9,
+          3.1
+        ],
+        "center": [
+          0,
+          1.55,
+          0
+        ]
+      }
+    },
+    "holo_sign": {
+      "file": "kit_y2k/holo_sign.glb",
+      "tris": 1852,
+      "bytes": 43268,
+      "size": [
+        2.913,
+        3.207,
+        0.675
+      ],
+      "bbox_min": [
+        -1.457,
+        0.0,
+        -0.338
+      ],
+      "bbox_max": [
+        1.457,
+        3.207,
+        0.338
+      ],
+      "materials": [
+        "glow2",
+        "glow",
+        "white",
+        "trim",
+        "accent"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.9,
+          3.2,
+          0.4
+        ],
+        "center": [
+          0,
+          1.6,
+          0
+        ]
+      },
+      "note": "paineis glow/glow2 sao emissivos: bom para bloom e para trocar por textura animada depois"
+    },
+    "neon_strip": {
+      "file": "kit_y2k/neon_strip.glb",
+      "tris": 376,
+      "bytes": 9948,
+      "size": [
+        2.143,
+        0.15,
+        0.176
+      ],
+      "bbox_min": [
+        -1.071,
+        -0.015,
+        -0.105
+      ],
+      "bbox_max": [
+        1.071,
+        0.135,
+        0.071
+      ],
+      "materials": [
+        "glow",
+        "trim"
+      ],
+      "walkable": false,
+      "note": "decorativo, 2 m"
+    },
+    "neon_strip_curve": {
+      "file": "kit_y2k/neon_strip_curve.glb",
+      "tris": 280,
+      "bytes": 9612,
+      "size": [
+        1.643,
+        0.15,
+        1.643
+      ],
+      "bbox_min": [
+        -0.071,
+        -0.015,
+        -1.571
+      ],
+      "bbox_max": [
+        1.571,
+        0.135,
+        0.071
+      ],
+      "materials": [
+        "glow2",
+        "trim"
+      ],
+      "walkable": false,
+      "note": "decorativo, quarto de circulo R=1.5"
+    },
+    "lamp_futuristic": {
+      "file": "kit_y2k/lamp_futuristic.glb",
+      "tris": 1268,
+      "bytes": 34816,
+      "size": [
+        1.86,
+        4.205,
+        1.01
+      ],
+      "bbox_min": [
+        -0.505,
+        0.0,
+        -0.505
+      ],
+      "bbox_max": [
+        1.355,
+        4.205,
+        0.505
+      ],
+      "materials": [
+        "accent",
+        "glow",
+        "trim",
+        "glow2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.4,
+          4.2
+        ],
+        "center": [
+          0,
+          2.1,
+          0
+        ]
+      }
+    },
+    "bench_bubble": {
+      "file": "kit_y2k/bench_bubble.glb",
+      "tris": 1576,
+      "bytes": 35924,
+      "size": [
+        2.18,
+        1.087,
+        0.737
+      ],
+      "bbox_min": [
+        -1.09,
+        0.0,
+        -0.387
+      ],
+      "bbox_max": [
+        1.09,
+        1.087,
+        0.35
+      ],
+      "materials": [
+        "accent2",
+        "base",
+        "trim",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.2,
+          1.1,
+          0.8
+        ],
+        "center": [
+          0,
+          0.55,
+          0
+        ]
+      }
+    },
+    "planter_orb": {
+      "file": "kit_y2k/planter_orb.glb",
+      "tris": 1560,
+      "bytes": 40128,
+      "size": [
+        1.3,
+        1.9,
+        1.3
+      ],
+      "bbox_min": [
+        -0.65,
+        0.0,
+        -0.65
+      ],
+      "bbox_max": [
+        0.65,
+        1.9,
+        0.65
+      ],
+      "materials": [
+        "trim",
+        "accent",
+        "glow",
+        "deep",
+        "leaf",
+        "glow2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.62,
+          1.9
+        ],
+        "center": [
+          0,
+          0.95,
+          0
+        ]
+      }
+    },
+    "floating_platform": {
+      "file": "kit_y2k/floating_platform.glb",
+      "tris": 1472,
+      "bytes": 39980,
+      "size": [
+        3.354,
+        0.76,
+        3.354
+      ],
+      "bbox_min": [
+        -1.677,
+        0.0,
+        -1.677
+      ],
+      "bbox_max": [
+        1.677,
+        0.76,
+        1.677
+      ],
+      "materials": [
+        "accent",
+        "soft",
+        "trim",
+        "glow",
+        "glow2"
+      ],
+      "walkable": true,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          1.65,
+          0.75
+        ],
+        "center": [
+          0,
+          0.375,
+          0
+        ]
+      },
+      "note": "degrau/plataforma de 0.75 m; piso caminhavel no topo"
+    },
+    "plaza_centerpiece": {
+      "file": "kit_y2k/plaza_centerpiece.glb",
+      "tris": 6980,
+      "bytes": 185664,
+      "size": [
+        7.66,
+        5.427,
+        7.66
+      ],
+      "bbox_min": [
+        -3.83,
+        0.0,
+        -3.83
+      ],
+      "bbox_max": [
+        3.83,
+        5.427,
+        3.83
+      ],
+      "materials": [
+        "white",
+        "trim",
+        "glow",
+        "water",
+        "accent",
+        "glow2",
+        "base",
+        "soft",
+        "glass"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          3.85,
+          0.65
+        ],
+        "center": [
+          0,
+          0.32,
+          0
+        ]
+      },
+      "note": "colisor so da bacia; coracao de cromo flutua a ~4 m"
+    },
+    "paving_y2k": {
+      "file": "kit_y2k/paving_y2k.glb",
+      "tris": 1164,
+      "bytes": 24716,
+      "size": [
+        2.0,
+        0.15,
+        2.0
+      ],
+      "bbox_min": [
+        -1.0,
+        0.0,
+        -1.0
+      ],
+      "bbox_max": [
+        1.0,
+        0.15,
+        1.0
+      ],
+      "materials": [
+        "glow",
+        "accent",
+        "soft",
+        "trim",
+        "glow2"
+      ],
+      "walkable": true,
+      "note": "amostra 2x2 m, vira textura/padrao do piso"
+    }
   },
-  "building_bubble_tall": {
-   "file": "kit_y2k/building_bubble_tall.glb",
-   "tris": 6160,
-   "bytes": 170200,
-   "size": [
-    6.56,
-    14.8,
-    7.856
-   ],
-   "bbox_min": [
-    -3.28,
-    0.0,
-    -3.28
-   ],
-   "bbox_max": [
-    3.28,
-    14.8,
-    4.576
-   ],
-   "materials": [
-    "white",
+  "slots": [
     "base",
-    "glass",
-    "trim",
     "accent",
-    "glow2",
-    "glow",
-    "accent2"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "cylinder",
-    "size": [
-     2.7,
-     14.4
-    ],
-    "center": [
-     0,
-     7.2,
-     0
-    ]
-   },
-   "mount": "torre esguia de 4 andares; porta em -Y; placa na frente do 1o andar"
-  },
-  "building_bubble_wide": {
-   "file": "kit_y2k/building_bubble_wide.glb",
-   "tris": 3568,
-   "bytes": 100864,
-   "size": [
-    11.06,
-    8.4,
-    12.006
-   ],
-   "bbox_min": [
-    -5.53,
-    0.0,
-    -5.53
-   ],
-   "bbox_max": [
-    5.53,
-    8.4,
-    6.476
-   ],
-   "materials": [
-    "white",
-    "base",
-    "glass",
-    "trim",
-    "accent",
-    "glow2",
-    "glow",
-    "accent2"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "cylinder",
-    "size": [
-     4.5,
-     7.4
-    ],
-    "center": [
-     0,
-     3.7,
-     0
-    ]
-   },
-   "mount": "torre larga de 2 andares; porta em -Y"
-  },
-  "building_capsule_row": {
-   "file": "kit_y2k/building_capsule_row.glb",
-   "tris": 3636,
-   "bytes": 81152,
-   "size": [
-    8.454,
-    4.24,
-    4.157
-   ],
-   "bbox_min": [
-    -4.227,
-    0.0,
-    -3.502
-   ],
-   "bbox_max": [
-    4.227,
-    4.24,
-    0.655
-   ],
-   "materials": [
-    "base",
-    "glass",
-    "accent",
-    "trim",
-    "glow",
-    "glow2"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "box",
-    "size": [
-     8.2,
-     4.4,
-     3.5
-    ],
-    "center": [
-     0,
-     2.2,
-     -1.7
-    ]
-   },
-   "mount": "modulo comprido: plano frontal em z=0, corpo ate z=-3.4; encadeie de 8 em 8 m ou use sozinho"
-  },
-  "storefront_glass": {
-   "file": "kit_y2k/storefront_glass.glb",
-   "tris": 2372,
-   "bytes": 64680,
-   "size": [
-    4.576,
-    3.65,
-    1.65
-   ],
-   "bbox_min": [
-    -2.288,
-    0.0,
-    -0.8
-   ],
-   "bbox_max": [
-    2.288,
-    3.65,
-    0.85
-   ],
-   "materials": [
-    "glass",
-    "trim",
-    "accent",
-    "glow",
-    "white",
     "accent2",
     "soft",
-    "glow2"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "box",
-    "size": [
-     4.2,
-     3.6,
-     1.1
-    ],
-    "center": [
-     0,
-     1.8,
-     -0.3
-    ]
-   },
-   "mount": "vitrine curva 4 m; frente z=0, fundo ~0.8; encaixe em parede/pilares"
-  },
-  "canopy_curved": {
-   "file": "kit_y2k/canopy_curved.glb",
-   "tris": 1260,
-   "bytes": 37584,
-   "size": [
-    5.114,
-    3.666,
-    3.24
-   ],
-   "bbox_min": [
-    -2.557,
-    0.0,
-    -1.6
-   ],
-   "bbox_max": [
-    2.557,
-    3.666,
-    1.64
-   ],
-   "materials": [
-    "accent",
-    "trim",
-    "glow",
-    "white",
-    "glow2"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "boxes",
-    "size": [
-     [
-      0.5,
-      3.2,
-      0.5,
-      -2.1,
-      1.6,
-      -0.9
-     ],
-     [
-      0.5,
-      3.2,
-      0.5,
-      2.1,
-      1.6,
-      -0.9
-     ]
-    ],
-    "center": null
-   },
-   "mount": "cobertura flutuante sobre 2 postes (colisores so dos postes)"
-  },
-  "kiosk_pod": {
-   "file": "kit_y2k/kiosk_pod.glb",
-   "tris": 3380,
-   "bytes": 86648,
-   "size": [
-    3.92,
-    3.4,
-    3.92
-   ],
-   "bbox_min": [
-    -1.96,
-    0.0,
-    -1.96
-   ],
-   "bbox_max": [
-    1.96,
-    3.4,
-    1.96
-   ],
-   "materials": [
-    "accent2",
-    "trim",
-    "glow",
-    "white",
-    "glass",
-    "soft",
-    "base",
-    "glow2"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "cylinder",
-    "size": [
-     1.9,
-     3.1
-    ],
-    "center": [
-     0,
-     1.55,
-     0
-    ]
-   }
-  },
-  "holo_sign": {
-   "file": "kit_y2k/holo_sign.glb",
-   "tris": 1852,
-   "bytes": 43268,
-   "size": [
-    2.913,
-    3.207,
-    0.675
-   ],
-   "bbox_min": [
-    -1.457,
-    0.0,
-    -0.338
-   ],
-   "bbox_max": [
-    1.457,
-    3.207,
-    0.338
-   ],
-   "materials": [
-    "glow2",
-    "glow",
-    "white",
-    "trim",
-    "accent"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "box",
-    "size": [
-     2.9,
-     3.2,
-     0.4
-    ],
-    "center": [
-     0,
-     1.6,
-     0
-    ]
-   },
-   "note": "paineis glow/glow2 sao emissivos: bom para bloom e para trocar por textura animada depois"
-  },
-  "neon_strip": {
-   "file": "kit_y2k/neon_strip.glb",
-   "tris": 376,
-   "bytes": 9948,
-   "size": [
-    2.143,
-    0.15,
-    0.176
-   ],
-   "bbox_min": [
-    -1.071,
-    -0.015,
-    -0.105
-   ],
-   "bbox_max": [
-    1.071,
-    0.135,
-    0.071
-   ],
-   "materials": [
-    "glow",
-    "trim"
-   ],
-   "walkable": false,
-   "note": "decorativo, 2 m"
-  },
-  "neon_strip_curve": {
-   "file": "kit_y2k/neon_strip_curve.glb",
-   "tris": 280,
-   "bytes": 9612,
-   "size": [
-    1.643,
-    0.15,
-    1.643
-   ],
-   "bbox_min": [
-    -0.071,
-    -0.015,
-    -1.571
-   ],
-   "bbox_max": [
-    1.571,
-    0.135,
-    0.071
-   ],
-   "materials": [
-    "glow2",
-    "trim"
-   ],
-   "walkable": false,
-   "note": "decorativo, quarto de circulo R=1.5"
-  },
-  "lamp_futuristic": {
-   "file": "kit_y2k/lamp_futuristic.glb",
-   "tris": 1268,
-   "bytes": 34816,
-   "size": [
-    1.86,
-    4.205,
-    1.01
-   ],
-   "bbox_min": [
-    -0.505,
-    0.0,
-    -0.505
-   ],
-   "bbox_max": [
-    1.355,
-    4.205,
-    0.505
-   ],
-   "materials": [
-    "accent",
-    "glow",
-    "trim",
-    "glow2"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "cylinder",
-    "size": [
-     0.4,
-     4.2
-    ],
-    "center": [
-     0,
-     2.1,
-     0
-    ]
-   }
-  },
-  "bench_bubble": {
-   "file": "kit_y2k/bench_bubble.glb",
-   "tris": 1576,
-   "bytes": 35924,
-   "size": [
-    2.18,
-    1.087,
-    0.737
-   ],
-   "bbox_min": [
-    -1.09,
-    0.0,
-    -0.387
-   ],
-   "bbox_max": [
-    1.09,
-    1.087,
-    0.35
-   ],
-   "materials": [
-    "accent2",
-    "base",
-    "trim",
-    "glow"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "box",
-    "size": [
-     2.2,
-     1.1,
-     0.8
-    ],
-    "center": [
-     0,
-     0.55,
-     0
-    ]
-   }
-  },
-  "planter_orb": {
-   "file": "kit_y2k/planter_orb.glb",
-   "tris": 1560,
-   "bytes": 40128,
-   "size": [
-    1.3,
-    1.9,
-    1.3
-   ],
-   "bbox_min": [
-    -0.65,
-    0.0,
-    -0.65
-   ],
-   "bbox_max": [
-    0.65,
-    1.9,
-    0.65
-   ],
-   "materials": [
-    "trim",
-    "accent",
-    "glow",
     "deep",
-    "leaf",
-    "glow2"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "cylinder",
-    "size": [
-     0.62,
-     1.9
-    ],
-    "center": [
-     0,
-     0.95,
-     0
-    ]
-   }
-  },
-  "floating_platform": {
-   "file": "kit_y2k/floating_platform.glb",
-   "tris": 1472,
-   "bytes": 39980,
-   "size": [
-    3.354,
-    0.76,
-    3.354
-   ],
-   "bbox_min": [
-    -1.677,
-    0.0,
-    -1.677
-   ],
-   "bbox_max": [
-    1.677,
-    0.76,
-    1.677
-   ],
-   "materials": [
-    "accent",
-    "soft",
-    "trim",
-    "glow",
-    "glow2"
-   ],
-   "walkable": true,
-   "collider": {
-    "type": "cylinder",
-    "size": [
-     1.65,
-     0.75
-    ],
-    "center": [
-     0,
-     0.375,
-     0
-    ]
-   },
-   "note": "degrau/plataforma de 0.75 m; piso caminhavel no topo"
-  },
-  "plaza_centerpiece": {
-   "file": "kit_y2k/plaza_centerpiece.glb",
-   "tris": 6980,
-   "bytes": 185664,
-   "size": [
-    7.66,
-    5.427,
-    7.66
-   ],
-   "bbox_min": [
-    -3.83,
-    0.0,
-    -3.83
-   ],
-   "bbox_max": [
-    3.83,
-    5.427,
-    3.83
-   ],
-   "materials": [
     "white",
     "trim",
+    "glass",
     "glow",
-    "water",
-    "accent",
     "glow2",
-    "base",
-    "soft",
-    "glass"
-   ],
-   "walkable": false,
-   "collider": {
-    "type": "cylinder",
-    "size": [
-     3.85,
-     0.65
-    ],
-    "center": [
-     0,
-     0.32,
-     0
-    ]
-   },
-   "note": "colisor so da bacia; coracao de cromo flutua a ~4 m"
+    "leaf",
+    "water"
+  ],
+  "slotNotes": "recolore por predio trocando a cor de cada material; glow/glow2 sao emissivos (neon); trim = cromo tingido; glass = perolado translucido",
+  "metals": {
+    "gold": {
+      "color": "#c9a15a",
+      "roughness": 0.22,
+      "metallic": 1.0
+    },
+    "pearl": {
+      "color": "#f6f0fa",
+      "roughness": 0.16,
+      "metallic": 0.65
+    },
+    "chrome_pink": {
+      "color": "#e3dde0",
+      "roughness": 0.08,
+      "metallic": 1.0
+    },
+    "chrome_lilac": {
+      "color": "#d9dbe6",
+      "roughness": 0.08,
+      "metallic": 1.0
+    },
+    "chrome_blue": {
+      "color": "#d2dde8",
+      "roughness": 0.08,
+      "metallic": 1.0
+    },
+    "chrome_mint": {
+      "color": "#d8e4dd",
+      "roughness": 0.08,
+      "metallic": 1.0
+    },
+    "chrome": {
+      "color": "#f5f7fb",
+      "roughness": 0.05,
+      "metallic": 1.0
+    },
+    "brass": {
+      "color": "#c9a15a",
+      "roughness": 0.24,
+      "metallic": 1.0
+    },
+    "bronze": {
+      "color": "#8c6a46",
+      "roughness": 0.3,
+      "metallic": 1.0
+    },
+    "steel": {
+      "color": "#c3c9d1",
+      "roughness": 0.2,
+      "metallic": 1.0
+    },
+    "black_steel": {
+      "color": "#3a3d44",
+      "roughness": 0.28,
+      "metallic": 0.9
+    },
+    "copper": {
+      "color": "#c27a56",
+      "roughness": 0.26,
+      "metallic": 1.0
+    }
   },
-  "paving_y2k": {
-   "file": "kit_y2k/paving_y2k.glb",
-   "tris": 1164,
-   "bytes": 24716,
-   "size": [
-    2.0,
-    0.15,
-    2.0
-   ],
-   "bbox_min": [
-    -1.0,
-    0.0,
-    -1.0
-   ],
-   "bbox_max": [
-    1.0,
-    0.15,
-    1.0
-   ],
-   "materials": [
-    "glow",
-    "accent",
-    "soft",
-    "trim",
-    "glow2"
-   ],
-   "walkable": true,
-   "note": "amostra 2x2 m, vira textura/padrao do piso"
+  "palettes": {
+    "bubblegum": {
+      "label": "Plaza pearl",
+      "base": "#e6e4ea",
+      "accent": "#fffaf6",
+      "accent2": "#e0558f",
+      "soft": "#bfc7d6",
+      "deep": "#5a4a7a",
+      "white": "#f6f2ea",
+      "glass": "#9fc3e8",
+      "metal": "steel",
+      "glow": "#ff7ad9",
+      "glow2": "#7ad9ff"
+    },
+    "lilac": {
+      "label": "Slate",
+      "base": "#9099a8",
+      "accent": "#e3e6ec",
+      "accent2": "#6a5aa8",
+      "soft": "#b3bac6",
+      "deep": "#2c3140",
+      "white": "#f6f2ea",
+      "glass": "#86a2bd",
+      "metal": "steel",
+      "glow": "#b58cff",
+      "glow2": "#7ad9ff"
+    },
+    "babyblue": {
+      "label": "Steel blue",
+      "base": "#b9c9d6",
+      "accent": "#eef1f3",
+      "accent2": "#2f6f9a",
+      "soft": "#94a9b8",
+      "deep": "#26384a",
+      "white": "#f6f2ea",
+      "glass": "#7ea8c0",
+      "metal": "steel",
+      "glow": "#6fd4ff",
+      "glow2": "#ffd36b"
+    },
+    "mint": {
+      "label": "Sage glass",
+      "base": "#bccbbd",
+      "accent": "#eef0ea",
+      "accent2": "#3f7d62",
+      "soft": "#9db5a4",
+      "deep": "#274537",
+      "white": "#f6f2ea",
+      "glass": "#86b0a8",
+      "metal": "steel",
+      "glow": "#7ae6c0",
+      "glow2": "#ffd36b"
+    },
+    "butter": {
+      "label": "Sand",
+      "base": "#e3d6b4",
+      "accent": "#f3efe3",
+      "accent2": "#c9972f",
+      "soft": "#cbbd98",
+      "deep": "#5c4a22",
+      "white": "#f6f2ea",
+      "glass": "#9bb4bd",
+      "metal": "brass",
+      "glow": "#ffe08a",
+      "glow2": "#7ad9ff"
+    },
+    "peach": {
+      "label": "Terracotta",
+      "base": "#d6ae92",
+      "accent": "#f1e6dc",
+      "accent2": "#b5502f",
+      "soft": "#c99d84",
+      "deep": "#4a2e24",
+      "white": "#f6f2ea",
+      "glass": "#9ab5c0",
+      "metal": "brass",
+      "glow": "#ffb27a",
+      "glow2": "#7ad9ff"
+    },
+    "pearl": {
+      "label": "Warm white",
+      "base": "#e9e7e2",
+      "accent": "#cfd3d8",
+      "accent2": "#5b7a96",
+      "soft": "#b9c1c9",
+      "deep": "#3b4048",
+      "white": "#f6f2ea",
+      "glass": "#8fb2c4",
+      "metal": "steel",
+      "glow": "#fff0c8",
+      "glow2": "#7ad9ff"
+    }
   }
- },
- "slots": [
-  "base",
-  "accent",
-  "accent2",
-  "soft",
-  "deep",
-  "white",
-  "trim",
-  "glass",
-  "glow",
-  "glow2",
-  "leaf",
-  "water"
- ],
- "slotNotes": "recolore por predio trocando a cor de cada material; glow/glow2 sao emissivos (neon); trim = cromo tingido; glass = perolado translucido",
- "metals": {
-  "gold": {
-   "color": "#f1d27a",
-   "roughness": 0.12,
-   "metallic": 1.0
-  },
-  "pearl": {
-   "color": "#f6f0fa",
-   "roughness": 0.16,
-   "metallic": 0.65
-  },
-  "chrome_pink": {
-   "color": "#f6dfe9",
-   "roughness": 0.05,
-   "metallic": 1.0
-  },
-  "chrome_lilac": {
-   "color": "#e6dcf6",
-   "roughness": 0.05,
-   "metallic": 1.0
-  },
-  "chrome_blue": {
-   "color": "#dcebf8",
-   "roughness": 0.05,
-   "metallic": 1.0
-  },
-  "chrome_mint": {
-   "color": "#dff3ea",
-   "roughness": 0.05,
-   "metallic": 1.0
-  },
-  "chrome": {
-   "color": "#f5f7fb",
-   "roughness": 0.05,
-   "metallic": 1.0
-  }
- },
- "palettes": {
-  "bubblegum": {
-   "label": "Bubblegum Pearl",
-   "base": "#f7c6d9",
-   "accent": "#fffaf6",
-   "accent2": "#ff8fbf",
-   "soft": "#d9c2f0",
-   "deep": "#8a4a9a",
-   "white": "#fffaf6",
-   "glass": "#ff9fe0",
-   "glow": "#ff7ad9",
-   "glow2": "#7ad9ff",
-   "metal": "pearl"
-  },
-  "lilac": {
-   "label": "Lilac Iridescent",
-   "base": "#d9c2f0",
-   "accent": "#fffaf6",
-   "accent2": "#b58cf0",
-   "soft": "#c6ddf5",
-   "deep": "#5b3f87",
-   "white": "#fffaf6",
-   "glass": "#b58cff",
-   "glow": "#b58cff",
-   "glow2": "#7ad9ff",
-   "metal": "chrome_lilac"
-  },
-  "babyblue": {
-   "label": "Baby Blue Pool",
-   "base": "#c6ddf5",
-   "accent": "#fffaf6",
-   "accent2": "#6fb4ff",
-   "soft": "#d6c4f0",
-   "deep": "#2f5a8f",
-   "white": "#fffaf6",
-   "glass": "#7fc4ff",
-   "glow": "#6fd4ff",
-   "glow2": "#ffd36b",
-   "metal": "gold"
-  },
-  "mint": {
-   "label": "Mint Fresh",
-   "base": "#bfe8d6",
-   "accent": "#fffaf6",
-   "accent2": "#5fe0b8",
-   "soft": "#c6ddf5",
-   "deep": "#2f7a62",
-   "white": "#fffaf6",
-   "glass": "#7affd0",
-   "glow": "#7affd0",
-   "glow2": "#b58cff",
-   "metal": "pearl"
-  },
-  "butter": {
-   "label": "Butter Cream",
-   "base": "#fbeeb0",
-   "accent": "#fffaf6",
-   "accent2": "#ffd36b",
-   "soft": "#c6ddf5",
-   "deep": "#8a6a2a",
-   "white": "#fffaf6",
-   "glass": "#ffe58a",
-   "glow": "#ffd36b",
-   "glow2": "#6fd4ff",
-   "metal": "gold"
-  },
-  "peach": {
-   "label": "Peach Fizz",
-   "base": "#ffd5bf",
-   "accent": "#fffaf6",
-   "accent2": "#ff9f8a",
-   "soft": "#e6dcf6",
-   "deep": "#a14a3a",
-   "white": "#fffaf6",
-   "glass": "#ffbfa0",
-   "glow": "#ff9fb0",
-   "glow2": "#7ad9ff",
-   "metal": "gold"
-  },
-  "pearl": {
-   "label": "Pearl White",
-   "base": "#f4f0f8",
-   "accent": "#c6ddf5",
-   "accent2": "#b58cf0",
-   "soft": "#d9c2f0",
-   "deep": "#6a5a8a",
-   "white": "#fffaf6",
-   "glass": "#cfe6ff",
-   "glow": "#9fdcff",
-   "glow2": "#ffb0e0",
-   "metal": "chrome"
-  }
- }
 }

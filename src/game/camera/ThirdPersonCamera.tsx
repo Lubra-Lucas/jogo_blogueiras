@@ -8,6 +8,7 @@ import { useCameraStore } from '../../state/cameraStore'
 import { usePlayerStore } from '../../state/playerStore'
 import { CAMERA as C } from './config'
 import { navBridge } from '../navigation/navStore'
+import { driveBridge } from '../vehicles/driveStore'
 
 const PITCH_MIN = MathUtils.degToRad(C.minPitchDeg)
 const PITCH_MAX = MathUtils.degToRad(C.maxPitchDeg)
@@ -51,6 +52,7 @@ export function ThirdPersonCamera() {
   useFrame((_, rawDelta) => {
     const dt = Math.min(rawDelta, 0.05)
     if (dt <= 0) return
+    if (driveBridge.active) return // dirigindo: a camera e a do carro (game/vehicles/VehicleCamera)
     const ps = usePlayerStore.getState()
     const cs = useCameraStore.getState()
 

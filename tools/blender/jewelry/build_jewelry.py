@@ -132,9 +132,14 @@ HEAD_C = Vector((0, -0.012, 1.44))
 PIECES = {}
 
 
-def piece(id, label, slot, anchor, bone, notes=""):
+def piece(id, label, slot, anchor, bone, notes="", tags=(), formality=0.5, rarity="comum", metal="gold",
+          defaults=None, mlabels=None, mount=None, finger=None):
+    """tags: styles (romantico/y2k/gala/casual/goth/praia/rococo/esportivo); formality 0..1; rarity comum/raro/épico/lendário;
+    defaults: per-slot default colours; mlabels: per-slot label overrides; mount: Blender-space dir used by hair_fit.py"""
     def deco(fn):
-        PIECES[id] = dict(id=id, label=label, slot=slot, anchor=Vector(anchor), bone=bone, notes=notes, fn=fn)
+        PIECES[id] = dict(id=id, label=label, slot=slot, anchor=Vector(anchor), bone=bone, notes=notes, fn=fn, tags=list(tags),
+                          formality=formality, rarity=rarity, metal=metal, defaults=defaults or {}, mlabels=mlabels or {},
+                          mount=mount, finger=finger)
         return fn
     return deco
 
@@ -654,15 +659,27 @@ def cocktail_ring():
     return P, ra
 
 
+# ============================================================ collection 2 (extra modules)
+for _mod in ("pieces_helpers.py", "pieces_neck.py", "pieces_ears.py", "pieces_head.py", "pieces_hand.py"):
+    _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), _mod)
+    if os.path.exists(_p): exec(compile(open(_p, encoding="utf-8").read(), _p, "exec"), globals())
+
 # ================================================================== EXPORT
-DEFAULT_PALETTE = {"metal": "#f2c14e", "gem": "#ff7fc0", "pearl": "#fdf3ee", "ribbon": "#ff5fa8"}
+DEFAULT_PALETTE = {"metal": "#f2c14e", "gem": "#eaf2ff", "pearl": "#fdf3ee", "ribbon": "#1a1a1f"}
 SLOT_INFO = {
     "metal": {"label": "Metal", "kind": "metal", "variants": METALS},
-    "gem": {"label": "Cristal", "kind": "gem", "default": "#ff7fc0",
-            "suggested": ["#ff7fc0", "#b9e4ff", "#d9b8ff", "#fff3c4", "#ff6b81", "#9ff0d0"]},
-    "pearl": {"label": "Perola", "kind": "pearl", "default": "#fdf3ee", "suggested": ["#fdf3ee", "#ffe4ee", "#e8e8f4", "#2d2a30"]},
-    "ribbon": {"label": "Fita de cetim", "kind": "satin", "default": "#ff5fa8", "suggested": ["#ff5fa8", "#1d1b22", "#f6f0ff", "#b6e3ff", "#ff2d55"]},
+    "gem": {"label": "Cristal", "kind": "gem", "default": "#eaf2ff",
+            "suggested": ["#eaf2ff", "#c1121f", "#2a4fb8", "#0f9d6b", "#8e5bd6", "#f2c14e", "#ff7fc0", "#2d2a30"]},
+    "pearl": {"label": "Pérola", "kind": "pearl", "default": "#fdf3ee", "suggested": ["#fdf3ee", "#f1e3c8", "#e8e8f4", "#2d2a30", "#ffe4ee"]},
+    "ribbon": {"label": "Fita de cetim", "kind": "satin", "default": "#1a1a1f", "suggested": ["#1a1a1f", "#f3ead7", "#14213d", "#6e1423", "#0f6b4f", "#c19a6b", "#ff5fa8"]},
 }
+
+def style_mats(mats, spec):
+    pal = dict(DEFAULT_PALETTE); pal.update(spec['defaults']); pal["metal"] = METALS[spec['metal']]
+    for sl, m in mats.items():
+        b = m.node_tree.nodes["Principled BSDF"]; b.inputs["Base Color"].default_value = hexc(pal[sl])
+        if sl == "gem": b.inputs["Emission Color"].default_value = hexc(pal[sl])
+
 
 report = {}
 catalog = []
@@ -670,7 +687,7 @@ ids = argv or list(PIECES.keys())
 jpath = os.path.join(OUT, "jewelry.json")
 old = {}
 if os.path.exists(jpath):
-    try: old = {p["id"]: p for p in json.load(open(jpath))["pieces"]}
+    try: old = {p["id"]: p for p in json.load(open(jpath, encoding="utf-8"))["pieces"]}
     except Exception: old = {}
 
 mats = make_mats()
@@ -687,6 +704,7 @@ for pid in PIECES:
     else:
         shift = Matrix.Translation(-spec['anchor'])
     for s in SLOTS: bmesh.ops.transform(Pc[s], matrix=shift, verts=Pc[s].verts)
+    style_mats(mats, spec)
     ob = Pc.build(mats)
     ob.name = pid
     path = os.path.join(OUT, pid + ".glb")
@@ -699,13 +717,24 @@ for pid in PIECES:
     entry = {
         "id": pid, "label": spec['label'], "slot": spec['slot'], "file": "jewelry/%s.glb" % pid,
         "bone": attaches[0][0], "attachments": placements, "triangles": tris, "bytes": size,
-        "materials": {s: {"slot": s, "label": SLOT_INFO[s]["label"], "default": DEFAULT_PALETTE[s]} for s in Pc.slots},
-        "defaultMetal": "gold", "notes": spec['notes'],
+        "materials": {s: {"slot": s, "label": spec['mlabels'].get(s, SLOT_INFO[s]["label"]),
+                          "default": METALS[spec['metal']] if s == "metal" else spec['defaults'].get(s, DEFAULT_PALETTE[s])} for s in Pc.slots},
+        "defaultMetal": spec['metal'], "notes": spec['notes'],
+        "tags": spec['tags'], "formality": spec['formality'], "rarity": spec['rarity'],
     }
+    if spec['mount'] is not None: entry["hairMount"] = [round(x, 4) for x in Vector(spec['mount']).normalized()]
+    if spec['finger']: entry["finger"] = spec['finger']
     catalog.append(entry)
     print("[jewelry]", pid, "tris", tris, "bytes", size, "slots", Pc.slots)
     bpy.data.objects.remove(ob)
 
+for e in catalog:   # label/tag/default fixes for the first 14 pieces (accents, art direction palette)
+    om = OLD_META.get(e["id"])
+    if om:
+        e["label"] = om["label"]; e["tags"] = om["tags"]; e["formality"] = om["formality"]; e["rarity"] = om["rarity"]
+        for sl, col in om.get("defaults", {}).items():
+            if sl in e["materials"]: e["materials"][sl]["default"] = col
+        if om.get("metal"): e["defaultMetal"] = om["metal"]; e["materials"]["metal"]["default"] = METALS[om["metal"]]
 order = list(PIECES.keys())
 catalog.sort(key=lambda p: order.index(p["id"]) if p["id"] in order else 99)
 doc = {
@@ -717,7 +746,7 @@ doc = {
     "bones": {"mixamorig:Head": "head/ears", "mixamorig:Neck": "chokers", "mixamorig:Spine2": "long necklaces", "mixamorig:*Hand": "wrists", "mixamorig:*Hand{Ring,Middle}1": "rings"},
     "pieces": catalog,
 }
-try: doc["hairFit"] = json.load(open(jpath))["hairFit"]
+try: doc["hairFit"] = json.load(open(jpath, encoding="utf-8"))["hairFit"]
 except Exception: pass
-json.dump(doc, open(jpath, "w"), indent=1, ensure_ascii=False)
+json.dump(doc, open(jpath, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
 print("[jewelry] wrote", jpath)

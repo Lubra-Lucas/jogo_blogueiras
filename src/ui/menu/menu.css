@@ -458,3 +458,10 @@
   .slot { flex: none; width: 48px; height: 48px; }
   .grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
 }
+
+/* ---- economia: itens bloqueados no guarda-roupa ---- */
+.card--locked { background: rgba(245, 241, 235, 0.9); }
+.card--locked .card__icon { filter: saturate(0.6); opacity: 0.85; }
+.card__price { display: inline-flex; margin-top: 2px; }
+.card__price--n { font: 700 10px var(--corpo); color: var(--tinta-suave); }
+.card__eq--lock { background: #6f6075; }

@@ -61,6 +61,34 @@ export const ITEM_TAGS: Record<string, ItemTags> = {
   cocktail_ring: { styles: ['gala', 'rococo'], colors: ['dourado', 'rosa'], formality: 0.9, rarity: 'epico' },
 }
 
+/** Etiquetas vindas dos manifestos (garments.json / jewelry.json), preenchidas pelo catálogo. */
+const MANIFEST_TAGS: Record<string, ItemTags> = {}
+
+const STYLES = new Set<string>(Object.keys(STYLE_LABELS))
+const normRarity = (r: unknown): Rarity => {
+  const v = String(r ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+  return v === 'raro' || v === 'epico' || v === 'lendario' ? v : 'comum'
+}
+
+/**
+ * Registra as etiquetas de um item a partir do manifesto. Aceita o formato das roupas
+ * (`tags: { styles, colors, formality, rarity }`) e o das joias (`tags: string[]`, `formality`, `rarity`).
+ */
+export function registerManifestTags(id: string, raw: Record<string, unknown>): void {
+  const t = raw.tags as unknown
+  const obj = t && !Array.isArray(t) && typeof t === 'object' ? (t as Record<string, unknown>) : null
+  const styles = ((obj?.styles ?? (Array.isArray(t) ? t : [])) as unknown[]).map(String).filter((x) => STYLES.has(x)) as StyleTag[]
+  const colors = ((obj?.colors ?? raw.colors ?? []) as unknown[]).map(String)
+  const formality = Number(obj?.formality ?? raw.formality)
+  if (!styles.length && Number.isNaN(formality)) return
+  MANIFEST_TAGS[id] = {
+    styles: styles.length ? styles : DEFAULT_TAGS.styles,
+    colors,
+    formality: Number.isNaN(formality) ? DEFAULT_TAGS.formality : formality,
+    rarity: normRarity(obj?.rarity ?? raw.rarity),
+  }
+}
+
 export function tagsOf(id: string): ItemTags {
-  return ITEM_TAGS[id] ?? DEFAULT_TAGS
+  return ITEM_TAGS[id] ?? MANIFEST_TAGS[id] ?? DEFAULT_TAGS
 }

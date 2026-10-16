@@ -5,6 +5,7 @@ import { usePlayerStore } from '../../../state/playerStore'
 import { getQuality, QUALITY_SETTINGS } from '../../systems/quality'
 import { env } from './envState'
 import { lampSpots } from './lamps'
+import { lifeU } from '../life/lifeState'
 
 /**
  * Luzes dos postes a noite:
@@ -14,6 +15,15 @@ import { lampSpots } from './lamps'
 
 const POOL_VERT = /* glsl */ `
   attribute vec3 aColor;
+  uniform float uT;
+  float lampIgnite(float uI, vec2 p) {
+    float th = fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453) * 0.5;
+    float k = smoothstep(th, th + 0.32, uI);
+    // aquecendo: tremula um pouco ate firmar
+    float fl = 1.0 - (1.0 - smoothstep(0.55, 0.95, k)) * 0.35 * (0.5 + 0.5 * sin(uT * 31.0 + th * 90.0)) * step(0.02, k);
+    return k * fl;
+  }
+
   uniform float uI;
   uniform float uFadeA;
   uniform float uFadeB;
@@ -24,7 +34,7 @@ const POOL_VERT = /* glsl */ `
     vP = position.xy * 2.0;
     vC = aColor;
     vec4 wp = modelMatrix * instanceMatrix * vec4(position.x * 2.0, 0.0, -position.y * 2.0, 1.0);
-    vF = uI * (1.0 - smoothstep(uFadeA, uFadeB, distance(wp.xyz, cameraPosition)));
+    vF = lampIgnite(uI, instanceMatrix[3].xz) * (1.0 - smoothstep(uFadeA, uFadeB, distance(wp.xyz, cameraPosition)));
     gl_Position = projectionMatrix * viewMatrix * wp;
   }
 `
@@ -41,6 +51,15 @@ const POOL_FRAG = /* glsl */ `
 `
 const HALO_VERT = /* glsl */ `
   attribute vec3 aColor;
+  uniform float uT;
+  float lampIgnite(float uI, vec2 p) {
+    float th = fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453) * 0.5;
+    float k = smoothstep(th, th + 0.32, uI);
+    // aquecendo: tremula um pouco ate firmar
+    float fl = 1.0 - (1.0 - smoothstep(0.55, 0.95, k)) * 0.35 * (0.5 + 0.5 * sin(uT * 31.0 + th * 90.0)) * step(0.02, k);
+    return k * fl;
+  }
+
   uniform float uI;
   uniform float uSize;
   uniform float uFadeA;
@@ -53,7 +72,7 @@ const HALO_VERT = /* glsl */ `
     vC = aColor;
     vec4 c = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
     vec4 mv = viewMatrix * c;
-    vF = uI * (1.0 - smoothstep(uFadeA, uFadeB, -mv.z));
+    vF = lampIgnite(uI, instanceMatrix[3].xz) * (1.0 - smoothstep(uFadeA, uFadeB, -mv.z));
     mv.xy += position.xy * uSize;
     gl_Position = projectionMatrix * mv;
   }
@@ -97,13 +116,13 @@ export function NightLights() {
       polygonOffset: true,
       polygonOffsetFactor: -14,
       polygonOffsetUnits: -14,
-      uniforms: { uI: { value: 0 }, uFadeA: { value: fadeA }, uFadeB: { value: fadeB } },
+      uniforms: { uI: { value: 0 }, uT: lifeU.uLifeT, uFadeA: { value: fadeA }, uFadeB: { value: fadeB } },
     })
     const halo = new ShaderMaterial({
       ...base,
       vertexShader: HALO_VERT,
       fragmentShader: HALO_FRAG,
-      uniforms: { uI: { value: 0 }, uSize: { value: 2.6 }, uFadeA: { value: fadeA * 1.1 }, uFadeB: { value: fadeB * 1.15 } },
+      uniforms: { uI: { value: 0 }, uT: lifeU.uLifeT, uSize: { value: 2.6 }, uFadeA: { value: fadeA * 1.1 }, uFadeB: { value: fadeB * 1.15 } },
     })
     return { pool, halo }
   }, [tier.propDist])

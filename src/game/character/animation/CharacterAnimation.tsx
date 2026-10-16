@@ -8,6 +8,7 @@ import { usePlayerStore } from '../../../state/playerStore'
 import type { CharacterHandle } from '../Character'
 import { applyRestPose } from '../pose'
 import { useSitStore } from '../../sit/sitStore'
+import { driveBridge } from '../../vehicles/driveStore'
 import { CORE_URL, EMOTES_URL, EMOTE_CLIPS, CharacterAnimator, type AnimInput, type ClipName } from './animator'
 import { turnState } from './turnState'
 import { EMOTE_BY_ID, playEmote, useEmoteStore } from './emoteStore'
@@ -102,7 +103,7 @@ export function CharacterAnimation({ rig, driver }: { rig: CharacterHandle; driv
       input.typing = e.typing
       input.turn = turnState.active
       const sit = useSitStore.getState()
-      input.seat = sit.seat ? sit.phase : 'none'
+      input.seat = sit.seat ? sit.phase : driveBridge.active ? 'sitting' : 'none' // dirigindo = sentada no carro
       animator.update(dt, input)
     } else if (driver.t !== undefined) {
       animator.seek(driver.clip, driver.t)

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 export type MenuTab = 'perfil' | 'aparencia' | 'guardaroupa' | 'config'
-export type PhoneApp = 'home' | 'missoes' | 'blogram' | 'mensagens'
+export type PhoneApp = 'home' | 'missoes' | 'blogram' | 'mensagens' | 'loja'
 
 interface UiState {
   menuOpen: boolean

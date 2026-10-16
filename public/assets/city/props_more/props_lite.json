@@ -1,0 +1,870 @@
+{
+  "units": "m",
+  "up": "Y",
+  "front": "+Z",
+  "style": "lite (decimado) de props_plus",
+  "slots": [
+    "base",
+    "accent",
+    "accent2",
+    "soft",
+    "deep",
+    "seat",
+    "white",
+    "trim",
+    "glass",
+    "glow",
+    "leaf",
+    "water"
+  ],
+  "metals": {
+    "jewel_gold": {
+      "color": "#f2cf6e",
+      "roughness": 0.14,
+      "metallic": 1
+    },
+    "rose_gold": {
+      "color": "#f0aa9c",
+      "roughness": 0.18,
+      "metallic": 1
+    },
+    "silver": {
+      "color": "#e3e6ee",
+      "roughness": 0.16,
+      "metallic": 1
+    },
+    "champagne": {
+      "color": "#ecd9a2",
+      "roughness": 0.2,
+      "metallic": 1
+    },
+    "chrome": {
+      "color": "#f5f7fb",
+      "roughness": 0.05,
+      "metallic": 1
+    },
+    "pearl": {
+      "color": "#f6f0fa",
+      "roughness": 0.16,
+      "metallic": 1
+    }
+  },
+  "palettes": {},
+  "pieces": {
+    "lite_photo_spot_frame": {
+      "file": "props_more/lite_photo_spot_frame.glb",
+      "family": "centro",
+      "palette": "photo",
+      "tris": 3600,
+      "bytes": 145444,
+      "size": [
+        5.05,
+        3.711,
+        3.85
+      ],
+      "bbox_min": [
+        -2.525,
+        0.0,
+        -1.925
+      ],
+      "bbox_max": [
+        2.525,
+        3.711,
+        1.925
+      ],
+      "materials": [
+        "white",
+        "trim",
+        "accent",
+        "accent2",
+        "soft",
+        "deep",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.34,
+            3.3,
+            0.5,
+            -1.25,
+            1.65,
+            -0.2
+          ],
+          [
+            0.34,
+            3.3,
+            0.5,
+            1.25,
+            1.65,
+            -0.2
+          ],
+          [
+            0.5,
+            1.2,
+            0.5,
+            2.15,
+            0.6,
+            0.9
+          ]
+        ],
+        "center": null
+      },
+      "note": "palco 4.8x3.6 m de altura 0.14 (pisavel); moldura a 0.2 m do centro do palco; pessoa fica atras da moldura (y>0 Blender = -z jogo) e aparece na abertura",
+      "mount": "livre; frente -Z do jogo ... (+Z no GLB)"
+    },
+    "lite_wayfinding_post": {
+      "file": "props_more/lite_wayfinding_post.glb",
+      "family": "centro",
+      "palette": "sign",
+      "tris": 2800,
+      "bytes": 68844,
+      "size": [
+        3.096,
+        3.961,
+        1.04
+      ],
+      "bbox_min": [
+        -1.498,
+        0.0,
+        -0.52
+      ],
+      "bbox_max": [
+        1.598,
+        3.961,
+        0.52
+      ],
+      "materials": [
+        "white",
+        "accent2",
+        "trim",
+        "base",
+        "deep",
+        "accent",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.45,
+          3.8
+        ],
+        "center": [
+          0,
+          1.9,
+          0
+        ]
+      },
+      "note": "placas em branco (texto depois); 4 setas + medalhoes de icone (bolsa, flor, camera, xicara)"
+    },
+    "lite_magazine_kiosk": {
+      "file": "props_more/lite_magazine_kiosk.glb",
+      "family": "centro",
+      "palette": "kiosk",
+      "tris": 3000,
+      "bytes": 150880,
+      "size": [
+        4.196,
+        3.6,
+        2.718
+      ],
+      "bbox_min": [
+        -2.098,
+        0.0,
+        -1.125
+      ],
+      "bbox_max": [
+        2.098,
+        3.6,
+        1.593
+      ],
+      "materials": [
+        "white",
+        "trim",
+        "base",
+        "accent",
+        "soft",
+        "accent2",
+        "deep",
+        "seat",
+        "glass",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.9,
+          3.2,
+          1.9
+        ],
+        "center": [
+          0,
+          1.6,
+          0
+        ]
+      },
+      "note": "frente aberta para -Z do jogo; balcao a 1.0 m; revistas em prateleiras laterais"
+    },
+    "lite_flower_cart": {
+      "file": "props_more/lite_flower_cart.glb",
+      "family": "jardim",
+      "palette": "flower",
+      "tris": 3000,
+      "bytes": 101420,
+      "size": [
+        2.438,
+        2.489,
+        1.424
+      ],
+      "bbox_min": [
+        -1.05,
+        -0.03,
+        -0.678
+      ],
+      "bbox_max": [
+        1.388,
+        2.459,
+        0.746
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "trim",
+        "accent2",
+        "deep",
+        "soft",
+        "white",
+        "seat",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.4,
+          1.2,
+          1.4
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "canopy a 2.3 m; carrinho com baldes de flores"
+    },
+    "lite_rose_arch": {
+      "file": "props_more/lite_rose_arch.glb",
+      "family": "jardim",
+      "palette": "rose",
+      "tris": 2800,
+      "bytes": 97868,
+      "size": [
+        2.98,
+        3.481,
+        0.67
+      ],
+      "bbox_min": [
+        -1.49,
+        0.0,
+        -0.335
+      ],
+      "bbox_max": [
+        1.49,
+        3.481,
+        0.335
+      ],
+      "materials": [
+        "trim",
+        "white",
+        "accent2",
+        "seat",
+        "leaf",
+        "accent",
+        "deep",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.5,
+            2.6,
+            0.5,
+            -1.2,
+            1.3,
+            0
+          ],
+          [
+            0.5,
+            2.6,
+            0.5,
+            1.2,
+            1.3,
+            0
+          ]
+        ],
+        "center": null
+      },
+      "note": "vao livre de 1.9 m x 2.6 m; passagem de jardim"
+    },
+    "lite_macaron_stand": {
+      "file": "props_more/lite_macaron_stand.glb",
+      "family": "jardim",
+      "palette": "macaron",
+      "tris": 2800,
+      "bytes": 79712,
+      "size": [
+        2.0,
+        2.295,
+        2.278
+      ],
+      "bbox_min": [
+        -1.0,
+        0.005,
+        -1.55
+      ],
+      "bbox_max": [
+        1.0,
+        2.3,
+        0.728
+      ],
+      "materials": [
+        "trim",
+        "accent2",
+        "white",
+        "soft",
+        "accent",
+        "seat",
+        "base",
+        "glass"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.75,
+          1.0
+        ],
+        "center": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "note": "mesa de doces com expositor de 3 andares e guarda-sol de 2 m (a 1.85-2.25 m)"
+    },
+    "lite_bike_rack": {
+      "file": "props_more/lite_bike_rack.glb",
+      "family": "centro",
+      "palette": "bike",
+      "tris": 2200,
+      "bytes": 80112,
+      "size": [
+        3.6,
+        1.6,
+        1.1
+      ],
+      "bbox_min": [
+        -1.8,
+        0.0,
+        -0.55
+      ],
+      "bbox_max": [
+        1.8,
+        1.6,
+        0.55
+      ],
+      "materials": [
+        "white",
+        "trim",
+        "accent2",
+        "deep",
+        "accent",
+        "seat",
+        "soft",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          3.4,
+          1.2,
+          0.8
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "bicicletario com bike cruiser parada (cesta de flores)"
+    },
+    "lite_phone_booth_capsule": {
+      "file": "props_more/lite_phone_booth_capsule.glb",
+      "family": "centro",
+      "palette": "booth",
+      "tris": 2399,
+      "bytes": 72388,
+      "size": [
+        1.9,
+        3.17,
+        1.9
+      ],
+      "bbox_min": [
+        -0.95,
+        0.0,
+        -0.95
+      ],
+      "bbox_max": [
+        0.95,
+        3.17,
+        0.95
+      ],
+      "materials": [
+        "white",
+        "glow",
+        "accent",
+        "glass",
+        "trim",
+        "soft",
+        "accent2",
+        "deep",
+        "seat"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.85,
+          3.0
+        ],
+        "center": [
+          0,
+          1.5,
+          0
+        ]
+      },
+      "note": "abertura de 110 graus para a frente (-Y Blender)"
+    },
+    "lite_vending_pod": {
+      "file": "props_more/lite_vending_pod.glb",
+      "family": "centro",
+      "palette": "vending",
+      "tris": 2399,
+      "bytes": 64100,
+      "size": [
+        1.37,
+        2.443,
+        1.095
+      ],
+      "bbox_min": [
+        -0.685,
+        0.0,
+        -0.5
+      ],
+      "bbox_max": [
+        0.685,
+        2.443,
+        0.595
+      ],
+      "materials": [
+        "trim",
+        "base",
+        "accent2",
+        "white",
+        "glow",
+        "deep",
+        "soft",
+        "accent",
+        "seat",
+        "glass"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.3,
+          2.3,
+          0.95
+        ],
+        "center": [
+          0,
+          1.15,
+          0
+        ]
+      }
+    },
+    "lite_bubble_car_parked": {
+      "file": "props_more/lite_bubble_car_parked.glb",
+      "family": "centro",
+      "palette": "car",
+      "tris": 2399,
+      "bytes": 72472,
+      "size": [
+        1.72,
+        1.833,
+        2.466
+      ],
+      "bbox_min": [
+        -0.86,
+        0.0,
+        -1.233
+      ],
+      "bbox_max": [
+        0.86,
+        1.833,
+        1.233
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "accent2",
+        "glass",
+        "accent",
+        "seat",
+        "deep",
+        "glow",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.5,
+          1.5,
+          2.4
+        ],
+        "center": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "note": "frente do carro para -Y Blender (+Z GLB)"
+    },
+    "lite_cafe_table_set": {
+      "file": "props_more/lite_cafe_table_set.glb",
+      "family": "avenida",
+      "palette": "cafe_lux",
+      "tris": 2400,
+      "bytes": 78764,
+      "size": [
+        2.68,
+        2.742,
+        2.669
+      ],
+      "bbox_min": [
+        -1.34,
+        -0.022,
+        -1.335
+      ],
+      "bbox_max": [
+        1.34,
+        2.72,
+        1.335
+      ],
+      "materials": [
+        "trim",
+        "white",
+        "accent",
+        "base",
+        "accent2",
+        "seat",
+        "deep",
+        "soft",
+        "glass",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          1.15,
+          1.0
+        ],
+        "center": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "note": "guarda-sol 2.6 m de diametro a 2.1-2.65 m (nao colide)"
+    },
+    "lite_mannequin_display": {
+      "file": "props_more/lite_mannequin_display.glb",
+      "family": "avenida",
+      "palette": "mannequin",
+      "tris": 2799,
+      "bytes": 83072,
+      "size": [
+        1.9,
+        3.344,
+        1.9
+      ],
+      "bbox_min": [
+        -0.95,
+        0.0,
+        -0.75
+      ],
+      "bbox_max": [
+        0.95,
+        3.344,
+        1.15
+      ],
+      "materials": [
+        "trim",
+        "accent",
+        "seat",
+        "base",
+        "glow",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.9,
+          3.0,
+          1.2
+        ],
+        "center": [
+          0,
+          1.5,
+          -0.1
+        ]
+      }
+    },
+    "lite_palm_planter_lux": {
+      "file": "props_more/lite_palm_planter_lux.glb",
+      "family": "avenida",
+      "palette": "palm_lux",
+      "tris": 2800,
+      "bytes": 107444,
+      "size": [
+        3.235,
+        4.087,
+        3.207
+      ],
+      "bbox_min": [
+        -1.715,
+        0.0,
+        -1.536
+      ],
+      "bbox_max": [
+        1.52,
+        4.087,
+        1.671
+      ],
+      "materials": [
+        "trim",
+        "base",
+        "accent",
+        "deep",
+        "white",
+        "leaf",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.7,
+          1.0
+        ],
+        "center": [
+          0,
+          0.5,
+          0
+        ]
+      },
+      "note": "copa ate 4.2 m de altura; so o vaso colide"
+    },
+    "lite_trash_bin_cute": {
+      "file": "props_more/lite_trash_bin_cute.glb",
+      "family": "centro",
+      "palette": "bin",
+      "tris": 1200,
+      "bytes": 45588,
+      "size": [
+        0.878,
+        1.363,
+        0.878
+      ],
+      "bbox_min": [
+        -0.439,
+        -0.01,
+        -0.439
+      ],
+      "bbox_max": [
+        0.439,
+        1.353,
+        0.439
+      ],
+      "materials": [
+        "trim",
+        "base",
+        "accent",
+        "accent2",
+        "deep",
+        "soft",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.45,
+          1.3
+        ],
+        "center": [
+          0,
+          0.65,
+          0
+        ]
+      }
+    },
+    "lite_mailbox_heart": {
+      "file": "props_more/lite_mailbox_heart.glb",
+      "family": "centro",
+      "palette": "mail",
+      "tris": 1400,
+      "bytes": 41748,
+      "size": [
+        1.118,
+        2.065,
+        0.853
+      ],
+      "bbox_min": [
+        -0.559,
+        0.0,
+        -0.42
+      ],
+      "bbox_max": [
+        0.559,
+        2.065,
+        0.433
+      ],
+      "materials": [
+        "white",
+        "trim",
+        "base",
+        "deep",
+        "accent",
+        "soft",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.45,
+          1.9
+        ],
+        "center": [
+          0,
+          0.95,
+          0
+        ]
+      }
+    },
+    "lite_birdcage_lamp": {
+      "file": "props_more/lite_birdcage_lamp.glb",
+      "family": "jardim",
+      "palette": "birdcage",
+      "tris": 1800,
+      "bytes": 67332,
+      "size": [
+        0.84,
+        3.839,
+        0.84
+      ],
+      "bbox_min": [
+        -0.42,
+        0.0,
+        -0.42
+      ],
+      "bbox_max": [
+        0.42,
+        3.839,
+        0.42
+      ],
+      "materials": [
+        "trim",
+        "white",
+        "accent2",
+        "accent",
+        "glow",
+        "leaf",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.4,
+          3.6
+        ],
+        "center": [
+          0,
+          1.8,
+          0
+        ]
+      },
+      "note": "gaiola luminosa; passaro dentro"
+    },
+    "lite_swan_boat": {
+      "file": "props_more/lite_swan_boat.glb",
+      "family": "jardim",
+      "palette": "swan",
+      "tris": 2399,
+      "bytes": 65516,
+      "size": [
+        2.53,
+        2.815,
+        4.37
+      ],
+      "bbox_min": [
+        -1.265,
+        -0.12,
+        -2.285
+      ],
+      "bbox_max": [
+        1.265,
+        2.695,
+        2.085
+      ],
+      "materials": [
+        "water",
+        "white",
+        "accent2",
+        "soft",
+        "seat",
+        "accent",
+        "deep",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.5,
+          1.8,
+          3.0
+        ],
+        "center": [
+          0,
+          0.9,
+          0
+        ]
+      },
+      "note": "origem na linha d'agua; pe do pedalinho flutua; frente (pescoco) para -Y Blender"
+    }
+  }
+}

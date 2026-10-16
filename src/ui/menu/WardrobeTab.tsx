@@ -1,11 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAppearanceStore } from '../../state/appearanceStore'
 import { SLOT_NAMES, itemsForSlot, useCatalogStore, type CatalogItem, type ItemSlot } from '../../game/character/catalog'
 import { equip, equippedRef, isEquipped, recolor, unequip } from '../../game/character/outfit'
 import { RARITY_COLORS, RARITY_LABELS, STYLE_LABELS, tagsOf } from '../../game/character/itemTags'
 import { FINISH_NAMES } from '../../game/character/fabric'
 import { getWearable } from '../../game/character/items'
+import { useEconomyStore } from '../../game/economy/economyStore'
+import { PREMIUM_FINISH_PRICE } from '../../game/economy/prices'
+import { useSellables, useStatuses } from '../../game/economy/sellables'
+import { useProfileStore } from '../../state/profileStore'
+import { Money } from '../shop/parts'
+import { useShopStore } from '../shop/shopStore'
+import { endTryOn, toggleTry, unownedWorn, useTryStore } from '../shop/tryon'
 import { Swatches } from './controls'
+import { EditionsSection } from './EditionsSection'
 import { IconBag, IconCheck, IconLock, IconStar, SLOT_ICONS } from './icons'
 
 /** Categorias do inventario: slot(s) reais + categorias bloqueadas ("Em breve"). */
@@ -42,6 +50,15 @@ export function WardrobeTab() {
   const appearance = useAppearanceStore((s) => s.appearance)
   const setAppearance = useAppearanceStore((s) => s.setAppearance)
   const items = useCatalogStore((s) => s.items)
+  const sellables = useSellables()
+  const statuses = useStatuses(sellables)
+  const owned = useProfileStore((s) => s.owned)
+  const finishes = useEconomyStore((s) => s.finishes)
+  const ask = useShopStore((s) => s.ask)
+  const tried = useTryStore((s) => s.tried)
+  const ownedSet = useMemo(() => new Set(owned), [owned])
+  // ao sair do guarda-roupa, pecas apenas provadas saem do look
+  useEffect(() => endTryOn, [])
 
   const cat = CATEGORIES.find((c) => c.id === catId)!
   const slots = cat.id === 'jewelry' && jewelSlot !== 'all' ? [jewelSlot] : cat.slots
@@ -54,6 +71,11 @@ export function WardrobeTab() {
   const selWorn = !!selRef && selRef.id === selItem?.id
 
   const click = (id: string, slot: ItemSlot) => {
+    if (!ownedSet.has(id)) {
+      toggleTry(id)
+      setSelected(id)
+      return
+    }
     if (isEquipped(appearance, id)) setAppearance(unequip(appearance, slot))
     else setAppearance(equip(appearance, id))
     setSelected(id)
@@ -97,14 +119,22 @@ export function WardrobeTab() {
               {list.map((it) => {
                 const tags = tagsOf(it.id)
                 const on = isEquipped(appearance, it.id)
+                const mine = ownedSet.has(it.id)
+                const st = statuses.get(it.id)
                 const slot = (it.item?.slot ?? 'hair') as ItemSlot
                 const tint = it.item?.mats[0]?.color ?? getWearable(it.id)?.defaultColor ?? '#c9a8d8'
                 return (
-                  <button key={it.id} type="button" className="card" style={{ ['--rar' as string]: RARITY_COLORS[tags.rarity] }} aria-pressed={selected === it.id} onClick={() => click(it.id, slot)}>
+                  <button key={it.id} type="button" className={`card${mine ? '' : ' card--locked'}`} style={{ ['--rar' as string]: RARITY_COLORS[tags.rarity] }} aria-pressed={selected === it.id} onClick={() => click(it.id, slot)}>
                     <span className="card__icon">{SLOT_ICONS[slot]({ style: { color: tint } })}</span>
                     {it.label}
                     <span className="card__rar">{RARITY_LABELS[tags.rarity]}</span>
-                    {on && (
+                    {!mine && st && (st.state === 'buyable' ? <span className="card__price"><Money offer={st.offers[0]} /></span> : <span className="card__price card__price--n">{st.state === 'upcoming' ? 'Em breve' : (st.note ?? 'Indisponível')}</span>)}
+                    {!mine && (
+                      <span className="card__eq card__eq--lock" title={tried.includes(it.id) ? 'Provando' : 'Bloqueado'}>
+                        <IconLock />
+                      </span>
+                    )}
+                    {mine && on && (
                       <span className="card__eq" title="Equipado">
                         <IconCheck />
                       </span>
@@ -122,7 +152,48 @@ export function WardrobeTab() {
           )}
         </div>
 
-        {selItem && selWorn && (
+        <EditionsSection />
+
+        {selected && !ownedSet.has(selected) && sellables.some((x) => x.id === selected) && (
+          <div className="panel">
+            <h3>{sellables.find((x) => x.id === selected)!.label}</h3>
+            <div className="row-wrap" style={{ marginBottom: 8 }}>
+              <span className="chip" style={{ borderColor: RARITY_COLORS[tagsOf(selected).rarity] }}>
+                {RARITY_LABELS[tagsOf(selected).rarity]}
+              </span>
+              {tagsOf(selected).styles.map((s) => (
+                <span key={s} className="chip chip--gold">
+                  {STYLE_LABELS[s]}
+                </span>
+              ))}
+            </div>
+            {(() => {
+              const st = statuses.get(selected)
+              if (!st) return null
+              return st.state === 'buyable' ? (
+                <>
+                  <div className="row-wrap" style={{ marginBottom: 8, gap: 12 }}>
+                    {st.offers.map((o) => (
+                      <Money key={o.currency} offer={o} big />
+                    ))}
+                  </div>
+                  <div className="actions">
+                    <button type="button" className="btn btn--primary" onClick={() => ask({ kind: 'item', id: selected, canWear: true })}>
+                      Comprar
+                    </button>
+                    <button type="button" className="btn" onClick={() => toggleTry(selected)}>
+                      {tried.includes(selected) ? 'Tirar prova' : 'Provar'}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <p style={{ margin: 0, font: '700 13px var(--corpo)', color: 'var(--tinta-suave)' }}>{st.state === 'upcoming' ? 'Exclusivo ainda não lançado. Veja a vitrine da loja.' : (st.note ?? 'Indisponível.')}</p>
+              )
+            })()}
+            <p style={{ margin: '8px 0 0', font: '600 12px var(--corpo)', color: 'var(--tinta-suave)' }}>Você pode provar antes de comprar. Peças provadas não ficam no look salvo.</p>
+          </div>
+        )}
+        {selItem && selWorn && ownedSet.has(selItem.id) && (
           <div className="panel">
             <h3>{selItem.label}</h3>
             <div className="row-wrap" style={{ marginBottom: 6 }}>
@@ -142,8 +213,25 @@ export function WardrobeTab() {
                 {m.finishes.length > 1 && (
                   <div className="fin-chips">
                     {m.finishes.map((f) => (
-                      <button key={f} type="button" className="pill" aria-pressed={(selRef?.finishes?.[i] ?? m.finish) === f} onClick={() => setAppearance(recolor(appearance, selItem, i, { finish: f }))}>
+                      <button
+                        key={f}
+                        type="button"
+                        className="pill"
+                        aria-pressed={(selRef?.finishes?.[i] ?? m.finish) === f}
+                        onClick={() => {
+                          const price = PREMIUM_FINISH_PRICE[f]
+                          if (price && f !== m.finish && !finishes.includes(f))
+                            useShopStore.getState().ask({ kind: 'finish', finish: f, label: FINISH_NAMES[f] ?? f, price, onDone: () => setAppearance(recolor(useAppearanceStore.getState().appearance, selItem, i, { finish: f })) })
+                          else setAppearance(recolor(appearance, selItem, i, { finish: f }))
+                        }}
+                      >
                         {FINISH_NAMES[f] ?? f}
+                        {PREMIUM_FINISH_PRICE[f] && f !== m.finish && !finishes.includes(f) && (
+                          <>
+                            {' '}
+                            <IconLock width={11} height={11} style={{ verticalAlign: '-1px' }} />
+                          </>
+                        )}
                       </button>
                     ))}
                   </div>
@@ -168,15 +256,17 @@ function SaveLookBar() {
   const save = useAppearanceStore((s) => s.save)
   const revert = useAppearanceStore((s) => s.revert)
   const dirty = JSON.stringify(appearance) !== JSON.stringify(saved)
+  const lockedWorn = unownedWorn(appearance).length > 0
   return (
     <div className="actions">
-      <button type="button" className="btn btn--primary" disabled={!dirty} onClick={save}>
+      <button type="button" className="btn btn--primary" disabled={!dirty || lockedWorn} onClick={save} title={lockedWorn ? 'Compre ou tire as peças em prova para salvar' : undefined}>
         Salvar look
       </button>
       <button type="button" className="btn" disabled={!dirty} onClick={revert}>
         Desfazer
       </button>
-      {dirty && <span className="unsaved">Alterações não salvas</span>}
+      {lockedWorn && <span className="unsaved">Peças em prova: compre ou tire para salvar</span>}
+      {dirty && !lockedWorn && <span className="unsaved">Alterações não salvas</span>}
     </div>
   )
 }

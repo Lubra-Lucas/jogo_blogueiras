@@ -7,7 +7,13 @@ import { useEnvStore } from '../../game/world/environment/envStore'
 import { WEATHER_LABEL } from '../../game/world/environment/config'
 import { fastTravelTo, navigateTo } from '../navBridge'
 import { portraitCanvas, usePortraitStore } from '../PortraitCapture'
-import { GBack, GBlogram, GCamera, GCheck, GCloud, GMap, GMessages, GMissions, GMoon, GPin, GProfile, GRain, GSettings, GStar, GSun, GWardrobe, GBolt, GClose } from '../glyphs'
+import { GBack, GBlogram, GCamera, GCheck, GCloud, GMap, GMercado, GMessages, GMissions, GMoon, GPin, GProfile, GRain, GSettings, GStar, GSun, GWardrobe, GBolt, GClose } from '../glyphs'
+import { PhoneShop } from '../shop/PhoneShop'
+import { GCar } from '../vehicles/CarArt'
+import { useVehicleStore } from '../../game/vehicles/driveStore'
+import { openMarket } from '../market/marketUi'
+import { IconTag } from '../shop/icons'
+import '../shop/shop.css'
 import '../phone/phone.css'
 
 const isTyping = (t: EventTarget | null) => t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))
@@ -46,6 +52,9 @@ const APPS: Array<{ id: string; label: string; color: string; icon: ReactNode; r
   { id: 'missoes', label: 'Missões', color: '#d99a2b', icon: <GMissions />, run: () => useUiStore.getState().setPhoneApp('missoes') },
   { id: 'blogram', label: 'Blogram', color: '#d9789f', icon: <GBlogram />, run: () => (usePhotoStore.getState().reload(), useUiStore.getState().setPhoneApp('blogram')) },
   { id: 'mensagens', label: 'Mensagens', color: '#3a9f8a', icon: <GMessages />, run: () => useUiStore.getState().setPhoneApp('mensagens') },
+  { id: 'loja', label: 'Loja', color: '#2f7f86', icon: <IconTag />, run: () => useUiStore.getState().setPhoneApp('loja') },
+  { id: 'mercado', label: 'Mercado', color: '#b8892f', icon: <GMercado />, run: () => (useUiStore.getState().closePhone(), openMarket()) },
+  { id: 'garagem', label: 'Garagem', color: '#4a6a8a', icon: <GCar />, run: () => (useUiStore.getState().closePhone(), useVehicleStore.getState().setGarage(true)) },
   { id: 'mapa', label: 'Mapa', color: '#4b8fcf', icon: <GMap />, run: () => (useUiStore.getState().closePhone(), useUiStore.getState().setBigMap(true)) },
   { id: 'camera', label: 'Câmera', color: '#4a3a56', icon: <GCamera />, run: () => useUiStore.getState().setCameraMode(true) },
   { id: 'guarda', label: 'Guarda-roupa', color: '#7d63b0', icon: <GWardrobe />, run: () => useUiStore.getState().openMenu('guardaroupa') },
@@ -229,6 +238,14 @@ function Messages() {
   )
 }
 
+function Shop() {
+  return (
+    <AppFrame title="Loja">
+      <PhoneShop />
+    </AppFrame>
+  )
+}
+
 /** Celular: desliza de baixo; P abre/fecha, Esc fecha. Mostra hora e clima do jogo (somente leitura). */
 export function Phone() {
   const open = useUiStore((s) => s.phoneOpen)
@@ -262,7 +279,7 @@ export function Phone() {
   }, [])
 
   if (!mounted) return null
-  const screens: Record<PhoneApp, ReactNode> = { home: <Home />, missoes: <Missions />, blogram: <Blogram />, mensagens: <Messages /> }
+  const screens: Record<PhoneApp, ReactNode> = { home: <Home />, missoes: <Missions />, blogram: <Blogram />, mensagens: <Messages />, loja: <Shop /> }
   return (
     <div className={`phone-wrap${out ? ' phone-wrap--out' : ''}`} role="dialog" aria-label="Celular">
       <div className="phone">

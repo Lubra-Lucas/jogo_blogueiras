@@ -36,9 +36,9 @@ function buildLayers(): Layer[] {
   for (const r of CITY.roads) {
     const spec = ROAD_SPEC[r.kind]
     if (r.kind === 'path') continue // trilhas do parque: ladrilho pastel em ParqueDeco.tsx
-    L[2].geoms.push(paint(ribbon(r.points, r.width, 0.02), '#f4eef3'))
-    L[3].geoms.push(paint(ribbon(r.points, r.width - spec.sidewalk * 2 + 0.5, 0.03), '#ddd7e4'))
-    L[4].geoms.push(paint(ribbon(r.points, r.width - spec.sidewalk * 2, 0.04), r.id === 'boulevard' ? '#8d89a8' : '#b7b3c8'))
+    L[2].geoms.push(paint(ribbon(r.points, r.width, 0.02), '#d8d3c7'))
+    L[3].geoms.push(paint(ribbon(r.points, r.width - spec.sidewalk * 2 + 0.5, 0.03), '#b8b3a8'))
+    L[4].geoms.push(paint(ribbon(r.points, r.width - spec.sidewalk * 2, 0.04), r.id === 'boulevard' ? '#3b3d44' : '#4a4d55'))
   }
 
   // 5: pracas
@@ -48,9 +48,9 @@ function buildLayers(): Layer[] {
 
   // 6: detalhes da praca central (aneis) + reserva da fonte
   L[6].geoms.push(
-    ringAt(0, -90, 0.1, 5, 0.06, '#cfe6f6'),
-    ringAt(0, -90, 5, 5.5, 0.06, '#e6b84f'),
-    ringAt(0, -150, 3, 3.4, 0.06, '#e6b84f'),
+    ringAt(0, -90, 0.1, 5, 0.06, '#cdd3d8'),
+    ringAt(0, -90, 5, 5.5, 0.06, '#c9a15a'),
+    ringAt(0, -150, 3, 3.4, 0.06, '#c9a15a'),
     ringAt(150, 0, 3, 3.4, 0.06, '#35e8ff'),
     ringAt(150, 0, 6, 6.3, 0.06, '#ff3fb4'),
   )
@@ -73,7 +73,7 @@ function plazaTextures(): { map: CanvasTexture; glow: CanvasTexture } {
   const e = b.getContext('2d')!
   e.fillStyle = '#000'
   e.fillRect(0, 0, S, S)
-  g.fillStyle = '#efe9f3'
+  g.fillStyle = '#d9d5cc'
   g.fillRect(0, 0, S, S)
   const C = S / 2
   const ang = (i: number, n: number) => (i / n) * Math.PI * 2
@@ -86,14 +86,14 @@ function plazaTextures(): { map: CanvasTexture; glow: CanvasTexture } {
     ctx.fill()
   }
   // coroa de ladrilhos em leque alternando lilas / azul bebe / menta
-  const fan = ['#c7b3ea', '#a9cdee', '#a6dcc6', '#e6bad6']
+  const fan = ['#b5b0a4', '#a2adb6', '#b2b8a4', '#c2a894']
   for (const [r0, r1, n] of [[12.2, 17.4, 24], [17.8, 23.4, 36], [24.8, 30, 48]] as const) {
     for (let i = 0; i < n; i++) sector(g, r0, r1, ang(i, n) + 0.012, ang(i + 1, n) - 0.012, fan[(i + (r0 > 20 ? 1 : 0)) % fan.length])
   }
   // faixa perolada e miolo
-  sector(g, 30.4, 36.2, 0, Math.PI * 2, '#efe9f3')
-  sector(g, 0, 11.8, 0, Math.PI * 2, '#d6c8ee')
-  for (let i = 0; i < 16; i++) sector(g, 6.6, 11.4, ang(i, 16) + 0.02, ang(i + 1, 16) - 0.02, i % 2 ? '#bcd8f2' : '#e1d3f4')
+  sector(g, 30.4, 36.2, 0, Math.PI * 2, '#d9d5cc')
+  sector(g, 0, 11.8, 0, Math.PI * 2, '#c8c4bb')
+  for (let i = 0; i < 16; i++) sector(g, 6.6, 11.4, ang(i, 16) + 0.02, ang(i + 1, 16) - 0.02, i % 2 ? '#b9c5cd' : '#d4cfc4')
   // linhas luminosas (cor no mapa; mesmo desenho no mapa de emissao)
   const ring = (r: number, col: string, w: number) => {
     for (const ctx of [g, e]) {
@@ -107,8 +107,8 @@ function plazaTextures(): { map: CanvasTexture; glow: CanvasTexture } {
   ring(12, '#ffffff', 0.26)
   ring(17.6, '#ffffff', 0.18)
   ring(24.4, '#ffffff', 0.22)
-  ring(30.2, '#fff6c8', 0.18)
-  ring(36.4, '#e9d36f', 0.3)
+  ring(30.2, '#e8dcb4', 0.18)
+  ring(36.4, '#c9a15a', 0.3)
   ring(36.9, '#ffffff', 0.12)
   for (let i = 0; i < 24; i++) {
     const t = ang(i, 24)

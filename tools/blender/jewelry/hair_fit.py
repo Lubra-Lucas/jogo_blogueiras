@@ -8,6 +8,9 @@ skull = BVHTree.FromPolygons([tuple(c.co) for c in body.data.vertices], [tuple(p
 HC = Vector((0, -0.012, 1.44))
 MOUNT = {"tiara": (0, -0.62, 0.78), "hair_bow": (0.55, -0.35, 0.75), "star_pins": (-0.5, -0.55, 0.7)}
 BUILT = 0.010
+_j = json.load(open(os.path.join(OUT, "jewelry.json"), encoding="utf-8"))
+for _p in _j["pieces"]:      # collection-2 head pieces declare hairMount (Blender-space dir)
+    if _p.get("hairMount"): MOUNT[_p["id"]] = tuple(_p["hairMount"])
 fit = {}
 for hair in ("hair_chestnutWaves", "hair_caramelCurls", "hair_platinumUndercut", "hair_meshy_updo"):
     pre = set(bpy.data.objects.keys())
@@ -30,9 +33,9 @@ for hair in ("hair_chestnutWaves", "hair_caramelCurls", "hair_platinumUndercut",
         fit[hair][pid] = round(max(0.0, th - BUILT), 4)
     for o in new: bpy.data.objects.remove(o)
     print("[hairfit]", hair, fit[hair])
-jp = os.path.join(OUT, "jewelry.json"); doc = json.load(open(jp))
+jp = os.path.join(OUT, "jewelry.json"); doc = json.load(open(jp, encoding="utf-8"))
 doc["hairFit"] = {"note": "per hairstyle lift (m) to add to the piece position along mountDir (glTF world dir) so it sits on top of the hair volume instead of inside it",
                   "builtOffset": BUILT,
                   "mountDir": {k: [round(v[0], 3), round(v[2], 3), round(-v[1], 3)] for k, v in ((k, Vector(v).normalized()) for k, v in MOUNT.items())},
                   "lift": fit}
-json.dump(doc, open(jp, "w"), indent=1, ensure_ascii=False)
+json.dump(doc, open(jp, "w", encoding="utf-8"), indent=1, ensure_ascii=False)

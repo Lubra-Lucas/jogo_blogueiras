@@ -1,0 +1,3906 @@
+{
+  "units": "m",
+  "up": "Y",
+  "front": "+Z",
+  "style": "porcelain/vinyl toy street props, real-world palettes",
+  "slots": [
+    "base",
+    "accent",
+    "accent2",
+    "soft",
+    "deep",
+    "seat",
+    "white",
+    "trim",
+    "glass",
+    "glow",
+    "leaf",
+    "water"
+  ],
+  "metals": {
+    "jewel_gold": {
+      "color": "#f2cf6e",
+      "roughness": 0.14,
+      "metallic": 1
+    },
+    "rose_gold": {
+      "color": "#f0aa9c",
+      "roughness": 0.18,
+      "metallic": 1
+    },
+    "silver": {
+      "color": "#e3e6ee",
+      "roughness": 0.16,
+      "metallic": 1
+    },
+    "champagne": {
+      "color": "#ecd9a2",
+      "roughness": 0.2,
+      "metallic": 1
+    },
+    "chrome": {
+      "color": "#f5f7fb",
+      "roughness": 0.05,
+      "metallic": 1
+    },
+    "pearl": {
+      "color": "#f6f0fa",
+      "roughness": 0.16,
+      "metallic": 1
+    },
+    "brass": {
+      "color": "#c9a15a",
+      "roughness": 0.24,
+      "metallic": 1
+    },
+    "bronze": {
+      "color": "#8c6a46",
+      "roughness": 0.3,
+      "metallic": 1
+    },
+    "steel": {
+      "color": "#c3c9d1",
+      "roughness": 0.2,
+      "metallic": 1
+    },
+    "black_steel": {
+      "color": "#3a3d44",
+      "roughness": 0.28,
+      "metallic": 1
+    },
+    "copper": {
+      "color": "#c27a56",
+      "roughness": 0.26,
+      "metallic": 1
+    }
+  },
+  "palettes": {
+    "stone": {
+      "label": "Calcario",
+      "base": "#e4dac6",
+      "accent": "#c9bba0",
+      "accent2": "#b5502f",
+      "soft": "#f0e8d8",
+      "deep": "#2f3036",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass"
+    },
+    "char": {
+      "label": "Carvao",
+      "base": "#3b3e45",
+      "accent": "#55595f",
+      "accent2": "#c9a15a",
+      "soft": "#8a8d92",
+      "deep": "#1c1d21",
+      "seat": "#5a4632",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "navy": {
+      "label": "Marinho",
+      "base": "#2c3e5e",
+      "accent": "#46587a",
+      "accent2": "#d9b45a",
+      "soft": "#9aa6bd",
+      "deep": "#161d2e",
+      "seat": "#6b4a2f",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass"
+    },
+    "forest": {
+      "label": "Floresta",
+      "base": "#2f5d46",
+      "accent": "#4f7d5a",
+      "accent2": "#c9a15a",
+      "soft": "#a9c2a0",
+      "deep": "#1d3a2c",
+      "seat": "#7a5232",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "bronze"
+    },
+    "brick": {
+      "label": "Tijolo",
+      "base": "#9a4f3a",
+      "accent": "#b8694c",
+      "accent2": "#e0b858",
+      "soft": "#d8b89a",
+      "deep": "#3a2a26",
+      "seat": "#5a3b28",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "wood": {
+      "label": "Madeira",
+      "base": "#b98a58",
+      "accent": "#8a6038",
+      "accent2": "#5f7f4a",
+      "soft": "#e0c9a0",
+      "deep": "#3a2a1c",
+      "seat": "#a07a48",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "concrete": {
+      "label": "Concreto",
+      "base": "#b9b7b2",
+      "accent": "#8f8d89",
+      "accent2": "#e0a030",
+      "soft": "#d8d6d0",
+      "deep": "#3a3a3c",
+      "seat": "#6a6a6c",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "neon": {
+      "label": "Neon noturno",
+      "base": "#23252f",
+      "accent": "#2f3347",
+      "accent2": "#ff3fb4",
+      "soft": "#35e8ff",
+      "deep": "#101018",
+      "seat": "#3a2f4a",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ff3fb4",
+      "metal": "black_steel",
+      "glow_str": 8.0
+    },
+    "white": {
+      "label": "Branco jardim",
+      "base": "#f1ede2",
+      "accent": "#d9d2c2",
+      "accent2": "#6f9a6a",
+      "soft": "#e8e2d2",
+      "deep": "#5a5a58",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "y2k": {
+      "label": "Y2K aco",
+      "base": "#dfe3e8",
+      "accent": "#bfc7d2",
+      "accent2": "#2f8fd0",
+      "soft": "#e8e3f2",
+      "deep": "#2b3140",
+      "seat": "#7a8aa8",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#6fd4ff",
+      "metal": "chrome",
+      "glow_str": 6.0
+    },
+    "luxo": {
+      "label": "Luxo marfim",
+      "base": "#efe6d4",
+      "accent": "#d9c9a8",
+      "accent2": "#c9a15a",
+      "soft": "#f6f0e2",
+      "deep": "#1f1f24",
+      "seat": "#6a1f2a",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a0",
+      "metal": "brass"
+    },
+    "traffic": {
+      "label": "Semaforo",
+      "base": "#2b2d33",
+      "accent": "#44474f",
+      "accent2": "#e0402f",
+      "soft": "#f2b632",
+      "deep": "#17181c",
+      "seat": "#6b4a2f",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#46d68a",
+      "metal": "steel",
+      "glow_str": 6.0
+    },
+    "recycle": {
+      "label": "Reciclagem",
+      "base": "#2f6fb0",
+      "accent": "#2f9a5a",
+      "accent2": "#e0b020",
+      "soft": "#c9d0d6",
+      "deep": "#26282e",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "hydrant": {
+      "label": "Hidrante",
+      "base": "#d33a2c",
+      "accent": "#e0705a",
+      "accent2": "#c9a15a",
+      "soft": "#f2d9a8",
+      "deep": "#3a2a26",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass"
+    },
+    "bus": {
+      "label": "Abrigo",
+      "base": "#2f4a6a",
+      "accent": "#c3c9d1",
+      "accent2": "#e0a030",
+      "soft": "#e8e4d8",
+      "deep": "#1f2128",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#a9c4d2",
+      "glow": "#fff0c8",
+      "metal": "steel"
+    },
+    "post_red": {
+      "label": "Correio vermelho",
+      "base": "#b8352f",
+      "accent": "#d9584a",
+      "accent2": "#c9a15a",
+      "soft": "#f1e4c8",
+      "deep": "#2a1c1a",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass"
+    },
+    "post_blue": {
+      "label": "Correio azul",
+      "base": "#2a5aa0",
+      "accent": "#4a7ac0",
+      "accent2": "#e0b020",
+      "soft": "#e8e4d8",
+      "deep": "#17202e",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "cone": {
+      "label": "Obra",
+      "base": "#f26a1f",
+      "accent": "#ffb020",
+      "accent2": "#f26a1f",
+      "soft": "#f4f0e6",
+      "deep": "#2a2a2c",
+      "seat": "#b39a70",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "plywood": {
+      "label": "Tapume",
+      "base": "#c9a56e",
+      "accent": "#e8d3a0",
+      "accent2": "#f2b21f",
+      "soft": "#f4f0e6",
+      "deep": "#3a3a3c",
+      "seat": "#8a6a3a",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "car_red": {
+      "label": "Carro vermelho",
+      "base": "#b8352f",
+      "accent": "#f4f0e6",
+      "accent2": "#2a2a2e",
+      "soft": "#d9584a",
+      "deep": "#1f2024",
+      "seat": "#2a2a2e",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "chrome"
+    },
+    "car_navy": {
+      "label": "Carro marinho",
+      "base": "#27406b",
+      "accent": "#f4f0e6",
+      "accent2": "#c9a15a",
+      "soft": "#46587a",
+      "deep": "#1f2024",
+      "seat": "#c9bfa8",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "chrome"
+    },
+    "car_cream": {
+      "label": "Carro creme",
+      "base": "#efe6cf",
+      "accent": "#f4f0e6",
+      "accent2": "#2f7a6a",
+      "soft": "#c9c0a8",
+      "deep": "#1f2024",
+      "seat": "#7a4a2f",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "chrome"
+    },
+    "car_green": {
+      "label": "Carro verde",
+      "base": "#2f6a52",
+      "accent": "#efe6cf",
+      "accent2": "#c9a15a",
+      "soft": "#4f8a6e",
+      "deep": "#1f2024",
+      "seat": "#c9bfa8",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "chrome"
+    },
+    "car_mustard": {
+      "label": "Carro mostarda",
+      "base": "#d9a02a",
+      "accent": "#f4f0e6",
+      "accent2": "#2a2a2e",
+      "soft": "#f0c25a",
+      "deep": "#1f2024",
+      "seat": "#2a2a2e",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "chrome"
+    },
+    "car_silver": {
+      "label": "Carro prata",
+      "base": "#b9bfc9",
+      "accent": "#e8ecf2",
+      "accent2": "#2a2a2e",
+      "soft": "#8f97a3",
+      "deep": "#1f2024",
+      "seat": "#2a2a2e",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "chrome"
+    },
+    "car_black": {
+      "label": "Carro preto",
+      "base": "#1f2026",
+      "accent": "#3a3d44",
+      "accent2": "#c9a15a",
+      "soft": "#55595f",
+      "deep": "#111114",
+      "seat": "#c9a15a",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "chrome"
+    },
+    "car_teal": {
+      "label": "Carro petroleo",
+      "base": "#1f6a74",
+      "accent": "#efe6cf",
+      "accent2": "#e0b858",
+      "soft": "#3a8a94",
+      "deep": "#1f2024",
+      "seat": "#c9bfa8",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "chrome"
+    },
+    "truck_cream": {
+      "label": "Food truck creme",
+      "base": "#efe6cf",
+      "accent": "#2f7a6a",
+      "accent2": "#e0402f",
+      "soft": "#f6f0e2",
+      "deep": "#26282e",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "truck_mint": {
+      "label": "Food truck sage",
+      "base": "#8fb09a",
+      "accent": "#efe6cf",
+      "accent2": "#d9872f",
+      "soft": "#c9d9c8",
+      "deep": "#26282e",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "truck_navy": {
+      "label": "Food truck marinho",
+      "base": "#2a3a5a",
+      "accent": "#f1e6d0",
+      "accent2": "#e0b858",
+      "soft": "#6a7a9a",
+      "deep": "#16181e",
+      "seat": "#6b4a2f",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass"
+    },
+    "truck_neon": {
+      "label": "Food truck noturno",
+      "base": "#2a2630",
+      "accent": "#46405a",
+      "accent2": "#35e8ff",
+      "soft": "#ff3fb4",
+      "deep": "#101018",
+      "seat": "#3a2f4a",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#35e8ff",
+      "metal": "black_steel",
+      "glow_str": 8.0
+    },
+    "carnival": {
+      "label": "Carrinho festa",
+      "base": "#f4efe2",
+      "accent": "#b8352f",
+      "accent2": "#e0b020",
+      "soft": "#2f6fb0",
+      "deep": "#2a2a2e",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass"
+    },
+    "umbrella": {
+      "label": "Guarda-sol",
+      "base": "#e8e0cc",
+      "accent": "#2f4a6a",
+      "accent2": "#c9553a",
+      "soft": "#7a9a6a",
+      "deep": "#2a2a2e",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "garden": {
+      "label": "Jardim",
+      "base": "#ecd8bf",
+      "accent": "#8fb08a",
+      "accent2": "#c25e3a",
+      "soft": "#e8d79a",
+      "deep": "#3f5a3a",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "bronze",
+      "leaf": "#6aa05a"
+    },
+    "bike_a": {
+      "label": "Bike verde",
+      "base": "#2f6a52",
+      "accent": "#efe6cf",
+      "accent2": "#c9a15a",
+      "soft": "#8a6038",
+      "deep": "#1f2024",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "bike_b": {
+      "label": "Bike creme",
+      "base": "#e8dfc8",
+      "accent": "#2f4a6a",
+      "accent2": "#c9553a",
+      "soft": "#8a6038",
+      "deep": "#1f2024",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "bike_c": {
+      "label": "Bike marinho",
+      "base": "#27406b",
+      "accent": "#c3c9d1",
+      "accent2": "#e0b020",
+      "soft": "#8a6038",
+      "deep": "#1f2024",
+      "seat": "#6b4a2f",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "play": {
+      "label": "Playground",
+      "base": "#2f6fb0",
+      "accent": "#e0b020",
+      "accent2": "#c9402f",
+      "soft": "#3f8a52",
+      "deep": "#2a2a2e",
+      "seat": "#a07a48",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "steel"
+    },
+    "flower_real": {
+      "label": "Carrinho de flores",
+      "base": "#f1ede2",
+      "accent": "#3f7a4a",
+      "accent2": "#c9553a",
+      "soft": "#e8d79a",
+      "deep": "#4a3220",
+      "seat": "#8a6038",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "brass",
+      "leaf": "#5f9a58"
+    },
+    "lights": {
+      "label": "Luzinhas",
+      "base": "#2a2a2e",
+      "accent": "#44474f",
+      "accent2": "#c9a15a",
+      "soft": "#f4efe2",
+      "deep": "#17181c",
+      "seat": "#6b4a2f",
+      "white": "#f4f0e6",
+      "glass": "#9db7c4",
+      "glow": "#ffe2a8",
+      "metal": "black_steel",
+      "glow_str": 7.0
+    },
+    "casino": {
+      "label": "Cassino",
+      "base": "#1c1d22",
+      "accent": "#0f4a36",
+      "accent2": "#c9a15a",
+      "soft": "#4a4c56",
+      "deep": "#0b0b0d",
+      "seat": "#7a1f2a",
+      "white": "#f4f0e6",
+      "glass": "#6f8798",
+      "glow": "#ffcf6a",
+      "metal": "brass",
+      "glow_str": 7.0
+    }
+  },
+  "pieces": {
+    "traffic_light": {
+      "file": "props_more/traffic_light.glb",
+      "family": "rua",
+      "palette": "traffic",
+      "tris": 1128,
+      "bytes": 29096,
+      "size": [
+        0.52,
+        3.91,
+        1.45
+      ],
+      "bbox_min": [
+        -0.26,
+        0.0,
+        -0.26
+      ],
+      "bbox_max": [
+        0.26,
+        3.91,
+        1.19
+      ],
+      "materials": [
+        "trim",
+        "deep",
+        "base",
+        "accent2",
+        "soft",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.28,
+          3.8
+        ],
+        "center": [
+          0,
+          1.9,
+          0
+        ]
+      },
+      "note": "semaforo de carros (cabeca vermelha/ambar/verde) + botoeira pedestre; frente (-Y blender) aponta para a via",
+      "cull": "props"
+    },
+    "street_sign_post": {
+      "file": "props_more/street_sign_post.glb",
+      "family": "rua",
+      "palette": "stone",
+      "tris": 1152,
+      "bytes": 26040,
+      "size": [
+        0.95,
+        3.025,
+        0.95
+      ],
+      "bbox_min": [
+        -0.475,
+        0.0,
+        -0.475
+      ],
+      "bbox_max": [
+        0.475,
+        3.025,
+        0.475
+      ],
+      "materials": [
+        "trim",
+        "deep",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.2,
+          3.0
+        ],
+        "center": [
+          0,
+          1.5,
+          0
+        ]
+      },
+      "note": "poste com duas placas de nome de rua (cruzadas) e placa de pare opcional",
+      "cull": "props"
+    },
+    "street_lamp_tall": {
+      "file": "props_more/street_lamp_tall.glb",
+      "family": "rua",
+      "palette": "char",
+      "tris": 1400,
+      "bytes": 37396,
+      "size": [
+        0.6,
+        5.59,
+        1.542
+      ],
+      "bbox_min": [
+        -0.3,
+        0.0,
+        -0.292
+      ],
+      "bbox_max": [
+        0.3,
+        5.59,
+        1.25
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "deep",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.3,
+          5.4
+        ],
+        "center": [
+          0,
+          2.7,
+          0
+        ]
+      },
+      "note": "poste alto de rua, braco curvo e lanterna de vidro com luz quente (slot glow)",
+      "cull": "props"
+    },
+    "garden_lamp_low": {
+      "file": "props_more/garden_lamp_low.glb",
+      "family": "rua",
+      "palette": "char",
+      "tris": 832,
+      "bytes": 22428,
+      "size": [
+        0.34,
+        1.51,
+        0.34
+      ],
+      "bbox_min": [
+        -0.17,
+        0.0,
+        -0.17
+      ],
+      "bbox_max": [
+        0.17,
+        1.51,
+        0.17
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.18,
+          1.2
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "poste baixo de jardim com lanterna",
+      "cull": "props"
+    },
+    "fire_hydrant": {
+      "file": "props_more/fire_hydrant.glb",
+      "family": "rua",
+      "palette": "hydrant",
+      "tris": 1384,
+      "bytes": 31908,
+      "size": [
+        0.59,
+        0.88,
+        0.43
+      ],
+      "bbox_min": [
+        -0.295,
+        0.0,
+        -0.2
+      ],
+      "bbox_max": [
+        0.295,
+        0.88,
+        0.23
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "accent2",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.28,
+          0.85
+        ],
+        "center": [
+          0,
+          0.42,
+          0
+        ]
+      },
+      "note": "hidrante classico",
+      "cull": "props"
+    },
+    "bench_simple": {
+      "file": "props_more/bench_simple.glb",
+      "family": "rua",
+      "palette": "wood",
+      "tris": 968,
+      "bytes": 25832,
+      "size": [
+        1.7,
+        0.893,
+        0.62
+      ],
+      "bbox_min": [
+        -0.85,
+        0.002,
+        -0.3
+      ],
+      "bbox_max": [
+        0.85,
+        0.895,
+        0.32
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "seat"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.9,
+          0.9,
+          0.6
+        ],
+        "center": [
+          0,
+          0.45,
+          0
+        ]
+      },
+      "note": "banco de rua: ripas de madeira + ferro fundido; 1.8 m",
+      "cull": "props"
+    },
+    "recycling_bins_triple": {
+      "file": "props_more/recycling_bins_triple.glb",
+      "family": "rua",
+      "palette": "recycle",
+      "tris": 1496,
+      "bytes": 36448,
+      "size": [
+        2.5,
+        1.05,
+        0.741
+      ],
+      "bbox_min": [
+        -1.25,
+        0.03,
+        -0.345
+      ],
+      "bbox_max": [
+        1.25,
+        1.08,
+        0.396
+      ],
+      "materials": [
+        "base",
+        "deep",
+        "soft",
+        "white",
+        "accent",
+        "accent2",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.5,
+          1.2,
+          0.8
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "coleta seletiva: 3 lixeiras (azul/verde/amarela)",
+      "cull": "props"
+    },
+    "drinking_fountain": {
+      "file": "props_more/drinking_fountain.glb",
+      "family": "rua",
+      "palette": "stone",
+      "tris": 1532,
+      "bytes": 37776,
+      "size": [
+        0.71,
+        1.308,
+        0.967
+      ],
+      "bbox_min": [
+        -0.355,
+        0.0,
+        -0.355
+      ],
+      "bbox_max": [
+        0.355,
+        1.308,
+        0.612
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "water",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.3,
+          1.1
+        ],
+        "center": [
+          0,
+          0.55,
+          0
+        ]
+      },
+      "note": "bebedouro de pedestal com bacia e tigela pet",
+      "cull": "props"
+    },
+    "bike_hoop": {
+      "file": "props_more/bike_hoop.glb",
+      "family": "rua",
+      "palette": "char",
+      "tris": 508,
+      "bytes": 18832,
+      "size": [
+        0.92,
+        0.894,
+        0.794
+      ],
+      "bbox_min": [
+        -0.46,
+        -0.01,
+        -0.397
+      ],
+      "bbox_max": [
+        0.46,
+        0.884,
+        0.397
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "deep"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.6,
+          0.9,
+          0.2
+        ],
+        "center": [
+          0,
+          0.45,
+          0
+        ]
+      },
+      "note": "paraciclo: 2 argolas de aco",
+      "cull": "props"
+    },
+    "bus_stop": {
+      "file": "props_more/bus_stop.glb",
+      "family": "rua",
+      "palette": "bus",
+      "tris": 1484,
+      "bytes": 42140,
+      "size": [
+        4.93,
+        2.83,
+        1.88
+      ],
+      "bbox_min": [
+        -2.35,
+        0.0,
+        -0.88
+      ],
+      "bbox_max": [
+        2.58,
+        2.83,
+        1.0
+      ],
+      "materials": [
+        "soft",
+        "base",
+        "accent2",
+        "accent",
+        "glass",
+        "seat",
+        "deep",
+        "glow",
+        "white",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            3.4,
+            2.6,
+            0.12,
+            0,
+            1.3,
+            0.6
+          ],
+          [
+            0.1,
+            2.6,
+            1.3,
+            -1.7,
+            1.3,
+            0
+          ],
+          [
+            3.4,
+            2.6,
+            0.1,
+            0,
+            1.3,
+            -0.6
+          ]
+        ],
+        "center": null
+      },
+      "note": "ponto de onibus com abrigo (teto, 3 vidros, banco, placa redonda de linha, painel de rotas); abertura voltada para -Y blender (via)",
+      "cull": "props"
+    },
+    "city_map_totem": {
+      "file": "props_more/city_map_totem.glb",
+      "family": "rua",
+      "palette": "stone",
+      "tris": 1056,
+      "bytes": 29848,
+      "size": [
+        1.0,
+        2.67,
+        0.358
+      ],
+      "bbox_min": [
+        -0.5,
+        0.0,
+        -0.17
+      ],
+      "bbox_max": [
+        0.5,
+        2.67,
+        0.188
+      ],
+      "materials": [
+        "trim",
+        "base",
+        "deep",
+        "white",
+        "leaf",
+        "accent2",
+        "soft",
+        "accent"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.1,
+          2.6,
+          0.4
+        ],
+        "center": [
+          0,
+          1.3,
+          0
+        ]
+      },
+      "note": "totem de mapa da cidade (tela com mapa estilizado, 'voce esta aqui')",
+      "cull": "props"
+    },
+    "clock_post": {
+      "file": "props_more/clock_post.glb",
+      "family": "rua",
+      "palette": "char",
+      "tris": 2110,
+      "bytes": 60556,
+      "size": [
+        0.88,
+        4.71,
+        0.753
+      ],
+      "bbox_min": [
+        -0.44,
+        0.0,
+        -0.377
+      ],
+      "bbox_max": [
+        0.44,
+        4.71,
+        0.377
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "white",
+        "deep"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.3,
+          4.4
+        ],
+        "center": [
+          0,
+          2.2,
+          0
+        ]
+      },
+      "note": "relogio de rua em coluna ornamentada (mostrador duplo)",
+      "cull": "props"
+    },
+    "street_mailbox": {
+      "file": "props_more/street_mailbox.glb",
+      "family": "rua",
+      "palette": "post_blue",
+      "tris": 628,
+      "bytes": 17612,
+      "size": [
+        0.6,
+        1.25,
+        0.462
+      ],
+      "bbox_min": [
+        -0.3,
+        0.0,
+        -0.225
+      ],
+      "bbox_max": [
+        0.3,
+        1.25,
+        0.237
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "accent",
+        "accent2",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          0.7,
+          1.3,
+          0.55
+        ],
+        "center": [
+          0,
+          0.65,
+          0
+        ]
+      },
+      "note": "caixa de correio de rua (arco, aba, bandeirola)",
+      "cull": "props"
+    },
+    "traffic_cone": {
+      "file": "props_more/traffic_cone.glb",
+      "family": "obra",
+      "palette": "cone",
+      "tris": 380,
+      "bytes": 11164,
+      "size": [
+        0.45,
+        0.69,
+        0.45
+      ],
+      "bbox_min": [
+        -0.225,
+        0.0,
+        -0.225
+      ],
+      "bbox_max": [
+        0.225,
+        0.69,
+        0.225
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.25,
+          0.7
+        ],
+        "center": [
+          0,
+          0.35,
+          0
+        ]
+      },
+      "note": "cone de obra (listras brancas)",
+      "cull": "props"
+    },
+    "road_barrier": {
+      "file": "props_more/road_barrier.glb",
+      "family": "obra",
+      "palette": "cone",
+      "tris": 1008,
+      "bytes": 21172,
+      "size": [
+        1.7,
+        0.98,
+        0.55
+      ],
+      "bbox_min": [
+        -0.85,
+        0.0,
+        -0.275
+      ],
+      "bbox_max": [
+        0.85,
+        0.98,
+        0.275
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "white",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.9,
+          0.9,
+          0.3
+        ],
+        "center": [
+          0,
+          0.45,
+          0
+        ]
+      },
+      "note": "barreira de obra listrada (laranja/branco) com pes",
+      "cull": "props"
+    },
+    "manhole_cover": {
+      "file": "props_more/manhole_cover.glb",
+      "family": "rua",
+      "palette": "char",
+      "tris": 604,
+      "bytes": 13052,
+      "size": [
+        0.92,
+        0.049,
+        0.92
+      ],
+      "bbox_min": [
+        -0.46,
+        0.0,
+        -0.46
+      ],
+      "bbox_max": [
+        0.46,
+        0.049,
+        0.46
+      ],
+      "materials": [
+        "trim",
+        "base",
+        "deep"
+      ],
+      "walkable": false,
+      "note": "bueiro/tampa redonda; deitada em y=0 (use y=0.045 sobre o asfalto)",
+      "cull": "props"
+    },
+    "car_hatch": {
+      "file": "props_more/car_hatch.glb",
+      "family": "veiculo",
+      "palette": "car_red",
+      "tris": 1944,
+      "bytes": 46928,
+      "size": [
+        1.83,
+        1.593,
+        3.68
+      ],
+      "bbox_min": [
+        -0.915,
+        0.0,
+        -1.84
+      ],
+      "bbox_max": [
+        0.915,
+        1.593,
+        1.84
+      ],
+      "materials": [
+        "base",
+        "glass",
+        "accent",
+        "deep",
+        "trim",
+        "glow",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.7,
+          1.4,
+          3.6
+        ],
+        "center": [
+          0,
+          0.7,
+          0
+        ]
+      },
+      "note": "hatch compacto fofo (3.5 m); 8 paletas via palette: car_*",
+      "cull": "props"
+    },
+    "car_sedan": {
+      "file": "props_more/car_sedan.glb",
+      "family": "veiculo",
+      "palette": "car_navy",
+      "tris": 1944,
+      "bytes": 46952,
+      "size": [
+        1.97,
+        1.533,
+        4.58
+      ],
+      "bbox_min": [
+        -0.985,
+        0.0,
+        -2.29
+      ],
+      "bbox_max": [
+        0.985,
+        1.533,
+        2.29
+      ],
+      "materials": [
+        "base",
+        "glass",
+        "accent",
+        "deep",
+        "trim",
+        "glow",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.85,
+          1.4,
+          4.5
+        ],
+        "center": [
+          0,
+          0.7,
+          0
+        ]
+      },
+      "note": "sedan arredondado (4.4 m)",
+      "cull": "props"
+    },
+    "car_suv": {
+      "file": "props_more/car_suv.glb",
+      "family": "veiculo",
+      "palette": "car_green",
+      "tris": 2036,
+      "bytes": 49892,
+      "size": [
+        2.05,
+        1.896,
+        4.48
+      ],
+      "bbox_min": [
+        -1.025,
+        0.0,
+        -2.24
+      ],
+      "bbox_max": [
+        1.025,
+        1.896,
+        2.24
+      ],
+      "materials": [
+        "base",
+        "glass",
+        "accent",
+        "deep",
+        "trim",
+        "glow",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.95,
+          1.7,
+          4.5
+        ],
+        "center": [
+          0,
+          0.85,
+          0
+        ]
+      },
+      "note": "SUV/perua compacta (4.3 m)",
+      "cull": "props"
+    },
+    "car_convertible": {
+      "file": "props_more/car_convertible.glb",
+      "family": "veiculo",
+      "palette": "car_black",
+      "tris": 2212,
+      "bytes": 52912,
+      "size": [
+        2.07,
+        1.23,
+        4.88
+      ],
+      "bbox_min": [
+        -1.035,
+        0.0,
+        -2.44
+      ],
+      "bbox_max": [
+        1.035,
+        1.23,
+        2.44
+      ],
+      "materials": [
+        "base",
+        "glass",
+        "trim",
+        "deep",
+        "seat",
+        "glow",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.95,
+          1.3,
+          4.8
+        ],
+        "center": [
+          0,
+          0.65,
+          0
+        ]
+      },
+      "note": "conversivel de luxo (4.7 m) para a Avenida da Moda",
+      "cull": "props"
+    },
+    "scooter_moto": {
+      "file": "props_more/scooter_moto.glb",
+      "family": "veiculo",
+      "palette": "car_cream",
+      "tris": 1100,
+      "bytes": 31784,
+      "size": [
+        0.92,
+        1.225,
+        1.91
+      ],
+      "bbox_min": [
+        -0.46,
+        0.0,
+        -0.97
+      ],
+      "bbox_max": [
+        0.46,
+        1.225,
+        0.94
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "base",
+        "seat",
+        "glass",
+        "glow",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          0.7,
+          1.2,
+          1.7
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "scooter/vespa fofa estacionada",
+      "cull": "props"
+    },
+    "kick_scooter": {
+      "file": "props_more/kick_scooter.glb",
+      "family": "veiculo",
+      "palette": "bike_c",
+      "tris": 620,
+      "bytes": 19828,
+      "size": [
+        0.6,
+        1.125,
+        1.516
+      ],
+      "bbox_min": [
+        -0.3,
+        0.0,
+        -0.8
+      ],
+      "bbox_max": [
+        0.3,
+        1.125,
+        0.716
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "base",
+        "accent2",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          0.5,
+          1.1,
+          1.3
+        ],
+        "center": [
+          0,
+          0.55,
+          0
+        ]
+      },
+      "note": "patinete eletrico (aluguel) encostado",
+      "cull": "props"
+    },
+    "bicycle_parked": {
+      "file": "props_more/bicycle_parked.glb",
+      "family": "veiculo",
+      "palette": "bike_a",
+      "tris": 1748,
+      "bytes": 62296,
+      "size": [
+        0.62,
+        1.211,
+        1.852
+      ],
+      "bbox_min": [
+        -0.31,
+        -0.026,
+        -0.926
+      ],
+      "bbox_max": [
+        0.31,
+        1.185,
+        0.926
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "base",
+        "seat",
+        "glow",
+        "leaf",
+        "accent2",
+        "white",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          0.6,
+          1.1,
+          1.8
+        ],
+        "center": [
+          0,
+          0.55,
+          0
+        ]
+      },
+      "note": "bicicleta urbana com cesta (3 paletas bike_a/b/c); encostada, comprimento ao longo de Y blender",
+      "cull": "props"
+    },
+    "food_truck_icecream": {
+      "file": "props_more/food_truck_icecream.glb",
+      "family": "veiculo",
+      "palette": "truck_cream",
+      "tris": 2744,
+      "bytes": 68200,
+      "size": [
+        2.872,
+        4.24,
+        4.982
+      ],
+      "bbox_min": [
+        -1.067,
+        0.0,
+        -2.622
+      ],
+      "bbox_max": [
+        1.805,
+        4.24,
+        2.36
+      ],
+      "materials": [
+        "base",
+        "glass",
+        "accent",
+        "trim",
+        "glow",
+        "deep",
+        "accent2",
+        "white",
+        "seat",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.1,
+          2.9,
+          4.7
+        ],
+        "center": [
+          0,
+          1.45,
+          0
+        ]
+      },
+      "note": "food truck de sorvete (casquinha no teto); janela de atendimento no lado +X do blender (= +X jogo)",
+      "cull": "props"
+    },
+    "food_truck_crepe": {
+      "file": "props_more/food_truck_crepe.glb",
+      "family": "veiculo",
+      "palette": "truck_mint",
+      "tris": 4800,
+      "bytes": 150744,
+      "size": [
+        2.872,
+        3.57,
+        4.982
+      ],
+      "bbox_min": [
+        -1.067,
+        0.0,
+        -2.622
+      ],
+      "bbox_max": [
+        1.805,
+        3.57,
+        2.36
+      ],
+      "materials": [
+        "base",
+        "glass",
+        "accent",
+        "trim",
+        "glow",
+        "deep",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.1,
+          2.9,
+          4.7
+        ],
+        "center": [
+          0,
+          1.45,
+          0
+        ]
+      },
+      "note": "food truck de crepe/lanches (letreiro CREPES no teto); janela no lado +X",
+      "cull": "props"
+    },
+    "popcorn_cart": {
+      "file": "props_more/popcorn_cart.glb",
+      "family": "carrinho",
+      "palette": "carnival",
+      "tris": 3382,
+      "bytes": 113492,
+      "size": [
+        2.325,
+        2.71,
+        1.322
+      ],
+      "bbox_min": [
+        -1.475,
+        0.0,
+        -0.625
+      ],
+      "bbox_max": [
+        0.85,
+        2.71,
+        0.697
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "base",
+        "glass",
+        "white",
+        "soft",
+        "accent",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.8,
+          2.5,
+          1.3
+        ],
+        "center": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "note": "carrinho de pipoca com toldo listrado, vidro e pipoca; atende pelo lado -Y blender (frente)",
+      "cull": "props"
+    },
+    "cotton_candy_cart": {
+      "file": "props_more/cotton_candy_cart.glb",
+      "family": "carrinho",
+      "palette": "carnival",
+      "tris": 1738,
+      "bytes": 67748,
+      "size": [
+        2.225,
+        2.62,
+        1.02
+      ],
+      "bbox_min": [
+        -1.425,
+        0.0,
+        -0.5
+      ],
+      "bbox_max": [
+        0.8,
+        2.62,
+        0.52
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "base",
+        "accent2",
+        "soft",
+        "white",
+        "accent"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.8,
+          2.5,
+          1.3
+        ],
+        "center": [
+          0,
+          1.25,
+          0
+        ]
+      },
+      "note": "carrinho de algodao-doce: nuvens de algodao (rosa/azul = acento raro) em espeto",
+      "cull": "props"
+    },
+    "patio_umbrella": {
+      "file": "props_more/patio_umbrella.glb",
+      "family": "mobiliario",
+      "palette": "umbrella",
+      "tris": 680,
+      "bytes": 19648,
+      "size": [
+        3.1,
+        2.72,
+        3.1
+      ],
+      "bbox_min": [
+        -1.55,
+        0.0,
+        -1.55
+      ],
+      "bbox_max": [
+        1.55,
+        2.72,
+        1.55
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "accent",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.45,
+          2.4
+        ],
+        "center": [
+          0,
+          1.2,
+          0
+        ]
+      },
+      "note": "guarda-sol de mesa (8 gomos) com base; sem mesa, para combinar com cafe_table_set/bistro_set",
+      "cull": "props"
+    },
+    "bistro_set": {
+      "file": "props_more/bistro_set.glb",
+      "family": "mobiliario",
+      "palette": "wood",
+      "tris": 1176,
+      "bytes": 37156,
+      "size": [
+        0.798,
+        0.967,
+        1.952
+      ],
+      "bbox_min": [
+        -0.399,
+        -0.001,
+        -0.976
+      ],
+      "bbox_max": [
+        0.399,
+        0.966,
+        0.976
+      ],
+      "materials": [
+        "deep",
+        "white",
+        "trim",
+        "accent2",
+        "leaf",
+        "seat"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.9,
+          0.9
+        ],
+        "center": [
+          0,
+          0.45,
+          0
+        ]
+      },
+      "note": "mesa de bistro redonda (tampo de marmore) + 2 cadeiras de madeira curvada",
+      "cull": "props"
+    },
+    "market_stall": {
+      "file": "props_more/market_stall.glb",
+      "family": "mobiliario",
+      "palette": "umbrella",
+      "tris": 2412,
+      "bytes": 79604,
+      "size": [
+        2.495,
+        2.381,
+        1.556
+      ],
+      "bbox_min": [
+        -1.247,
+        0.0,
+        -0.734
+      ],
+      "bbox_max": [
+        1.247,
+        2.381,
+        0.822
+      ],
+      "materials": [
+        "seat",
+        "base",
+        "accent",
+        "white",
+        "accent2",
+        "soft",
+        "leaf",
+        "deep"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.4,
+          2.4,
+          1.4
+        ],
+        "center": [
+          0,
+          1.2,
+          0
+        ]
+      },
+      "note": "barraca de feira/banca com toldo listrado e caixotes de frutas/flores",
+      "cull": "props"
+    },
+    "window_flower_box": {
+      "file": "props_more/window_flower_box.glb",
+      "family": "mobiliario",
+      "palette": "garden",
+      "tris": 868,
+      "bytes": 23084,
+      "size": [
+        1.24,
+        0.565,
+        0.3
+      ],
+      "bbox_min": [
+        -0.62,
+        0.0,
+        -0.15
+      ],
+      "bbox_max": [
+        0.62,
+        0.565,
+        0.15
+      ],
+      "materials": [
+        "seat",
+        "trim",
+        "deep",
+        "leaf",
+        "accent2",
+        "white",
+        "soft"
+      ],
+      "walkable": false,
+      "note": "floreira de janela (caixa de madeira com flores/folhas); 1.2 m; fixar sob a janela (z ~ 0.9 acima do piso do andar)",
+      "cull": "props"
+    },
+    "string_lights_span": {
+      "file": "props_more/string_lights_span.glb",
+      "family": "decor",
+      "palette": "lights",
+      "tris": 1924,
+      "bytes": 56096,
+      "size": [
+        12.4,
+        4.66,
+        0.38
+      ],
+      "bbox_min": [
+        -6.2,
+        0.0,
+        -0.19
+      ],
+      "bbox_max": [
+        6.2,
+        4.66,
+        0.19
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "deep",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.3,
+            4.6,
+            0.3,
+            -6.0,
+            2.3,
+            0
+          ],
+          [
+            0.3,
+            4.6,
+            0.3,
+            6.0,
+            2.3,
+            0
+          ]
+        ],
+        "center": null
+      },
+      "note": "varal de luzinhas de 12 m entre dois postes (z 4.4 m, flecha 0.7 m); orientar o eixo X ao longo da travessia da rua",
+      "cull": "small"
+    },
+    "bunting_span": {
+      "file": "props_more/bunting_span.glb",
+      "family": "decor",
+      "palette": "garden",
+      "tris": 508,
+      "bytes": 25928,
+      "size": [
+        10.152,
+        4.3,
+        0.152
+      ],
+      "bbox_min": [
+        -5.076,
+        0.0,
+        -0.076
+      ],
+      "bbox_max": [
+        5.076,
+        4.3,
+        0.076
+      ],
+      "materials": [
+        "seat",
+        "trim",
+        "deep",
+        "soft",
+        "accent",
+        "white",
+        "leaf",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.3,
+            4.2,
+            0.3,
+            -5.0,
+            2.1,
+            0
+          ],
+          [
+            0.3,
+            4.2,
+            0.3,
+            5.0,
+            2.1,
+            0
+          ]
+        ],
+        "center": null
+      },
+      "note": "varal de bandeirinhas (triangulos coloridos) de 10 m entre dois postes de madeira",
+      "cull": "small"
+    },
+    "billboard_fashion": {
+      "file": "props_more/billboard_fashion.glb",
+      "family": "decor",
+      "palette": "luxo",
+      "tris": 2198,
+      "bytes": 84860,
+      "size": [
+        6.2,
+        6.223,
+        1.2
+      ],
+      "bbox_min": [
+        -3.1,
+        0.0,
+        -0.3
+      ],
+      "bbox_max": [
+        3.1,
+        6.223,
+        0.9
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "accent",
+        "base",
+        "accent2",
+        "soft",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.4,
+            5.5,
+            0.4,
+            -2.3,
+            2.75,
+            0
+          ],
+          [
+            0.4,
+            5.5,
+            0.4,
+            2.3,
+            2.75,
+            0
+          ]
+        ],
+        "center": null
+      },
+      "note": "outdoor/painel de publicidade 6x3 m em dois postes, luminarias no topo; arte 'MODA' + silhueta de vestido (troca de cor via palette)",
+      "cull": "props"
+    },
+    "vertical_shop_sign": {
+      "file": "props_more/vertical_shop_sign.glb",
+      "family": "decor",
+      "palette": "luxo",
+      "tris": 1080,
+      "bytes": 34592,
+      "size": [
+        0.7,
+        3.69,
+        0.559
+      ],
+      "bbox_min": [
+        -0.35,
+        0.0,
+        -0.22
+      ],
+      "bbox_max": [
+        0.35,
+        3.69,
+        0.339
+      ],
+      "materials": [
+        "trim",
+        "deep",
+        "base",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.25,
+          4.0
+        ],
+        "center": [
+          0,
+          2.0,
+          0
+        ]
+      },
+      "note": "letreiro vertical de loja em poste (letras empilhadas; 'glow' para neon); 3.6 m",
+      "cull": "props"
+    },
+    "info_kiosk": {
+      "file": "props_more/info_kiosk.glb",
+      "family": "decor",
+      "palette": "stone",
+      "tris": 1948,
+      "bytes": 80432,
+      "size": [
+        2.6,
+        3.135,
+        2.6
+      ],
+      "bbox_min": [
+        -1.3,
+        0.0,
+        -1.3
+      ],
+      "bbox_max": [
+        1.3,
+        3.135,
+        1.3
+      ],
+      "materials": [
+        "soft",
+        "base",
+        "seat",
+        "glass",
+        "trim",
+        "accent2",
+        "white",
+        "deep",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          1.35,
+          2.8
+        ],
+        "center": [
+          0,
+          1.4,
+          0
+        ]
+      },
+      "note": "quiosque de informacoes redondo: balcao, vidro, teto abaulado e 'i' no topo",
+      "cull": "props"
+    },
+    "holo_totem": {
+      "file": "props_more/holo_totem.glb",
+      "family": "centro",
+      "palette": "y2k",
+      "tris": 1608,
+      "bytes": 43684,
+      "size": [
+        1.1,
+        2.86,
+        1.1
+      ],
+      "bbox_min": [
+        -0.55,
+        0.0,
+        -0.55
+      ],
+      "bbox_max": [
+        0.55,
+        2.86,
+        0.55
+      ],
+      "materials": [
+        "base",
+        "glow",
+        "deep",
+        "white",
+        "accent2",
+        "glass"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.5,
+          3.0
+        ],
+        "center": [
+          0,
+          1.5,
+          0
+        ]
+      },
+      "note": "totem holografico Y2K: coluna de aco com tela curva e anel de luz",
+      "cull": "props"
+    },
+    "capsule_bench": {
+      "file": "props_more/capsule_bench.glb",
+      "family": "centro",
+      "palette": "y2k",
+      "tris": 628,
+      "bytes": 18656,
+      "size": [
+        2.2,
+        1.105,
+        0.95
+      ],
+      "bbox_min": [
+        -1.1,
+        0.0,
+        -0.55
+      ],
+      "bbox_max": [
+        1.1,
+        1.105,
+        0.4
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "seat",
+        "glass",
+        "glow",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.3,
+          1.1,
+          1.0
+        ],
+        "center": [
+          0,
+          0.55,
+          0
+        ]
+      },
+      "note": "banco-capsula Y2K: casco de aco/vidro com assento estofado",
+      "cull": "props"
+    },
+    "selfie_totem": {
+      "file": "props_more/selfie_totem.glb",
+      "family": "centro",
+      "palette": "y2k",
+      "tris": 1652,
+      "bytes": 68136,
+      "size": [
+        1.6,
+        2.435,
+        1.6
+      ],
+      "bbox_min": [
+        -0.8,
+        0.0,
+        -0.8
+      ],
+      "bbox_max": [
+        0.8,
+        2.435,
+        0.8
+      ],
+      "materials": [
+        "accent",
+        "accent2",
+        "deep",
+        "trim",
+        "glow",
+        "base",
+        "glass",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.45,
+          2.0
+        ],
+        "center": [
+          0,
+          1.0,
+          0
+        ]
+      },
+      "note": "totem de selfie: anel de luz (ring light) em pe, suporte de celular e tapete marcado",
+      "cull": "props"
+    },
+    "ferris_wheel_mini": {
+      "file": "props_more/ferris_wheel_mini.glb",
+      "family": "centro",
+      "palette": "y2k",
+      "tris": 4000,
+      "bytes": 112460,
+      "size": [
+        6.62,
+        6.96,
+        6.0
+      ],
+      "bbox_min": [
+        -3.31,
+        0.0,
+        -3.0
+      ],
+      "bbox_max": [
+        3.31,
+        6.96,
+        3.0
+      ],
+      "materials": [
+        "soft",
+        "base",
+        "trim",
+        "accent",
+        "accent2",
+        "glass",
+        "deep",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          3.2,
+          1.6
+        ],
+        "center": [
+          0,
+          0.8,
+          0
+        ]
+      },
+      "note": "roda-gigante pequena de decoracao (7 m): 10 cabines, base de aco, luzes",
+      "cull": "props"
+    },
+    "ground_fountain_jets": {
+      "file": "props_more/ground_fountain_jets.glb",
+      "family": "centro",
+      "palette": "y2k",
+      "tris": 5276,
+      "bytes": 127844,
+      "size": [
+        6.6,
+        0.99,
+        6.6
+      ],
+      "bbox_min": [
+        -3.3,
+        0.0,
+        -3.3
+      ],
+      "bbox_max": [
+        3.3,
+        0.99,
+        3.3
+      ],
+      "materials": [
+        "soft",
+        "trim",
+        "water",
+        "glow"
+      ],
+      "walkable": false,
+      "note": "fonte de piso: disco de pedra com 25 bicos e luzes; agua (slot water) e animavel; atravessavel (sem colisor)",
+      "cull": "props"
+    },
+    "pop_sculpture": {
+      "file": "props_more/pop_sculpture.glb",
+      "family": "centro",
+      "palette": "y2k",
+      "tris": 1184,
+      "bytes": 28084,
+      "size": [
+        3.0,
+        3.833,
+        3.0
+      ],
+      "bbox_min": [
+        -1.5,
+        0.0,
+        -1.5
+      ],
+      "bbox_max": [
+        1.5,
+        3.833,
+        1.5
+      ],
+      "materials": [
+        "soft",
+        "base",
+        "trim",
+        "accent2",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          1.6,
+          4.4
+        ],
+        "center": [
+          0,
+          2.2,
+          0
+        ]
+      },
+      "note": "escultura pop: estrela de aco espelhado em plinto (acento Y2K); 4 m",
+      "cull": "props"
+    },
+    "stanchion": {
+      "file": "props_more/stanchion.glb",
+      "family": "moda",
+      "palette": "luxo",
+      "tris": 456,
+      "bytes": 10788,
+      "size": [
+        0.4,
+        1.015,
+        0.4
+      ],
+      "bbox_min": [
+        -0.2,
+        0.0,
+        -0.2
+      ],
+      "bbox_max": [
+        0.2,
+        1.015,
+        0.2
+      ],
+      "materials": [
+        "trim"
+      ],
+      "walkable": false,
+      "note": "coluninha de latao (stanchion) com base; 1 m. Combine em fila com cordao via red_carpet_set",
+      "cull": "props"
+    },
+    "red_carpet_set": {
+      "file": "props_more/red_carpet_set.glb",
+      "family": "moda",
+      "palette": "luxo",
+      "tris": 3428,
+      "bytes": 82936,
+      "size": [
+        3.24,
+        0.986,
+        10.1
+      ],
+      "bbox_min": [
+        -1.62,
+        -0.001,
+        -5.05
+      ],
+      "bbox_max": [
+        1.62,
+        0.985,
+        5.05
+      ],
+      "materials": [
+        "seat",
+        "trim"
+      ],
+      "walkable": true,
+      "note": "tapete vermelho 2x10 m com 6 stanchions de cada lado ligados por cordao de veludo; atravessavel; eixo Y = comprimento",
+      "cull": "props"
+    },
+    "red_carpet_short": {
+      "file": "props_more/red_carpet_short.glb",
+      "family": "moda",
+      "palette": "luxo",
+      "tris": 1688,
+      "bytes": 41716,
+      "size": [
+        3.24,
+        0.986,
+        5.3
+      ],
+      "bbox_min": [
+        -1.62,
+        -0.001,
+        -2.65
+      ],
+      "bbox_max": [
+        1.62,
+        0.985,
+        2.65
+      ],
+      "materials": [
+        "seat",
+        "trim"
+      ],
+      "walkable": true,
+      "note": "tapete vermelho curto 2x5.2 m com 3 stanchions por lado (porta de loja ate a calcada); eixo Y = comprimento",
+      "cull": "props"
+    },
+    "brand_totem": {
+      "file": "props_more/brand_totem.glb",
+      "family": "moda",
+      "palette": "luxo",
+      "tris": 924,
+      "bytes": 38900,
+      "size": [
+        1.2,
+        4.325,
+        0.6
+      ],
+      "bbox_min": [
+        -0.6,
+        0.0,
+        -0.3
+      ],
+      "bbox_max": [
+        0.6,
+        4.325,
+        0.3
+      ],
+      "materials": [
+        "trim",
+        "base",
+        "deep",
+        "glow",
+        "accent"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.2,
+          4.2,
+          0.6
+        ],
+        "center": [
+          0,
+          2.1,
+          0
+        ]
+      },
+      "note": "totem de marca: pilar de marfim com letreiro de latao e monograma luminoso",
+      "cull": "props"
+    },
+    "valet_stand": {
+      "file": "props_more/valet_stand.glb",
+      "family": "moda",
+      "palette": "luxo",
+      "tris": 852,
+      "bytes": 43912,
+      "size": [
+        1.4,
+        2.18,
+        0.9
+      ],
+      "bbox_min": [
+        -0.7,
+        0.0,
+        -0.45
+      ],
+      "bbox_max": [
+        0.7,
+        2.18,
+        0.45
+      ],
+      "materials": [
+        "soft",
+        "deep",
+        "seat",
+        "trim",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.3,
+          1.5,
+          0.9
+        ],
+        "center": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "note": "stand de valet: balcao de madeira escura, toldo de latao e quadro de chaves",
+      "cull": "props"
+    },
+    "spotlight_tower": {
+      "file": "props_more/spotlight_tower.glb",
+      "family": "moda",
+      "palette": "char",
+      "tris": 788,
+      "bytes": 21508,
+      "size": [
+        1.2,
+        6.807,
+        3.522
+      ],
+      "bbox_min": [
+        -0.6,
+        0.0,
+        -0.42
+      ],
+      "bbox_max": [
+        0.6,
+        6.807,
+        3.102
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "trim",
+        "glow",
+        "glass"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.4,
+          3.4
+        ],
+        "center": [
+          0,
+          1.7,
+          0
+        ]
+      },
+      "note": "holofote de evento: torre baixa com refletor giratorio e feixe (slot glow, cone translucido)",
+      "cull": "props"
+    },
+    "neon_street_sign": {
+      "file": "props_more/neon_street_sign.glb",
+      "family": "neon",
+      "palette": "neon",
+      "tris": 1202,
+      "bytes": 44584,
+      "size": [
+        1.71,
+        3.6,
+        0.51
+      ],
+      "bbox_min": [
+        -0.85,
+        0.0,
+        -0.22
+      ],
+      "bbox_max": [
+        0.86,
+        3.6,
+        0.29
+      ],
+      "materials": [
+        "trim",
+        "deep",
+        "base",
+        "accent2",
+        "glow",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.25,
+          4.0
+        ],
+        "center": [
+          0,
+          2.0,
+          0
+        ]
+      },
+      "note": "placa de neon de rua (poste + painel com letras BAR e seta); neon = slot glow/accent2/soft",
+      "cull": "props"
+    },
+    "queue_rope_line": {
+      "file": "props_more/queue_rope_line.glb",
+      "family": "neon",
+      "palette": "neon",
+      "tris": 1094,
+      "bytes": 28364,
+      "size": [
+        4.84,
+        1.001,
+        0.34
+      ],
+      "bbox_min": [
+        -2.42,
+        -0.001,
+        -0.17
+      ],
+      "bbox_max": [
+        2.42,
+        1.0,
+        0.17
+      ],
+      "materials": [
+        "trim",
+        "base",
+        "accent2"
+      ],
+      "walkable": false,
+      "note": "fila com cordao: 4 stanchions pretos com cordao de veludo; 4.5 m ao longo de X; atravessavel",
+      "cull": "props"
+    },
+    "light_totem": {
+      "file": "props_more/light_totem.glb",
+      "family": "neon",
+      "palette": "neon",
+      "tris": 1248,
+      "bytes": 36216,
+      "size": [
+        0.8,
+        3.4,
+        0.8
+      ],
+      "bbox_min": [
+        -0.4,
+        0.0,
+        -0.4
+      ],
+      "bbox_max": [
+        0.4,
+        3.4,
+        0.4
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "glow",
+        "accent2",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.35,
+          3.2
+        ],
+        "center": [
+          0,
+          1.6,
+          0
+        ]
+      },
+      "note": "totem de luz: coluna escura com 3 aneis de neon (rosa/ciano/roxo = glow/accent2/soft)",
+      "cull": "props"
+    },
+    "neon_puddle": {
+      "file": "props_more/neon_puddle.glb",
+      "family": "neon",
+      "palette": "neon",
+      "tris": 140,
+      "bytes": 5664,
+      "size": [
+        2.098,
+        0.012,
+        1.465
+      ],
+      "bbox_min": [
+        -1.049,
+        0.0,
+        -0.681
+      ],
+      "bbox_max": [
+        1.049,
+        0.012,
+        0.784
+      ],
+      "materials": [
+        "water"
+      ],
+      "walkable": false,
+      "note": "poca/piso refletivo (disco achatado do slot water) para o Palco Neon; usar y=0.04",
+      "cull": "props"
+    },
+    "bar_stool_table": {
+      "file": "props_more/bar_stool_table.glb",
+      "family": "neon",
+      "palette": "neon",
+      "tris": 1200,
+      "bytes": 34892,
+      "size": [
+        0.838,
+        1.16,
+        1.79
+      ],
+      "bbox_min": [
+        -0.419,
+        0.0,
+        -0.895
+      ],
+      "bbox_max": [
+        0.419,
+        1.16,
+        0.895
+      ],
+      "materials": [
+        "deep",
+        "trim",
+        "base",
+        "glow",
+        "seat"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.9,
+          1.2
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "mesa alta de bar com 2 bancos altos (preto + latao)",
+      "cull": "props"
+    },
+    "casino_building": {
+      "file": "props_more/casino_building.glb",
+      "family": "neon",
+      "palette": "casino",
+      "tris": 9000,
+      "bytes": 271936,
+      "size": [
+        20.8,
+        15.855,
+        18.3
+      ],
+      "bbox_min": [
+        -10.4,
+        -0.005,
+        -7.4
+      ],
+      "bbox_max": [
+        10.4,
+        15.85,
+        10.9
+      ],
+      "materials": [
+        "base",
+        "soft",
+        "trim",
+        "accent",
+        "deep",
+        "glass",
+        "glow",
+        "seat",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          20.0,
+          12.0,
+          13.6
+        ],
+        "center": [
+          0,
+          6.0,
+          0
+        ]
+      },
+      "note": "Lounge de Jogos 20x14x12 m: fachada preta com paineis verde-profundo, frisos de latao, marquise com lampadas (glow), porta giratoria, tapete vermelho, letreiro LOUNGE no topo. Origem = centro do bloco; porta em +Z jogo (frente -Y blender) a y=-7",
+      "cull": "buildings"
+    },
+    "pergola_flowers": {
+      "file": "props_more/pergola_flowers.glb",
+      "family": "jardim",
+      "palette": "white",
+      "tris": 2788,
+      "bytes": 65416,
+      "size": [
+        4.3,
+        3.25,
+        3.167
+      ],
+      "bbox_min": [
+        -2.15,
+        0.0,
+        -1.45
+      ],
+      "bbox_max": [
+        2.15,
+        3.25,
+        1.717
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "leaf",
+        "accent2",
+        "white",
+        "soft",
+        "seat"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.25,
+            2.8,
+            0.25,
+            -1.8,
+            1.4,
+            -1.2
+          ],
+          [
+            0.25,
+            2.8,
+            0.25,
+            1.8,
+            1.4,
+            -1.2
+          ],
+          [
+            0.25,
+            2.8,
+            0.25,
+            -1.8,
+            1.4,
+            1.2
+          ],
+          [
+            0.25,
+            2.8,
+            0.25,
+            1.8,
+            1.4,
+            1.2
+          ]
+        ],
+        "center": null
+      },
+      "note": "pergolado branco 4x2.8 m com trepadeira e flores; banco interno; atravessavel entre os postes",
+      "cull": "props"
+    },
+    "swing_bench": {
+      "file": "props_more/swing_bench.glb",
+      "family": "jardim",
+      "palette": "white",
+      "tris": 1376,
+      "bytes": 32272,
+      "size": [
+        2.594,
+        2.585,
+        1.599
+      ],
+      "bbox_min": [
+        -1.297,
+        -0.015,
+        -0.8
+      ],
+      "bbox_max": [
+        1.297,
+        2.57,
+        0.8
+      ],
+      "materials": [
+        "base",
+        "trim",
+        "seat",
+        "accent",
+        "white"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.2,
+            2.5,
+            0.2,
+            -1.1,
+            1.25,
+            -0.7
+          ],
+          [
+            0.2,
+            2.5,
+            0.2,
+            1.1,
+            1.25,
+            -0.7
+          ],
+          [
+            0.2,
+            2.5,
+            0.2,
+            -1.1,
+            1.25,
+            0.7
+          ],
+          [
+            0.2,
+            2.5,
+            0.2,
+            1.1,
+            1.25,
+            0.7
+          ]
+        ],
+        "center": null
+      },
+      "note": "banco de balanco com cobertura listrada (armacao branca + assento de madeira)",
+      "cull": "props"
+    },
+    "birdhouse_post": {
+      "file": "props_more/birdhouse_post.glb",
+      "family": "jardim",
+      "palette": "wood",
+      "tris": 304,
+      "bytes": 13576,
+      "size": [
+        0.579,
+        2.545,
+        0.55
+      ],
+      "bbox_min": [
+        -0.29,
+        0.0,
+        -0.23
+      ],
+      "bbox_max": [
+        0.29,
+        2.545,
+        0.32
+      ],
+      "materials": [
+        "accent",
+        "base",
+        "accent2",
+        "deep",
+        "trim",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.15,
+          2.2
+        ],
+        "center": [
+          0,
+          1.1,
+          0
+        ]
+      },
+      "note": "casinha de passaros em poste de madeira",
+      "cull": "props"
+    },
+    "garden_pots_can": {
+      "file": "props_more/garden_pots_can.glb",
+      "family": "jardim",
+      "palette": "garden",
+      "tris": 1402,
+      "bytes": 37432,
+      "size": [
+        1.349,
+        0.746,
+        1.024
+      ],
+      "bbox_min": [
+        -0.639,
+        0.0,
+        -0.384
+      ],
+      "bbox_max": [
+        0.71,
+        0.746,
+        0.64
+      ],
+      "materials": [
+        "accent2",
+        "leaf",
+        "white",
+        "soft",
+        "accent",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.7,
+          0.8
+        ],
+        "center": [
+          0,
+          0.4,
+          0
+        ]
+      },
+      "note": "vasos de terracota com flores + regador de metal",
+      "cull": "props"
+    },
+    "picket_fence": {
+      "file": "props_more/picket_fence.glb",
+      "family": "jardim",
+      "palette": "white",
+      "tris": 820,
+      "bytes": 21956,
+      "size": [
+        2.12,
+        1.035,
+        0.109
+      ],
+      "bbox_min": [
+        -1.06,
+        0.005,
+        -0.052
+      ],
+      "bbox_max": [
+        1.06,
+        1.04,
+        0.057
+      ],
+      "materials": [
+        "base",
+        "accent"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.0,
+          0.9,
+          0.12
+        ],
+        "center": [
+          0,
+          0.45,
+          0
+        ]
+      },
+      "note": "cerca branca de jardim (2 m); encaixa lado a lado ao longo de X",
+      "cull": "props"
+    },
+    "house_mailbox": {
+      "file": "props_more/house_mailbox.glb",
+      "family": "jardim",
+      "palette": "wood",
+      "tris": 316,
+      "bytes": 11332,
+      "size": [
+        0.45,
+        1.485,
+        0.542
+      ],
+      "bbox_min": [
+        -0.2,
+        0.0,
+        -0.25
+      ],
+      "bbox_max": [
+        0.25,
+        1.485,
+        0.292
+      ],
+      "materials": [
+        "accent",
+        "deep",
+        "accent2",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.2,
+          1.3
+        ],
+        "center": [
+          0,
+          0.65,
+          0
+        ]
+      },
+      "note": "caixa de correio de casa em poste de madeira, bandeirola",
+      "cull": "props"
+    },
+    "stepping_stones": {
+      "file": "props_more/stepping_stones.glb",
+      "family": "jardim",
+      "palette": "stone",
+      "tris": 1140,
+      "bytes": 23224,
+      "size": [
+        0.996,
+        0.04,
+        6.602
+      ],
+      "bbox_min": [
+        -0.499,
+        0.0,
+        -3.283
+      ],
+      "bbox_max": [
+        0.497,
+        0.04,
+        3.32
+      ],
+      "materials": [
+        "base",
+        "accent"
+      ],
+      "walkable": false,
+      "note": "caminho de pedras (7 lajes) ao longo de Y; atravessavel; y=0.03",
+      "cull": "props"
+    },
+    "picnic_set": {
+      "file": "props_more/picnic_set.glb",
+      "family": "jardim",
+      "palette": "garden",
+      "tris": 984,
+      "bytes": 40928,
+      "size": [
+        1.8,
+        0.532,
+        1.8
+      ],
+      "bbox_min": [
+        -0.9,
+        0.002,
+        -0.9
+      ],
+      "bbox_max": [
+        0.9,
+        0.534,
+        0.9
+      ],
+      "materials": [
+        "accent2",
+        "white",
+        "seat",
+        "leaf",
+        "accent"
+      ],
+      "walkable": false,
+      "note": "piquenique: toalha xadrez, cesta com baguete, tigelas e copos; atravessavel (decor baixo)",
+      "cull": "props"
+    },
+    "playground_swings": {
+      "file": "props_more/playground_swings.glb",
+      "family": "jardim",
+      "palette": "play",
+      "tris": 456,
+      "bytes": 19660,
+      "size": [
+        3.0,
+        2.495,
+        1.8
+      ],
+      "bbox_min": [
+        -1.5,
+        -0.015,
+        -0.9
+      ],
+      "bbox_max": [
+        1.5,
+        2.48,
+        0.9
+      ],
+      "materials": [
+        "base",
+        "deep",
+        "accent",
+        "trim",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.16,
+            2.4,
+            0.16,
+            -1.4,
+            1.2,
+            0
+          ],
+          [
+            0.16,
+            2.4,
+            0.16,
+            1.4,
+            1.2,
+            0
+          ]
+        ],
+        "center": null
+      },
+      "note": "balanco duplo: portico de aco azul com 2 assentos de borracha",
+      "cull": "props"
+    },
+    "playground_slide": {
+      "file": "props_more/playground_slide.glb",
+      "family": "jardim",
+      "palette": "play",
+      "tris": 1132,
+      "bytes": 35044,
+      "size": [
+        1.161,
+        2.281,
+        3.55
+      ],
+      "bbox_min": [
+        -0.58,
+        0.0,
+        -1.469
+      ],
+      "bbox_max": [
+        0.58,
+        2.281,
+        2.081
+      ],
+      "materials": [
+        "base",
+        "seat",
+        "accent",
+        "accent2",
+        "trim",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            1.0,
+            2.0,
+            1.0,
+            0,
+            1.0,
+            0.8
+          ],
+          [
+            0.7,
+            0.4,
+            2.2,
+            0,
+            0.2,
+            -0.9
+          ]
+        ],
+        "center": null
+      },
+      "note": "escorregador: torre com plataforma, escada e rampa ondulada amarela",
+      "cull": "props"
+    },
+    "playground_seesaw": {
+      "file": "props_more/playground_seesaw.glb",
+      "family": "jardim",
+      "palette": "play",
+      "tris": 392,
+      "bytes": 14772,
+      "size": [
+        3.12,
+        0.865,
+        0.5
+      ],
+      "bbox_min": [
+        -1.56,
+        0.0,
+        -0.25
+      ],
+      "bbox_max": [
+        1.56,
+        0.865,
+        0.25
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "accent",
+        "trim",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          3.0,
+          0.5,
+          0.5
+        ],
+        "center": [
+          0,
+          0.25,
+          0
+        ]
+      },
+      "note": "gangorra: tabua amarela, pivo central e alcas",
+      "cull": "props"
+    },
+    "garden_lantern_hook": {
+      "file": "props_more/garden_lantern_hook.glb",
+      "family": "jardim",
+      "palette": "char",
+      "tris": 428,
+      "bytes": 17352,
+      "size": [
+        0.4,
+        2.15,
+        0.72
+      ],
+      "bbox_min": [
+        -0.2,
+        0.0,
+        -0.19
+      ],
+      "bbox_max": [
+        0.2,
+        2.15,
+        0.53
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "glow"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.15,
+          2.0
+        ],
+        "center": [
+          0,
+          1.0,
+          0
+        ]
+      },
+      "note": "lampiao pendurado em gancho de jardim (poste fino + lanterna com vela)",
+      "cull": "props"
+    },
+    "sidewalk_tree_grate": {
+      "file": "props_more/sidewalk_tree_grate.glb",
+      "family": "calcada",
+      "palette": "forest",
+      "tris": 1216,
+      "bytes": 33500,
+      "size": [
+        2.911,
+        4.4,
+        2.498
+      ],
+      "bbox_min": [
+        -1.48,
+        0.0,
+        -1.249
+      ],
+      "bbox_max": [
+        1.431,
+        4.4,
+        1.249
+      ],
+      "materials": [
+        "deep",
+        "soft",
+        "seat",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          0.35,
+          3.0
+        ],
+        "center": [
+          0,
+          1.5,
+          0
+        ]
+      },
+      "note": "arvore de calcada em grade de ferro (copa verde real, 4.2 m); copa nao colide",
+      "cull": "props"
+    },
+    "street_planter": {
+      "file": "props_more/street_planter.glb",
+      "family": "calcada",
+      "palette": "stone",
+      "tris": 864,
+      "bytes": 24176,
+      "size": [
+        1.7,
+        1.19,
+        1.014
+      ],
+      "bbox_min": [
+        -0.85,
+        0.0,
+        -0.511
+      ],
+      "bbox_max": [
+        0.85,
+        1.19,
+        0.503
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "deep",
+        "leaf",
+        "accent2",
+        "white",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          1.7,
+          0.9,
+          0.7
+        ],
+        "center": [
+          0,
+          0.45,
+          0
+        ]
+      },
+      "note": "canteiro de rua: jardineira de pedra com arbustos e flores; 1.6 m; palette controla a pedra (stone/wood/concrete/forest)",
+      "cull": "props"
+    },
+    "tapume_panel": {
+      "file": "props_more/tapume_panel.glb",
+      "family": "obra",
+      "palette": "plywood",
+      "tris": 596,
+      "bytes": 26876,
+      "size": [
+        2.4,
+        2.26,
+        0.17
+      ],
+      "bbox_min": [
+        -1.2,
+        0.0,
+        -0.07
+      ],
+      "bbox_max": [
+        1.2,
+        2.26,
+        0.1
+      ],
+      "materials": [
+        "base",
+        "accent",
+        "deep",
+        "accent2",
+        "soft",
+        "white",
+        "leaf"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.4,
+          2.2,
+          0.2
+        ],
+        "center": [
+          0,
+          1.1,
+          0
+        ]
+      },
+      "note": "tapume de obra de 2.4 m (compensado com desenhos infantis: sol, casinha, guindaste e arvore); encaixa em fila ao longo de X",
+      "cull": "props"
+    },
+    "crane_toy": {
+      "file": "props_more/crane_toy.glb",
+      "family": "obra",
+      "palette": "cone",
+      "tris": 1508,
+      "bytes": 57612,
+      "size": [
+        2.0,
+        9.6,
+        10.911
+      ],
+      "bbox_min": [
+        -1.0,
+        0.0,
+        -4.111
+      ],
+      "bbox_max": [
+        1.0,
+        9.6,
+        6.8
+      ],
+      "materials": [
+        "deep",
+        "base",
+        "trim",
+        "accent",
+        "glass",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            1.6,
+            3.0,
+            1.6,
+            0,
+            1.5,
+            0
+          ]
+        ],
+        "center": null
+      },
+      "note": "guindaste de obra estilo brinquedo (torre treliçada 8 m, lanca, contrapeso, cabine, gancho); amarelo/laranja de obra",
+      "cull": "props"
+    },
+    "soon_sign": {
+      "file": "props_more/soon_sign.glb",
+      "family": "obra",
+      "palette": "plywood",
+      "tris": 2476,
+      "bytes": 101732,
+      "size": [
+        3.4,
+        2.75,
+        0.223
+      ],
+      "bbox_min": [
+        -1.7,
+        0.0,
+        -0.08
+      ],
+      "bbox_max": [
+        1.7,
+        2.75,
+        0.143
+      ],
+      "materials": [
+        "deep",
+        "accent2",
+        "base",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.2,
+            2.6,
+            0.2,
+            -1.4,
+            1.3,
+            0
+          ],
+          [
+            0.2,
+            2.6,
+            0.2,
+            1.4,
+            1.3,
+            0
+          ]
+        ],
+        "center": null
+      },
+      "note": "placa 'EM BREVE' do Bairro Futuro em dois postes, com faixa listrada de obra",
+      "cull": "props"
+    },
+    "skip_dumpster": {
+      "file": "props_more/skip_dumpster.glb",
+      "family": "obra",
+      "palette": "cone",
+      "tris": 472,
+      "bytes": 17904,
+      "size": [
+        2.64,
+        1.662,
+        1.34
+      ],
+      "bbox_min": [
+        -1.32,
+        0.04,
+        -0.67
+      ],
+      "bbox_max": [
+        1.32,
+        1.702,
+        0.67
+      ],
+      "materials": [
+        "deep",
+        "accent",
+        "trim",
+        "base",
+        "soft"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          2.7,
+          1.2,
+          1.4
+        ],
+        "center": [
+          0,
+          0.6,
+          0
+        ]
+      },
+      "note": "cacamba de entulho (amarela) com entulho e sacos",
+      "cull": "props"
+    },
+    "sand_pile_wheelbarrow": {
+      "file": "props_more/sand_pile_wheelbarrow.glb",
+      "family": "obra",
+      "palette": "cone",
+      "tris": 580,
+      "bytes": 17380,
+      "size": [
+        3.135,
+        0.78,
+        1.61
+      ],
+      "bbox_min": [
+        -1.65,
+        0.0,
+        -0.851
+      ],
+      "bbox_max": [
+        1.485,
+        0.78,
+        0.758
+      ],
+      "materials": [
+        "seat",
+        "white",
+        "accent2",
+        "deep",
+        "trim"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "cylinder",
+        "size": [
+          1.4,
+          1.1
+        ],
+        "center": [
+          0,
+          0.55,
+          0
+        ]
+      },
+      "note": "monte de areia, sacos de cimento e carrinho de mao",
+      "cull": "props"
+    }
+  }
+}

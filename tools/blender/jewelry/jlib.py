@@ -7,7 +7,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 DOLL = os.path.join(REPO, "public", "assets", "characters", "doll_base.glb")
 OUT = os.path.join(REPO, "public", "assets", "jewelry")
-SHOTS = r"C:\Users\user\AppData\Local\Temp\claude\shots\jewelry"
+SHOTS = r"C:\Users\user\AppData\Local\Temp\claude\shots\jewelry2"
 os.makedirs(OUT, exist_ok=True); os.makedirs(SHOTS, exist_ok=True)
 
 
@@ -256,7 +256,7 @@ def setup_render(w=1000, h=1200, samples=48):
     except Exception: pass
     w_ = bpy.data.worlds.new("W"); sc.world = w_; w_.use_nodes = True
     bg = w_.node_tree.nodes["Background"]
-    bg.inputs[0].default_value = (0.93, 0.78, 0.85, 1); bg.inputs[1].default_value = 1.2
+    bg.inputs[0].default_value = (0.60, 0.61, 0.63, 1); bg.inputs[1].default_value = 1.1   # neutral studio grey
 
     def area(name, loc, energy, size, color=(1, 1, 1), tgt=(0, 0, 1.3)):
         d = bpy.data.lights.new(name, 'AREA'); d.energy = energy; d.size = size; d.color = color
@@ -264,7 +264,7 @@ def setup_render(w=1000, h=1200, samples=48):
         o.location = loc
         o.rotation_euler = (Vector(tgt) - Vector(loc)).to_track_quat('-Z', 'Y').to_euler()
     area("key", (-1.2, -2.0, 2.2), 420, 2.5, (1, 0.96, 0.95))
-    area("fill", (1.8, -1.6, 1.4), 160, 3.0, (1, 0.88, 0.95))
+    area("fill", (1.8, -1.6, 1.4), 160, 3.0, (1, 0.97, 0.95))
     area("rim", (0.5, 1.8, 2.0), 260, 1.5, (0.9, 0.92, 1))
     for i, loc in enumerate([(-0.5, -0.9, 1.8), (0.6, -0.8, 1.6), (0.0, -1.1, 1.0)]):
         d = bpy.data.lights.new("sp%d" % i, 'POINT'); d.energy = 40; d.shadow_soft_size = 0.01

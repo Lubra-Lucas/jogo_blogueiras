@@ -196,9 +196,9 @@ const districts: District[] = [
     style: 'y2k',
     center: [0, 0],
     bounds: { t: 'circle', cx: 0, cz: 0, r: 76 },
-    ground: '#e2edf8',
-    palette: ['#bfe0ff', '#bff0dc', '#d9c8f7', '#fff1b8', '#fdfbff'],
-    accent: ['#e8eefc', '#ffd36b'],
+    ground: '#cfd1d2',
+    palette: ['#b9c9d6', '#bccbbd', '#9099a8', '#e3d6b4', '#e9e7e2'],
+    accent: ['#e8eef2', '#c9a15a'],
     spawn: [0, 9],
   },
   {
@@ -207,9 +207,9 @@ const districts: District[] = [
     style: 'luxo',
     center: [0, -150],
     bounds: { t: 'rect', x0: -62, z0: -196, x1: 62, z1: -72 },
-    ground: '#f1ebe0',
-    palette: ['#fbf7ee', '#f0e2c8', '#bfdcf2', '#c9dcc4'],
-    accent: ['#8fc4ea', '#a9d6f2'],
+    ground: '#d9cfba',
+    palette: ['#e9e0cc', '#d8c8a6', '#a9b8c2', '#8f9a8f'],
+    accent: ['#7fa3b8', '#9db8c8'],
     spawn: [0, -122],
   },
   {
@@ -218,8 +218,8 @@ const districts: District[] = [
     style: 'neon',
     center: [150, 0],
     bounds: { t: 'rect', x0: 110, z0: -62, x1: 207, z1: 62 },
-    ground: '#2c2347',
-    palette: ['#2a1240', '#1b1f4a', '#3a1650', '#16213f'],
+    ground: '#24242b',
+    palette: ['#5a3a34', '#3a3d44', '#4a2f30', '#2f3340'],
     accent: ['#2ee6d6', '#ff3fb4', '#35e8ff'],
     spawn: [140, 9],
   },
@@ -229,9 +229,9 @@ const districts: District[] = [
     style: 'romantico',
     center: [0, 158],
     bounds: { t: 'rect', x0: -72, z0: 128, x1: 72, z1: 207 },
-    ground: '#d6f1e3',
-    palette: ['#ffd8b8', '#c9f0dc', '#fff3dc', '#e0d4f7', '#ffd1dc'],
-    accent: ['#f2a58f', '#c9a0dc', '#f0c27a', '#9fd3c0'],
+    ground: '#8fc16c',
+    palette: ['#e8cdb0', '#dfe3d0', '#f1e8d4', '#cfcfcc', '#ecd9a4'],
+    accent: ['#b5502f', '#9c4b30', '#6a4a3a', '#a8452c'],
     spawn: [0, 134],
   },
   {
@@ -240,8 +240,8 @@ const districts: District[] = [
     style: 'futuro',
     center: [-156, 0],
     bounds: { t: 'rect', x0: -207, z0: -62, x1: -106, z1: 62 },
-    ground: '#dde5ee',
-    palette: ['#b8c4d6', '#9aa8bd'],
+    ground: '#bdbab3',
+    palette: ['#b8b6b0', '#9a9c9f'],
     accent: ['#ffb347'],
     spawn: [-96, 8],
   },
@@ -255,7 +255,7 @@ const areas: OpenArea[] = [
     name: 'Lago',
     kind: 'lago',
     bounds: { t: 'circle', cx: LAKE.cx, cz: LAKE.cz, r: LAKE.r + 1.5 },
-    color: '#6cc1ec',
+    color: '#4f9fb0',
     spawn: [0, 68],
   },
   {
@@ -263,14 +263,14 @@ const areas: OpenArea[] = [
     name: 'Parque do Lago',
     kind: 'parque',
     bounds: { t: 'rect', x0: -48, z0: 62, x1: 48, z1: 126 },
-    color: '#bdeedb',
+    color: '#86bd6c',
     spawn: [0, 70],
   },
-  { id: 'vitrines', name: 'Praça das Vitrines', kind: 'praca', bounds: { t: 'circle', cx: 0, cz: -90, r: 14 }, color: '#fff6dc' },
-  { id: 'praca-moda', name: 'Avenida da Moda', kind: 'praca', bounds: { t: 'circle', cx: 0, cz: -150, r: 9 }, color: '#fbf6ee' },
-  { id: 'praca-neon', name: 'Palco Neon', kind: 'praca', bounds: { t: 'circle', cx: 150, cz: 0, r: 9 }, color: '#5a3f8c' },
-  { id: 'praca-jardim', name: 'Jardim Romântico', kind: 'praca', bounds: { t: 'circle', cx: 0, cz: 158, r: 9 }, color: '#fdeedd' },
-  { id: 'praca', name: 'Praça Central', kind: 'praca', bounds: { t: 'circle', cx: 0, cz: 0, r: 38 }, color: '#f7f4ff' },
+  { id: 'vitrines', name: 'Praça das Vitrines', kind: 'praca', bounds: { t: 'circle', cx: 0, cz: -90, r: 14 }, color: '#ddd3bd' },
+  { id: 'praca-moda', name: 'Avenida da Moda', kind: 'praca', bounds: { t: 'circle', cx: 0, cz: -150, r: 9 }, color: '#e1d8c4' },
+  { id: 'praca-neon', name: 'Palco Neon', kind: 'praca', bounds: { t: 'circle', cx: 150, cz: 0, r: 9 }, color: '#34323f' },
+  { id: 'praca-jardim', name: 'Jardim Romântico', kind: 'praca', bounds: { t: 'circle', cx: 0, cz: 158, r: 9 }, color: '#d9cfb8' },
+  { id: 'praca', name: 'Praça Central', kind: 'praca', bounds: { t: 'circle', cx: 0, cz: 0, r: 38 }, color: '#d9d5cc' },
 ]
 
 const roads: Road[] = [
@@ -320,6 +320,7 @@ const SHOPS: {
   { id: 'joalheria', name: 'Joalheria', district: 'moda', x: 17, z: -130, w: 14, d: 12, h: 14, facing: -Math.PI / 2, icon: 'J', color: '#7fd6ff' },
   { id: 'estudio-fotos', name: 'Estúdio de Fotos', district: 'moda', x: -27, z: -90, w: 14, d: 12, h: 11, facing: Math.PI / 2, icon: 'E', color: '#ffd36b' },
   { id: 'palco-neon', name: 'Palco Neon', district: 'neon', x: 187, z: 0, w: 38, d: 18, h: 15, facing: -Math.PI / 2, icon: 'P', color: '#35e8ff' },
+  { id: 'cassino', name: 'Lounge de Jogos', district: 'neon', x: 170, z: -50, w: 20, d: 14, h: 12, facing: 0, icon: 'L', color: '#c9a15a' },
   { id: 'casa-sonhos', name: 'Casa dos Sonhos', district: 'jardim', x: 0, z: 189, w: 28, d: 18, h: 13, facing: Math.PI, icon: 'H', color: '#ff9ccb' },
 ]
 
@@ -710,7 +711,7 @@ function buildCity(): City {
   spawns['fonte-jardim'] = [0, 150]
   for (const p of pois) if (p.kind !== 'spawn') spawns[p.id] = [p.x + Math.sin(p.facing) * 4, p.z + Math.cos(p.facing) * 4]
 
-  return { half: HALF, ground: '#f1e6d6', districts, roads, areas, blocks, pois, lamps, benches, trees, kiosks, spawns, futuro, lake: LAKE }
+  return { half: HALF, ground: '#b3b09f', districts, roads, areas, blocks, pois, lamps, benches, trees, kiosks, spawns, futuro, lake: LAKE }
 }
 
 export const CITY: City = buildCity()

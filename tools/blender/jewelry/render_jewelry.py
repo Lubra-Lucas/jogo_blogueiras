@@ -7,14 +7,16 @@ from jlib import *
 import argparse
 ap = argparse.ArgumentParser()
 ap.add_argument("--pieces", default=""); ap.add_argument("--cam", default="neck"); ap.add_argument("--out", default="shot")
-ap.add_argument("--metal", default="gold"); ap.add_argument("--bust", type=float, default=0.0)
+ap.add_argument("--metal", default=""); ap.add_argument("--bust", type=float, default=0.0)
 ap.add_argument("--hair", default=""); ap.add_argument("--gem", default=""); ap.add_argument("--ribbon", default="")
 ap.add_argument("--pearl", default=""); ap.add_argument("--size", default="1000,1000"); ap.add_argument("--samples", type=int, default=40)
-ap.add_argument("--metals", default="")   # per piece "id:metal,id:metal"
+ap.add_argument("--metals", default=""); ap.add_argument("--morph", default="")   # per piece "id:metal,id:metal"
 a = ap.parse_args(sys.argv[sys.argv.index("--")+1:])
 
 clear_scene()
-body = load_doll({"bustBig": a.bust} if a.bust else None)
+_m = {"bustBig": a.bust} if a.bust else {}
+_m.update({k: float(v) for k, v in (x.split("=") for x in a.morph.split("+") if x)})
+body = load_doll(_m or None)
 w, h = [int(x) for x in a.size.split(",")]
 setup_render(w, h, a.samples)
 doc = json.load(open(os.path.join(OUT, "jewelry.json")))
@@ -66,7 +68,7 @@ for pid in [x for x in a.pieces.split(",") if x]:
                 lift = doc["hairFit"]["lift"].get(a.hair, {}).get(pid, 0.0)
                 md = doc["hairFit"]["mountDir"][pid]
                 o.location += Vector((md[0], -md[2], md[1])) * lift
-            recolor(o, per_metal.get(pid, a.metal))
+            recolor(o, per_metal.get(pid, a.metal or p.get("defaultMetal", "gold")))
         for o in new:
             if o.type != 'MESH': bpy.data.objects.remove(o)
 
@@ -84,6 +86,21 @@ cams = {
     "upper": ((-0.2, -1.5, 1.45), (0, 0, 1.2), 85),
     "look": ((-0.55, -2.6, 1.22), (0.05, 0, 1.15), 85),
     "full": ((0, -3.8, 1.0), (0, 0, 0.8), 85),
+    "neckclose": ((-0.10, -0.50, 1.29), (0, -0.02, 1.255), 85),
+    "neckside": ((-0.45, -0.25, 1.28), (0, 0.0, 1.25), 85),
+    "chestclose": ((-0.12, -0.80, 1.20), (0, -0.03, 1.16), 85),
+    "earclose": ((0.45, -0.40, 1.40), (0.10, -0.01, 1.36), 85),
+    "earfront": ((0.30, -0.65, 1.40), (0.08, -0.02, 1.37), 85),
+    "headwide": ((0.0, -1.5, 1.66), (0, 0, 1.52), 85),
+    "headwide3q": ((-0.75, -1.25, 1.66), (0, 0, 1.52), 85),
+    "setshot": ((-0.30, -1.85, 1.62), (0.0, 0.0, 1.38), 85),
+    "headfront": ((0.0, -0.9, 1.50), (0, -0.01, 1.45), 85),
+    "headside": ((0.9, -0.2, 1.50), (0, 0, 1.45), 85),
+    "headback": ((0.3, 0.9, 1.5), (0, 0, 1.43), 85),
+    "wristclose": ((0.62, -0.38, 1.0), (0.37, 0.0, 0.88), 100),
+    "wristtop": ((0.55, -0.12, 1.25), (0.37, 0.0, 0.87), 100),
+    "handclose": ((0.60, -0.30, 1.05), (0.40, 0.0, 0.80), 85),
+    "handfront": ((0.40, -0.65, 0.95), (0.40, 0.0, 0.82), 100),
 }
 loc, tgt, lens = cams[a.cam]
 camera(loc, tgt, lens)

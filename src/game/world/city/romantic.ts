@@ -14,6 +14,11 @@ export type Disc = readonly [number, number, number]
 const reserved: Disc[] = []
 export const romanticReserved = (x: number, z: number, pad = 0) => reserved.some(([cx, cz, r]) => Math.hypot(x - cx, z - cz) < r + pad)
 
+/** Reserva um disco (mobiliario urbano de streetProps.ts): arvores aleatorias nao nascem aqui. */
+export const reserveDisc = (x: number, z: number, r: number) => {
+  reserved.push([x, z, r])
+}
+
 export const PRAC_JARDIM = { x: 0, z: 158, r: 9 }
 export const LAGO = CITY.lake
 /** Ilhota do coreto e ponte (Parque do Lago). */

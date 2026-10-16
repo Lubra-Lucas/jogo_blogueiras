@@ -22,6 +22,7 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { CITY } from './layout'
 import { CENTRO_R } from './centro'
 import { romanticReserved } from './romantic'
+import './streetProps' // reserva discos (parquinho, piquenique...) antes de filtrar as arvores
 import { merge, paint, place, placement } from './geo'
 import { Cull, chunkKey, useCullDist } from './cull'
 import { registerGlowColor, registerGlowEmissive } from '../environment/registry'
@@ -102,12 +103,12 @@ function Instances({ geometry, items, shadows, children, cast = true }: { geomet
 
 // ------------------------------------------------------------------ arvores
 
-const MINT = ['#a8ecd0', '#b9f0d9', '#9fe3c8']
-const SAGE = ['#bcd8b8', '#c7e0be', '#aecfae']
-const BLUSH = ['#ffb6cf', '#ffc9dc', '#ffa9c6']
-const LILAC = ['#cdb3f5', '#d9c4fa', '#c3a6f0']
-const CORAL = ['#ffb199', '#ffc0a8', '#ffa58a']
-const LEMON = ['#fff0a0', '#ffe98a', '#fff4b8']
+const MINT = ['#5fa05a', '#6cae62', '#549a52']
+const SAGE = ['#7fae6a', '#8cb976', '#6f9f60']
+const BLUSH = ['#c9663a', '#d98a3a', '#b85a34']
+const LILAC = ['#4d8a58', '#5a9660', '#437d4f']
+const CORAL = ['#3f7f4f', '#4a8a56', '#37744a']
+const LEMON = ['#a8c35a', '#b6cf68', '#9ab850']
 // gramados em menta/sage, com acentos de coral, limao, lilas e so um pouco de rosa
 const CANOPY = [MINT, SAGE, MINT, SAGE, CORAL, LEMON, LILAC, BLUSH]
 
@@ -148,7 +149,7 @@ function palmGeometries(): { base: BufferGeometry; leaves: BufferGeometry } {
   const base: BufferGeometry[] = []
   const pot = new CylinderGeometry(0.75, 0.6, 0.9, 10)
   pot.translate(0, 0.45, 0)
-  base.push(paint(pot, '#fff7ee'))
+  base.push(paint(pot, '#b9a98c'))
   let x = 0
   let y = 0.9
   for (let i = 0; i < 5; i++) {
@@ -158,10 +159,10 @@ function palmGeometries(): { base: BufferGeometry; leaves: BufferGeometry } {
     seg.translate(x + Math.sin(tilt) * 0.45, y + Math.cos(tilt) * 0.45, 0)
     x += Math.sin(tilt) * 0.9
     y += Math.cos(tilt) * 0.9
-    base.push(paint(seg, i % 2 ? '#f6e3d3' : '#fff1e4'))
+    base.push(paint(seg, i % 2 ? '#8a6a48' : '#9a7a54'))
   }
   const leaves: BufferGeometry[] = []
-  const cols = ['#a8ecd0', '#cdb3f5', '#b9f0d9', '#ffc2d9']
+  const cols = ['#5fa05a', '#4a8a52', '#6cae62', '#7fb86a']
   for (let i = 0; i < 8; i++) {
     const leaf = new SphereGeometry(1, 7, 4)
     leaf.scale(1.7, 0.1, 0.42)
@@ -201,37 +202,37 @@ export function Trees({ shadows }: { shadows: boolean }) {
       switch (t.kind) {
         case 'lollipop': {
           const th = 2.5 * s
-          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: s, sy: th, sz: s, color: '#fffaf5' })
+          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: s, sy: th, sz: s, color: '#7a5a3e' })
           rings.push({ x: t.x, y: th * 0.42, z: t.z, sx: s, sy: s, sz: s })
           round.push({ x: t.x, y: th + 0.9 * s, z: t.z, sx: 1.45 * s, sy: 1.35 * s, sz: 1.45 * s, color: pal(t.tint) })
           break
         }
         case 'heart': {
           const th = 2.3 * s
-          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: s, sy: th, sz: s, color: '#fffaf5' })
+          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: s, sy: th, sz: s, color: '#7a5a3e' })
           rings.push({ x: t.x, y: th * 0.42, z: t.z, sx: s, sy: s, sz: s })
           heart.push({ x: t.x, y: th + 1.2 * s, z: t.z, rot, sx: 1.7 * s, sy: 1.7 * s, sz: 1.5 * s, color: [BLUSH, CORAL, LEMON][Math.floor(t.tint * 3) % 3][Math.floor(t.tint * 9) % 3] })
           break
         }
         case 'cone': {
           const th = 1.3 * s
-          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: s, sy: th, sz: s, color: '#fffaf5' })
+          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: s, sy: th, sz: s, color: '#7a5a3e' })
           rings.push({ x: t.x, y: th * 0.5, z: t.z, sx: s, sy: s, sz: s })
           cone.push({ x: t.x, y: th + 2.2 * s, z: t.z, sx: 1.6 * s, sy: 4.4 * s, sz: 1.6 * s, color: t.tint < 0.5 ? MINT[Math.floor(t.tint * 6) % 3] : LILAC[Math.floor(t.tint * 6) % 3] })
           break
         }
         case 'blossom': {
           const th = 2.6 * s
-          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: s, sy: th, sz: s, color: '#fffaf5' })
+          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: s, sy: th, sz: s, color: '#7a5a3e' })
           rings.push({ x: t.x, y: th * 0.42, z: t.z, sx: s, sy: s, sz: s })
-          blossom.push({ x: t.x, y: th + 0.9 * s, z: t.z, rot, sx: 1.5 * s, sy: 1.5 * s, sz: 1.5 * s, color: ['#ffc2d9', '#ffb199', '#fff0a0'][Math.floor(t.tint * 3) % 3] })
+          blossom.push({ x: t.x, y: th + 0.9 * s, z: t.z, rot, sx: 1.5 * s, sy: 1.5 * s, sz: 1.5 * s, color: ['#f2b8cf', '#f7d0d8', '#fbe8ec'][Math.floor(t.tint * 3) % 3] })
           break
         }
         case 'orb': {
           const th = 3.4 * s
-          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: 0.45 * s, sy: th, sz: 0.45 * s, color: '#efe6ff' })
-          orbs.push({ x: t.x, y: th + 1.1 * s, z: t.z, sx: 1.25 * s, sy: 1.25 * s, sz: 1.25 * s, color: ['#f1e6ff', '#e3f3ff', '#ffe6f2'][Math.floor(t.tint * 3) % 3] })
-          orbRings.push({ x: t.x, y: th + 1.1 * s, z: t.z, rot, sx: 1.25 * s, sy: 1.25 * s, sz: 1.25 * s, color: t.tint < 0.5 ? '#8fe9ff' : '#ff9fd6' })
+          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: 0.45 * s, sy: th, sz: 0.45 * s, color: '#6f5438' })
+          orbs.push({ x: t.x, y: th + 1.1 * s, z: t.z, sx: 1.25 * s, sy: 1.25 * s, sz: 1.25 * s, color: ['#6fae6a', '#5ea062', '#7dba72'][Math.floor(t.tint * 3) % 3] })
+          orbRings.push({ x: t.x, y: th + 1.1 * s, z: t.z, rot, sx: 1.25 * s, sy: 1.25 * s, sz: 1.25 * s, color: t.tint < 0.5 ? '#d8c27a' : '#c9a15a' })
           break
         }
         case 'palm':
@@ -240,8 +241,8 @@ export function Trees({ shadows }: { shadows: boolean }) {
           break
         case 'dark': {
           const th = 2.6 * s
-          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: 1.2 * s, sy: th, sz: 1.2 * s, color: '#2d1b52' })
-          darkTop.push({ x: t.x, y: th + 1.2 * s, z: t.z, sx: 1.5 * s, sy: 1.5 * s, sz: 1.5 * s, color: ['#3a2170', '#2c1860', '#46267f'][Math.floor(t.tint * 3) % 3] })
+          trunks.push({ x: t.x, y: th / 2, z: t.z, sx: 1.2 * s, sy: th, sz: 1.2 * s, color: '#2a2a30' })
+          darkTop.push({ x: t.x, y: th + 1.2 * s, z: t.z, sx: 1.5 * s, sy: 1.5 * s, sz: 1.5 * s, color: ['#1f4a44', '#1a3f46', '#24524a'][Math.floor(t.tint * 3) % 3] })
           darkRing.push({ x: t.x, y: th + 1.2 * s, z: t.z, rot, sx: 1.5 * s, sy: 1.5 * s, sz: 1.5 * s, color: t.tint < 0.5 ? '#ff3fb4' : '#35e8ff' })
           break
         }
@@ -470,7 +471,7 @@ export function Landmarks({ shadows }: { shadows: boolean }) {
     }
     // quiosques
     for (const k of CITY.kiosks) {
-      add(new RoundedBoxGeometry(2.6, 2.4, 2.2, 3, 0.3), '#fff4e6', k.x, 1.2, k.z, k.rot)
+      add(new RoundedBoxGeometry(2.6, 2.4, 2.2, 3, 0.3), '#d9cfb8', k.x, 1.2, k.z, k.rot)
       const m = placement(k.x, 0, k.z, k.rot)
       const aw = paint(new RoundedBoxGeometry(3.4, 0.3, 1.6, 2, 0.12), k.color)
       place(aw, m, 0, 2.6, 1.5)
@@ -516,7 +517,7 @@ export function Landmarks({ shadows }: { shadows: boolean }) {
 
   const hedges = useMemo(() => {
     // sebe do perimetro: muro baixo + festao de esferas pastel (mint / rosa / lilas), em trechos de ~70 m
-    const cols = ['#a8ecd0', '#fff0a0', '#d9c4fa', '#ffc2b0']
+    const cols = ['#4f8f4f', '#5f9f55', '#3f7a48', '#6aa85a']
     const out: { geo: BufferGeometry; cx: number; cz: number }[] = []
     const SEG = 70
     const T = 3
@@ -529,7 +530,7 @@ export function Landmarks({ shadows }: { shadows: boolean }) {
         const [mx, mz] = at((a0 + a1) / 2)
         const horizontal = side < 2
         const wallGeo = new RoundedBoxGeometry(horizontal ? a1 - a0 : T, 2.2, horizontal ? T : a1 - a0, 1, 0.9)
-        paint(wallGeo, '#b9f0d9')
+        paint(wallGeo, '#4a8a4c')
         wallGeo.translate(mx, 1.1, mz)
         list.push(wallGeo)
         for (let t = a0 + 2.5; t < a1; t += 5) {
@@ -582,7 +583,7 @@ export function Landmarks({ shadows }: { shadows: boolean }) {
       {/* mar ao redor da cidade */}
       <mesh rotation-x={-Math.PI / 2} position={[0, -0.8, 0]}>
         <planeGeometry args={[1600, 1600]} />
-        <meshStandardMaterial color="#8fd0f0" roughness={0.1} metalness={0.2} />
+        <meshStandardMaterial color="#3f8aa8" roughness={0.1} metalness={0.2} />
       </mesh>
 
       <Label text="Em breve" sub="Bairro Futuro" accent="#ffb347" position={[F.x1 + 3.9, 5.4, 0]} height={3.2} />

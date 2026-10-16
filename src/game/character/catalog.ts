@@ -42,6 +42,8 @@ export interface CatalogItem {
   attachments?: Attach[]
 }
 
+import { registerManifestTags } from './itemTags'
+
 const A = `${import.meta.env.BASE_URL}assets/`
 
 /** Rotulos com acento (os manifestos vem sem); id -> nome exibido. */
@@ -153,6 +155,10 @@ export function loadCatalog(): Promise<void> {
   pending ??= Promise.all([fetchJson<GarmentJson>(`${A}garments/garments.json`), fetchJson<JewelryJson>(`${A}jewelry/jewelry.json`)]).then(([g, j]) => {
     const items: Record<string, CatalogItem> = {}
     if (j?.hairFit) Object.assign(hairFit, j.hairFit)
+    for (const raw of [...((g as unknown as { items?: unknown[] })?.items ?? []), ...((j as unknown as { pieces?: unknown[] })?.pieces ?? [])]) {
+      const r = raw as Record<string, unknown>
+      if (typeof r.id === 'string') registerManifestTags(r.id, r)
+    }
     for (const it of [...(g ? parseGarments(g) : []), ...(j ? parseJewelry(j) : [])]) items[it.id] = it
     useCatalogStore.setState({ loaded: true, items })
   })

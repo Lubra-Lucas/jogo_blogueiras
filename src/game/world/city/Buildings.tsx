@@ -19,6 +19,8 @@ const rbox = (w: number, h: number, d: number, r: number) => new RoundedBoxGeome
 
 /** Centro (kit Y2K, centro.ts) e Jardim Romantico (kit romantico, romantic.ts) sao montados com o kit; os demais bairros seguem com o esboco de caixas. */
 const BLOCKS = CITY.blocks.filter((b) => b.district !== 'centro' && b.district !== 'jardim')
+/** o Cassino (Lounge de Jogos) e desenhado pela peca casino_building (streetProps.ts); aqui so entra o colisor */
+const DRAWN = BLOCKS.filter((b) => b.shopId !== 'cassino')
 
 interface Parts {
   body: BufferGeometry[]
@@ -99,7 +101,7 @@ export function Buildings({ shadows }: { shadows: boolean }) {
   const dist = useCullDist()
   const chunks = useMemo(() => {
     const map = new Map<number, typeof CITY.blocks>()
-    for (const b of BLOCKS) {
+    for (const b of DRAWN) {
       const k = chunkKey(b.x, b.z)
       const l = map.get(k)
       if (l) l.push(b)

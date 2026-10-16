@@ -26,25 +26,27 @@ interface KF {
   cShade: string
 }
 
+// Paleta "mundo real": ceu azul natural, luz neutra-quente, nevoa azul-acinzentada que acompanha o horizonte.
+// Magenta/laranja so perto do horizonte na hora dourada; noite anil-marinho com luar neutro.
 const NIGHT: Omit<KF, 'h'> = {
-  top: '#0f1646', mid: '#262d7c', hor: '#6a3f9a', sun: '#7f96ff', sunI: 0.3, hemiS: '#5f74d8', hemiG: '#2a2866', hemiI: 0.18,
-  envI: 0.05, exp: 0.92, fog: '#2c3070', stars: 1, moon: 1, glow: 0, cLit: '#7274bc', cShade: '#2f3374',
+  top: '#070b1f', mid: '#0e1735', hor: '#1c2b55', sun: '#a9bde6', sunI: 0.3, hemiS: '#6f86b8', hemiG: '#232a45', hemiI: 0.18,
+  envI: 0.05, exp: 0.92, fog: '#121a36', stars: 1, moon: 1, glow: 0, cLit: '#6b7aa0', cShade: '#262d4a',
 }
 const DAY: Omit<KF, 'h'> = {
-  top: '#6db1f4', mid: '#a6d3f7', hor: '#e3f1fb', sun: '#fffaf0', sunI: 2.4, hemiS: '#eaf3ff', hemiG: '#c0c6e0', hemiI: 0.42,
-  envI: 0.42, exp: 0.88, fog: '#d3e7f7', stars: 0, moon: 0, glow: 0.3, cLit: '#ffffff', cShade: '#c3d1ee',
+  top: '#3f86d8', mid: '#7db7ec', hor: '#cfe3f2', sun: '#fff6e8', sunI: 2.4, hemiS: '#dbe8f6', hemiG: '#b8bbbf', hemiI: 0.42,
+  envI: 0.42, exp: 0.88, fog: '#c3d6e6', stars: 0, moon: 0, glow: 0.3, cLit: '#ffffff', cShade: '#b6c3d6',
 }
 const KFS: KF[] = [
   { h: 0, ...NIGHT },
   { h: 5, ...NIGHT },
-  // amanhecer: pessego / lilas
-  { h: 6.4, top: '#b4a6ec', mid: '#f0b6d2', hor: '#ffd4b0', sun: '#ffd0b0', sunI: 1.6, hemiS: '#ffe8f0', hemiG: '#b4aad8', hemiI: 0.36, envI: 0.36, exp: 0.9, fog: '#f3cdd4', stars: 0, moon: 0, glow: 1, cLit: '#fff0e8', cShade: '#d8b4da' },
+  // amanhecer: azul-acinzentado esquentando para pessego no horizonte
+  { h: 6.4, top: '#5873b0', mid: '#d9a98e', hor: '#ffc994', sun: '#ffd2a6', sunI: 1.6, hemiS: '#ffe4cc', hemiG: '#98a0b2', hemiI: 0.36, envI: 0.36, exp: 0.9, fog: '#cdbfb6', stars: 0, moon: 0, glow: 1, cLit: '#fff0e0', cShade: '#b9a9b4' },
   { h: 8.6, ...DAY },
   { h: 14.6, ...DAY },
-  // entardecer: o rosa/lilas pastel de assinatura
-  { h: 16.5, top: '#a9d0f5', mid: '#d9bdf2', hor: '#ffc9dd', sun: '#fff1da', sunI: 2.2, hemiS: '#fff4ea', hemiG: '#b4bcd8', hemiI: 0.36, envI: 0.4, exp: 0.88, fog: '#f5bcd6', stars: 0, moon: 0, glow: 1, cLit: '#fff0f6', cShade: '#c9a8e0' },
-  // crepusculo: magenta / indigo
-  { h: 18.5, top: '#4b4d9e', mid: '#a972c4', hor: '#ff9fbb', sun: '#ffb3c6', sunI: 1.2, hemiS: '#c9b4f0', hemiG: '#6a5aa6', hemiI: 0.6, envI: 0.32, exp: 0.98, fog: '#b57fb0', stars: 0.3, moon: 0.5, glow: 0.6, cLit: '#ffc4dc', cShade: '#6a58a8' },
+  // hora dourada: ceu ainda azul, luz ambar, horizonte laranja-ouro
+  { h: 16.5, top: '#5e97d6', mid: '#b9c6d6', hor: '#ffc88a', sun: '#ffe0b0', sunI: 2.2, hemiS: '#fff0dc', hemiG: '#a8abb6', hemiI: 0.36, envI: 0.4, exp: 0.88, fog: '#d9d0c6', stars: 0, moon: 0, glow: 1, cLit: '#ffe9d2', cShade: '#aeb0c4' },
+  // por do sol / crepusculo: laranja forte no horizonte, magenta so la, azul profundo acima
+  { h: 18.5, top: '#1f3068', mid: '#52508e', hor: '#e8785a', sun: '#ff9a62', sunI: 1.2, hemiS: '#9eaee0', hemiG: '#454870', hemiI: 0.6, envI: 0.32, exp: 0.98, fog: '#4a5278', stars: 0.3, moon: 0.5, glow: 0.6, cLit: '#ffb08c', cShade: '#464c86' },
   { h: 20.6, ...NIGHT },
   { h: 24, ...NIGHT },
 ]
@@ -99,7 +101,7 @@ export const env = {
 }
 
 const _a = new Color()
-const GREY = new Color(0.84, 0.87, 0.97)
+const GREY = new Color(0.8, 0.83, 0.88)
 const sstep = (x: number, a: number, b: number) => MathUtils.smoothstep(x, a, b)
 
 /** Dessatura em direcao a um cinza-lilas de mesma luminancia (ceu encoberto), escurecendo por `dark`. */

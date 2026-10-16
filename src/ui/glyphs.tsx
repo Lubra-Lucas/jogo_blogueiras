@@ -61,6 +61,13 @@ export const GProfile = g(
     <path d="M4.500 20c.8-3.800 3.700-5.800 7.500-5.800s6.700 2 7.500 5.800" />
   </>,
 )
+export const GMercado = g(
+  <>
+    <path d="M4 20.500h16" />
+    <path d="M6 17V12M12 17V7M18 17V10" />
+    <path d="m5 8 5-3.500 3 2.500 6-4" />
+  </>,
+)
 export const GSettings = g(
   <>
     <path d="M4 7h9M17 7h3M4 17h3M11 17h9M4 12h5M13 12h7" />

@@ -14,7 +14,12 @@ import { useUiStore } from './state/uiStore'
 import { MinigameHost } from './ui/minigames/MinigameHost'
 import { InteractionPrompt } from './ui/minigames/InteractionPrompt'
 import { SitPrompt } from './ui/sit/SitPrompt'
+import { VehicleUi } from './ui/vehicles/VehicleUi'
+import { useVehicleStore } from './game/vehicles/driveStore'
 import { EnvironmentHud } from './ui/environment/EnvironmentHud'
+import { ShopHost } from './ui/shop/ShopHost'
+import { useShopStore } from './ui/shop/shopStore'
+import { MarketHost, useMarketUi } from './ui/market'
 import { FastTravelFade } from './game/navigation/FastTravelFade'
 
 const tier = getQuality()
@@ -22,8 +27,12 @@ const settings = QUALITY_SETTINGS[tier]
 
 export default function App() {
   const isTouch = useDeviceStore((s) => s.isTouch)
+  const driving = useVehicleStore((s) => s.drivingUid !== null)
   // menu aberto: o mundo 3D pausa (economiza GPU; o menu tem seu proprio visualizador)
-  const menuOpen = useUiStore((s) => s.menuOpen)
+  const uiMenu = useUiStore((s) => s.menuOpen)
+  const shopOpen = useShopStore((s) => !!s.open)
+  const marketOpen = useMarketUi((s) => s.open)
+  const menuOpen = uiMenu || shopOpen || marketOpen
   useEffect(() => initDeviceDetection(), [])
   return (
     <div className="app">
@@ -52,10 +61,13 @@ export default function App() {
         <TravelFade />
         <CharacterMenu />
         {isTouch && <FullscreenButton />}
-        {isTouch && <Joystick />}
+        {isTouch && !driving && <Joystick />}
         <InteractionPrompt />
         <SitPrompt />
+        <VehicleUi />
         <MinigameHost />
+        <ShopHost />
+        <MarketHost />
         <FastTravelFade />
       </div>
     </div>

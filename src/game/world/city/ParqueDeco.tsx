@@ -22,11 +22,11 @@ function lawnTexture(): CanvasTexture {
   const c = canvas(S, (S * 2) / 3)
   const g = c.getContext('2d')!
   const px = S / 96 // px por metro (96 x 64 m)
-  g.fillStyle = '#a9e3c6'
+  g.fillStyle = '#8fc16c'
   g.fillRect(0, 0, c.width, c.height)
   // faixas de corte alternadas, bem suaves
   for (let i = 0; i < 16; i++) {
-    g.fillStyle = i % 2 ? 'rgba(255,255,255,0.10)' : 'rgba(150,225,190,0.16)'
+    g.fillStyle = i % 2 ? 'rgba(255,255,255,0.10)' : 'rgba(110,170,80,0.16)'
     g.fillRect(i * 6 * px, 0, 6 * px, c.height)
   }
   // manchas macias de sage e menta
@@ -61,9 +61,9 @@ function pavingTexture(): CanvasTexture {
   const S = 256
   const c = canvas(S, S)
   const g = c.getContext('2d')!
-  g.fillStyle = '#fff6ea'
+  g.fillStyle = '#d9d2c0'
   g.fillRect(0, 0, S, S)
-  const cols = ['#f7b8a6', '#a6dec3', '#ffe09a', '#cdb6f0']
+  const cols = ['#cfc6b2', '#c4cab4', '#d6cdb6', '#bfbfb8']
   const n = 4
   const w = S / n
   for (let i = 0; i < n; i++) {
@@ -96,7 +96,7 @@ function plazaTexture(): CanvasTexture {
   const c = canvas(S, S)
   const g = c.getContext('2d')!
   const C = S / 2
-  g.fillStyle = '#fff1e8'
+  g.fillStyle = '#dcd5c6'
   g.fillRect(0, 0, S, S)
   const sector = (r0: number, r1: number, a0: number, a1: number, col: string) => {
     g.beginPath()
@@ -106,13 +106,13 @@ function plazaTexture(): CanvasTexture {
     g.fillStyle = col
     g.fill()
   }
-  const fan = ['#fbd3c4', '#cdeedd', '#e3d7f7', '#fff0c8']
+  const fan = ['#d9cdb8', '#cdd6c0', '#d2d2cc', '#e0d6bc']
   for (const [r0, r1, n] of [[3.9, 5.6, 16], [5.8, 7.4, 24], [7.6, 8.5, 32]] as const) {
     for (let i = 0; i < n; i++) sector(r0, r1, ((i + 0.02) / n) * Math.PI * 2, ((i + 0.98) / n) * Math.PI * 2, fan[(i + (r0 > 5 ? 1 : 0)) % 4])
   }
-  sector(0, 3.7, 0, Math.PI * 2, '#fde3ea')
-  for (let i = 0; i < 12; i++) sector(2.4, 3.5, ((i + 0.04) / 12) * Math.PI * 2, ((i + 0.96) / 12) * Math.PI * 2, i % 2 ? '#fff6f0' : '#f9c9d9')
-  for (const [r, col, w] of [[3.8, '#e6b84f', 0.18], [5.7, '#fff', 0.12], [7.5, '#fff', 0.12], [8.62, '#e6b84f', 0.22]] as const) {
+  sector(0, 3.7, 0, Math.PI * 2, '#d8d0bf')
+  for (let i = 0; i < 12; i++) sector(2.4, 3.5, ((i + 0.04) / 12) * Math.PI * 2, ((i + 0.96) / 12) * Math.PI * 2, i % 2 ? '#e6dfd0' : '#cfc6b0')
+  for (const [r, col, w] of [[3.8, '#c9a15a', 0.18], [5.7, '#fff', 0.12], [7.5, '#fff', 0.12], [8.62, '#c9a15a', 0.22]] as const) {
     g.beginPath()
     g.arc(C, C, r * px, 0, Math.PI * 2)
     g.lineWidth = w * px
@@ -126,9 +126,9 @@ function plazaTexture(): CanvasTexture {
 }
 
 const FLOWER_SETS = [
-  ['#ff8f7a', '#ffb199', '#ffd0c0'], // coral
-  ['#ffe27a', '#fff0a0', '#fff6c4'], // limao
-  ['#c9a8f0', '#dcc6fa', '#fffaf6'], // lilas
+  ['#d9503f', '#e8705a', '#f2a58f'], // coral
+  ['#f2c230', '#f7d85a', '#fbe99a'], // limao
+  ['#8f6fc4', '#b49be0', '#f2eef8'], // lilas
 ]
 
 /** Canteiros: moldura de perola + monte de folhas menta + flores-bolha em coral / limao / lilas. */
@@ -147,10 +147,10 @@ export function bedsGeometry(): BufferGeometry {
     const border = new TorusGeometry(1, 0.1, 6, 22).rotateX(Math.PI / 2)
     border.scale(2.0, 1.4, 1.05)
     border.translate(0, 0.11, 0)
-    add(border, '#fff4ec')
+    add(border, '#cfc7b6')
     const mound = new SphereGeometry(1, 14, 7, 0, Math.PI * 2, 0, Math.PI / 2)
     mound.scale(1.95, 0.42, 0.98)
-    add(mound, '#a6e6bd')
+    add(mound, '#5f9a4f')
     const set = FLOWER_SETS[b.hue % 3]
     for (let i = 0; i < 12; i++) {
       const a = (i / 12) * Math.PI * 2 + b.hue
@@ -175,7 +175,7 @@ export function ParqueDeco({ shadows }: { shadows: boolean }) {
       pave: pavingTexture(),
       plaza: plazaTexture(),
       tiles: mergeUV(all.map((p, i) => ribbon(p.points, p.width, i === all.length - 1 ? 0.0412 : 0.04, 2))),
-      edge: merge([...all.map((p) => paint(ribbon(p.points, p.width + 0.9, 0.032), '#f0cf7a')), ...all.map((p) => paint(ribbon(p.points, p.width + 0.55, 0.036), '#fffaf2'))]),
+      edge: merge([...all.map((p) => paint(ribbon(p.points, p.width + 0.9, 0.032), '#bfb59c')), ...all.map((p) => paint(ribbon(p.points, p.width + 0.55, 0.036), '#e2dccb'))]),
       lawnGeo: new PlaneGeometry(96, 64).rotateX(-Math.PI / 2),
       plazaGeo: new CircleGeometry(PRAC_JARDIM.r, 96).rotateX(-Math.PI / 2),
     }

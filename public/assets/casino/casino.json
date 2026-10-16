@@ -1,0 +1,377 @@
+{
+  "convention": "size/min/max in game axes (x right, y up, z toward player/front); meters; origin at floor center; front faces +Z in game",
+  "pieces": [
+    {
+      "file": "card_table.glb",
+      "size": [
+        2.416,
+        0.927,
+        1.22
+      ],
+      "min": [
+        -1.208,
+        0.0,
+        -0.612
+      ],
+      "max": [
+        1.208,
+        0.927,
+        0.608
+      ],
+      "tris": 10748,
+      "materials": [
+        "brass",
+        "chip_black",
+        "chip_blue",
+        "chip_green",
+        "chip_ivory",
+        "chip_red",
+        "felt",
+        "ivory",
+        "lacquer"
+      ],
+      "objects": [
+        "card_table"
+      ],
+      "emissive": [],
+      "notes": "Dealer side = flat edge at +Y (back). Players on the curve (-Y front). Felt top surface z=0.86; rail top 0.93."
+    },
+    {
+      "file": "poker_table.glb",
+      "size": [
+        2.61,
+        0.79,
+        1.41
+      ],
+      "min": [
+        -1.305,
+        0.0,
+        -0.705
+      ],
+      "max": [
+        1.305,
+        0.79,
+        0.705
+      ],
+      "tris": 8272,
+      "materials": [
+        "brass",
+        "chip_red",
+        "felt",
+        "ivory",
+        "lacquer",
+        "velvet"
+      ],
+      "objects": [
+        "poker_table"
+      ],
+      "emissive": [],
+      "notes": "Oval 2.6x1.4, felt surface z=0.74, rail top 0.785 (velvet), single brass pedestal. Origin at floor center."
+    },
+    {
+      "file": "roulette_table.glb",
+      "size": [
+        3.07,
+        1.117,
+        1.37
+      ],
+      "min": [
+        -1.535,
+        0.0,
+        -0.685
+      ],
+      "max": [
+        1.535,
+        1.117,
+        0.685
+      ],
+      "tris": 12852,
+      "materials": [
+        "brass",
+        "chip_green",
+        "chip_red",
+        "felt",
+        "ivory",
+        "lacquer",
+        "velvet",
+        "walnut"
+      ],
+      "objects": [
+        "roulette_table",
+        "wheel_rotor"
+      ],
+      "emissive": [],
+      "notes": "Table 3.0x1.3; wheel bowl at the -X end. Object 'wheel_rotor' has its origin on the wheel axis: rotate it around its Y (game axes, = Blender Z)."
+    },
+    {
+      "file": "slot_machine.glb",
+      "size": [
+        0.915,
+        1.9,
+        0.77
+      ],
+      "min": [
+        -0.41,
+        0.0,
+        -0.385
+      ],
+      "max": [
+        0.505,
+        1.9,
+        0.385
+      ],
+      "tris": 5084,
+      "materials": [
+        "brass",
+        "chip_blue",
+        "chip_green",
+        "chip_red",
+        "glass",
+        "glow",
+        "ivory",
+        "lacquer",
+        "screen"
+      ],
+      "objects": [
+        "slot_machine"
+      ],
+      "emissive": [
+        "glow",
+        "screen"
+      ],
+      "notes": "Front = -Y. Emissive: glow (marquee, bulbs, center button, win line) and screen (reels window). Lever on +X side."
+    },
+    {
+      "file": "chip_stack.glb",
+      "size": [
+        1.374,
+        0.362,
+        0.522
+      ],
+      "min": [
+        -0.687,
+        0.0,
+        -0.261
+      ],
+      "max": [
+        0.687,
+        0.362,
+        0.261
+      ],
+      "tris": 5828,
+      "materials": [
+        "chip_black",
+        "chip_ivory",
+        "chip_red"
+      ],
+      "objects": [
+        "chip_stack"
+      ],
+      "emissive": [],
+      "notes": "Three stacks (red 6, ivory 9, black 4). Chip r=0.2, thickness 0.04 (oversized toy scale)."
+    },
+    {
+      "file": "card_shoe.glb",
+      "size": [
+        0.521,
+        0.199,
+        0.21
+      ],
+      "min": [
+        -0.26,
+        0.0,
+        -0.105
+      ],
+      "max": [
+        0.26,
+        0.199,
+        0.105
+      ],
+      "tris": 1980,
+      "materials": [
+        "brass",
+        "chip_red",
+        "ivory",
+        "lacquer"
+      ],
+      "objects": [
+        "card_shoe"
+      ],
+      "emissive": [],
+      "notes": "Blackjack shoe (ramp, front = -Y) with a loose stack of 12 cards on the +X side."
+    },
+    {
+      "file": "bar_stool.glb",
+      "size": [
+        0.484,
+        0.76,
+        0.484
+      ],
+      "min": [
+        -0.242,
+        0.0,
+        -0.242
+      ],
+      "max": [
+        0.242,
+        0.76,
+        0.242
+      ],
+      "tris": 3844,
+      "materials": [
+        "brass",
+        "chrome",
+        "lacquer",
+        "velvet"
+      ],
+      "objects": [
+        "bar_stool"
+      ],
+      "emissive": [],
+      "notes": "Seat top z=0.76 (use ~0.72 for avatar sit). Velvet seat, brass pole, chrome footrest."
+    },
+    {
+      "file": "chandelier.glb",
+      "size": [
+        1.226,
+        0.945,
+        1.228
+      ],
+      "min": [
+        -0.613,
+        -0.945,
+        -0.614
+      ],
+      "max": [
+        0.613,
+        0.0,
+        0.614
+      ],
+      "tris": 9228,
+      "materials": [
+        "brass",
+        "crystal",
+        "glow",
+        "ivory"
+      ],
+      "objects": [
+        "chandelier"
+      ],
+      "emissive": [
+        "crystal",
+        "glow"
+      ],
+      "notes": "Origin = ceiling attachment point; hangs down (game -Y). Emissive: glow flames, crystal (faint)."
+    },
+    {
+      "file": "bar_counter.glb",
+      "size": [
+        3.12,
+        1.98,
+        1.346
+      ],
+      "min": [
+        -1.56,
+        0.0,
+        -0.91
+      ],
+      "max": [
+        1.56,
+        1.98,
+        0.436
+      ],
+      "tris": 9744,
+      "materials": [
+        "brass",
+        "chip_blue",
+        "chip_green",
+        "glass",
+        "glow",
+        "ivory",
+        "lacquer",
+        "velvet",
+        "walnut"
+      ],
+      "objects": [
+        "bar_counter"
+      ],
+      "emissive": [
+        "glow"
+      ],
+      "notes": "Front = -Y (customers). Back bar with shelves + bottles at +Y. Walnut top at z=1.09. Emissive: glow strips under shelves."
+    },
+    {
+      "file": "lamp_floor.glb",
+      "size": [
+        0.458,
+        1.606,
+        0.458
+      ],
+      "min": [
+        -0.229,
+        0.0,
+        -0.229
+      ],
+      "max": [
+        0.229,
+        1.606,
+        0.229
+      ],
+      "tris": 3352,
+      "materials": [
+        "brass",
+        "glow",
+        "lacquer",
+        "shade"
+      ],
+      "objects": [
+        "lamp_floor"
+      ],
+      "emissive": [
+        "glow",
+        "shade"
+      ],
+      "notes": "Art-deco floor lamp 1.6 m. Emissive: shade (soft) and glow bulb."
+    },
+    {
+      "file": "pillar.glb",
+      "size": [
+        0.7,
+        3.2,
+        0.7
+      ],
+      "min": [
+        -0.35,
+        0.0,
+        -0.35
+      ],
+      "max": [
+        0.35,
+        3.2,
+        0.35
+      ],
+      "tris": 2336,
+      "materials": [
+        "brass",
+        "lacquer"
+      ],
+      "objects": [
+        "pillar"
+      ],
+      "emissive": [],
+      "notes": "3.2 m art-deco column: lacquer shaft, 12 brass inlays, brass base/capital."
+    }
+  ],
+  "textures": [
+    {
+      "file": "carpet.png",
+      "size_px": 512,
+      "notes": "seamless burgundy velvet with low-contrast gold art-deco diamond lattice (sRGB). Repeat ~every 2 m."
+    },
+    {
+      "file": "felt.png",
+      "size_px": 512,
+      "notes": "seamless deep green felt fibre noise (sRGB). Felt faces in the GLBs have planar XY UVs (2 tiles per meter)."
+    }
+  ]
+}

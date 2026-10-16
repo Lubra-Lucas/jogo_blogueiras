@@ -9,6 +9,7 @@ import { useMinigameStore } from '../minigames/minigameStore'
 import { CITY } from '../world/city/layout'
 import { BENCHES, KINDS, SEATS, type Seat } from './seats'
 import { useSitStore } from './sitStore'
+import { driveBridge } from '../vehicles/driveStore'
 
 /** Distancia (m) do assento para aparecer o aviso "Sentar". */
 export const SIT_RADIUS = 2.2
@@ -36,7 +37,7 @@ if (typeof window !== 'undefined') {
       if (e.code !== 'KeyE' || e.repeat || e.ctrlKey || e.metaKey || e.altKey) return
       const t = e.target
       if (t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return
-      if (useMinigameStore.getState().active) return
+      if (useMinigameStore.getState().active || driveBridge.active) return
       const st = useSitStore.getState()
       if (st.seat || !st.nearest) return
       st.sitDown(st.nearest)
@@ -144,6 +145,7 @@ export function SitController() {
 
     const onDown = (e: PointerEvent) => {
       down =
+        !driveBridge.active &&
         e.isPrimary && !isPointerClaimed(e.pointerId) && (e.pointerType !== 'mouse' || e.button === 0)
           ? { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now() }
           : null
@@ -226,7 +228,7 @@ export function SitController() {
     if (acc < 0.12) return
     acc = 0
     let best: Seat | null = null
-    if (!st.seat && !useMinigameStore.getState().active) {
+    if (!st.seat && !useMinigameStore.getState().active && !driveBridge.active) {
       let bd = SIT_RADIUS * SIT_RADIUS
       for (const s of SEATS) {
         const dd = (s.x - p.x) ** 2 + (s.z - p.z) ** 2

@@ -4,6 +4,9 @@ import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier
 import { Color, DoubleSide, Matrix4, MeshBasicMaterial, MeshPhysicalMaterial, Quaternion, Vector3, type BufferGeometry, type Mesh, type Material } from 'three'
 import kitY from './kitY2k.json'
 import kitR from './kitRomantic.json'
+import kitPP from './propsPlus.json'
+import kitPM from './propsMore.json'
+import kitPL from './propsLite.json'
 import { merge, paint } from './geo'
 import { Cull, chunkKey, useCullDist } from './cull'
 import { nightGlass, registerGlowColor, registerWet } from '../environment/registry'
@@ -19,8 +22,9 @@ import { nightGlass, registerGlowColor, registerWet } from '../environment/regis
 
 export type Slot = 'base' | 'accent' | 'accent2' | 'soft' | 'deep' | 'white' | 'trim' | 'glass' | 'glow' | 'glow2' | 'leaf' | 'water' | 'seat'
 type PaletteDef = { base: string; accent: string; accent2: string; soft: string; deep: string; white: string; glass: string; glow: string; glow2?: string; seat?: string; metal: string }
-export const PALETTES = { ...kitY.palettes, ...kitR.palettes } as unknown as Record<string, PaletteDef>
-const METALS = { ...kitY.metals, ...kitR.metals } as Record<string, { color: string; roughness: number; metallic: number }>
+type PaletteDefX = PaletteDef & { leaf?: string }
+export const PALETTES = { ...kitY.palettes, ...kitR.palettes, ...kitPP.palettes, ...kitPM.palettes, ...kitPL.palettes } as unknown as Record<string, PaletteDefX>
+const METALS = { ...kitY.metals, ...kitR.metals, ...kitPP.metals, ...kitPM.metals, ...kitPL.metals } as Record<string, { color: string; roughness: number; metallic: number }>
 
 export interface KitItem {
   piece: string
@@ -37,22 +41,21 @@ export interface KitItem {
 }
 
 type Collider = { type: 'cylinder' | 'box' | 'boxes'; size: number[] | number[][]; center: number[] | null }
-const PIECES = { ...kitY.pieces, ...kitR.pieces } as unknown as Record<string, { file: string; collider?: Collider }>
+const PIECES = { ...kitY.pieces, ...kitR.pieces, ...kitPP.pieces, ...kitPM.pieces, ...kitPL.pieces } as unknown as Record<string, { file: string; collider?: Collider }>
 const BASE = `${import.meta.env.BASE_URL}assets/city/`
-const NAMES = Object.keys(PIECES)
-const URLS = NAMES.map((n) => BASE + PIECES[n].file)
-URLS.forEach((u) => useGLTF.preload(u))
+// kits (predios/props do bairro) sao pre-carregados; props de rua (props_plus / props_more) so quando uma cena os usa
+Object.keys(PIECES).filter((n) => !PIECES[n].file.startsWith('props_')).forEach((n) => useGLTF.preload(BASE + PIECES[n].file))
 
 type Cls = 'por' | 'metal' | 'glass' | 'glow' | 'water'
 const CLASS_OF: Record<Slot, Cls> = {
   base: 'por', seat: 'por', accent: 'por', accent2: 'por', soft: 'por', deep: 'por', white: 'por', leaf: 'por', trim: 'metal', glass: 'glass', glow: 'glow', glow2: 'glow', water: 'water',
 }
 
-function slotColor(slot: Slot, p: PaletteDef, over?: Partial<Record<Slot, string>>): string {
+function slotColor(slot: Slot, p: PaletteDefX, over?: Partial<Record<Slot, string>>): string {
   if (over && over[slot]) return over[slot]!
   if (slot === 'trim') return METALS[p.metal].color
-  if (slot === 'leaf') return '#a9ecc8'
-  if (slot === 'water') return '#cfeeff'
+  if (slot === 'leaf') return p.leaf ?? '#5f9a58'
+  if (slot === 'water') return '#a8d4e0'
   if (slot === 'glass') return new Color(p.glass).lerp(new Color('#ffffff'), 0.55).getStyle()
   if (slot === 'seat') return p.seat ?? p.base
   return p[slot] ?? p.base
@@ -88,11 +91,11 @@ interface Part {
 }
 
 /** Carrega todos os GLBs do kit e devolve as geometrias (ja no espaco da peca) por slot. */
-function useParts(): Record<string, Part[]> {
-  const gltfs = useGLTF(URLS)
+function useParts(names: string[]): Record<string, Part[]> {
+  const gltfs = useGLTF(names.map((n) => BASE + PIECES[n].file))
   return useMemo(() => {
     const out: Record<string, Part[]> = {}
-    NAMES.forEach((name, i) => {
+    names.forEach((name, i) => {
       const scene = gltfs[i].scene
       scene.updateMatrixWorld(true)
       const parts: Part[] = []
@@ -107,7 +110,7 @@ function useParts(): Record<string, Part[]> {
       out[name] = parts
     })
     return out
-  }, [gltfs])
+  }, [gltfs, names])
 }
 
 const _q = new Quaternion()
@@ -123,7 +126,7 @@ interface Cell {
   geo: Partial<Record<Cls, BufferGeometry>>
 }
 
-function buildCells(items: KitItem[], parts: Record<string, Part[]>, chunk?: number): Cell[] {
+function buildCells(items: KitItem[], parts: Record<string, Part[]>, chunk?: number, pad = 14): Cell[] {
   const groups = new Map<number, KitItem[]>()
   for (const it of items) {
     const k = chunk ? Math.floor(it.x / chunk) * 10000 + Math.floor(it.z / chunk) : chunkKey(it.x, it.z)
@@ -147,7 +150,7 @@ function buildCells(items: KitItem[], parts: Record<string, Part[]>, chunk?: num
         paint(g, col.set(slotColor(p.slot, pal, it.over)))
         bag[CLASS_OF[p.slot]].push(g)
       }
-      r = Math.max(r, Math.hypot(it.x - cx, it.z - cz) + 14 * s)
+      r = Math.max(r, Math.hypot(it.x - cx, it.z - cz) + pad * s)
     }
     const geo: Cell['geo'] = {}
     for (const c of Object.keys(bag) as Cls[]) if (bag[c].length) geo[c] = merge(bag[c])
@@ -189,10 +192,11 @@ function Colliders({ items }: { items: KitItem[] }) {
 }
 
 /** Cena do kit: itens fundidos por celula (frustum + distancia), 5 materiais compartilhados, colisores do kit.json. */
-export function KitScene({ items, shadows, cull = 'buildings', max, walkable, chunk, cast = true }: { items: KitItem[]; shadows: boolean; cull?: 'buildings' | 'props'; max?: number; walkable?: boolean; chunk?: number; cast?: boolean }) {
-  const parts = useParts()
+export function KitScene({ items, shadows, cull = 'buildings', max, walkable, chunk, cast = true, pad }: { items: KitItem[]; shadows: boolean; cull?: 'buildings' | 'props'; max?: number; walkable?: boolean; chunk?: number; cast?: boolean; pad?: number }) {
+  const names = useMemo(() => [...new Set(items.map((i) => i.piece))].sort(), [items])
+  const parts = useParts(names)
   const dist = useCullDist()
-  const cells = useMemo(() => buildCells(items, parts, chunk), [items, parts, chunk])
+  const cells = useMemo(() => buildCells(items, parts, chunk, pad), [items, parts, chunk, pad])
   const mats = kitMaterials()
   const data = walkable ? WALK_DATA : KIT_DATA
   return (

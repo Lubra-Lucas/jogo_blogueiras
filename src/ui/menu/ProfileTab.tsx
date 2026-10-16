@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { CURRENCY_NAME, fameTitle, NO_PROFESSION, PROFESSIONS, useProfileStore, xpToNext } from '../../state/profileStore'
+import { CURRENCY_NAME, fameTitle, NO_PROFESSION, PROFESSIONS, professionLevel, useProfileStore, xpToNext } from '../../state/profileStore'
 import { useAppearanceStore } from '../../state/appearanceStore'
-import { IconLock, IconPencil } from './icons'
+import { IconPencil } from './icons'
+import { VitrinePanel } from './EditionsSection'
+import { useInventory } from '../../game/market/api'
 
 /** Atributos de "flavor": derivados de nivel, visitas e do que esta vestido (sem regra de jogo ainda). */
 function useStats() {
@@ -26,6 +28,8 @@ export function ProfileTab() {
   const [status, setStatus] = useState(p.status)
   const need = xpToNext(p.level)
   const stats = useStats()
+  const title = useInventory((s) => s.equippedTitle)
+  const profXp = p.professionXp
   const commitName = () => {
     p.setName(name)
     setName(useProfileStore.getState().name)
@@ -55,6 +59,11 @@ export function ProfileTab() {
               <span className="chip chip--gold">{fameTitle(p.level)}</span>
               <span className="chip">{p.profession ?? NO_PROFESSION}</span>
             </div>
+            {title && (
+              <div className="row-wrap" style={{ marginTop: 4 }}>
+                <span className="chip chip--gold">{title}</span>
+              </div>
+            )}
           </div>
           <div className="coins" title={CURRENCY_NAME}>
             <span className="coin-dot" />
@@ -88,17 +97,21 @@ export function ProfileTab() {
         ))}
       </div>
 
+      <VitrinePanel />
+
       <div className="panel">
-        <h3>Profissão</h3>
+        <h3>Profissões</h3>
         <div className="row-wrap">
-          <span className="chip chip--gold">{NO_PROFESSION}</span>
-          {PROFESSIONS.map((n) => (
-            <span key={n} className="chip chip--lock" title="Em breve">
-              <IconLock width={12} height={12} /> {n}
-            </span>
-          ))}
+          {PROFESSIONS.map((n) => {
+            const xp = profXp[n] ?? 0
+            return (
+              <span key={n} className={`chip${xp > 0 ? ' chip--gold' : ''}`} title={`${Math.floor(xp)} XP`}>
+                {n} · Nv {professionLevel(xp)} · {Math.floor(xp)} XP
+              </span>
+            )
+          })}
         </div>
-        <p style={{ margin: '8px 0 0', font: '600 12px var(--corpo)', color: 'var(--tinta-suave)' }}>As profissões chegam em breve.</p>
+        <p style={{ margin: '8px 0 0', font: '600 12px var(--corpo)', color: 'var(--tinta-suave)' }}>O XP de cada profissão sobe jogando os minijogos (Cabeleireira vale para Salão Express e Manicure).</p>
       </div>
     </>
   )
