@@ -3,6 +3,7 @@ import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier
 import { RepeatWrapping, type Texture } from 'three'
 import { Character } from '../character/Character'
 import { DEFAULT_APPEARANCE, type Appearance } from '../../shared/appearance'
+import { npcAppearance as rollNpcAppearance } from '../../shared/randomAppearance'
 import { instantiate, pieceUrl } from './catalog'
 import { floorTextures, casinoCarpet } from './textures'
 import type { Resolved } from './resolve'
@@ -196,7 +197,8 @@ function Furniture({ r }: { r: Resolved }) {
 const HAIRS = ['hair.meshyUpdo', 'hair.chestnutWaves', 'hair.platinumUndercut', 'hair.caramelCurls']
 
 function npcAppearance(n: NpcDef): Appearance {
-  return {
+  // rosto e corpo variados e estaveis por NPC (seed = id + posicao); gerado uma vez e guardado em cache
+  return rollNpcAppearance(`${n.id}@${n.x},${n.z}`, {
     ...DEFAULT_APPEARANCE,
     skin: { tone: n.skin },
     suit: { color: n.suit, finish: 'satin' },
@@ -208,7 +210,7 @@ function npcAppearance(n: NpcDef): Appearance {
       ...(n.bottom ? { bottom: { id: n.bottom } } : {}),
       ...(n.dress ? { dress: { id: n.dress } } : {}),
     },
-  }
+  })
 }
 
 function NpcDoll({ n }: { n: NpcDef }) {
