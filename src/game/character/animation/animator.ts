@@ -12,28 +12,29 @@ import {
   type Object3D,
 } from 'three'
 
-export type ClipName = 'idle' | 'walk' | 'desfile' | 'clap' | 'dance_twerk' | 'walk_start'
+export type ClipName = 'idle' | 'walk' | 'walk_normal' | 'sit' | 'jump' | 'desfile' | 'clap' | 'dance_twerk' | 'walk_start'
 
 /**
  * Velocidade (m/s) que o clipe de passo "cobre" por ciclo (medida no retarget, tools/blender/retarget_mixamo.py ->
  * public/assets/anims/doll_anims.json). timeScale = velocidade real / este valor mantem o pe sem deslizar.
  */
-export const CLIP_SPEED: Partial<Record<ClipName, number>> = { walk: 0.855, desfile: 0.86 }
+export const CLIP_SPEED: Partial<Record<ClipName, number>> = { walk: 0.855, walk_normal: 1.03, desfile: 0.86 }
 
 export const ANIMS_URL = `${import.meta.env.BASE_URL}assets/anims/doll_anims.glb`
 
 /** Entrada por frame (valores ja lidos dos stores, sem alocar). */
 export interface AnimInput {
   speed: number
-  emote: 'clap' | 'dance' | null
+  emote: 'clap' | 'dance' | 'jump' | null
   desfile: boolean
+  seated: boolean
 }
 
 const FADE = 0.25
 const MOVE_ON = 0.45 // m/s: comeca a andar
 const MOVE_OFF = 0.25 // m/s: volta ao idle (histerese)
-const RUN_ON = 3.4 // m/s: passa a correr (entre andar e correr do PLAYER)
-const RUN_OFF = 3.0
+const RUN_ON = 2.5 // m/s: passa a correr (entre andar e correr do PLAYER)
+const RUN_OFF = 2.2
 const WALK_TS_MAX = 2.0
 const RUN_TS_MAX = 2.8
 const TS_MIN = 0.6
@@ -122,7 +123,8 @@ export class CharacterAnimator {
     this.mixer = new AnimationMixer(root)
     for (const c of [...clips, idle]) {
       const a = this.mixer.clipAction(c)
-      a.setLoop(c.name === 'walk_start' ? LoopOnce : LoopRepeat, Infinity)
+      a.setLoop(c.name === 'walk_start' || c.name === 'jump' ? LoopOnce : LoopRepeat, Infinity)
+      if (c.name === 'jump') a.clampWhenFinished = true
       this.actions.set(c.name, a)
     }
     this.spine1 = bones.mixamorigSpine1
@@ -157,13 +159,15 @@ export class CharacterAnimator {
 
   update(dt: number, inp: AnimInput) {
     const speed = inp.speed
-    this.moving = this.moving ? speed > MOVE_OFF : speed > MOVE_ON
+    this.moving = !inp.seated && (this.moving ? speed > MOVE_OFF : speed > MOVE_ON)
     this.running = this.running ? speed > RUN_OFF : speed > RUN_ON
-    const step: ClipName = inp.desfile ? 'desfile' : 'walk'
+    const step: ClipName = inp.desfile ? 'desfile' : 'walk_normal'
     let want: ClipName
-    if (this.moving) want = step
+    if (inp.seated) want = 'sit'
+    else if (this.moving) want = step
     else if (inp.emote === 'clap') want = 'clap'
     else if (inp.emote === 'dance') want = 'dance_twerk'
+    else if (inp.emote === 'jump') want = 'jump'
     else if (inp.desfile) want = 'desfile'
     else want = 'idle'
     this.play(want)
@@ -179,7 +183,7 @@ export class CharacterAnimator {
     const k = 1 - Math.exp(-8 * dt)
     this.timeScale += (ts - this.timeScale) * k
     this.lean += (leanTarget - this.lean) * (1 - Math.exp(-5 * dt))
-    if (this.current && (this.currentName === 'walk' || this.currentName === 'desfile')) this.current.setEffectiveTimeScale(this.timeScale)
+    if (this.current && (this.currentName === 'walk_normal' || this.currentName === 'desfile')) this.current.setEffectiveTimeScale(this.timeScale)
     this.mixer.update(dt)
     if (this.spine1 && this.lean > 0.002) {
       this.qLean.setFromAxisAngle(AXIS_X, this.lean)

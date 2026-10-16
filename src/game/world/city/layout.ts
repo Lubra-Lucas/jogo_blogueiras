@@ -703,6 +703,11 @@ function buildCity(): City {
   spawns['vitrines'] = [0, -74]
   spawns['boulevard'] = [90, 3]
   spawns['spawn'] = [0, 9]
+  // pontos de captura/atalho no Parque do Lago e na pracinha do Jardim
+  spawns['ponte'] = [0, 74]
+  spawns['coreto'] = [0, 87.5]
+  spawns['margem'] = [-19.5, 96]
+  spawns['fonte-jardim'] = [0, 150]
   for (const p of pois) if (p.kind !== 'spawn') spawns[p.id] = [p.x + Math.sin(p.facing) * 4, p.z + Math.cos(p.facing) * 4]
 
   return { half: HALF, ground: '#f1e6d6', districts, roads, areas, blocks, pois, lamps, benches, trees, kiosks, spawns, futuro, lake: LAKE }

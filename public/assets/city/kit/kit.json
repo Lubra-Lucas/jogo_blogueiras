@@ -6,8 +6,8 @@
   "pieces": {
     "wall_plain": {
       "file": "kit/wall_plain.glb",
-      "tris": 3736,
-      "bytes": 76388,
+      "tris": 1900,
+      "bytes": 42304,
       "size": [
         4.0,
         4.0,
@@ -48,16 +48,16 @@
     },
     "wall_window": {
       "file": "kit/wall_window.glb",
-      "tris": 3472,
-      "bytes": 79380,
+      "tris": 1900,
+      "bytes": 51432,
       "size": [
         4.0,
-        4.0,
+        3.997,
         0.841
       ],
       "bbox_min": [
         -2.0,
-        0.0,
+        0.003,
         -0.4
       ],
       "bbox_max": [
@@ -92,12 +92,12 @@
     },
     "wall_door": {
       "file": "kit/wall_door.glb",
-      "tris": 7680,
-      "bytes": 158468,
+      "tris": 3000,
+      "bytes": 76884,
       "size": [
         4.0,
         4.0,
-        1.22
+        1.218
       ],
       "bbox_min": [
         -2.0,
@@ -107,7 +107,7 @@
       "bbox_max": [
         2.0,
         4.0,
-        0.82
+        0.818
       ],
       "materials": [
         "base",
@@ -135,22 +135,22 @@
     },
     "wall_corner": {
       "file": "kit/wall_corner.glb",
-      "tris": 3036,
-      "bytes": 72964,
+      "tris": 1200,
+      "bytes": 34492,
       "size": [
-        1.47,
-        4.0,
-        1.47
+        1.471,
+        4.001,
+        1.472
       ],
       "bbox_min": [
-        -0.735,
-        0.0,
-        -0.935
+        -0.736,
+        -0.001,
+        -0.936
       ],
       "bbox_max": [
         0.735,
         4.0,
-        0.535
+        0.536
       ],
       "materials": [
         "base",
@@ -176,17 +176,17 @@
     },
     "column_rococo": {
       "file": "kit/column_rococo.glb",
-      "tris": 3172,
-      "bytes": 83152,
+      "tris": 1200,
+      "bytes": 34408,
       "size": [
         1.447,
         3.55,
-        1.309
+        1.312
       ],
       "bbox_min": [
         -0.724,
-        0.0,
-        -0.635
+        -0.0,
+        -0.638
       ],
       "bbox_max": [
         0.724,
@@ -216,22 +216,22 @@
     },
     "arch_gate": {
       "file": "kit/arch_gate.glb",
-      "tris": 6228,
-      "bytes": 127324,
+      "tris": 2600,
+      "bytes": 61668,
       "size": [
-        4.38,
-        5.59,
-        0.937
+        4.371,
+        5.583,
+        0.94
       ],
       "bbox_min": [
-        -2.19,
-        0.0,
-        -0.42
+        -2.186,
+        0.007,
+        -0.416
       ],
       "bbox_max": [
-        2.19,
+        2.185,
         5.59,
-        0.517
+        0.524
       ],
       "materials": [
         "base",
@@ -267,21 +267,21 @@
     },
     "cornice_scallop": {
       "file": "kit/cornice_scallop.glb",
-      "tris": 2820,
-      "bytes": 56416,
+      "tris": 1000,
+      "bytes": 26876,
       "size": [
         4.0,
-        0.8,
-        0.763
+        0.794,
+        0.761
       ],
       "bbox_min": [
         -2.0,
         0.15,
-        -0.02
+        -0.018
       ],
       "bbox_max": [
         2.0,
-        0.95,
+        0.944,
         0.743
       ],
       "materials": [
@@ -296,22 +296,22 @@
     },
     "roof_dome_small": {
       "file": "kit/roof_dome_small.glb",
-      "tris": 3508,
-      "bytes": 92348,
+      "tris": 1500,
+      "bytes": 44292,
       "size": [
-        3.23,
+        3.224,
         2.65,
-        3.23
+        3.224
       ],
       "bbox_min": [
-        -1.615,
-        0.0,
-        -1.615
+        -1.612,
+        -0.0,
+        -1.612
       ],
       "bbox_max": [
-        1.615,
+        1.612,
         2.65,
-        1.615
+        1.612
       ],
       "materials": [
         "accent",
@@ -323,22 +323,22 @@
     },
     "awning_striped": {
       "file": "kit/awning_striped.glb",
-      "tris": 3148,
-      "bytes": 55008,
+      "tris": 1000,
+      "bytes": 34628,
       "size": [
         3.792,
-        0.892,
-        1.284
+        0.891,
+        1.288
       ],
       "bbox_min": [
         -1.896,
         -0.025,
-        -0.002
+        -0.001
       ],
       "bbox_max": [
         1.896,
-        0.867,
-        1.283
+        0.866,
+        1.287
       ],
       "materials": [
         "accent2",
@@ -350,20 +350,20 @@
     },
     "balcony_curved": {
       "file": "kit/balcony_curved.glb",
-      "tris": 3184,
-      "bytes": 82024,
+      "tris": 1100,
+      "bytes": 36808,
       "size": [
-        3.175,
-        1.643,
+        3.168,
+        1.645,
         1.384
       ],
       "bbox_min": [
-        -1.587,
-        -0.518,
+        -1.584,
+        -0.52,
         -0.25
       ],
       "bbox_max": [
-        1.587,
+        1.584,
         1.125,
         1.134
       ],
@@ -378,22 +378,22 @@
     },
     "sign_frame": {
       "file": "kit/sign_frame.glb",
-      "tris": 4712,
-      "bytes": 118224,
+      "tris": 2000,
+      "bytes": 59020,
       "size": [
-        3.28,
-        1.95,
-        0.194
+        3.284,
+        1.951,
+        0.198
       ],
       "bbox_min": [
-        -1.64,
-        -0.867,
-        -0.04
+        -1.642,
+        -0.868,
+        -0.039
       ],
       "bbox_max": [
-        1.64,
+        1.642,
         1.083,
-        0.154
+        0.159
       ],
       "materials": [
         "base",
@@ -406,22 +406,22 @@
     },
     "lamp_post": {
       "file": "kit/lamp_post.glb",
-      "tris": 3228,
-      "bytes": 74920,
+      "tris": 950,
+      "bytes": 28152,
       "size": [
-        1.764,
-        4.68,
-        0.87
+        1.772,
+        4.679,
+        0.873
       ],
       "bbox_min": [
-        -0.882,
-        0.0,
-        -0.435
+        -0.886,
+        -0.0,
+        -0.437
       ],
       "bbox_max": [
-        0.882,
-        4.68,
-        0.435
+        0.886,
+        4.678,
+        0.437
       ],
       "materials": [
         "accent",
@@ -445,22 +445,22 @@
     },
     "bench_tufted": {
       "file": "kit/bench_tufted.glb",
-      "tris": 6280,
-      "bytes": 133492,
+      "tris": 1700,
+      "bytes": 63976,
       "size": [
-        2.374,
-        1.204,
-        0.769
+        2.361,
+        1.201,
+        0.768
       ],
       "bbox_min": [
-        -1.187,
-        0.002,
-        -0.371
+        -1.181,
+        0.006,
+        -0.366
       ],
       "bbox_max": [
-        1.187,
-        1.206,
-        0.398
+        1.181,
+        1.207,
+        0.402
       ],
       "materials": [
         "seat",
@@ -485,22 +485,22 @@
     },
     "planter_round": {
       "file": "kit/planter_round.glb",
-      "tris": 3896,
-      "bytes": 85028,
+      "tris": 1100,
+      "bytes": 36388,
       "size": [
-        1.238,
-        1.462,
-        1.238
+        1.253,
+        1.46,
+        1.253
       ],
       "bbox_min": [
-        -0.619,
-        0.0,
-        -0.619
+        -0.627,
+        0.001,
+        -0.627
       ],
       "bbox_max": [
-        0.619,
-        1.462,
-        0.619
+        0.627,
+        1.461,
+        0.627
       ],
       "materials": [
         "white",
@@ -527,22 +527,22 @@
     },
     "hedge_heart": {
       "file": "kit/hedge_heart.glb",
-      "tris": 3820,
-      "bytes": 85752,
+      "tris": 1100,
+      "bytes": 39680,
       "size": [
         1.272,
         1.868,
-        0.892
+        0.924
       ],
       "bbox_min": [
         -0.655,
-        0.0,
-        -0.43
+        0.001,
+        -0.445
       ],
       "bbox_max": [
-        0.617,
+        0.616,
         1.868,
-        0.462
+        0.478
       ],
       "materials": [
         "accent",
@@ -568,22 +568,22 @@
     },
     "fence_segment": {
       "file": "kit/fence_segment.glb",
-      "tris": 3924,
-      "bytes": 85136,
+      "tris": 700,
+      "bytes": 28188,
       "size": [
         2.128,
-        1.12,
-        0.228
+        1.119,
+        0.252
       ],
       "bbox_min": [
         -1.064,
         0.0,
-        -0.114
+        -0.126
       ],
       "bbox_max": [
         1.064,
-        1.12,
-        0.114
+        1.119,
+        0.126
       ],
       "materials": [
         "base",
@@ -607,11 +607,11 @@
     },
     "balloon_heart": {
       "file": "kit/balloon_heart.glb",
-      "tris": 1552,
-      "bytes": 34752,
+      "tris": 700,
+      "bytes": 19780,
       "size": [
-        0.943,
-        2.984,
+        0.942,
+        2.983,
         0.5
       ],
       "bbox_min": [
@@ -621,7 +621,7 @@
       ],
       "bbox_max": [
         0.494,
-        2.954,
+        2.953,
         0.25
       ],
       "materials": [
@@ -634,22 +634,22 @@
     },
     "fountain_center": {
       "file": "kit/fountain_center.glb",
-      "tris": 22344,
-      "bytes": 571248,
+      "tris": 6492,
+      "bytes": 178884,
       "size": [
-        5.514,
+        5.532,
         4.415,
-        5.514
+        5.268
       ],
       "bbox_min": [
-        -2.757,
-        0.0,
-        -2.757
+        -2.766,
+        -0.0,
+        -2.634
       ],
       "bbox_max": [
-        2.757,
+        2.766,
         4.415,
-        2.757
+        2.634
       ],
       "materials": [
         "accent",
@@ -703,6 +703,294 @@
       ],
       "walkable": true,
       "note": "amostra 2x2 m para virar textura/padrao do piso da praca"
+    },
+    "house_shell": {
+      "file": "kit/house_shell.glb",
+      "tris": 1100,
+      "bytes": 51004,
+      "size": [
+        8.737,
+        7.978,
+        8.737
+      ],
+      "bbox_min": [
+        -4.368,
+        0.022,
+        -4.368
+      ],
+      "bbox_max": [
+        4.368,
+        8.0,
+        4.368
+      ],
+      "materials": [
+        "base",
+        "white",
+        "accent",
+        "trim",
+        "accent2",
+        "glass"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          8.4,
+          8,
+          8.4
+        ],
+        "center": [
+          0,
+          4,
+          0
+        ]
+      },
+      "mount": "corpo 8x8x8 m (2 andares), centro da planta na origem; frente +Z; encaixe facade_win/facade_door em z=+4 e roof_pitched em y=8"
+    },
+    "house_shell_wide": {
+      "file": "kit/house_shell_wide.glb",
+      "tris": 1700,
+      "bytes": 70620,
+      "size": [
+        12.737,
+        8.0,
+        12.737
+      ],
+      "bbox_min": [
+        -6.368,
+        0.0,
+        -6.368
+      ],
+      "bbox_max": [
+        6.368,
+        8.0,
+        6.368
+      ],
+      "materials": [
+        "base",
+        "white",
+        "accent",
+        "trim",
+        "accent2",
+        "glass"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "box",
+        "size": [
+          12.4,
+          8,
+          12.4
+        ],
+        "center": [
+          0,
+          4,
+          0
+        ]
+      },
+      "mount": "corpo 12x12x8 m, idem house_shell; usado no miolo da Casa dos Sonhos"
+    },
+    "facade_win": {
+      "file": "kit/facade_win.glb",
+      "tris": 620,
+      "bytes": 24768,
+      "size": [
+        3.504,
+        3.487,
+        0.562
+      ],
+      "bbox_min": [
+        -1.752,
+        0.256,
+        0.014
+      ],
+      "bbox_max": [
+        1.752,
+        3.744,
+        0.575
+      ],
+      "materials": [
+        "accent",
+        "soft",
+        "trim",
+        "glass",
+        "accent2",
+        "white"
+      ],
+      "walkable": false,
+      "mount": "modulo de fachada 4x4 m, plano de fundo em z=0, sai para +Z (empilhe 2 andares a cada 4 m)"
+    },
+    "facade_door": {
+      "file": "kit/facade_door.glb",
+      "tris": 680,
+      "bytes": 24544,
+      "size": [
+        3.504,
+        3.744,
+        1.129
+      ],
+      "bbox_min": [
+        -1.752,
+        0.008,
+        -0.0
+      ],
+      "bbox_max": [
+        1.752,
+        3.752,
+        1.129
+      ],
+      "materials": [
+        "accent",
+        "trim",
+        "accent2",
+        "glass",
+        "soft",
+        "glow",
+        "white"
+      ],
+      "walkable": false,
+      "mount": "idem facade_win; porta no centro com degraus"
+    },
+    "roof_pitched": {
+      "file": "kit/roof_pitched.glb",
+      "tris": 900,
+      "bytes": 38968,
+      "size": [
+        9.469,
+        4.395,
+        9.469
+      ],
+      "bbox_min": [
+        -4.735,
+        -0.031,
+        -4.735
+      ],
+      "bbox_max": [
+        4.734,
+        4.365,
+        4.734
+      ],
+      "materials": [
+        "accent2",
+        "white",
+        "trim",
+        "accent",
+        "base",
+        "deep"
+      ],
+      "walkable": false,
+      "mount": "sobre house_shell (y=8): telhado de 4 aguas com beiral festonado + chamine"
+    },
+    "gazebo": {
+      "file": "kit/gazebo.glb",
+      "tris": 3200,
+      "bytes": 99860,
+      "size": [
+        7.7,
+        8.067,
+        7.658
+      ],
+      "bbox_min": [
+        -3.85,
+        -0.0,
+        -3.829
+      ],
+      "bbox_max": [
+        3.85,
+        8.067,
+        3.829
+      ],
+      "materials": [
+        "accent",
+        "white",
+        "trim",
+        "soft",
+        "accent2"
+      ],
+      "walkable": false,
+      "collider": {
+        "type": "boxes",
+        "size": [
+          [
+            0.45,
+            3.5,
+            0.45,
+            1.35,
+            1.75,
+            -2.34
+          ],
+          [
+            0.45,
+            3.5,
+            0.45,
+            2.7,
+            1.75,
+            0
+          ],
+          [
+            0.45,
+            3.5,
+            0.45,
+            1.35,
+            1.75,
+            2.34
+          ],
+          [
+            0.45,
+            3.5,
+            0.45,
+            -1.35,
+            1.75,
+            2.34
+          ],
+          [
+            0.45,
+            3.5,
+            0.45,
+            -2.7,
+            1.75,
+            0
+          ],
+          [
+            0.45,
+            3.5,
+            0.45,
+            -1.35,
+            1.75,
+            -2.34
+          ]
+        ],
+        "center": null
+      },
+      "mount": "coreto redondo r=3.85 m, vao de entrada virado para +Z; plataforma 0.4 m; ~7 m de altura"
+    },
+    "bridge_small": {
+      "file": "kit/bridge_small.glb",
+      "tris": 2200,
+      "bytes": 63320,
+      "size": [
+        3.16,
+        2.391,
+        8.58
+      ],
+      "bbox_min": [
+        -1.58,
+        -0.483,
+        -4.29
+      ],
+      "bbox_max": [
+        1.58,
+        1.908,
+        4.29
+      ],
+      "materials": [
+        "white",
+        "accent",
+        "trim",
+        "accent2"
+      ],
+      "walkable": true,
+      "mount": "ponte arqueada, eixo no Z do GLB (8.4 m), 3 m de largura, topo 0.9 m; colisor montado no jogo (rampas + grades)"
     }
   },
   "slots": [
@@ -721,14 +1009,14 @@
   ],
   "slotNotes": "geometria exportada com materiais nomeados por slot; recolore por predio trocando a cor de cada material (trim = metal)",
   "metals": {
-    "gold": {
-      "color": "#f6d878",
-      "roughness": 0.2,
+    "jewel_gold": {
+      "color": "#f2cf6e",
+      "roughness": 0.14,
       "metallic": 1
     },
-    "rosegold": {
-      "color": "#eaa595",
-      "roughness": 0.22,
+    "rose_gold": {
+      "color": "#f0aa9c",
+      "roughness": 0.18,
       "metallic": 1
     },
     "silver": {
@@ -743,7 +1031,12 @@
     },
     "chrome": {
       "color": "#f5f7fb",
-      "roughness": 0.06,
+      "roughness": 0.05,
+      "metallic": 1
+    },
+    "pearl": {
+      "color": "#f6f0fa",
+      "roughness": 0.16,
       "metallic": 1
     }
   },
@@ -759,7 +1052,7 @@
       "white": "#fffaf6",
       "glass": "#ffb3d1",
       "glow": "#ffd08a",
-      "metal": "gold"
+      "metal": "jewel_gold"
     },
     "cafe": {
       "label": "Cafe Rose",
@@ -772,7 +1065,7 @@
       "white": "#fffaf6",
       "glass": "#ffc9c0",
       "glow": "#ffd9a0",
-      "metal": "rosegold"
+      "metal": "rose_gold"
     },
     "salao": {
       "label": "Salao & Spa",
@@ -851,7 +1144,176 @@
       "white": "#fffaf6",
       "glass": "#d6f0d0",
       "glow": "#fff2b0",
-      "metal": "gold"
+      "metal": "jewel_gold"
+    },
+    "h_peach": {
+      "label": "Casa pessego",
+      "base": "#ffd9c2",
+      "accent": "#fff1e4",
+      "accent2": "#f29b86",
+      "soft": "#ffe9d6",
+      "deep": "#b4604e",
+      "seat": "#f29b86",
+      "white": "#fffaf6",
+      "glass": "#ffd6c8",
+      "glow": "#fff0b8",
+      "metal": "jewel_gold"
+    },
+    "h_mint": {
+      "label": "Casa menta",
+      "base": "#c4ecd8",
+      "accent": "#f3fff9",
+      "accent2": "#6fc9a6",
+      "soft": "#e2f7ee",
+      "deep": "#3a8a6c",
+      "seat": "#6fc9a6",
+      "white": "#fffaf6",
+      "glass": "#c9f3e2",
+      "glow": "#fff0b8",
+      "metal": "pearl"
+    },
+    "h_cream": {
+      "label": "Casa creme",
+      "base": "#fff3df",
+      "accent": "#ffe3b8",
+      "accent2": "#f2a8b8",
+      "soft": "#fff8ec",
+      "deep": "#b86a7a",
+      "seat": "#f2a8b8",
+      "white": "#fffaf6",
+      "glass": "#ffe9d2",
+      "glow": "#fff0b8",
+      "metal": "rose_gold"
+    },
+    "h_lavender": {
+      "label": "Casa lavanda",
+      "base": "#dccdf5",
+      "accent": "#f4ecff",
+      "accent2": "#a98bdc",
+      "soft": "#ece3fb",
+      "deep": "#6a4fa0",
+      "seat": "#a98bdc",
+      "white": "#fffaf6",
+      "glass": "#e3d5fa",
+      "glow": "#fff0b8",
+      "metal": "pearl"
+    },
+    "h_butter": {
+      "label": "Casa manteiga",
+      "base": "#fcecae",
+      "accent": "#fff8d8",
+      "accent2": "#f4b860",
+      "soft": "#fff3c4",
+      "deep": "#a77c1f",
+      "seat": "#f4b860",
+      "white": "#fffaf6",
+      "glass": "#fff0b0",
+      "glow": "#fff0b8",
+      "metal": "jewel_gold"
+    },
+    "h_sky": {
+      "label": "Casa celeste",
+      "base": "#c8e2f8",
+      "accent": "#f1f8ff",
+      "accent2": "#7fb4e6",
+      "soft": "#e1effc",
+      "deep": "#3d6fa5",
+      "seat": "#7fb4e6",
+      "white": "#fffaf6",
+      "glass": "#d3ebff",
+      "glow": "#fff0b8",
+      "metal": "silver"
+    },
+    "h_blush": {
+      "label": "Casa rose",
+      "base": "#f9d0de",
+      "accent": "#fff4f7",
+      "accent2": "#e57fa6",
+      "soft": "#fde6ee",
+      "deep": "#a24668",
+      "seat": "#e57fa6",
+      "white": "#fffaf6",
+      "glass": "#ffd3e3",
+      "glow": "#fff0b8",
+      "metal": "rose_gold"
+    },
+    "casa_rosa": {
+      "label": "Casa dos Sonhos",
+      "base": "#f8c3d8",
+      "accent": "#fff3ea",
+      "accent2": "#f06aa4",
+      "soft": "#ffd9e8",
+      "deep": "#b03a74",
+      "seat": "#f6a3c4",
+      "white": "#fffaf6",
+      "glass": "#ffb3d1",
+      "glow": "#ffd08a",
+      "metal": "jewel_gold"
+    },
+    "p_ponte": {
+      "label": "Parque pearl",
+      "base": "#fff6ee",
+      "accent": "#bfe8d6",
+      "accent2": "#ff8f7a",
+      "soft": "#ffe9df",
+      "deep": "#c4584a",
+      "seat": "#ff9f8f",
+      "white": "#fffaf6",
+      "glass": "#d6f3e8",
+      "glow": "#fff0b8",
+      "metal": "rose_gold"
+    },
+    "p_coral": {
+      "label": "Parque coral",
+      "base": "#ffd6cc",
+      "accent": "#fff6ee",
+      "accent2": "#ff8f7a",
+      "soft": "#ffe9df",
+      "deep": "#c4584a",
+      "seat": "#ff9f8f",
+      "white": "#fffaf6",
+      "glass": "#ffd6c8",
+      "glow": "#fff0b8",
+      "metal": "jewel_gold"
+    },
+    "p_lemon": {
+      "label": "Parque limao",
+      "base": "#fff0a8",
+      "accent": "#fffbe0",
+      "accent2": "#f5cf4a",
+      "soft": "#fff6c4",
+      "deep": "#a78a1f",
+      "seat": "#ffe27a",
+      "white": "#fffaf6",
+      "glass": "#fff3b8",
+      "glow": "#fff0b8",
+      "metal": "jewel_gold"
+    },
+    "p_mint": {
+      "label": "Parque menta",
+      "base": "#bfe8d6",
+      "accent": "#f3fff9",
+      "accent2": "#6fc9a6",
+      "soft": "#dff7ec",
+      "deep": "#3a8a6c",
+      "seat": "#9fe0c4",
+      "white": "#fffaf6",
+      "glass": "#c9f3e2",
+      "glow": "#fff0b8",
+      "metal": "pearl"
+    },
+    "p_lilac": {
+      "label": "Parque lilas",
+      "base": "#dccdf5",
+      "accent": "#f4ecff",
+      "accent2": "#b394e8",
+      "soft": "#ece3fb",
+      "deep": "#6a4fa0",
+      "seat": "#c9b0f2",
+      "white": "#fffaf6",
+      "glass": "#e3d5fa",
+      "glow": "#fff0b8",
+      "metal": "pearl"
     }
   }
 }

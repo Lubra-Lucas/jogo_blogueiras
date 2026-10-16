@@ -1,0 +1,3077 @@
+{
+ "units": "m",
+ "up": "Y",
+ "front": "+Z",
+ "style": "luxury vinyl dollhouse interiors",
+ "slots": [
+  "base",
+  "accent",
+  "accent2",
+  "soft",
+  "deep",
+  "white",
+  "fabric",
+  "trim",
+  "mirror",
+  "glass",
+  "glow",
+  "glow2",
+  "leaf",
+  "water"
+ ],
+ "slotNotes": "materiais nomeados por slot; recolor por sala trocando a cor. mount: floor|wall|ceiling|tabletop. Pecas de teto: origem no ponto de fixacao, pendem em -Y(jogo). Pecas de parede: plano da parede em z=0, corpo em z<=0 (jogo), frente +Z. sit/use: pos em coordenadas locais da peca (jogo, metros), face = direcao XZ para onde o jogador/boneca olha",
+ "metals": {
+  "gold": {
+   "color": "#f2cf6e",
+   "roughness": 0.14,
+   "metallic": 1
+  },
+  "rose_gold": {
+   "color": "#f0aa9c",
+   "roughness": 0.18,
+   "metallic": 1
+  },
+  "silver": {
+   "color": "#e3e6ee",
+   "roughness": 0.16,
+   "metallic": 1
+  },
+  "champagne": {
+   "color": "#ecd9a2",
+   "roughness": 0.2,
+   "metallic": 1
+  },
+  "chrome": {
+   "color": "#f5f7fb",
+   "roughness": 0.05,
+   "metallic": 1
+  },
+  "pearl": {
+   "color": "#f6f0fa",
+   "roughness": 0.16,
+   "metallic": 1
+  },
+  "black_chrome": {
+   "color": "#2b2733",
+   "roughness": 0.08,
+   "metallic": 1
+  },
+  "copper": {
+   "color": "#e59a72",
+   "roughness": 0.2,
+   "metallic": 1
+  }
+ },
+ "rooms": {
+  "shared": {
+   "label": "Compartilhado",
+   "palette": {
+    "label": "Compartilhado",
+    "base": "#fff0ea",
+    "accent": "#f8c3d8",
+    "accent2": "#f06aa4",
+    "soft": "#ead2f2",
+    "deep": "#b03a74",
+    "fabric": "#f6a3c4",
+    "metal": "gold",
+    "glass": "#ffc4dc",
+    "glow": "#ffd9a0",
+    "white": "#fffaf6",
+    "leaf": "#a8dcc0"
+   }
+  },
+  "casa": {
+   "label": "Casa dos Sonhos",
+   "palette": {
+    "label": "Casa dos Sonhos",
+    "base": "#fff0ea",
+    "accent": "#f8c3d8",
+    "accent2": "#f06aa4",
+    "soft": "#ead2f2",
+    "deep": "#b03a74",
+    "fabric": "#f6a3c4",
+    "metal": "gold",
+    "glass": "#ffc4dc",
+    "glow": "#ffd9a0",
+    "white": "#fffaf6",
+    "leaf": "#a8dcc0"
+   }
+  },
+  "cafe": {
+   "label": "Cafe Rose",
+   "palette": {
+    "label": "Cafe Rose",
+    "base": "#a9e3cb",
+    "accent": "#fff3ea",
+    "accent2": "#e0405a",
+    "soft": "#ffd9c9",
+    "deep": "#7a2a3a",
+    "fabric": "#e8697e",
+    "metal": "rose_gold",
+    "glass": "#ffc9c0",
+    "glow": "#ffe0b0",
+    "white": "#fffaf6",
+    "leaf": "#a8dcc0",
+    "glow2": "#ff6f91"
+   }
+  }
+ },
+ "pieces": {
+  "shared/floor_checker": {
+   "file": "shared/floor_checker.glb",
+   "tris": 300,
+   "bytes": 14640,
+   "size": [
+    2.0,
+    0.036,
+    2.0
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.036,
+    1.0
+   ],
+   "materials": [
+    "white",
+    "accent",
+    "trim"
+   ],
+   "mount": "floor",
+   "tags": [
+    "floor",
+    "tile"
+   ],
+   "walkable": true,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.036,
+     2.0
+    ],
+    "center": [
+     0.0,
+     0.018,
+     -0.0
+    ]
+   },
+   "note": "ladrilho 2x2 m, topo em z=0.03",
+   "room": "shared"
+  },
+  "shared/floor_parquet": {
+   "file": "shared/floor_parquet.glb",
+   "tris": 876,
+   "bytes": 44180,
+   "size": [
+    2.0,
+    0.036,
+    2.0
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.036,
+    1.0
+   ],
+   "materials": [
+    "deep.001",
+    "base.001",
+    "soft.001"
+   ],
+   "mount": "floor",
+   "tags": [
+    "floor",
+    "tile"
+   ],
+   "walkable": true,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.036,
+     2.0
+    ],
+    "center": [
+     0.0,
+     0.018,
+     -0.0
+    ]
+   },
+   "note": "parquet basketweave 2x2 m",
+   "room": "shared"
+  },
+  "shared/floor_medallion": {
+   "file": "shared/floor_medallion.glb",
+   "tris": 2444,
+   "bytes": 66820,
+   "size": [
+    2.0,
+    0.056,
+    2.0
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.056,
+    1.0
+   ],
+   "materials": [
+    "white.002",
+    "trim.002",
+    "accent2.002",
+    "accent.002"
+   ],
+   "mount": "floor",
+   "tags": [
+    "floor",
+    "tile",
+    "feature"
+   ],
+   "walkable": true,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.056,
+     2.0
+    ],
+    "center": [
+     0.0,
+     0.028,
+     -0.0
+    ]
+   },
+   "note": "piso de marmore com medalhao de coracao e aro dourado",
+   "room": "shared"
+  },
+  "shared/wall_panel": {
+   "file": "shared/wall_panel.glb",
+   "tris": 4788,
+   "bytes": 92764,
+   "size": [
+    2.0,
+    3.2,
+    0.183
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -0.1
+   ],
+   "bbox_max": [
+    1.0,
+    3.2,
+    0.083
+   ],
+   "materials": [
+    "base.003",
+    "accent.003",
+    "trim.003",
+    "white.003"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     3.2,
+     0.183
+    ],
+    "center": [
+     0.0,
+     1.6,
+     -0.009
+    ]
+   },
+   "note": "parede 2 m x 3.2 m, lambri rosa + molduras",
+   "room": "shared"
+  },
+  "shared/wall_panel_wide": {
+   "file": "shared/wall_panel_wide.glb",
+   "tris": 8000,
+   "bytes": 152088,
+   "size": [
+    4.0,
+    3.2,
+    0.183
+   ],
+   "bbox_min": [
+    -2.0,
+    0.0,
+    -0.1
+   ],
+   "bbox_max": [
+    2.0,
+    3.2,
+    0.083
+   ],
+   "materials": [
+    "base.004",
+    "accent.004",
+    "trim.004",
+    "white.004"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     4.0,
+     3.2,
+     0.183
+    ],
+    "center": [
+     0.0,
+     1.6,
+     -0.009
+    ]
+   },
+   "note": "parede 4 m x 3.2 m",
+   "room": "shared"
+  },
+  "shared/baseboard_2m": {
+   "file": "shared/baseboard_2m.glb",
+   "tris": 220,
+   "bytes": 6556,
+   "size": [
+    2.0,
+    0.218,
+    0.088
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -0.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.218,
+    0.088
+   ],
+   "materials": [
+    "white.005",
+    "trim.005"
+   ],
+   "mount": "wall",
+   "tags": [
+    "trim"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "rodape 2 m",
+   "room": "shared"
+  },
+  "shared/crown_2m": {
+   "file": "shared/crown_2m.glb",
+   "tris": 1368,
+   "bytes": 27940,
+   "size": [
+    2.0,
+    0.165,
+    0.17
+   ],
+   "bbox_min": [
+    -1.0,
+    3.035,
+    -0.0
+   ],
+   "bbox_max": [
+    1.0,
+    3.2,
+    0.17
+   ],
+   "materials": [
+    "white.006",
+    "base.006",
+    "trim.006"
+   ],
+   "mount": "wall",
+   "tags": [
+    "trim"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "sanca/cornija 2 m, topo em z=3.2",
+   "room": "shared"
+  },
+  "shared/wall_arch_door": {
+   "file": "shared/wall_arch_door.glb",
+   "tris": 3620,
+   "bytes": 78924,
+   "size": [
+    3.21,
+    3.2,
+    0.225
+   ],
+   "bbox_min": [
+    -1.605,
+    0.0,
+    -0.1
+   ],
+   "bbox_max": [
+    1.605,
+    3.2,
+    0.125
+   ],
+   "materials": [
+    "base.007",
+    "accent.007",
+    "trim.007",
+    "white.007"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "door"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     3.2,
+     0.45,
+     0.1
+    ],
+    "center": [
+     0.0,
+     2.975,
+     -0.05
+    ]
+   },
+   "use": [
+    {
+     "id": "door",
+     "pos": [
+      0,
+      0,
+      0.6
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Passagem"
+    }
+   ],
+   "note": "parede 3.2 m com arco de passagem 1.5 x 2.6 m (colisor so no lintel)",
+   "room": "shared"
+  },
+  "shared/wall_window_curtains": {
+   "file": "shared/wall_window_curtains.glb",
+   "tris": 6392,
+   "bytes": 144392,
+   "size": [
+    3.0,
+    3.2,
+    0.38
+   ],
+   "bbox_min": [
+    -1.5,
+    0.0,
+    -0.1
+   ],
+   "bbox_max": [
+    1.5,
+    3.2,
+    0.28
+   ],
+   "materials": [
+    "base.008",
+    "accent.008",
+    "trim.008",
+    "white.008",
+    "glow.008",
+    "glass.008",
+    "fabric.008"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "window"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     3.0,
+     3.2,
+     0.38
+    ],
+    "center": [
+     0.0,
+     1.6,
+     0.09
+    ]
+   },
+   "use": [
+    {
+     "id": "window",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Janela"
+    }
+   ],
+   "note": "parede 3 m com janela em arco, cortinas amarradas, varao dourado; vidro com luz do dia (slot glow)",
+   "room": "shared"
+  },
+  "shared/ceiling_medallion": {
+   "file": "shared/ceiling_medallion.glb",
+   "tris": 1768,
+   "bytes": 44972,
+   "size": [
+    1.654,
+    0.13,
+    1.573
+   ],
+   "bbox_min": [
+    -0.827,
+    -0.13,
+    -0.786
+   ],
+   "bbox_max": [
+    0.827,
+    0.0,
+    0.786
+   ],
+   "materials": [
+    "white.009",
+    "trim.009"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "ceiling",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "rosace de teto, origem = teto; use sob lustres",
+   "room": "shared"
+  },
+  "shared/rug_round": {
+   "file": "shared/rug_round.glb",
+   "tris": 2268,
+   "bytes": 60472,
+   "size": [
+    2.0,
+    0.041,
+    2.0
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.041,
+    1.0
+   ],
+   "materials": [
+    "accent.010",
+    "white.010",
+    "trim.010",
+    "accent2.010"
+   ],
+   "mount": "floor",
+   "tags": [
+    "rug",
+    "decor"
+   ],
+   "walkable": true,
+   "hero": false,
+   "note": "tapete redondo 2 m, aneis",
+   "room": "shared"
+  },
+  "shared/rug_heart": {
+   "file": "shared/rug_heart.glb",
+   "tris": 1884,
+   "bytes": 31680,
+   "size": [
+    1.975,
+    0.04,
+    1.803
+   ],
+   "bbox_min": [
+    -0.987,
+    -0.0,
+    -0.903
+   ],
+   "bbox_max": [
+    0.987,
+    0.04,
+    0.9
+   ],
+   "materials": [
+    "accent2.011",
+    "accent.011",
+    "white.011"
+   ],
+   "mount": "floor",
+   "tags": [
+    "rug",
+    "decor"
+   ],
+   "walkable": true,
+   "hero": false,
+   "note": "tapete coracao 2 m",
+   "room": "shared"
+  },
+  "shared/plant_potted": {
+   "file": "shared/plant_potted.glb",
+   "tris": 1408,
+   "bytes": 32360,
+   "size": [
+    0.944,
+    1.054,
+    0.864
+   ],
+   "bbox_min": [
+    -0.403,
+    0.0,
+    -0.447
+   ],
+   "bbox_max": [
+    0.542,
+    1.054,
+    0.417
+   ],
+   "materials": [
+    "white.012",
+    "trim.012",
+    "leaf.012"
+   ],
+   "mount": "floor",
+   "tags": [
+    "plant",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.472,
+    "height": 1.054,
+    "center": [
+     0.07,
+     0.527,
+     -0.015
+    ]
+   },
+   "note": "vaso grande com folhagem (prefira Meshy para hero)",
+   "room": "shared"
+  },
+  "shared/plant_small": {
+   "file": "shared/plant_small.glb",
+   "tris": 1216,
+   "bytes": 28060,
+   "size": [
+    0.25,
+    0.301,
+    0.319
+   ],
+   "bbox_min": [
+    -0.097,
+    0.0,
+    -0.152
+   ],
+   "bbox_max": [
+    0.153,
+    0.301,
+    0.167
+   ],
+   "materials": [
+    "accent.013",
+    "trim.013",
+    "leaf.013"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "plant",
+    "decor",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "vasinho de mesa",
+   "room": "shared"
+  },
+  "shared/wall_sconce": {
+   "file": "shared/wall_sconce.glb",
+   "tris": 572,
+   "bytes": 17944,
+   "size": [
+    0.18,
+    0.51,
+    0.298
+   ],
+   "bbox_min": [
+    -0.09,
+    1.73,
+    -0.03
+   ],
+   "bbox_max": [
+    0.09,
+    2.24,
+    0.268
+   ],
+   "materials": [
+    "trim.014",
+    "glass.014",
+    "glow.014"
+   ],
+   "mount": "wall",
+   "tags": [
+    "light",
+    "wall"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.1,
+      0.18
+     ],
+     "color": "#ffd9a0",
+     "range": 3.0,
+     "intensity": 0.8
+    }
+   ],
+   "note": "arandela dourada com cristais, centro a 1.9 m",
+   "room": "shared"
+  },
+  "shared/mirror_wall_oval": {
+   "file": "shared/mirror_wall_oval.glb",
+   "tris": 3996,
+   "bytes": 95340,
+   "size": [
+    1.339,
+    1.829,
+    0.153
+   ],
+   "bbox_min": [
+    -0.67,
+    0.405,
+    -0.027
+   ],
+   "bbox_max": [
+    0.67,
+    2.234,
+    0.125
+   ],
+   "materials": [
+    "mirror.015",
+    "trim.015",
+    "white.015",
+    "accent2.015"
+   ],
+   "mount": "wall",
+   "tags": [
+    "mirror",
+    "wall",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": true,
+   "use": [
+    {
+     "id": "mirror",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Espelho"
+    }
+   ],
+   "note": "espelho oval com moldura dourada ornamentada e laco, de 0.5 a 2.0 m",
+   "room": "shared"
+  },
+  "shared/picture_frame": {
+   "file": "shared/picture_frame.glb",
+   "tris": 1936,
+   "bytes": 37484,
+   "size": [
+    0.7,
+    1.01,
+    0.095
+   ],
+   "bbox_min": [
+    -0.35,
+    1.1,
+    -0.03
+   ],
+   "bbox_max": [
+    0.35,
+    2.11,
+    0.065
+   ],
+   "materials": [
+    "white.016",
+    "trim.016",
+    "soft.016",
+    "accent2.016",
+    "accent.016"
+   ],
+   "mount": "wall",
+   "tags": [
+    "decor",
+    "wall"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "quadro com moldura dourada (arte abstrata em coracoes)",
+   "room": "shared"
+  },
+  "shared/shelf_wall": {
+   "file": "shared/shelf_wall.glb",
+   "tris": 1948,
+   "bytes": 43084,
+   "size": [
+    1.2,
+    0.42,
+    0.265
+   ],
+   "bbox_min": [
+    -0.6,
+    1.32,
+    -0.005
+   ],
+   "bbox_max": [
+    0.6,
+    1.74,
+    0.26
+   ],
+   "materials": [
+    "white.017",
+    "trim.017",
+    "accent2.017",
+    "soft.017",
+    "accent.017",
+    "deep.017",
+    "glass.017"
+   ],
+   "mount": "wall",
+   "tags": [
+    "shelf",
+    "wall",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "prateleira flutuante com livros e vaso, a 1.5 m",
+   "room": "shared"
+  },
+  "shared/fairy_lights_curtain": {
+   "file": "shared/fairy_lights_curtain.glb",
+   "tris": 3664,
+   "bytes": 76076,
+   "size": [
+    2.3,
+    2.312,
+    0.038
+   ],
+   "bbox_min": [
+    -1.15,
+    0.8,
+    0.01
+   ],
+   "bbox_max": [
+    1.15,
+    3.112,
+    0.048
+   ],
+   "materials": [
+    "trim.018",
+    "glow.018"
+   ],
+   "mount": "wall",
+   "tags": [
+    "light",
+    "decor",
+    "wall"
+   ],
+   "walkable": false,
+   "hero": true,
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.0,
+      0.1
+     ],
+     "color": "#ffd9a0",
+     "range": 3.0,
+     "intensity": 0.5
+    }
+   ],
+   "note": "cortina de luzes de fada, 2.2 m, do teto (3.1 m) para baixo",
+   "room": "shared"
+  },
+  "casa/bed_canopy": {
+   "file": "casa/bed_canopy.glb",
+   "tris": 12104,
+   "bytes": 258672,
+   "size": [
+    2.104,
+    2.39,
+    2.313
+   ],
+   "bbox_min": [
+    -1.052,
+    0.0,
+    -1.17
+   ],
+   "bbox_max": [
+    1.052,
+    2.39,
+    1.143
+   ],
+   "materials": [
+    "base",
+    "trim",
+    "white",
+    "accent",
+    "accent2",
+    "soft",
+    "fabric"
+   ],
+   "mount": "floor",
+   "tags": [
+    "bed",
+    "bedroom",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     1.0,
+     2.3
+    ],
+    "center": [
+     0.0,
+     0.5,
+     -0.05
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit_edge",
+     "pos": [
+      0,
+      0.74,
+      0.8
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Sentar na cama"
+    }
+   ],
+   "use": [
+    {
+     "id": "sleep",
+     "pos": [
+      0,
+      0.74,
+      -0.15
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Deitar"
+    }
+   ],
+   "note": "cama de dossel king com cabeceira capitone, cortinas e cortinado (2.1 x 2.3 x 2.4 m). colisor so ate a altura da cama",
+   "room": "casa"
+  },
+  "casa/nightstand_pink": {
+   "file": "casa/nightstand_pink.glb",
+   "tris": 1144,
+   "bytes": 31964,
+   "size": [
+    0.57,
+    0.759,
+    0.475
+   ],
+   "bbox_min": [
+    -0.285,
+    -0.006,
+    -0.23
+   ],
+   "bbox_max": [
+    0.285,
+    0.753,
+    0.245
+   ],
+   "materials": [
+    "base.001",
+    "white.001",
+    "trim.001",
+    "accent.001"
+   ],
+   "mount": "floor",
+   "tags": [
+    "table",
+    "bedroom"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.57,
+     0.759,
+     0.475
+    ],
+    "center": [
+     0.0,
+     0.374,
+     0.008
+    ]
+   },
+   "use": [
+    {
+     "id": "lamp",
+     "pos": [
+      0,
+      0,
+      0.5
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Abajur"
+    }
+   ],
+   "note": "criado-mudo 0.5 x 0.4 x 0.72 com 2 gavetas",
+   "room": "casa"
+  },
+  "casa/lamp_table_pink": {
+   "file": "casa/lamp_table_pink.glb",
+   "tris": 1376,
+   "bytes": 31296,
+   "size": [
+    0.388,
+    0.57,
+    0.388
+   ],
+   "bbox_min": [
+    -0.194,
+    0.0,
+    -0.194
+   ],
+   "bbox_max": [
+    0.194,
+    0.57,
+    0.194
+   ],
+   "materials": [
+    "trim.002",
+    "glass.002",
+    "accent.002",
+    "glow.002"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "light",
+    "tabletop",
+    "bedroom"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      0.45,
+      0
+     ],
+     "color": "#ffd9a0",
+     "range": 3.5,
+     "intensity": 0.7
+    }
+   ],
+   "note": "abajur de mesa com base de vidro e cupula pregueada",
+   "room": "casa"
+  },
+  "casa/vanity_hollywood": {
+   "file": "casa/vanity_hollywood.glb",
+   "tris": 6980,
+   "bytes": 157780,
+   "size": [
+    1.6,
+    2.317,
+    0.6
+   ],
+   "bbox_min": [
+    -0.8,
+    0.017,
+    -0.3
+   ],
+   "bbox_max": [
+    0.8,
+    2.334,
+    0.3
+   ],
+   "materials": [
+    "white.003",
+    "trim.003",
+    "base.003",
+    "accent.003",
+    "mirror.003",
+    "glow.003",
+    "glass.003",
+    "accent2.003",
+    "deep.003"
+   ],
+   "mount": "floor",
+   "tags": [
+    "vanity",
+    "bedroom",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.6,
+     2.317,
+     0.6
+    ],
+    "center": [
+     0.0,
+     1.176,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "vanity",
+     "pos": [
+      0,
+      0,
+      0.85
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Maquiagem / espelho"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.5,
+      0.15
+     ],
+     "color": "#ffe2b0",
+     "range": 3,
+     "intensity": 0.9
+    }
+   ],
+   "note": "penteadeira coracao com espelho em arco e lampadas Hollywood (1.5 x 0.6 x 2.1 m)",
+   "room": "casa"
+  },
+  "casa/stool_tufted": {
+   "file": "casa/stool_tufted.glb",
+   "tris": 1424,
+   "bytes": 41428,
+   "size": [
+    0.491,
+    0.513,
+    0.491
+   ],
+   "bbox_min": [
+    -0.245,
+    -0.003,
+    -0.245
+   ],
+   "bbox_max": [
+    0.245,
+    0.51,
+    0.245
+   ],
+   "materials": [
+    "fabric.004",
+    "trim.004"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "bedroom"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.245,
+    "height": 0.513,
+    "center": [
+     0.0,
+     0.253,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.46,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ],
+     "label": "Sentar"
+    }
+   ],
+   "note": "banquinho capitone redondo, assento a 0.46 m",
+   "room": "casa"
+  },
+  "casa/pouf_round": {
+   "file": "casa/pouf_round.glb",
+   "tris": 1496,
+   "bytes": 43988,
+   "size": [
+    0.624,
+    0.395,
+    0.624
+   ],
+   "bbox_min": [
+    -0.312,
+    0.005,
+    -0.312
+   ],
+   "bbox_max": [
+    0.312,
+    0.4,
+    0.312
+   ],
+   "materials": [
+    "fabric.005",
+    "trim.005"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "living"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.312,
+    "height": 0.395,
+    "center": [
+     0.0,
+     0.202,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.42,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "pufe redondo capitone com piping dourado (0.55 m)",
+   "room": "casa"
+  },
+  "casa/sofa_capitone": {
+   "file": "casa/sofa_capitone.glb",
+   "tris": 4128,
+   "bytes": 98296,
+   "size": [
+    2.2,
+    1.119,
+    1.042
+   ],
+   "bbox_min": [
+    -1.1,
+    -0.009,
+    -0.475
+   ],
+   "bbox_max": [
+    1.1,
+    1.11,
+    0.567
+   ],
+   "materials": [
+    "fabric.006",
+    "trim.006",
+    "accent2.006",
+    "white.006"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "living",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.2,
+     1.119,
+     1.042
+    ],
+    "center": [
+     0.0,
+     0.55,
+     0.046
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit_l",
+     "pos": [
+      -0.5,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    },
+    {
+     "id": "sit_r",
+     "pos": [
+      0.5,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "sofa capitone 2.2 m, costas com diamantes e botoes dourados, pernas cabriole",
+   "room": "casa"
+  },
+  "casa/armchair_capitone": {
+   "file": "casa/armchair_capitone.glb",
+   "tris": 2278,
+   "bytes": 53132,
+   "size": [
+    0.9,
+    1.128,
+    0.89
+   ],
+   "bbox_min": [
+    -0.45,
+    -0.008,
+    -0.425
+   ],
+   "bbox_max": [
+    0.45,
+    1.12,
+    0.465
+   ],
+   "materials": [
+    "fabric.007",
+    "trim.007"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "living"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.9,
+     1.128,
+     0.89
+    ],
+    "center": [
+     0.0,
+     0.556,
+     0.02
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.5,
+      0.05
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "poltrona capitone 0.9 m",
+   "room": "casa"
+  },
+  "casa/coffee_table_heart": {
+   "file": "casa/coffee_table_heart.glb",
+   "tris": 2404,
+   "bytes": 48432,
+   "size": [
+    0.987,
+    0.451,
+    0.902
+   ],
+   "bbox_min": [
+    -0.494,
+    -0.001,
+    -0.451
+   ],
+   "bbox_max": [
+    0.494,
+    0.45,
+    0.45
+   ],
+   "materials": [
+    "glass.008",
+    "trim.008",
+    "accent.008",
+    "accent2.008"
+   ],
+   "mount": "floor",
+   "tags": [
+    "table",
+    "living"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.987,
+     0.451,
+     0.902
+    ],
+    "center": [
+     0.0,
+     0.225,
+     -0.001
+    ]
+   },
+   "note": "mesa de centro com tampo de vidro em coracao e pernas douradas (1.0 m)",
+   "room": "casa"
+  },
+  "casa/table_side_round": {
+   "file": "casa/table_side_round.glb",
+   "tris": 2932,
+   "bytes": 69280,
+   "size": [
+    0.519,
+    0.776,
+    0.519
+   ],
+   "bbox_min": [
+    -0.26,
+    0.0,
+    -0.26
+   ],
+   "bbox_max": [
+    0.26,
+    0.776,
+    0.26
+   ],
+   "materials": [
+    "white.009",
+    "trim.009",
+    "glass.009",
+    "leaf.009",
+    "accent2.009",
+    "accent.009"
+   ],
+   "mount": "floor",
+   "tags": [
+    "table",
+    "living"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.26,
+    "height": 0.776,
+    "center": [
+     0.0,
+     0.388,
+     -0.0
+    ]
+   },
+   "note": "mesinha lateral redonda com vaso de flores (0.5 m, h 0.55)",
+   "room": "casa"
+  },
+  "casa/chandelier_crystal": {
+   "file": "casa/chandelier_crystal.glb",
+   "tris": 4592,
+   "bytes": 128744,
+   "size": [
+    1.16,
+    1.405,
+    1.16
+   ],
+   "bbox_min": [
+    -0.58,
+    -1.4,
+    -0.58
+   ],
+   "bbox_max": [
+    0.58,
+    0.005,
+    0.58
+   ],
+   "materials": [
+    "trim.010",
+    "glow.010",
+    "glass.010"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "light",
+    "ceiling",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "lights": [
+    {
+     "pos": [
+      0,
+      -1.0,
+      0
+     ],
+     "color": "#ffe0b0",
+     "range": 7,
+     "intensity": 1.2
+    }
+   ],
+   "note": "lustre de cristal dourado de 3 niveis; origem no teto, pende 1.3 m (largura 1.1 m)",
+   "room": "casa"
+  },
+  "casa/balloons_hearts": {
+   "file": "casa/balloons_hearts.glb",
+   "tris": 2662,
+   "bytes": 57584,
+   "size": [
+    0.959,
+    2.373,
+    0.35
+   ],
+   "bbox_min": [
+    -0.486,
+    0.0,
+    -0.155
+   ],
+   "bbox_max": [
+    0.473,
+    2.373,
+    0.195
+   ],
+   "materials": [
+    "trim.011",
+    "accent2.011",
+    "white.011",
+    "accent.011"
+   ],
+   "mount": "floor",
+   "tags": [
+    "decor",
+    "balloon"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "cacho de 3 baloes de coracao com fitas (altura 2.3 m)",
+   "room": "casa"
+  },
+  "casa/bookshelf_pink": {
+   "file": "casa/bookshelf_pink.glb",
+   "tris": 4872,
+   "bytes": 101720,
+   "size": [
+    1.279,
+    2.072,
+    0.459
+   ],
+   "bbox_min": [
+    -0.64,
+    0.0,
+    -0.23
+   ],
+   "bbox_max": [
+    0.64,
+    2.072,
+    0.23
+   ],
+   "materials": [
+    "base.012",
+    "accent.012",
+    "white.012",
+    "trim.012",
+    "deep.012",
+    "soft.012",
+    "fabric.012",
+    "accent2.012"
+   ],
+   "mount": "floor",
+   "tags": [
+    "shelf",
+    "living"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.279,
+     2.072,
+     0.459
+    ],
+    "center": [
+     0.0,
+     1.036,
+     -0.0
+    ]
+   },
+   "note": "estante 1.2 x 0.4 x 2.0 com livros, coracoes e vasinhos",
+   "room": "casa"
+  },
+  "casa/tv_console": {
+   "file": "casa/tv_console.glb",
+   "tris": 2064,
+   "bytes": 48820,
+   "size": [
+    1.66,
+    1.307,
+    0.48
+   ],
+   "bbox_min": [
+    -0.83,
+    -0.007,
+    -0.23
+   ],
+   "bbox_max": [
+    0.83,
+    1.3,
+    0.25
+   ],
+   "materials": [
+    "base.013",
+    "white.013",
+    "accent.013",
+    "trim.013",
+    "deep.013",
+    "glow2.013",
+    "accent2.013"
+   ],
+   "mount": "floor",
+   "tags": [
+    "tv",
+    "living"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.66,
+     1.307,
+     0.48
+    ],
+    "center": [
+     0.0,
+     0.646,
+     0.01
+    ]
+   },
+   "use": [
+    {
+     "id": "tv",
+     "pos": [
+      0,
+      0,
+      1.6
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Assistir TV"
+    }
+   ],
+   "note": "console branco e dourado 1.6 m com TV de tela plana (altura 1.2 m)",
+   "room": "casa"
+  },
+  "casa/clawfoot_tub": {
+   "file": "casa/clawfoot_tub.glb",
+   "tris": 3836,
+   "bytes": 94944,
+   "size": [
+    1.845,
+    1.036,
+    0.915
+   ],
+   "bbox_min": [
+    -0.922,
+    -0.021,
+    -0.465
+   ],
+   "bbox_max": [
+    0.922,
+    1.015,
+    0.45
+   ],
+   "materials": [
+    "accent.014",
+    "water.014",
+    "trim.014",
+    "glass.014",
+    "white.014"
+   ],
+   "mount": "floor",
+   "tags": [
+    "bath"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.845,
+     1.036,
+     0.915
+    ],
+    "center": [
+     0.0,
+     0.497,
+     -0.008
+    ]
+   },
+   "use": [
+    {
+     "id": "bath",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Banho de espuma"
+    }
+   ],
+   "note": "banheira clawfoot rosa com pes dourados e agua com bolhas (1.75 x 0.8 x 0.7)",
+   "room": "casa"
+  },
+  "casa/bath_vanity_sink": {
+   "file": "casa/bath_vanity_sink.glb",
+   "tris": 1668,
+   "bytes": 41532,
+   "size": [
+    1.28,
+    1.03,
+    0.619
+   ],
+   "bbox_min": [
+    -0.64,
+    0.03,
+    -0.3
+   ],
+   "bbox_max": [
+    0.64,
+    1.06,
+    0.319
+   ],
+   "materials": [
+    "base.015",
+    "white.015",
+    "accent.015",
+    "trim.015",
+    "water.015",
+    "glass.015",
+    "accent2.015"
+   ],
+   "mount": "floor",
+   "tags": [
+    "bath",
+    "vanity"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.28,
+     1.03,
+     0.619
+    ],
+    "center": [
+     0.0,
+     0.545,
+     0.009
+    ]
+   },
+   "use": [
+    {
+     "id": "sink",
+     "pos": [
+      0,
+      0,
+      0.7
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Lavar as maos"
+    }
+   ],
+   "note": "bancada de banheiro 1.2 m com cuba em concha, torneira dourada",
+   "room": "casa"
+  },
+  "casa/wardrobe_glass_lit": {
+   "file": "casa/wardrobe_glass_lit.glb",
+   "tris": 6900,
+   "bytes": 152756,
+   "size": [
+    1.56,
+    2.764,
+    0.675
+   ],
+   "bbox_min": [
+    -0.78,
+    0.0,
+    -0.32
+   ],
+   "bbox_max": [
+    0.78,
+    2.764,
+    0.355
+   ],
+   "materials": [
+    "base.016",
+    "white.016",
+    "accent.016",
+    "trim.016",
+    "accent2.016",
+    "soft.016",
+    "fabric.016",
+    "deep.016",
+    "glow.016",
+    "glass.016"
+   ],
+   "mount": "floor",
+   "tags": [
+    "closet",
+    "storage",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.56,
+     2.764,
+     0.675
+    ],
+    "center": [
+     0.0,
+     1.382,
+     0.017
+    ]
+   },
+   "use": [
+    {
+     "id": "closet",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Abrir closet"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.8,
+      0.1
+     ],
+     "color": "#fff0d8",
+     "range": 3,
+     "intensity": 0.9
+    }
+   ],
+   "note": "guarda-roupa de portas de vidro com iluminacao LED, vestidos pendurados (1.5 x 0.6 x 2.5)",
+   "room": "casa"
+  },
+  "casa/closet_shoe_wall": {
+   "file": "casa/closet_shoe_wall.glb",
+   "tris": 7220,
+   "bytes": 182432,
+   "size": [
+    1.68,
+    2.38,
+    0.39
+   ],
+   "bbox_min": [
+    -0.84,
+    0.0,
+    -0.195
+   ],
+   "bbox_max": [
+    0.84,
+    2.38,
+    0.195
+   ],
+   "materials": [
+    "accent.017",
+    "base.017",
+    "white.017",
+    "glass.017",
+    "glow.017",
+    "trim.017",
+    "accent2.017",
+    "fabric.017",
+    "soft.017",
+    "deep.017"
+   ],
+   "mount": "floor",
+   "tags": [
+    "closet",
+    "storage",
+    "shoes",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.68,
+     2.38,
+     0.39
+    ],
+    "center": [
+     0.0,
+     1.19,
+     -0.0
+    ]
+   },
+   "use": [
+    {
+     "id": "shoes",
+     "pos": [
+      0,
+      0,
+      0.7
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Escolher sapatos"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.4,
+      0.2
+     ],
+     "color": "#ffe8d0",
+     "range": 3,
+     "intensity": 0.8
+    }
+   ],
+   "note": "parede de sapatos 1.6 m x 2.3 m com prateleiras de vidro iluminadas",
+   "room": "casa"
+  },
+  "casa/closet_island": {
+   "file": "casa/closet_island.glb",
+   "tris": 4832,
+   "bytes": 116156,
+   "size": [
+    1.46,
+    1.003,
+    0.769
+   ],
+   "bbox_min": [
+    -0.73,
+    0.012,
+    -0.38
+   ],
+   "bbox_max": [
+    0.73,
+    1.015,
+    0.389
+   ],
+   "materials": [
+    "base.018",
+    "white.018",
+    "fabric.018",
+    "glass.018",
+    "trim.018",
+    "accent.018",
+    "accent2.018"
+   ],
+   "mount": "floor",
+   "tags": [
+    "closet",
+    "storage",
+    "table"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.46,
+     1.003,
+     0.769
+    ],
+    "center": [
+     0.0,
+     0.513,
+     0.005
+    ]
+   },
+   "use": [
+    {
+     "id": "jewelry",
+     "pos": [
+      0,
+      0,
+      0.75
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Joias"
+    }
+   ],
+   "note": "ilha do closet 1.4 x 0.7 x 0.95 com tampo de vidro e vitrine de joias",
+   "room": "casa"
+  },
+  "casa/clothes_rail_gold": {
+   "file": "casa/clothes_rail_gold.glb",
+   "tris": 1852,
+   "bytes": 49560,
+   "size": [
+    1.51,
+    1.88,
+    0.45
+   ],
+   "bbox_min": [
+    -0.755,
+    0.0,
+    -0.225
+   ],
+   "bbox_max": [
+    0.755,
+    1.88,
+    0.225
+   ],
+   "materials": [
+    "trim.019",
+    "accent2.019",
+    "white.019",
+    "soft.019",
+    "accent.019",
+    "fabric.019",
+    "deep.019"
+   ],
+   "mount": "floor",
+   "tags": [
+    "closet",
+    "rack"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.51,
+     1.88,
+     0.45
+    ],
+    "center": [
+     0.0,
+     0.94,
+     -0.0
+    ]
+   },
+   "note": "arara dourada com rodinhas e vestidos (1.5 x 0.5 x 1.7)",
+   "room": "casa"
+  },
+  "cafe/floor_checker_small": {
+   "file": "cafe/floor_checker_small.glb",
+   "tris": 516,
+   "bytes": 27040,
+   "size": [
+    2.0,
+    0.036,
+    2.0
+   ],
+   "bbox_min": [
+    -1.0,
+    0.0,
+    -1.0
+   ],
+   "bbox_max": [
+    1.0,
+    0.036,
+    1.0
+   ],
+   "materials": [
+    "accent",
+    "base",
+    "trim"
+   ],
+   "mount": "floor",
+   "tags": [
+    "floor",
+    "tile"
+   ],
+   "walkable": true,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.036,
+     2.0
+    ],
+    "center": [
+     0.0,
+     0.018,
+     -0.0
+    ]
+   },
+   "note": "piso xadrez 8x8 menta/creme, ladrilho 2x2 m",
+   "room": "cafe"
+  },
+  "cafe/counter_service": {
+   "file": "cafe/counter_service.glb",
+   "tris": 4200,
+   "bytes": 97816,
+   "size": [
+    2.521,
+    0.937,
+    0.832
+   ],
+   "bbox_min": [
+    -1.26,
+    0.04,
+    -0.39
+   ],
+   "bbox_max": [
+    1.26,
+    0.977,
+    0.441
+   ],
+   "materials": [
+    "base.001",
+    "white.001",
+    "trim.001",
+    "accent.001",
+    "accent2.001"
+   ],
+   "mount": "floor",
+   "tags": [
+    "counter",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.521,
+     0.937,
+     0.832
+    ],
+    "center": [
+     0.0,
+     0.508,
+     0.026
+    ]
+   },
+   "use": [
+    {
+     "id": "order",
+     "pos": [
+      0,
+      0,
+      0.9
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Fazer pedido"
+    }
+   ],
+   "note": "balcao de atendimento 2.4 m, frente canelada com festao de morango e tampo creme (h 0.96). Atendente fica em +Y",
+   "room": "cafe"
+  },
+  "cafe/display_case_pastry": {
+   "file": "cafe/display_case_pastry.glb",
+   "tris": 6852,
+   "bytes": 172044,
+   "size": [
+    1.66,
+    1.43,
+    0.78
+   ],
+   "bbox_min": [
+    -0.83,
+    0.02,
+    -0.38
+   ],
+   "bbox_max": [
+    0.83,
+    1.45,
+    0.4
+   ],
+   "materials": [
+    "base.002",
+    "accent.002",
+    "white.002",
+    "trim.002",
+    "glass.002",
+    "glow.002",
+    "accent2.002",
+    "soft.002"
+   ],
+   "mount": "floor",
+   "tags": [
+    "counter",
+    "display",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.66,
+     1.43,
+     0.78
+    ],
+    "center": [
+     0.0,
+     0.735,
+     0.01
+    ]
+   },
+   "use": [
+    {
+     "id": "pastries",
+     "pos": [
+      0,
+      0,
+      0.8
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Ver doces"
+    }
+   ],
+   "lights": [
+    {
+     "pos": [
+      0,
+      1.2,
+      0.2
+     ],
+     "color": "#fff0d8",
+     "range": 2.5,
+     "intensity": 0.6
+    }
+   ],
+   "note": "vitrine de confeitaria 1.6 m com bolos, macarons e cupcakes, vidro e LED (h 1.45)",
+   "room": "cafe"
+  },
+  "cafe/espresso_machine": {
+   "file": "cafe/espresso_machine.glb",
+   "tris": 1810,
+   "bytes": 44520,
+   "size": [
+    0.66,
+    0.49,
+    0.52
+   ],
+   "bbox_min": [
+    -0.33,
+    0.03,
+    -0.2
+   ],
+   "bbox_max": [
+    0.33,
+    0.52,
+    0.32
+   ],
+   "materials": [
+    "accent.003",
+    "trim.003",
+    "accent2.003",
+    "white.003",
+    "deep.003",
+    "glow.003"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "appliance",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "use": [
+    {
+     "id": "coffee",
+     "pos": [
+      0,
+      0,
+      0.6
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Fazer cafe"
+    }
+   ],
+   "note": "maquina de espresso retro creme/rose gold (0.6 m)",
+   "room": "cafe"
+  },
+  "cafe/register_retro": {
+   "file": "cafe/register_retro.glb",
+   "tris": 1556,
+   "bytes": 39168,
+   "size": [
+    0.44,
+    0.41,
+    0.405
+   ],
+   "bbox_min": [
+    -0.22,
+    0.005,
+    -0.2
+   ],
+   "bbox_max": [
+    0.22,
+    0.415,
+    0.205
+   ],
+   "materials": [
+    "accent2.004",
+    "trim.004",
+    "white.004",
+    "deep.004",
+    "glow.004"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "appliance",
+    "tabletop",
+    "register"
+   ],
+   "walkable": false,
+   "hero": false,
+   "use": [
+    {
+     "id": "pay",
+     "pos": [
+      0,
+      0,
+      0.6
+     ],
+     "face": [
+      0,
+      -1
+     ],
+     "label": "Pagar"
+    }
+   ],
+   "note": "caixa registradora retro rosa com teclas e gaveta (0.4 m)",
+   "room": "cafe"
+  },
+  "cafe/menu_board": {
+   "file": "cafe/menu_board.glb",
+   "tris": 3396,
+   "bytes": 70192,
+   "size": [
+    0.965,
+    1.295,
+    0.095
+   ],
+   "bbox_min": [
+    -0.49,
+    1.225,
+    -0.04
+   ],
+   "bbox_max": [
+    0.475,
+    2.52,
+    0.055
+   ],
+   "materials": [
+    "trim.005",
+    "deep.005",
+    "white.005",
+    "accent2.005",
+    "glow.005",
+    "glow2.005"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "sign"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "quadro de cardapio com moldura dourada e linhas luminosas, z 1.2 a 2.5",
+   "room": "cafe"
+  },
+  "cafe/bistro_table_round": {
+   "file": "cafe/bistro_table_round.glb",
+   "tris": 1860,
+   "bytes": 43476,
+   "size": [
+    0.821,
+    0.766,
+    0.821
+   ],
+   "bbox_min": [
+    -0.41,
+    0.0,
+    -0.41
+   ],
+   "bbox_max": [
+    0.41,
+    0.766,
+    0.41
+   ],
+   "materials": [
+    "white.006",
+    "trim.006",
+    "accent2.006"
+   ],
+   "mount": "floor",
+   "tags": [
+    "table",
+    "seat_group"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.41,
+    "height": 0.766,
+    "center": [
+     0.0,
+     0.383,
+     -0.0
+    ]
+   },
+   "note": "mesa bistro redonda 0.8 m, tampo de marmore creme e pe de rose gold (h 0.75)",
+   "room": "cafe"
+  },
+  "cafe/chair_bistro_curvy": {
+   "file": "cafe/chair_bistro_curvy.glb",
+   "tris": 1420,
+   "bytes": 39896,
+   "size": [
+    0.439,
+    0.879,
+    0.446
+   ],
+   "bbox_min": [
+    -0.22,
+    -0.004,
+    -0.226
+   ],
+   "bbox_max": [
+    0.22,
+    0.876,
+    0.22
+   ],
+   "materials": [
+    "fabric.007",
+    "trim.007",
+    "accent2.007"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "chair"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     0.439,
+     0.879,
+     0.446
+    ],
+    "center": [
+     0.0,
+     0.436,
+     -0.003
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.48,
+      0.02
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "cadeira bistro curvilinea com encosto em arco com coracao, assento morango (0.9 m)",
+   "room": "cafe"
+  },
+  "cafe/booth_sofa": {
+   "file": "cafe/booth_sofa.glb",
+   "tris": 3216,
+   "bytes": 73428,
+   "size": [
+    2.04,
+    1.377,
+    0.72
+   ],
+   "bbox_min": [
+    -1.02,
+    0.01,
+    -0.35
+   ],
+   "bbox_max": [
+    1.02,
+    1.387,
+    0.37
+   ],
+   "materials": [
+    "base.008",
+    "fabric.008",
+    "trim.008"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "booth"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.04,
+     1.377,
+     0.72
+    ],
+    "center": [
+     0.0,
+     0.699,
+     0.01
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit_l",
+     "pos": [
+      -0.5,
+      0.5,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    },
+    {
+     "id": "sit_r",
+     "pos": [
+      0.5,
+      0.5,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "banco de cabine capitone morango 2 m (costas altas 1.2 m); combine 2 de frente para uma mesa",
+   "room": "cafe"
+  },
+  "cafe/cake_stand_dome": {
+   "file": "cafe/cake_stand_dome.glb",
+   "tris": 2320,
+   "bytes": 54372,
+   "size": [
+    0.444,
+    0.55,
+    0.444
+   ],
+   "bbox_min": [
+    -0.222,
+    0.0,
+    -0.222
+   ],
+   "bbox_max": [
+    0.222,
+    0.55,
+    0.222
+   ],
+   "materials": [
+    "white.009",
+    "trim.009",
+    "soft.009",
+    "accent2.009",
+    "glass.009"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "food",
+    "tabletop",
+    "decor"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "suporte de bolo com cupula de vidro, bolo de morango (h 0.5)",
+   "room": "cafe"
+  },
+  "cafe/cupcake_tower": {
+   "file": "cafe/cupcake_tower.glb",
+   "tris": 5264,
+   "bytes": 128052,
+   "size": [
+    0.672,
+    0.834,
+    0.667
+   ],
+   "bbox_min": [
+    -0.336,
+    0.0,
+    -0.334
+   ],
+   "bbox_max": [
+    0.336,
+    0.834,
+    0.334
+   ],
+   "materials": [
+    "trim.010",
+    "white.010",
+    "accent2.010",
+    "accent.010",
+    "soft.010"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "food",
+    "tabletop",
+    "decor",
+    "hero"
+   ],
+   "walkable": false,
+   "hero": true,
+   "note": "torre de cupcakes 3 andares com coracao (h 0.8)",
+   "room": "cafe"
+  },
+  "cafe/macaron_plate": {
+   "file": "cafe/macaron_plate.glb",
+   "tris": 2232,
+   "bytes": 69996,
+   "size": [
+    0.432,
+    0.186,
+    0.432
+   ],
+   "bbox_min": [
+    -0.216,
+    0.0,
+    -0.216
+   ],
+   "bbox_max": [
+    0.216,
+    0.186,
+    0.216
+   ],
+   "materials": [
+    "white.011",
+    "trim.011",
+    "accent2.011",
+    "soft.011",
+    "base.011"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "food",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "prato com piramide de macarons pastel (h 0.2)",
+   "room": "cafe"
+  },
+  "cafe/coffee_set_tray": {
+   "file": "cafe/coffee_set_tray.glb",
+   "tris": 1016,
+   "bytes": 29408,
+   "size": [
+    0.543,
+    0.245,
+    0.32
+   ],
+   "bbox_min": [
+    -0.278,
+    0.0,
+    -0.16
+   ],
+   "bbox_max": [
+    0.265,
+    0.245,
+    0.16
+   ],
+   "materials": [
+    "trim.012",
+    "white.012",
+    "accent2.012",
+    "deep.012"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "food",
+    "tabletop"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "bandeja com bule, 2 xicaras e acucareiro (0.5 m)",
+   "room": "cafe"
+  },
+  "cafe/pendant_lamp_cafe": {
+   "file": "cafe/pendant_lamp_cafe.glb",
+   "tris": 1116,
+   "bytes": 28552,
+   "size": [
+    0.519,
+    1.14,
+    0.519
+   ],
+   "bbox_min": [
+    -0.26,
+    -1.14,
+    -0.26
+   ],
+   "bbox_max": [
+    0.26,
+    0.0,
+    0.26
+   ],
+   "materials": [
+    "trim.013",
+    "accent2.013",
+    "glow.013"
+   ],
+   "mount": "ceiling",
+   "tags": [
+    "light",
+    "ceiling"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      -1.1,
+      0
+     ],
+     "color": "#ffe0b8",
+     "range": 4,
+     "intensity": 0.9
+    }
+   ],
+   "note": "luminaria pendente com cupula morango canelada (pende 1.1 m, diametro 0.5)",
+   "room": "cafe"
+  },
+  "cafe/stool_bar_rose": {
+   "file": "cafe/stool_bar_rose.glb",
+   "tris": 1272,
+   "bytes": 34324,
+   "size": [
+    0.4,
+    0.72,
+    0.394
+   ],
+   "bbox_min": [
+    -0.2,
+    0.0,
+    -0.197
+   ],
+   "bbox_max": [
+    0.2,
+    0.72,
+    0.197
+   ],
+   "materials": [
+    "fabric.014",
+    "trim.014"
+   ],
+   "mount": "floor",
+   "tags": [
+    "seat",
+    "stool"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "cylinder",
+    "radius": 0.2,
+    "height": 0.72,
+    "center": [
+     0.0,
+     0.36,
+     -0.0
+    ]
+   },
+   "sit": [
+    {
+     "id": "sit",
+     "pos": [
+      0,
+      0.69,
+      0
+     ],
+     "face": [
+      0,
+      1
+     ]
+    }
+   ],
+   "note": "banqueta de bar giratoria morango/rose gold (assento 0.68)",
+   "room": "cafe"
+  },
+  "cafe/back_bar_shelves": {
+   "file": "cafe/back_bar_shelves.glb",
+   "tris": 3608,
+   "bytes": 89800,
+   "size": [
+    2.46,
+    2.5,
+    0.565
+   ],
+   "bbox_min": [
+    -1.23,
+    0.0,
+    -0.27
+   ],
+   "bbox_max": [
+    1.23,
+    2.5,
+    0.295
+   ],
+   "materials": [
+    "base.015",
+    "white.015",
+    "accent.015",
+    "trim.015",
+    "mirror.015",
+    "accent2.015",
+    "glass.015",
+    "glow.015"
+   ],
+   "mount": "floor",
+   "tags": [
+    "shelf",
+    "storage",
+    "counter"
+   ],
+   "walkable": false,
+   "hero": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.46,
+     2.5,
+     0.565
+    ],
+    "center": [
+     0.0,
+     1.25,
+     0.013
+    ]
+   },
+   "note": "bancada de fundo 2.4 m com espelho, prateleiras de vidro, xicaras e potes (h 2.5)",
+   "room": "cafe"
+  },
+  "cafe/vase_roses": {
+   "file": "cafe/vase_roses.glb",
+   "tris": 776,
+   "bytes": 20736,
+   "size": [
+    0.184,
+    0.305,
+    0.19
+   ],
+   "bbox_min": [
+    -0.085,
+    0.0,
+    -0.095
+   ],
+   "bbox_max": [
+    0.099,
+    0.305,
+    0.095
+   ],
+   "materials": [
+    "glass.016",
+    "leaf.016",
+    "accent.016",
+    "accent2.016"
+   ],
+   "mount": "tabletop",
+   "tags": [
+    "decor",
+    "tabletop",
+    "plant"
+   ],
+   "walkable": false,
+   "hero": false,
+   "note": "vaso de vidro com rosas morango (0.35 m)",
+   "room": "cafe"
+  },
+  "cafe/sign_neon_cup": {
+   "file": "cafe/sign_neon_cup.glb",
+   "tris": 1060,
+   "bytes": 35224,
+   "size": [
+    0.9,
+    0.792,
+    0.07
+   ],
+   "bbox_min": [
+    -0.45,
+    1.708,
+    -0.03
+   ],
+   "bbox_max": [
+    0.45,
+    2.5,
+    0.04
+   ],
+   "materials": [
+    "deep.017",
+    "glow2.017",
+    "glow.017"
+   ],
+   "mount": "wall",
+   "tags": [
+    "wall",
+    "sign",
+    "light"
+   ],
+   "walkable": false,
+   "hero": false,
+   "lights": [
+    {
+     "pos": [
+      0,
+      2.2,
+      0.2
+     ],
+     "color": "#ff6f91",
+     "range": 3,
+     "intensity": 0.6
+    }
+   ],
+   "note": "letreiro neon de xicara com vapor e coracao, z 1.75 a 2.45",
+   "room": "cafe"
+  }
+ }
+}

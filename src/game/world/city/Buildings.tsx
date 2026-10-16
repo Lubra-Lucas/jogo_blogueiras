@@ -1,15 +1,24 @@
 import { useMemo } from 'react'
 import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
-import { BoxGeometry, ConeGeometry, CylinderGeometry, SphereGeometry, TorusGeometry, type BufferGeometry, type Matrix4 } from 'three'
+import { BoxGeometry, ConeGeometry, CylinderGeometry, MeshBasicMaterial, MeshPhysicalMaterial, SphereGeometry, TorusGeometry, type BufferGeometry, type Matrix4 } from 'three'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { CITY } from './layout'
 import { merge, paint, place, placement } from './geo'
 import { Cull, chunkKey, useCullDist } from './cull'
+import { nightGlass, registerGlowColor, registerWet } from '../environment/registry'
+
+// materiais compartilhados (registrados no ambiente: janelas acendem a noite, neon brilha mais, porcelana molha)
+const BODY_MAT = new MeshPhysicalMaterial({ vertexColors: true, roughness: 0.3, clearcoat: 0.8, clearcoatRoughness: 0.2 })
+const GLASS_MAT = new MeshPhysicalMaterial({ vertexColors: true, roughness: 0.1, metalness: 0.4, clearcoat: 0.8, clearcoatRoughness: 0.1, envMapIntensity: 1.1 })
+const NEON_MAT = new MeshBasicMaterial({ vertexColors: true, toneMapped: false })
+registerWet(BODY_MAT, { roughWet: 0.14, ccWet: 1, dark: 0.08 })
+nightGlass(GLASS_MAT, 1.5)
+registerGlowColor(NEON_MAT, 0.82, 1.4)
 
 const rbox = (w: number, h: number, d: number, r: number) => new RoundedBoxGeometry(w, h, d, 2, Math.min(r, w / 2 - 0.01, d / 2 - 0.01, h / 2 - 0.01))
 
-/** O Centro usa o kit Y2K (centro.ts / kit.tsx); os demais bairros seguem com o esboco de caixas. */
-const BLOCKS = CITY.blocks.filter((b) => b.district !== 'centro')
+/** Centro (kit Y2K, centro.ts) e Jardim Romantico (kit romantico, romantic.ts) sao montados com o kit; os demais bairros seguem com o esboco de caixas. */
+const BLOCKS = CITY.blocks.filter((b) => b.district !== 'centro' && b.district !== 'jardim')
 
 interface Parts {
   body: BufferGeometry[]
@@ -109,17 +118,9 @@ export function Buildings({ shadows }: { shadows: boolean }) {
     <group>
       {chunks.map((c, i) => (
         <Cull key={i} cx={c.cx} cz={c.cz} r={c.r} max={dist.buildings}>
-          <mesh geometry={c.body} castShadow={shadows} receiveShadow={shadows}>
-            <meshPhysicalMaterial vertexColors roughness={0.3} clearcoat={0.8} clearcoatRoughness={0.2} />
-          </mesh>
-          {c.glass && <mesh geometry={c.glass} castShadow={shadows}>
-            <meshPhysicalMaterial vertexColors roughness={0.1} metalness={0.4} clearcoat={0.8} clearcoatRoughness={0.1} envMapIntensity={1.1} />
-          </mesh>}
-          {c.neon && (
-            <mesh geometry={c.neon}>
-              <meshBasicMaterial vertexColors toneMapped={false} />
-            </mesh>
-          )}
+          <mesh geometry={c.body} material={BODY_MAT} castShadow={shadows} receiveShadow={shadows} />
+          {c.glass && <mesh geometry={c.glass} material={GLASS_MAT} castShadow={shadows} />}
+          {c.neon && <mesh geometry={c.neon} material={NEON_MAT} />}
         </Cull>
       ))}
 

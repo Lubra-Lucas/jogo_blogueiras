@@ -1,0 +1,834 @@
+{
+ "version": 1,
+ "units": "meters",
+ "axes": "glTF Y-up, +Z forward (same as doll_base.glb)",
+ "pose": "attachments are in the doll REST pose (doll_base.glb bind pose): object.position/quaternion(xyzw)/scale relative to the named bone",
+ "metals": {
+  "gold": "#f2c14e",
+  "rosegold": "#e8a090",
+  "silver": "#d9dde6",
+  "chrome": "#f4f6fb"
+ },
+ "slots": {
+  "metal": {
+   "label": "Metal",
+   "kind": "metal",
+   "variants": {
+    "gold": "#f2c14e",
+    "rosegold": "#e8a090",
+    "silver": "#d9dde6",
+    "chrome": "#f4f6fb"
+   }
+  },
+  "gem": {
+   "label": "Cristal",
+   "kind": "gem",
+   "default": "#ff7fc0",
+   "suggested": [
+    "#ff7fc0",
+    "#b9e4ff",
+    "#d9b8ff",
+    "#fff3c4",
+    "#ff6b81",
+    "#9ff0d0"
+   ]
+  },
+  "pearl": {
+   "label": "Perola",
+   "kind": "pearl",
+   "default": "#fdf3ee",
+   "suggested": [
+    "#fdf3ee",
+    "#ffe4ee",
+    "#e8e8f4",
+    "#2d2a30"
+   ]
+  },
+  "ribbon": {
+   "label": "Fita de cetim",
+   "kind": "satin",
+   "default": "#ff5fa8",
+   "suggested": [
+    "#ff5fa8",
+    "#1d1b22",
+    "#f6f0ff",
+    "#b6e3ff",
+    "#ff2d55"
+   ]
+  }
+ },
+ "bones": {
+  "mixamorig:Head": "head/ears",
+  "mixamorig:Neck": "chokers",
+  "mixamorig:Spine2": "long necklaces",
+  "mixamorig:*Hand": "wrists",
+  "mixamorig:*Hand{Ring,Middle}1": "rings"
+ },
+ "pieces": [
+  {
+   "id": "pearl_choker",
+   "label": "Gargantilha de perolas com coracao",
+   "slot": "neck",
+   "file": "jewelry/pearl_choker.glb",
+   "bone": "mixamorig:Neck",
+   "attachments": [
+    {
+     "bone": "mixamorig:Neck",
+     "position": [
+      0.0,
+      0.07873,
+      -0.0024
+     ],
+     "quaternion": [
+      0.03565,
+      -0.0,
+      0.0,
+      0.99936
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2582,
+   "bytes": 51212,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Perola",
+     "default": "#fdf3ee"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "pendant heart sits just below the pearls, clear of the throat (neck front y=-0.0195)"
+  },
+  {
+   "id": "ribbon_choker",
+   "label": "Gargantilha de fita com laco",
+   "slot": "neck",
+   "file": "jewelry/ribbon_choker.glb",
+   "bone": "mixamorig:Neck",
+   "attachments": [
+    {
+     "bone": "mixamorig:Neck",
+     "position": [
+      0.0,
+      0.07873,
+      -0.0024
+     ],
+     "quaternion": [
+      0.03565,
+      -0.0,
+      0.0,
+      0.99936
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 754,
+   "bytes": 16972,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Fita de cetim",
+     "default": "#ff5fa8"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "satin band + bow; band centre-line is 1.4 mm off the skin"
+  },
+  {
+   "id": "layered_gold",
+   "label": "Colares dourados em camadas",
+   "slot": "neck",
+   "file": "jewelry/layered_gold.glb",
+   "bone": "mixamorig:Spine2",
+   "attachments": [
+    {
+     "bone": "mixamorig:Spine2",
+     "position": [
+      0.0,
+      0.10636,
+      0.0
+     ],
+     "quaternion": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 4156,
+   "bytes": 78988,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "3 chains (front drop z=1.185/1.15/1.115) shrink-wrapped to the chest, clear of bustBig=1 by >=3 mm"
+  },
+  {
+   "id": "pearl_studs",
+   "label": "Brincos de perola",
+   "slot": "ears",
+   "file": "jewelry/pearl_studs.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.12176,
+      0.0012
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 528,
+   "bytes": 11968,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Perola",
+     "default": "#fdf3ee"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "head mesh has no modelled ears: studs sit on the head side at the lobe line, hidden by hair on most hairstyles"
+  },
+  {
+   "id": "heart_hoops",
+   "label": "Argolas com coracao",
+   "slot": "ears",
+   "file": "jewelry/heart_hoops.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.12176,
+      0.0012
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1248,
+   "bytes": 24960,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "hoops lie in the sagittal plane, flared 20 deg outward so the front view shows them"
+  },
+  {
+   "id": "big_hoops",
+   "label": "Argolas douradas grandes",
+   "slot": "ears",
+   "file": "jewelry/big_hoops.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.12176,
+      0.0012
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 1472,
+   "bytes": 27772,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "R=3.2 cm hoops; bottom clears the shoulder trapezius by >2 cm (z=1.30 vs shoulder top 1.22)"
+  },
+  {
+   "id": "chandelier_drops",
+   "label": "Brincos chandelier de cristal",
+   "slot": "ears",
+   "file": "jewelry/chandelier_drops.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.12176,
+      0.0012
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 844,
+   "bytes": 19688,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Perola",
+     "default": "#fdf3ee"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "3-tier crystal chandelier, 4.4 cm long"
+  },
+  {
+   "id": "tiara",
+   "label": "Tiara de cristais",
+   "slot": "head",
+   "file": "jewelry/tiara.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2716,
+   "bytes": 54316,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Perola",
+     "default": "#fdf3ee"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "band follows the scalp + 10 mm (hair thickness); see hairFit for per-hairstyle lift along mountDir"
+  },
+  {
+   "id": "hair_bow",
+   "label": "Laco de cabelo",
+   "slot": "head",
+   "file": "jewelry/hair_bow.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 490,
+   "bytes": 12276,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    },
+    "ribbon": {
+     "slot": "ribbon",
+     "label": "Fita de cetim",
+     "default": "#ff5fa8"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "bow sits on the right side of the crown, 10 mm above the scalp; mirror with scale.x=-1 for the left (winding is flipped automatically in three.js)"
+  },
+  {
+   "id": "star_pins",
+   "label": "Grampos de estrela",
+   "slot": "head",
+   "file": "jewelry/star_pins.glb",
+   "bone": "mixamorig:Head",
+   "attachments": [
+    {
+     "bone": "mixamorig:Head",
+     "position": [
+      -0.0,
+      0.1871,
+      0.00349
+     ],
+     "quaternion": [
+      -0.03616,
+      -0.0,
+      -0.0,
+      0.99935
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 282,
+   "bytes": 7692,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "3 star pins fanned on the left-front of the scalp (+10 mm hair offset)"
+  },
+  {
+   "id": "tennis_bracelet",
+   "label": "Pulseira tennis de cristais",
+   "slot": "wrist",
+   "file": "jewelry/tennis_bracelet.glb",
+   "bone": "mixamorig:LeftHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:LeftHand",
+     "position": [
+      -0.01441,
+      -0.01441,
+      0.00111
+     ],
+     "quaternion": [
+      -0.0043,
+      -0.99886,
+      -0.04751,
+      0.00015
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      0.01441,
+      -0.01441,
+      0.00111
+     ],
+     "quaternion": [
+      0.04751,
+      -0.00015,
+      0.0043,
+      0.99886
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 2236,
+   "bytes": 44628,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "ring axis = +Z of the piece; attachments for both wrists (hand bone rest position + forearm axis)"
+  },
+  {
+   "id": "bangle_stack",
+   "label": "Pulseiras bangle empilhadas",
+   "slot": "wrist",
+   "file": "jewelry/bangle_stack.glb",
+   "bone": "mixamorig:LeftHand",
+   "attachments": [
+    {
+     "bone": "mixamorig:LeftHand",
+     "position": [
+      -0.01028,
+      -0.05698,
+      -0.00703
+     ],
+     "quaternion": [
+      -0.0043,
+      -0.99886,
+      -0.04751,
+      0.00015
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "bone": "mixamorig:RightHand",
+     "position": [
+      0.01028,
+      -0.05698,
+      -0.00703
+     ],
+     "quaternion": [
+      0.04751,
+      -0.00015,
+      0.0043,
+      0.99886
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 3036,
+   "bytes": 58852,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Perola",
+     "default": "#fdf3ee"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "5 stacked bangles; gem = small studs on the dorsal side"
+  },
+  {
+   "id": "heart_ring",
+   "label": "Anel de coracao",
+   "slot": "finger",
+   "file": "jewelry/heart_ring.glb",
+   "bone": "mixamorig:LeftHandRing1",
+   "attachments": [
+    {
+     "bone": "mixamorig:LeftHandRing1",
+     "position": [
+      0.00719,
+      0.04908,
+      -0.00731
+     ],
+     "quaternion": [
+      -0.0,
+      0.64029,
+      -0.0,
+      0.76813
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "bone": "mixamorig:RightHandRing1",
+     "position": [
+      -0.00719,
+      0.04908,
+      -0.00731
+     ],
+     "quaternion": [
+      -0.0,
+      0.76813,
+      -0.0,
+      0.64029
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 456,
+   "bytes": 10596,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "sized for the ring finger (inner radius = measured finger radius + 0.8 mm); ring axis = +Z, stone on +X (dorsal)"
+  },
+  {
+   "id": "cocktail_ring",
+   "label": "Anel de coquetel",
+   "slot": "finger",
+   "file": "jewelry/cocktail_ring.glb",
+   "bone": "mixamorig:LeftHandMiddle1",
+   "attachments": [
+    {
+     "bone": "mixamorig:LeftHandMiddle1",
+     "position": [
+      0.0073,
+      0.04717,
+      -0.01434
+     ],
+     "quaternion": [
+      0.0,
+      0.64029,
+      0.0,
+      0.76813
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "bone": "mixamorig:RightHandMiddle1",
+     "position": [
+      -0.0073,
+      0.04717,
+      -0.01434
+     ],
+     "quaternion": [
+      0.0,
+      0.76813,
+      0.0,
+      0.64029
+     ],
+     "scale": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "triangles": 686,
+   "bytes": 16072,
+   "materials": {
+    "metal": {
+     "slot": "metal",
+     "label": "Metal",
+     "default": "#f2c14e"
+    },
+    "gem": {
+     "slot": "gem",
+     "label": "Cristal",
+     "default": "#ff7fc0"
+    },
+    "pearl": {
+     "slot": "pearl",
+     "label": "Perola",
+     "default": "#fdf3ee"
+    }
+   },
+   "defaultMetal": "gold",
+   "notes": "big crystal on the middle finger; ring axis = +Z, stone on +X (dorsal)"
+  }
+ ],
+ "hairFit": {
+  "note": "per hairstyle lift (m) to add to the piece position along mountDir (glTF world dir) so it sits on top of the hair volume instead of inside it",
+  "builtOffset": 0.01,
+  "mountDir": {
+   "tiara": [
+    0.0,
+    0.783,
+    0.622
+   ],
+   "hair_bow": [
+    0.553,
+    0.755,
+    0.352
+   ],
+   "star_pins": [
+    -0.49,
+    0.686,
+    0.539
+   ]
+  },
+  "lift": {
+   "hair_chestnutWaves": {
+    "tiara": 0.0991,
+    "hair_bow": 0.0482,
+    "star_pins": 0.0782
+   },
+   "hair_caramelCurls": {
+    "tiara": 0.081,
+    "hair_bow": 0.0549,
+    "star_pins": 0.059
+   },
+   "hair_platinumUndercut": {
+    "tiara": 0.0537,
+    "hair_bow": 0.0505,
+    "star_pins": 0.0383
+   },
+   "hair_meshy_updo": {
+    "tiara": 0.0086,
+    "hair_bow": 0.0064,
+    "star_pins": 0.0117
+   }
+  }
+ }
+}

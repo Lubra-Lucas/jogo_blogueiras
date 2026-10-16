@@ -4,8 +4,10 @@ import { OrthographicCamera } from '@react-three/drei'
 import type { DirectionalLight, InstancedMesh, Mesh } from 'three'
 import { usePlayerStore } from '../../../state/playerStore'
 import { CITY } from './layout'
+import { env } from '../environment/envState'
 
 const SUN_OFFSET: [number, number, number] = [18, 26, 12]
+const SUN_DIST = 34
 
 /** Sol com sombras que acompanha o jogador (a cidade e grande demais para um frustum fixo). */
 export function SunFollow({ castShadow, mapSize }: { castShadow: boolean; mapSize: number }) {
@@ -14,9 +16,14 @@ export function SunFollow({ castShadow, mapSize }: { castShadow: boolean; mapSiz
     const l = light.current
     if (!l) return
     const p = usePlayerStore.getState().position
-    l.position.set(p.x + SUN_OFFSET[0], SUN_OFFSET[1], p.z + SUN_OFFSET[2])
+    // sol/lua do ciclo dia/noite: direcao, cor e forca vem de `env` (environment/envState.ts)
+    const d = env.lightDir
+    l.position.set(p.x + d.x * SUN_DIST, d.y * SUN_DIST, p.z + d.z * SUN_DIST)
     l.target.position.set(p.x, 0, p.z)
     l.target.updateMatrixWorld()
+    l.color.copy(env.lightColor)
+    l.intensity = env.lightI
+    l.shadow.intensity = env.shadow * (1 - 0.35 * env.night)
   })
   return (
     <>

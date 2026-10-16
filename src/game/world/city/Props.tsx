@@ -21,8 +21,10 @@ import {
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { CITY } from './layout'
 import { CENTRO_R } from './centro'
+import { romanticReserved } from './romantic'
 import { merge, paint, place, placement } from './geo'
 import { Cull, chunkKey, useCullDist } from './cull'
+import { registerGlowColor, registerGlowEmissive } from '../environment/registry'
 
 /** Material "porcelana/vinil de brinquedo" compartilhado por todos os props. */
 export const PORCELAIN = { roughness: 0.3, clearcoat: 0.8, clearcoatRoughness: 0.2 } as const
@@ -172,6 +174,9 @@ function palmGeometries(): { base: BufferGeometry; leaves: BufferGeometry } {
   return { base: merge(base), leaves: merge(leaves) }
 }
 
+/** Arvores do layout, menos as que cairiam em cima de casas, ponte, lago, vasos e postes do kit romantico. */
+const TREES = CITY.trees.filter((t) => !romanticReserved(t.x, t.z, 1.2))
+
 export function Trees({ shadows }: { shadows: boolean }) {
   const data = useMemo(() => {
     const trunks: Inst[] = []
@@ -190,7 +195,7 @@ export function Trees({ shadows }: { shadows: boolean }) {
       const set = CANOPY[Math.floor(t * 8) % 8]
       return set[Math.floor((t * 24) % 3)]
     }
-    for (const t of CITY.trees) {
+    for (const t of TREES) {
       const s = t.s
       const rot = t.tint * 6.28
       switch (t.kind) {
@@ -261,7 +266,7 @@ export function Trees({ shadows }: { shadows: boolean }) {
     }
   }, [])
 
-  const colliders = useMemo(() => CITY.trees.map((t) => ({ x: t.x, z: t.z, r: t.kind === 'palm' ? 0.7 : 0.3 })), [])
+  const colliders = useMemo(() => TREES.map((t) => ({ x: t.x, z: t.z, r: t.kind === 'palm' ? 0.7 : 0.3 })), [])
 
   return (
     <group>
@@ -287,7 +292,7 @@ export function Trees({ shadows }: { shadows: boolean }) {
         <meshPhysicalMaterial color="#ffffff" roughness={0.12} clearcoat={1} clearcoatRoughness={0.08} iridescence={0.8} iridescenceIOR={1.4} metalness={0.15} />
       </Instances>
       <Instances geometry={geos.orbRing} items={data.orbRings} shadows={false}>
-        <meshBasicMaterial color="#ffffff" toneMapped={false} />
+        <meshBasicMaterial ref={(m) => m && registerGlowColor(m, 0.85, 1.3)} color="#ffffff" toneMapped={false} />
       </Instances>
       <Instances geometry={geos.palmBase} items={data.palmBase} shadows={shadows}>
         <meshPhysicalMaterial {...PORCELAIN} vertexColors />
@@ -299,7 +304,7 @@ export function Trees({ shadows }: { shadows: boolean }) {
         <meshPhysicalMaterial color="#ffffff" roughness={0.2} clearcoat={1} clearcoatRoughness={0.1} />
       </Instances>
       <Instances geometry={geos.darkRing} items={data.darkRing} shadows={false}>
-        <meshBasicMaterial color="#ffffff" toneMapped={false} />
+        <meshBasicMaterial ref={(m) => m && registerGlowColor(m, 0.85, 1.3)} color="#ffffff" toneMapped={false} />
       </Instances>
 
       <RigidBody type="fixed" colliders={false}>
@@ -333,6 +338,8 @@ function toyMaterial(src: MeshStandardMaterial): Material {
       clearcoat: 0.8,
       clearcoatRoughness: 0.2,
     })
+    // globos dos postes: apagados de dia, acesos a noite
+    if (emissive) registerGlowEmissive(m as MeshPhysicalMaterial, Math.min(src.emissiveIntensity, 1.6) * 0.22, Math.min(src.emissiveIntensity, 1.6) * 1.5)
     toyCache.set(src, m)
   }
   return m
@@ -367,13 +374,15 @@ function KitInstances({ url, items, shadows }: { url: string; items: { x: number
 
 const isY2k = (x: number, z: number) => Math.hypot(x, z) < 82 || (x > 20 && Math.abs(z) < 70)
 const inCentro = (x: number, z: number) => Math.hypot(x, z) < CENTRO_R
+/** Parque do Lago + Jardim Romantico: postes e bancos vem do kit romantico (romantic.ts). */
+const inRomantic = (x: number, z: number) => z > 60 && z < 215 && Math.abs(x) < 80
 
 export function Lamps({ shadows }: { shadows: boolean }) {
   const sets = useMemo(() => {
     const lampsY = CITY.lamps.filter((l) => isY2k(l.x, l.z) && !inCentro(l.x, l.z))
-    const lampsR = CITY.lamps.filter((l) => !isY2k(l.x, l.z))
+    const lampsR = CITY.lamps.filter((l) => !isY2k(l.x, l.z) && !inRomantic(l.x, l.z))
     const benchY = CITY.benches.filter((b) => isY2k(b.x, b.z) && !inCentro(b.x, b.z)).map((b) => ({ x: b.x, z: b.z, rot: b.rot }))
-    const benchR = CITY.benches.filter((b) => !isY2k(b.x, b.z)).map((b) => ({ x: b.x, z: b.z, rot: b.rot }))
+    const benchR = CITY.benches.filter((b) => !isY2k(b.x, b.z) && !inRomantic(b.x, b.z)).map((b) => ({ x: b.x, z: b.z, rot: b.rot }))
     return { lampsY, lampsR, benchY, benchR }
   }, [])
   return (

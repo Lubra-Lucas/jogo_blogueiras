@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { locate } from '../game/world/city/layout'
 import { usePlayerStore } from '../state/playerStore'
+import { useProfileStore } from '../state/profileStore'
+import { useChatStore } from '../state/chatStore'
 
 /** Rotulo persistente da area atual + aviso "Você está em: ..." ao entrar em outra. */
 export function AreaInfo() {
@@ -18,16 +20,21 @@ export function AreaInfo() {
       const st = usePlayerStore.getState()
       if (!st.body) return // jogador ainda nao nasceu
       const p = st.position
-      const n = locate(p.x, p.z).name
+      const loc = locate(p.x, p.z)
+      const n = loc.name
       if (n !== cand) {
         cand = n
         candSince = now
       }
       // so muda depois de ficar 350 ms na nova area (evita piscar na fronteira)
       if (cand !== shown && (shown === '' || now - candSince > 350)) {
+        const first = shown === ''
         shown = cand
         setName(cand)
         setToast({ key: ++key, name: cand })
+        // progresso: visitar areas conclui missoes; o chat anuncia o lugar
+        useProfileStore.getState().visit(loc.id)
+        useChatStore.getState().system(first ? `Bem-vinda ao Jogo das Blogueiras! Você está em: ${cand}.` : `Você chegou em: ${cand}.`)
       }
     }
     raf = requestAnimationFrame(loop)

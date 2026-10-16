@@ -3,6 +3,9 @@ import { usePlayerStore } from '../state/playerStore'
 import { useDeviceStore } from '../game/systems/device'
 import { AreaInfo } from './AreaInfo'
 import { Minimap } from './Minimap'
+import { PlayerCard } from './PlayerCard'
+import { ChatPanel } from './chat/ChatPanel'
+import { GameToast } from './GameToast'
 
 function useFps() {
   const [fps, setFps] = useState(0)
@@ -33,7 +36,10 @@ export function Hud() {
     <>
       <h1 className="hud-title">Jogo das Blogueiras</h1>
       <div className="hud-fps">{fps} FPS</div>
+      <PlayerCard />
       <Minimap />
+      <ChatPanel />
+      <GameToast />
       <AreaInfo />
       <p className={`hud-hint${isTouch ? ' hud-hint--touch' : ''}${hasMoved ? ' hud-hint--hidden' : ''}`}>
         {isTouch

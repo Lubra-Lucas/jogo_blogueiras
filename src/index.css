@@ -204,67 +204,6 @@ canvas {
   background: linear-gradient(#cfc3f5, var(--rosa));
 }
 
-/* painel de edicao do personagem (dev) */
-.editor {
-  position: absolute;
-  top: calc(56px + env(safe-area-inset-top));
-  left: calc(8px + env(safe-area-inset-left));
-  width: min(260px, calc(100vw - 16px));
-  max-height: calc(100% - 130px);
-  display: flex;
-  flex-direction: column;
-  pointer-events: auto;
-  font-size: 12px;
-  color: var(--texto);
-}
-.editor-toggle,
-.editor-reset {
-  align-self: flex-start;
-  padding: 6px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--ouro);
-  background: rgba(255, 244, 230, 0.9);
-  font: inherit;
-  font-weight: 600;
-  color: inherit;
-  cursor: pointer;
-}
-.editor-body {
-  margin-top: 6px;
-  padding: 8px 10px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  border-radius: 12px;
-  background: rgba(255, 244, 230, 0.88);
-  border: 1px solid var(--ouro);
-}
-.editor-body h3 {
-  margin: 8px 0 4px;
-  font-size: 13px;
-}
-.editor-row {
-  display: grid;
-  grid-template-columns: 1fr 120px;
-  align-items: center;
-  gap: 8px;
-  min-height: 26px;
-}
-.editor-row input[type='range'],
-.editor-row select {
-  width: 100%;
-}
-.editor-row input[type='color'] {
-  width: 44px;
-  height: 24px;
-  padding: 0;
-  border: 1px solid var(--ouro);
-  border-radius: 6px;
-  background: none;
-}
-.editor-reset {
-  margin-top: 8px;
-}
-
 /* ---- minimapa, mapa grande e aviso de area ---- */
 .minimap {
   position: absolute;

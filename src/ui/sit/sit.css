@@ -1,0 +1,69 @@
+/* aviso "Sentar": mesmo estilo glam do aviso de portas (ia-prompt), acima do joystick; sobe se o aviso de porta tambem aparece */
+.sit-prompt {
+  position: fixed;
+  left: 50%;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 119;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px 8px 18px;
+  border-radius: 28px;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: #5a3a55;
+  background: linear-gradient(180deg, #fffdf8, #ffe9f1);
+  box-shadow: 0 4px 0 #e6c5d4, 0 12px 24px rgba(90, 58, 85, 0.25), inset 0 2px 0 #fff;
+  pointer-events: auto;
+  animation: sit-in 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+  white-space: nowrap;
+}
+.sit-prompt--stacked {
+  bottom: calc(166px + env(safe-area-inset-bottom));
+}
+.sit-prompt--hint {
+  padding: 8px 18px;
+  opacity: 0.92;
+  pointer-events: none;
+}
+@keyframes sit-in {
+  from {
+    transform: translateX(-50%) translateY(20px) scale(0.85);
+    opacity: 0;
+  }
+}
+.sit-name {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.sit-sub {
+  font-size: 0.9rem;
+  font-weight: 700;
+  opacity: 0.75;
+}
+.sit-key {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  margin: 0 4px;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 0.85rem;
+  background: linear-gradient(180deg, #fff, #efe2ee);
+  box-shadow: 0 2px 0 #cdb8cb, inset 0 1px 0 #fff;
+}
+.sit-btn {
+  border: 0;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font: 800 1rem/1 system-ui, sans-serif;
+  color: #fff;
+  background: linear-gradient(180deg, #ff9ec6, #f06fa6);
+  box-shadow: 0 3px 0 #c2527f;
+  cursor: pointer;
+  touch-action: manipulation;
+}

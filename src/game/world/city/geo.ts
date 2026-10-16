@@ -14,7 +14,9 @@ import type { Shape, Vec2 } from './layout'
 const UP = new Vector3(0, 1, 0)
 
 /** Faixa (fita) ao longo de uma polilinha, com juncao suavizada. Normais para cima (winding CCW visto de cima). */
-export function ribbon(points: readonly Vec2[], width: number, y: number): BufferGeometry {
+export function ribbon(points: readonly Vec2[], width: number, y: number, uvTile?: number): BufferGeometry {
+  const uv: number[] = []
+  let run = 0
   const n = points.length
   const pos: number[] = []
   const idx: number[] = []
@@ -46,6 +48,10 @@ export function ribbon(points: readonly Vec2[], width: number, y: number): Buffe
     const x = points[i][0]
     const z = points[i][1]
     pos.push(x - nx * hw * k, y, z - nz * hw * k, x + nx * hw * k, y, z + nz * hw * k)
+    if (uvTile) {
+      if (i > 0) run += Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1])
+      uv.push(0, run / uvTile, width / uvTile, run / uvTile)
+    }
   }
   for (let i = 0; i < n - 1; i++) {
     const l0 = i * 2
@@ -57,6 +63,7 @@ export function ribbon(points: readonly Vec2[], width: number, y: number): Buffe
   const g = new BufferGeometry()
   g.setAttribute('position', new Float32BufferAttribute(pos, 3))
   g.setIndex(idx)
+  if (uvTile) g.setAttribute('uv', new Float32BufferAttribute(uv, 2))
   g.computeVertexNormals()
   return g
 }

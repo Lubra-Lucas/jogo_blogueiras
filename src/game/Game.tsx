@@ -15,6 +15,10 @@ import { DestinationMarker } from './player/DestinationMarker'
 import { CameraInput } from './input/CameraInput'
 import { ThirdPersonCamera } from './camera/ThirdPersonCamera'
 import { CharacterViewer, getViewMode } from './character/CharacterViewer'
+import { PortraitCapture } from '../ui/PortraitCapture'
+import { ChatBubble } from '../ui/chat/ChatBubble'
+import { InteractionTrigger } from './interaction/InteractionTrigger'
+import { SitController } from './sit/SitController'
 
 const VIEW = getViewMode()
 const MAP_MODE = new URLSearchParams(window.location.search).get('map') === '1'
@@ -57,7 +61,7 @@ export function Game({ tier }: { tier: QualityTier }) {
         <Lightformer form="rect" intensity={1.2} color="#ffe0c0" position={[0, 3, 10]} rotation-y={Math.PI} scale={[12, 4, 1]} />
       </Environment>
 
-      <hemisphereLight args={['#fff4ea', '#b4bcd8', 0.36]} />
+      {/* hemisferio, nevoa e exposicao agora vem do ciclo dia/noite (world/environment/EnvironmentDriver) */}
       <SunFollow castShadow={q.shadows} mapSize={q.shadowMapSize} />
 
       {VIEW ? (
@@ -80,6 +84,10 @@ export function Game({ tier }: { tier: QualityTier }) {
           <ClickToMove />
           <CameraInput />
           <DestinationMarker />
+          <PortraitCapture />
+          <ChatBubble />
+          <InteractionTrigger />
+          <SitController />
         </>
       )}
       <Sparkles

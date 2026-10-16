@@ -1,0 +1,294 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "corset",
+      "label": "Espartilho coração",
+      "slot": "top",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#ff3f8e",
+        "trim": "#fff1f6",
+        "accent": "#e8b84a"
+      },
+      "finish": {
+        "base": "latex",
+        "trim": "satin",
+        "accent": "gold"
+      },
+      "finishesSupported": {
+        "base": [
+          "latex",
+          "satin",
+          "glitter",
+          "matte"
+        ],
+        "trim": [
+          "satin",
+          "latex",
+          "pearl",
+          "matte"
+        ],
+        "accent": [
+          "gold",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "torso"
+      ],
+      "hides": [],
+      "file": "corset.glb",
+      "triangles": 4174,
+      "sizeBytes": 491200,
+      "morphTargets": 16
+    },
+    {
+      "id": "aline",
+      "label": "Saia midi evasê com laço",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "trim",
+        "accent"
+      ],
+      "palette": {
+        "base": "#c8a4ff",
+        "trim": "#ffffff",
+        "accent": "#ff7ab8"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin",
+        "accent": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "latex",
+          "matte",
+          "glitter",
+          "lace"
+        ],
+        "trim": [
+          "satin",
+          "pearl",
+          "lace"
+        ],
+        "accent": [
+          "satin",
+          "latex",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "hips",
+        "thighs",
+        "knees"
+      ],
+      "hides": [],
+      "notes": "bow slot accent = knot, bow loops/tails = base",
+      "file": "aline.glb",
+      "triangles": 2320,
+      "sizeBytes": 207116,
+      "morphTargets": 6
+    },
+    {
+      "id": "tutu",
+      "label": "Saia tutu",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "accent",
+        "trim"
+      ],
+      "palette": {
+        "base": "#ffb3d1",
+        "accent": "#ffe0ef",
+        "trim": "#ff4f9a"
+      },
+      "finish": {
+        "base": "tulle",
+        "accent": "tulle",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "tulle",
+          "glitter",
+          "satin",
+          "lace"
+        ],
+        "accent": [
+          "tulle",
+          "glitter",
+          "satin",
+          "lace"
+        ],
+        "trim": [
+          "satin",
+          "latex",
+          "pearl"
+        ]
+      },
+      "covers": [
+        "hips",
+        "upperThighs"
+      ],
+      "hides": [],
+      "notes": "tulle = alpha blend; double sided",
+      "file": "tutu.glb",
+      "triangles": 3680,
+      "sizeBytes": 324072,
+      "morphTargets": 7
+    },
+    {
+      "id": "ballgown",
+      "label": "Saia de baile rococó",
+      "slot": "bottom",
+      "slots": [
+        "base",
+        "accent",
+        "trim",
+        "lining"
+      ],
+      "palette": {
+        "base": "#fff0f6",
+        "accent": "#ffc4dd",
+        "trim": "#e8b84a",
+        "lining": "#ffffff"
+      },
+      "finish": {
+        "base": "satin",
+        "accent": "satin",
+        "trim": "satin",
+        "lining": "tulle"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "latex",
+          "glitter",
+          "lace",
+          "matte"
+        ],
+        "accent": [
+          "satin",
+          "tulle",
+          "lace",
+          "glitter"
+        ],
+        "trim": [
+          "satin",
+          "pearl",
+          "gold"
+        ],
+        "lining": [
+          "tulle",
+          "lace"
+        ]
+      },
+      "covers": [
+        "hips",
+        "legs"
+      ],
+      "hides": [
+        "legs"
+      ],
+      "notes": "combine with corset to form a dress; floor length",
+      "file": "ballgown.glb",
+      "triangles": 6272,
+      "sizeBytes": 440364,
+      "morphTargets": 7
+    },
+    {
+      "id": "gloves",
+      "label": "Luvas de ópera",
+      "slot": "gloves",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#f6c6dc",
+        "trim": "#ffffff"
+      },
+      "finish": {
+        "base": "satin",
+        "trim": "satin"
+      },
+      "finishesSupported": {
+        "base": [
+          "satin",
+          "latex",
+          "lace",
+          "glitter",
+          "matte"
+        ],
+        "trim": [
+          "satin",
+          "lace",
+          "pearl",
+          "tulle"
+        ]
+      },
+      "covers": [
+        "hands",
+        "forearms",
+        "upperArmsLower"
+      ],
+      "hides": [],
+      "notes": "both arms in one mesh; offset 3.2 mm hands / 4.5 mm arms",
+      "file": "gloves.glb",
+      "triangles": 7387,
+      "sizeBytes": 386576,
+      "morphTargets": 15
+    },
+    {
+      "id": "stockings",
+      "label": "Meias 7/8 com renda",
+      "slot": "legwear",
+      "slots": [
+        "base",
+        "trim"
+      ],
+      "palette": {
+        "base": "#ffd6e8",
+        "trim": "#ffffff"
+      },
+      "finish": {
+        "base": "tulle",
+        "trim": "lace"
+      },
+      "finishesSupported": {
+        "base": [
+          "tulle",
+          "satin",
+          "latex",
+          "matte"
+        ],
+        "trim": [
+          "lace",
+          "satin",
+          "tulle"
+        ]
+      },
+      "covers": [
+        "thighs",
+        "knees",
+        "calves",
+        "ankles"
+      ],
+      "hides": [],
+      "notes": "sheer (alpha blend), lace = alpha texture tex/lace.png; ends at the ankle (shoes go over the foot)",
+      "file": "stockings.glb",
+      "triangles": 3920,
+      "sizeBytes": 337700,
+      "morphTargets": 6
+    }
+  ]
+}

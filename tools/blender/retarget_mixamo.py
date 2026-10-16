@@ -37,6 +37,9 @@ CLIPS = {
     "desfile":    dict(file="Catwalk Walk.fbx", loop=True, inplace=True, window=(40, 200, 26, 52)),  # ciclo de passos dentro do desfile de 15 s
     "clap":       dict(file="Clapping.fbx", loop=True, inplace=True),
     "dance_twerk": dict(file="Dancing Twerk.fbx", loop=True, inplace=True),
+    "walk_normal": dict(file="Female Walk.fbx", loop=True, inplace=True),
+    "sit":        dict(file="Female Sitting Pose.fbx", loop=False, inplace=True),
+    "jump":       dict(file="Jump.fbx", loop=False, inplace=True),
     "walk_start": dict(file="Female Start Walking.fbx", loop=False, inplace=False),
 }
 only = [a for a in argv if a in CLIPS]
@@ -180,6 +183,8 @@ def process_clip(name, cfg):
     hip_ratio = HIP_H / head_s["mixamorigHips"].z
     # amostra
     frames = list(range(f0, f1 + 1))
+    if len(frames) < 2: frames = [f0, f0 + 0]  # pose unica: 2 chaves iguais (1/30 s)
+    log(name, 'frames de origem', f0, f1)
     WQ = {n: [] for n in D}   # rotacao mundo (Blender) do osso da boneca
     HP = []                   # posicao (Blender, mundo) desejada do Hips
     hip_rest_s = head_s["mixamorigHips"]
@@ -249,7 +254,7 @@ def process_clip(name, cfg):
     hip_pos[:, :2] = hp[:, :2] * hip_ratio
     hip_pos[:, 2] = head_d["mixamorigHips"].z + hp[:, 2] * hip_ratio
     hip_pos[:, 0] += head_d["mixamorigHips"].x; hip_pos[:, 1] += head_d["mixamorigHips"].y
-    if cfg["loop"]:  # fecha o loop: mistura suave dos ultimos frames em direcao a pose do frame 0
+    if cfg["loop"] and end >= 3:  # fecha o loop: mistura suave dos ultimos frames em direcao a pose do frame 0
         K = min(8, end // 3)
         for j in range(K + 1):
             i = end - K + j; w = j / K; w = w * w * (3 - 2 * w)
@@ -390,7 +395,7 @@ def render_stage(clips):
     pose_all(doll, None)
     for cname, cd in clips.items():
         info = cd["info"]
-        picks = {"walk": [0.3, 0.6], "desfile": [0.3, 0.9], "clap": [0.5], "dance_twerk": [1.0], "walk_start": [0.4]}.get(cname, [0.5])
+        picks = {"walk_normal": [0.3], "sit": [0.0], "jump": [0.3, 0.5], "walk": [0.3, 0.6], "desfile": [0.3, 0.9], "clap": [0.5], "dance_twerk": [1.0], "walk_start": [0.4]}.get(cname, [0.5])
         for t in picks:
             i = min(cd["n"] - 1, int(round(t * FPS)))
             pose_all(doll, cd, i)

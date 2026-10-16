@@ -1,10 +1,11 @@
 import { useMemo } from 'react'
 import { CanvasTexture, CircleGeometry, SRGBColorSpace } from 'three'
-import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
-import { BufferGeometry, DoubleSide, LatheGeometry, RingGeometry, Vector2 } from 'three'
+import { CuboidCollider, RigidBody } from '@react-three/rapier'
+import { BufferGeometry, RingGeometry } from 'three'
 import { CITY, ROAD_SPEC } from './layout'
 import { flatShape, merge, paint, ribbon } from './geo'
 import { CENTRO_ITEMS } from './centro'
+import { registerGlowEmissive, registerWet } from '../environment/registry'
 
 const WALK = { walkable: true }
 
@@ -34,10 +35,7 @@ function buildLayers(): Layer[] {
   // 2-4: calcada, meio-fio, pista (ordem: pista por cima nos cruzamentos)
   for (const r of CITY.roads) {
     const spec = ROAD_SPEC[r.kind]
-    if (r.kind === 'path') {
-      L[4].geoms.push(paint(ribbon(r.points, r.width, 0.04), '#ecd9b9'))
-      continue
-    }
+    if (r.kind === 'path') continue // trilhas do parque: ladrilho pastel em ParqueDeco.tsx
     L[2].geoms.push(paint(ribbon(r.points, r.width, 0.02), '#f4eef3'))
     L[3].geoms.push(paint(ribbon(r.points, r.width - spec.sidewalk * 2 + 0.5, 0.03), '#ddd7e4'))
     L[4].geoms.push(paint(ribbon(r.points, r.width - spec.sidewalk * 2, 0.04), r.id === 'boulevard' ? '#8d89a8' : '#b7b3c8'))
@@ -45,7 +43,7 @@ function buildLayers(): Layer[] {
 
   // 5: pracas
   for (const a of CITY.areas) {
-    if (a.kind === 'praca' && a.id !== 'praca') L[5].geoms.push(paint(flatShape(a.bounds, 0.05, 96), a.color))
+    if (a.kind === 'praca' && a.id !== 'praca' && a.id !== 'praca-jardim') L[5].geoms.push(paint(flatShape(a.bounds, 0.05, 96), a.color))
   }
 
   // 6: detalhes da praca central (aneis) + reserva da fonte
@@ -55,7 +53,6 @@ function buildLayers(): Layer[] {
     ringAt(0, -150, 3, 3.4, 0.06, '#e6b84f'),
     ringAt(150, 0, 3, 3.4, 0.06, '#35e8ff'),
     ringAt(150, 0, 6, 6.3, 0.06, '#ff3fb4'),
-    ringAt(0, 158, 3, 3.4, 0.06, '#e8a3b8'),
   )
   return L
 }
@@ -149,12 +146,6 @@ function plazaTextures(): { map: CanvasTexture; glow: CanvasTexture } {
 
 export function Surfaces({ shadows }: { shadows: boolean }) {
   const meshes = useMemo(() => buildLayers().map((l) => ({ y: l.y, geo: merge(l.geoms) })), [])
-  const rim = useMemo(() => {
-    const r = CITY.lake.r
-    const pts = [new Vector2(r - 0.2, 0), new Vector2(r - 0.2, 0.45), new Vector2(r + 1.3, 0.45), new Vector2(r + 1.5, 0.3), new Vector2(r + 1.5, 0)]
-    return new LatheGeometry(pts, 64)
-  }, [])
-  const L = CITY.lake
   const plaza = useMemo(() => ({ tex: plazaTextures(), geo: new CircleGeometry(38, 128).rotateX(-Math.PI / 2) }), [])
 
   return (
@@ -162,13 +153,15 @@ export function Surfaces({ shadows }: { shadows: boolean }) {
       <RigidBody type="fixed" colliders={false}>
         {/* chao: caixa fina (topo em y=0) cobrindo toda a cidade */}
         <CuboidCollider args={[CITY.half + 5, 0.5, CITY.half + 5]} position={[0, -0.5, 0]} />
-        {/* lago: cilindro alto (nao da para entrar na agua) */}
-        <CylinderCollider args={[0.75, L.r + 0.6]} position={[L.cx, 0.75, L.cz]} />
       </RigidBody>
 
       {meshes.map((m, i) => (
         <mesh key={i} geometry={m.geo} receiveShadow={shadows} userData={WALK} renderOrder={i}>
           <meshPhysicalMaterial
+            ref={(m) => {
+              // chuva: ruas e pracas ficam molhadas (mais lisas, mais escuras, com verniz)
+              if (m) registerWet(m, i === 1 ? { roughWet: 0.3, ccWet: 0.6, dark: 0.1 } : i < 5 ? { roughWet: 0.34, ccWet: 0.95, dark: 0.22 } : { roughWet: 0.16, ccWet: 1, dark: 0.12 })
+            }}
             vertexColors
             roughness={i === 1 ? 0.45 : i >= 5 ? 0.35 : 0.9}
             clearcoat={i === 1 ? 0.3 : i >= 5 ? 0.8 : 0.1}
@@ -182,6 +175,11 @@ export function Surfaces({ shadows }: { shadows: boolean }) {
 
       <mesh geometry={plaza.geo} position={[0, 0.058, 0]} receiveShadow={shadows} userData={WALK} renderOrder={6}>
         <meshPhysicalMaterial
+          ref={(m) => {
+            if (!m) return
+            registerWet(m, { roughWet: 0.14, ccWet: 1, dark: 0.12 })
+            registerGlowEmissive(m, 0.3, 1.5) // as linhas da praca acendem a noite
+          }}
           map={plaza.tex.map}
           emissiveMap={plaza.tex.glow}
           emissive="#ffffff"
@@ -195,22 +193,6 @@ export function Surfaces({ shadows }: { shadows: boolean }) {
         />
       </mesh>
 
-      {/* lago: agua brilhante + borda de pedra (nao caminhavel) */}
-      <mesh position={[L.cx, 0.2, L.cz]} rotation-x={-Math.PI / 2}>
-        <circleGeometry args={[L.r, 64]} />
-        <meshPhysicalMaterial
-          color="#3fa7e0"
-          roughness={0.12}
-          metalness={0}
-          clearcoat={0.5}
-          clearcoatRoughness={0.03}
-          envMapIntensity={0.35}
-          side={DoubleSide}
-        />
-      </mesh>
-      <mesh geometry={rim} position={[L.cx, 0, L.cz]} receiveShadow={shadows}>
-        <meshStandardMaterial color="#e9dccf" roughness={0.7} side={DoubleSide} />
-      </mesh>
     </group>
   )
 }

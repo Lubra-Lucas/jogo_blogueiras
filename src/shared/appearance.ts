@@ -7,8 +7,10 @@
 
 export interface ItemRef {
   id: string
-  /** cores do item (a primeira tinge a peca) */
+  /** cores do item, na ordem dos slots de material do manifesto (base/trim/accent...; metal/gem/...) */
   colors?: string[]
+  /** acabamentos por slot de material (mesma ordem de `colors`) */
+  finishes?: string[]
   /** parametros numericos do item */
   params?: Record<string, number>
 }
@@ -31,7 +33,8 @@ export interface Appearance {
   lips?: { color: string; gloss: number }
   /** id do cabelo (null = careca) e sua cor */
   hair: { id: string | null; color: string }
-  outfit: { top?: ItemRef; bottom?: ItemRef; dress?: ItemRef; shoes?: ItemRef }
+  outfit: { top?: ItemRef; bottom?: ItemRef; dress?: ItemRef; shoes?: ItemRef; gloves?: ItemRef; legwear?: ItemRef }
+  /** joias (um item por slot: neck/ears/head/wrist/finger) */
   accessories: ItemRef[]
 }
 

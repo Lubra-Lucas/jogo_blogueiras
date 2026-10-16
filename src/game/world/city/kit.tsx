@@ -2,21 +2,25 @@ import { useMemo, type ReactNode } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { CuboidCollider, CylinderCollider, RigidBody } from '@react-three/rapier'
 import { Color, DoubleSide, Matrix4, MeshBasicMaterial, MeshPhysicalMaterial, Quaternion, Vector3, type BufferGeometry, type Mesh, type Material } from 'three'
-import kit from './kitY2k.json'
+import kitY from './kitY2k.json'
+import kitR from './kitRomantic.json'
 import { merge, paint } from './geo'
 import { Cull, chunkKey, useCullDist } from './cull'
+import { nightGlass, registerGlowColor, registerWet } from '../environment/registry'
 
 /**
  * Kit Y2K (public/assets/city/kit_y2k + kitY2k.json, gerado por tools/blender/city_kit_y2k.py).
  * Cada peca do GLB tem materiais por SLOT; aqui o slot vira COR DE VERTICE conforme a paleta do predio
  * e as pecas de uma celula espacial sao fundidas em poucas malhas (porcelana, metal, vidro, brilho, agua),
  * com 5 materiais compartilhados em toda a cidade. Resultado: ~4 draw calls por celula.
+ * O kit ROMANTICO (public/assets/city/kit + kitRomantic.json, tools/blender/city_kit.py) usa o mesmo formato e e fundido aqui
+ * (paletas e metais com chaves distintas; slot extra 'seat' = estofado).
  */
 
-export type Slot = 'base' | 'accent' | 'accent2' | 'soft' | 'deep' | 'white' | 'trim' | 'glass' | 'glow' | 'glow2' | 'leaf' | 'water'
-type PaletteDef = { base: string; accent: string; accent2: string; soft: string; deep: string; white: string; glass: string; glow: string; glow2: string; metal: string }
-export const PALETTES = kit.palettes as Record<string, PaletteDef>
-const METALS = kit.metals as Record<string, { color: string; roughness: number; metallic: number }>
+export type Slot = 'base' | 'accent' | 'accent2' | 'soft' | 'deep' | 'white' | 'trim' | 'glass' | 'glow' | 'glow2' | 'leaf' | 'water' | 'seat'
+type PaletteDef = { base: string; accent: string; accent2: string; soft: string; deep: string; white: string; glass: string; glow: string; glow2?: string; seat?: string; metal: string }
+export const PALETTES = { ...kitY.palettes, ...kitR.palettes } as unknown as Record<string, PaletteDef>
+const METALS = { ...kitY.metals, ...kitR.metals } as Record<string, { color: string; roughness: number; metallic: number }>
 
 export interface KitItem {
   piece: string
@@ -33,7 +37,7 @@ export interface KitItem {
 }
 
 type Collider = { type: 'cylinder' | 'box' | 'boxes'; size: number[] | number[][]; center: number[] | null }
-const PIECES = kit.pieces as unknown as Record<string, { file: string; collider?: Collider }>
+const PIECES = { ...kitY.pieces, ...kitR.pieces } as unknown as Record<string, { file: string; collider?: Collider }>
 const BASE = `${import.meta.env.BASE_URL}assets/city/`
 const NAMES = Object.keys(PIECES)
 const URLS = NAMES.map((n) => BASE + PIECES[n].file)
@@ -41,7 +45,7 @@ URLS.forEach((u) => useGLTF.preload(u))
 
 type Cls = 'por' | 'metal' | 'glass' | 'glow' | 'water'
 const CLASS_OF: Record<Slot, Cls> = {
-  base: 'por', accent: 'por', accent2: 'por', soft: 'por', deep: 'por', white: 'por', leaf: 'por', trim: 'metal', glass: 'glass', glow: 'glow', glow2: 'glow', water: 'water',
+  base: 'por', seat: 'por', accent: 'por', accent2: 'por', soft: 'por', deep: 'por', white: 'por', leaf: 'por', trim: 'metal', glass: 'glass', glow: 'glow', glow2: 'glow', water: 'water',
 }
 
 function slotColor(slot: Slot, p: PaletteDef, over?: Partial<Record<Slot, string>>): string {
@@ -50,7 +54,8 @@ function slotColor(slot: Slot, p: PaletteDef, over?: Partial<Record<Slot, string
   if (slot === 'leaf') return '#a9ecc8'
   if (slot === 'water') return '#cfeeff'
   if (slot === 'glass') return new Color(p.glass).lerp(new Color('#ffffff'), 0.55).getStyle()
-  return p[slot]
+  if (slot === 'seat') return p.seat ?? p.base
+  return p[slot] ?? p.base
 }
 
 // materiais compartilhados (um por classe, para a cidade toda)
@@ -70,6 +75,10 @@ export function kitMaterials(): Record<Cls, Material> {
     glow: new MeshBasicMaterial({ vertexColors: true, toneMapped: false }),
     water: new MeshPhysicalMaterial({ vertexColors: true, transparent: true, opacity: 0.5, roughness: 0.02, clearcoat: 1, envMapIntensity: 1.5, depthWrite: false }),
   }
+  // ambiente: porcelana ganha brilho molhado na chuva, janelas acendem a noite, o brilho (neon/globos/placas) cresce a noite
+  registerWet(MATS.por as MeshPhysicalMaterial, { roughWet: 0.12, ccWet: 1, dark: 0.08 })
+  nightGlass(MATS.glass as MeshPhysicalMaterial)
+  registerGlowColor(MATS.glow as MeshBasicMaterial, 0.8, 1.35)
   return MATS
 }
 
@@ -105,6 +114,7 @@ const _q = new Quaternion()
 const _up = new Vector3(0, 1, 0)
 
 const KIT_DATA = { kit: true }
+const WALK_DATA = { kit: true, walkable: true }
 
 interface Cell {
   cx: number
@@ -113,10 +123,10 @@ interface Cell {
   geo: Partial<Record<Cls, BufferGeometry>>
 }
 
-function buildCells(items: KitItem[], parts: Record<string, Part[]>): Cell[] {
+function buildCells(items: KitItem[], parts: Record<string, Part[]>, chunk?: number): Cell[] {
   const groups = new Map<number, KitItem[]>()
   for (const it of items) {
-    const k = chunkKey(it.x, it.z)
+    const k = chunk ? Math.floor(it.x / chunk) * 10000 + Math.floor(it.z / chunk) : chunkKey(it.x, it.z)
     const l = groups.get(k)
     if (l) l.push(it)
     else groups.set(k, [it])
@@ -179,20 +189,21 @@ function Colliders({ items }: { items: KitItem[] }) {
 }
 
 /** Cena do kit: itens fundidos por celula (frustum + distancia), 5 materiais compartilhados, colisores do kit.json. */
-export function KitScene({ items, shadows, cull = 'buildings' }: { items: KitItem[]; shadows: boolean; cull?: 'buildings' | 'props' }) {
+export function KitScene({ items, shadows, cull = 'buildings', max, walkable, chunk, cast = true }: { items: KitItem[]; shadows: boolean; cull?: 'buildings' | 'props'; max?: number; walkable?: boolean; chunk?: number; cast?: boolean }) {
   const parts = useParts()
   const dist = useCullDist()
-  const cells = useMemo(() => buildCells(items, parts), [items, parts])
+  const cells = useMemo(() => buildCells(items, parts, chunk), [items, parts, chunk])
   const mats = kitMaterials()
+  const data = walkable ? WALK_DATA : KIT_DATA
   return (
     <group>
       {cells.map((c, i) => (
-        <Cull key={i} cx={c.cx} cz={c.cz} r={c.r} max={dist[cull]}>
-          {c.geo.por && <mesh userData={KIT_DATA} geometry={c.geo.por} material={mats.por} castShadow={shadows} receiveShadow={shadows} />}
-          {c.geo.metal && <mesh userData={KIT_DATA} geometry={c.geo.metal} material={mats.metal} castShadow={shadows} receiveShadow={shadows} />}
-          {c.geo.glass && <mesh userData={KIT_DATA} geometry={c.geo.glass} material={mats.glass} renderOrder={3} />}
-          {c.geo.glow && <mesh userData={KIT_DATA} geometry={c.geo.glow} material={mats.glow} />}
-          {c.geo.water && <mesh userData={KIT_DATA} geometry={c.geo.water} material={mats.water} renderOrder={3} />}
+        <Cull key={i} cx={c.cx} cz={c.cz} r={c.r} max={max !== undefined ? Math.min(max, dist[cull]) : dist[cull]}>
+          {c.geo.por && <mesh userData={data} geometry={c.geo.por} material={mats.por} castShadow={shadows && cast} receiveShadow={shadows} />}
+          {c.geo.metal && <mesh userData={data} geometry={c.geo.metal} material={mats.metal} receiveShadow={shadows} />}
+          {c.geo.glass && <mesh userData={data} geometry={c.geo.glass} material={mats.glass} renderOrder={3} />}
+          {c.geo.glow && <mesh userData={data} geometry={c.geo.glow} material={mats.glow} />}
+          {c.geo.water && <mesh userData={data} geometry={c.geo.water} material={mats.water} renderOrder={3} />}
         </Cull>
       ))}
       <Colliders items={items} />

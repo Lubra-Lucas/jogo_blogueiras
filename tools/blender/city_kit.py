@@ -41,17 +41,18 @@ def _set(b, name, v):
         pass
 
 
+# chaves distintas das do kit Y2K (os dois JSONs sao fundidos no jogo)
 METALS = {
-    "gold": ("#f6d878", 0.2), "rosegold": ("#eaa595", 0.22), "silver": ("#e3e6ee", 0.16),
-    "champagne": ("#ecd9a2", 0.2), "chrome": ("#f5f7fb", 0.06),
+    "jewel_gold": ("#f2cf6e", 0.14), "rose_gold": ("#f0aa9c", 0.18), "silver": ("#e3e6ee", 0.16),
+    "champagne": ("#ecd9a2", 0.2), "chrome": ("#f5f7fb", 0.05), "pearl": ("#f6f0fa", 0.16),
 }
 # slots: base (corpo), accent (2a cor suave), accent2 (cor forte: listras/coracoes), soft (3a cor pastel),
 #        deep (tom escuro), seat (estofado), white, trim (metal), glass, glow, leaf, water
 PALETTES = {
     "casa":      dict(label="Casa dos Sonhos", base="#fff3ea", accent="#f7c6d9", accent2="#ff8fbf", soft="#d9c2f0", deep="#8a2f4a",
-                      seat="#f6a3c4", white="#fffaf6", glass="#ffb3d1", glow="#ffd08a", metal="gold"),
+                      seat="#f6a3c4", white="#fffaf6", glass="#ffb3d1", glow="#ffd08a", metal="jewel_gold"),
     "cafe":      dict(label="Cafe Rose", base="#bfe8d6", accent="#fff3ea", accent2="#e0405a", soft="#ffd9c9", deep="#8f2a3d",
-                      seat="#e8697e", white="#fffaf6", glass="#ffc9c0", glow="#ffd9a0", metal="rosegold"),
+                      seat="#e8697e", white="#fffaf6", glass="#ffc9c0", glow="#ffd9a0", metal="rose_gold"),
     "salao":     dict(label="Salao & Spa", base="#d6c4f0", accent="#fff3ea", accent2="#a77fd9", soft="#f1e6ff", deep="#5b3f87",
                       seat="#c9a8ee", white="#fffaf6", glass="#e3ccff", glow="#ffe0f0", metal="silver"),
     "boutique":  dict(label="Boutique", base="#c6ddf5", accent="#fffaf6", accent2="#7fb2ea", soft="#e3efff", deep="#2f5a8f",
@@ -63,8 +64,30 @@ PALETTES = {
     "palco":     dict(label="Palco / Boate", base="#b04ad8", accent="#e9c6ff", accent2="#ff4fd0", soft="#6a2d9c", deep="#3a1466",
                       seat="#8a3cc0", white="#f6e8ff", glass="#ff8be8", glow="#ff5ff0", glow_str=8.0, metal="silver"),
     "jardim":    dict(label="Jardim", base="#b9d2a8", accent="#fffaf6", accent2="#f2d36b", soft="#f6e3a1", deep="#6b8a58",
-                      seat="#d6e6a8", white="#fffaf6", glass="#d6f0d0", glow="#fff2b0", metal="gold"),
+                      seat="#d6e6a8", white="#fffaf6", glass="#d6f0d0", glow="#fff2b0", metal="jewel_gold"),
 }
+def _hp(label, base, accent, accent2, soft, deep, glass, metal, seat=None, glow="#fff0b8"):
+    return dict(label=label, base=base, accent=accent, accent2=accent2, soft=soft, deep=deep, seat=seat or accent2,
+                white="#fffaf6", glass=glass, glow=glow, metal=metal)
+
+
+# casas do Jardim (variadas, so um toque de rosa), Casa dos Sonhos (rosa + ouro) e Parque do Lago (menta/sage, coral e limao)
+PALETTES.update({
+    "h_peach":    _hp("Casa pessego", "#ffd9c2", "#fff1e4", "#f29b86", "#ffe9d6", "#b4604e", "#ffd6c8", "jewel_gold"),
+    "h_mint":     _hp("Casa menta", "#c4ecd8", "#f3fff9", "#6fc9a6", "#e2f7ee", "#3a8a6c", "#c9f3e2", "pearl"),
+    "h_cream":    _hp("Casa creme", "#fff3df", "#ffe3b8", "#f2a8b8", "#fff8ec", "#b86a7a", "#ffe9d2", "rose_gold"),
+    "h_lavender": _hp("Casa lavanda", "#dccdf5", "#f4ecff", "#a98bdc", "#ece3fb", "#6a4fa0", "#e3d5fa", "pearl"),
+    "h_butter":   _hp("Casa manteiga", "#fcecae", "#fff8d8", "#f4b860", "#fff3c4", "#a77c1f", "#fff0b0", "jewel_gold"),
+    "h_sky":      _hp("Casa celeste", "#c8e2f8", "#f1f8ff", "#7fb4e6", "#e1effc", "#3d6fa5", "#d3ebff", "silver"),
+    "h_blush":    _hp("Casa rose", "#f9d0de", "#fff4f7", "#e57fa6", "#fde6ee", "#a24668", "#ffd3e3", "rose_gold"),
+    "casa_rosa":  _hp("Casa dos Sonhos", "#f8c3d8", "#fff3ea", "#f06aa4", "#ffd9e8", "#b03a74", "#ffb3d1", "jewel_gold", seat="#f6a3c4", glow="#ffd08a"),
+    "p_ponte":    _hp("Parque pearl", "#fff6ee", "#bfe8d6", "#ff8f7a", "#ffe9df", "#c4584a", "#d6f3e8", "rose_gold", seat="#ff9f8f"),
+    "p_coral":    _hp("Parque coral", "#ffd6cc", "#fff6ee", "#ff8f7a", "#ffe9df", "#c4584a", "#ffd6c8", "jewel_gold", seat="#ff9f8f"),
+    "p_lemon":    _hp("Parque limao", "#fff0a8", "#fffbe0", "#f5cf4a", "#fff6c4", "#a78a1f", "#fff3b8", "jewel_gold", seat="#ffe27a"),
+    "p_mint":     _hp("Parque menta", "#bfe8d6", "#f3fff9", "#6fc9a6", "#dff7ec", "#3a8a6c", "#c9f3e2", "pearl", seat="#9fe0c4"),
+    "p_lilac":    _hp("Parque lilas", "#dccdf5", "#f4ecff", "#b394e8", "#ece3fb", "#6a4fa0", "#e3d5fa", "pearl", seat="#c9b0f2"),
+})
+
 # parametros de acabamento por slot: rough, coat, coat_rough, sheen, sheen_rough
 SPEC = dict(base=(.18, .9, .04, .9, .3), accent=(.14, 1, .04, .4, .4), accent2=(.08, 1, .02, 0, .4), soft=(.1, 1, .02, .3, .4),
             deep=(.12, 1, .03, 0, .4), seat=(.38, .45, .2, 1, .35), white=(.12, 1, .04, .3, .4))
@@ -400,6 +423,32 @@ def frame_rect(w, h, t, loc, mat, y=None):
     return P
 
 
+# orcamento de triangulos por peca (o jogo carrega o kit inteiro e funde por celula); acima disso aplica Decimate
+BUDGET = {"wall_door": 3000, "wall_window": 1900, "wall_plain": 1900, "bench_tufted": 1700, "arch_gate": 2600, "fountain_center": 6500,
+          "lamp_post": 950, "planter_round": 1100, "hedge_heart": 1100, "fence_segment": 700, "awning_striped": 1000,
+          "balcony_curved": 1100, "house_shell": 1100, "house_shell_wide": 1700, "roof_pitched": 900, "gazebo": 3200,
+          "bridge_small": 2200, "column_rococo": 1200, "cornice_scallop": 1000, "roof_dome_small": 1500, "wall_corner": 1200,
+          "facade_win": 620, "facade_door": 680, "balloon_heart": 700, "sign_frame": 2000}
+
+
+def decimate_to(ob, target):
+    for _ in range(3):
+        n = tri_count(ob)
+        if n <= target * 1.06:
+            return
+        md = ob.modifiers.new("dec", "DECIMATE")
+        md.decimate_type = "COLLAPSE"
+        md.ratio = max(0.1, target / n)
+        md.use_collapse_triangulate = True
+        bpy.context.view_layer.objects.active = ob
+        try:
+            bpy.ops.object.modifier_apply(modifier=md.name)
+        except Exception as e:
+            print("dec fail", e)
+            ob.modifiers.remove(md)
+            return
+
+
 def finish(name, parts):
     bpy.ops.object.select_all(action="DESELECT")
     for p in parts:
@@ -409,6 +458,8 @@ def finish(name, parts):
     ob = bpy.context.view_layer.objects.active
     ob.name = name
     ob.data.name = name
+    if name in BUDGET:
+        decimate_to(ob, BUDGET[name])
     bpy.ops.object.shade_smooth_by_angle(angle=radians(50))
     md = ob.modifiers.new("wn", "WEIGHTED_NORMAL")
     md.keep_sharp = True
@@ -848,7 +899,7 @@ def scallop_ring(R, z, lobes, amp, n=96):
                     R * (1 + amp * cos(lobes * 2 * pi * i / n)) * sin(2 * pi * i / n), z)) for i in range(n)]
 
 
-def shell_basin(P, R, z0, h, lobes, amp, mat="white", lining="accent", pool=0.8, n=48):
+def shell_basin(P, R, z0, h, lobes, amp, mat="white", lining="accent", pool=0.8, n=32):
     """bacia em forma de concha: parede canelada, borda recortada com fio de metal e perolas, piscina refletiva."""
     prof = [(0, z0), (R * .3, z0), (R * .62, z0 + h * .3), (R * .92, z0 + h * .68), (R * 1.0, z0 + h * .92), (R * 1.0, z0 + h),
             (R * .93, z0 + h), (R * .87, z0 + h * .8), (R * .66, z0 + h * .52), (0, z0 + h * .42)]
@@ -865,19 +916,19 @@ def shell_basin(P, R, z0, h, lobes, amp, mat="white", lining="accent", pool=0.8,
 def piece_fountain_center():
     P = []
     P.append(lathe([(0, 0), (2.3, 0), (2.45, .06), (2.5, .2), (2.2, .3)], "accent", n=40, smooth=1))
-    wz1 = shell_basin(P, 2.55, .15, .78, 16, .06, pool=.9)
+    wz1 = shell_basin(P, 2.55, .15, .78, 10, .06, pool=.9, n=40)
     P.append(lathe([(0, .5), (.75, .5), (.7, .62), (.5, .8), (.4, 1.0), (.5, 1.1), (.4, 1.2), (.38, 1.5), (.5, 1.62), (.6, 1.68), (0, 1.7)],
                    "white", n=32, smooth=1))
     for z, r in ((.95, .46), (1.28, .42)):
         P.append(tube([Vector((r * cos(t), r * sin(t), z)) for t in [2 * pi * i / 28 for i in range(28)]], .05, "trim", minor=6, closed=True))
-    for k in range(6):
-        P.append(tube(spiral3(.62, .85, .22, .05, pi, 1.05, 20, ccw=True), .04, "trim", minor=6, rot=(0, 0, 2 * pi * k / 6)))
-    wz2 = shell_basin(P, 1.6, 1.65, .6, 12, .07, mat="accent", lining="white", pool=.85, n=40)
+    for k in range(4):
+        P.append(tube(spiral3(.62, .85, .22, .05, pi, 1.05, 12, ccw=True), .045, "trim", minor=5, rot=(0, 0, 2 * pi * k / 4)))
+    wz2 = shell_basin(P, 1.6, 1.65, .6, 8, .07, mat="accent", lining="white", pool=.85, n=28)
     P.append(lathe([(0, 1.9), (.55, 1.9), (.4, 2.1), (.3, 2.4), (.38, 2.52), (.5, 2.6), (0, 2.62)], "white", n=28, smooth=1))
     P.append(tube([Vector((.33 * cos(t), .33 * sin(t), 2.22)) for t in [2 * pi * i / 24 for i in range(24)]], .045, "trim", minor=6, closed=True))
-    for k in range(4):
-        P.append(tube(spiral3(.42, 2.2, .2, .05, pi, 1.0, 18, ccw=True), .035, "trim", minor=6, rot=(0, 0, 2 * pi * k / 4 + pi / 4)))
-    wz3 = shell_basin(P, .95, 2.55, .45, 8, .08, mat="white", lining="accent", pool=.8, n=32)
+    for k in range(3):
+        P.append(tube(spiral3(.42, 2.2, .2, .05, pi, 1.0, 10, ccw=True), .04, "trim", minor=5, rot=(0, 0, 2 * pi * k / 3 + pi / 4)))
+    wz3 = shell_basin(P, .95, 2.55, .45, 6, .08, mat="white", lining="accent", pool=.8, n=20)
     # cisne central
     sz = wz3 + .08
     P.append(sph((.95, .5, .42), (0, 0, sz + .12), "white", n=14, rings=8))
@@ -903,9 +954,9 @@ def piece_fountain_center():
                 z = z0 + (z1 - z0) * (t ** 1.8) + lift * sin(pi * min(t * 1.35, 1)) * (1 - t)
                 pts.append(Vector((r * cos(a), r * sin(a), z)))
             P.append(tube(pts, rad, "water", minor=6))
-    jets(12, .9, wz3 + .35, 1.5, wz2, .035, 0.0, .28)
-    jets(16, 1.55, wz2 + .35, 2.3, wz1, .04, .1, .3)
-    jets(6, .1, sz + .3, .75, wz3, .03, .3, .35)
+    jets(6, .9, wz3 + .35, 1.5, wz2, .04, 0.0, .28)
+    jets(8, 1.55, wz2 + .35, 2.3, wz1, .05, .1, .3)
+    jets(3, .1, sz + .3, .75, wz3, .04, .3, .35)
     # conchas-bica de metal na borda da bacia 1
     for k in range(4):
         a = pi / 4 + k * pi / 2
@@ -913,7 +964,7 @@ def piece_fountain_center():
                        loc=(2.62 * cos(a), 2.62 * sin(a), .6), n=16, flute=(5, .15)))
     # brilhos (estrelinhas)
     rnd = random.Random(11)
-    for k in range(9):
+    for k in range(5):
         a = rnd.uniform(0, 2 * pi)
         r = rnd.uniform(.4, 2.6)
         z = rnd.uniform(1.0, 4.0)
@@ -939,6 +990,237 @@ def piece_paving_tile():
     return P
 
 
+# ----------------------------------------------------------------------------------------------------
+# PECAS - casas leves do Jardim, coreto e ponte do Parque
+# (origem da casa/telhado = centro da planta no chao; modulos de fachada = plano frontal em y=0, frente -Y)
+# ----------------------------------------------------------------------------------------------------
+def arch_outline(w, h_rect, n=14):
+    """contorno X/Z de janela/porta em arco: base em z=0, retangulo ate h_rect e meio-circulo em cima."""
+    r = w / 2
+    pts = [(-r, 0), (r, 0), (r, h_rect)]
+    pts += [(r * cos(a), h_rect + r * sin(a)) for a in [pi * i / n for i in range(1, n)]]
+    pts += [(-r, h_rect)]
+    return pts
+
+
+def lite_window(loc, rot, w=1.3, hr=1.1, glass="glass"):
+    """janelinha em arco com moldura de metal (para as laterais/fundos), centrada em loc (base da janela)."""
+    x, y, z = loc
+    P = []
+    P.append(prism(arch_outline(w + .26, hr, 10), .1, "xz", "trim", loc=(x, y, z - .08), rot=rot, bevel=.02, seg=2))
+    P.append(prism(arch_outline(w, hr, 10), .16, "xz", glass, loc=(x, y, z), rot=rot))
+    return P
+
+
+def house_shell(w=8.0, d=8.0, h=8.0, side_wins=True):
+    """corpo de casa de 2 andares (planta w x d, centrada), com soquinho, faixa do 2o andar e cornija com festao."""
+    P = []
+    P.append(box((w, d, h), (0, 0, h / 2), "base", bevel=.2, seg=2))
+    P.append(box((w + .3, d + .3, .6), (0, 0, .3), "white", bevel=.1, seg=2))
+    P.append(box((w + .24, d + .24, .3), (0, 0, 4.1), "white", bevel=.08, seg=2))
+    P.append(box((w + .3, d + .3, .26), (0, 0, h - .72), "accent", bevel=.08, seg=2))
+    P.append(box((w + .6, d + .6, .5), (0, 0, h - .25), "white", bevel=.12, seg=2))
+    P.append(box((w + .66, d + .66, .07), (0, 0, h - .5), "trim", bevel=.03, seg=2))
+    # pilastras de quina
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            P.append(cyl(.26, h - .7, (sx * (w / 2 + .02), sy * (d / 2 + .02), h / 2), "accent", n=10))
+    # festao (conchinhas) da cornija
+    for side in range(4):
+        L = w if side < 2 else d
+        cnt = int(round(L / 1.35))
+        wd = L / cnt
+        for i in range(cnt):
+            u = -L / 2 + wd * (i + .5)
+            pts = ellipse_pts(wd / 2 - .03, .3, 8, pi, 2 * pi)
+            m = "accent2" if i % 2 else "accent"
+            zz = h - .55
+            if side < 2:
+                sy = -1 if side == 0 else 1
+                P.append(prism(pts, .07, "xz", m, loc=(u, sy * (d / 2 + .34), zz), bevel=.02, seg=1))
+            else:
+                sx = -1 if side == 2 else 1
+                P.append(prism(pts, .07, "xz", m, loc=(sx * (w / 2 + .34), u, zz), rot=(0, 0, pi / 2), bevel=.02, seg=1))
+    if side_wins:
+        for sx in (-1, 1):
+            for z0 in (.95, 5.0):
+                P += lite_window((sx * (w / 2 + .02), 0, z0), (0, 0, pi / 2))
+        for z0 in (.95, 5.0):
+            for x in ((-w / 4, w / 4) if w > 9 else (0,)):
+                P += lite_window((x, d / 2 + .02, z0), (0, 0, pi))
+    return P
+
+
+def piece_house_shell():
+    return house_shell(8, 8, 8)
+
+
+def piece_house_shell_wide():
+    return house_shell(12, 12, 8)
+
+
+def piece_facade_win():
+    """modulo 4 x 4 de fachada leve: janela em arco com persianas, jardineira florida e coracao."""
+    P = []
+    P.append(box((3.5, .14, 3.5), (0, -.07, 2.0), "accent", bevel=.06, seg=2))
+    P.append(prism(arch_outline(1.9, 1.0, 12), .08, "xz", "soft", loc=(0, -.17, .8)))
+    P.append(prism(arch_outline(1.66, 1.0, 12), .08, "xz", "trim", loc=(0, -.2, .86)))
+    P.append(prism(arch_outline(1.4, 1.0, 12), .1, "xz", "glass", loc=(0, -.22, .9)))
+    P.append(box((.05, .06, 1.7), (0, -.3, 1.75), "trim", bevel=.02, seg=1))
+    P.append(box((1.3, .05, .05), (0, -.3, 1.5), "trim", bevel=.02, seg=1))
+    for sg in (-1, 1):
+        P.append(box((.5, .1, 2.0), (sg * 1.35, -.2, 1.9), "accent2", bevel=.05, seg=2))
+        P.append(box((.28, .06, 1.5), (sg * 1.35, -.27, 1.9), "soft", bevel=.03, seg=1))
+    P.append(box((1.8, .38, .34), (0, -.4, .55), "accent2", bevel=.07, seg=2))
+    fl = ["white", "soft", "accent", "white", "soft", "accent"]
+    for i in range(6):
+        P.append(sph(.13, (-.72 + i * .29, -.42 + (i % 2) * .05, .82), fl[i], n=8, rings=5))
+    P.append(heart(.36, .1, (0, -.2, 3.32), "accent2", bevel=.04))
+    return P
+
+
+def piece_facade_door():
+    """modulo 4 x 4 com porta em arco, degraus, lanternas e coracao."""
+    P = []
+    P.append(box((3.5, .14, 3.5), (0, -.07, 2.0), "accent", bevel=.06, seg=2))
+    P.append(prism(arch_outline(2.15, 1.55, 14), .1, "xz", "trim", loc=(0, -.17, .35)))
+    P.append(prism(arch_outline(1.85, 1.55, 14), .14, "xz", "accent2", loc=(0, -.2, .35)))
+    P.append(prism(arch_outline(1.15, .7, 10), .16, "xz", "glass", loc=(0, -.24, 1.45), bevel=.0))
+    P.append(box((.05, .1, 2.2), (0, -.3, 1.45), "trim", bevel=.02, seg=1))
+    for sg in (-1, 1):
+        P.append(sph(.08, (sg * .22, -.3, 1.05), "trim", n=8, rings=5))
+        P.append(box((.6, .08, .9), (sg * .45, -.3, .95), "soft", bevel=.03, seg=1))
+        # lanterna
+        P.append(box((.06, .22, .06), (sg * 1.45, -.12, 2.35), "trim", bevel=.02, seg=1))
+        P.append(sph(.15, (sg * 1.45, -.3, 2.2), "glow", n=10, rings=6))
+    P.append(box((2.7, .75, .16), (0, -.5, .08), "white", bevel=.06, seg=2))
+    P.append(box((2.2, .45, .16), (0, -.9, .08), "accent", bevel=.06, seg=2))
+    P.append(heart(.42, .1, (0, -.2, 3.15), "accent2", bevel=.04))
+    return P
+
+
+def piece_roof_pitched():
+    """telhado de 4 aguas com beiral festonado, cumeeira e chamine; origem no centro da planta, base em z=0."""
+    P = []
+    w = d = 9.3
+    hh = 3.0
+    top = 1.5
+    bm = bmesh.new()
+    b = [bm.verts.new(p) for p in ((-w / 2, -d / 2, 0), (w / 2, -d / 2, 0), (w / 2, d / 2, 0), (-w / 2, d / 2, 0))]
+    t = [bm.verts.new(p) for p in ((-top, -top, hh), (top, -top, hh), (top, top, hh), (-top, top, hh))]
+    for i in range(4):
+        j = (i + 1) % 4
+        bm.faces.new((b[i], b[j], t[j], t[i]))
+    bm.faces.new(t[::-1])
+    bm.faces.new(b)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    P.append(_obj_from_bm(bm, "accent2", (0, 0, 0), (0, 0, 0), bevel=.28, seg=3, ang=20))
+    P.append(box((w + .15, d + .15, .3), (0, 0, .12), "white", bevel=.1, seg=2))
+    # fio de metal na cumeeira e coroa
+    P.append(box((top * 2 + .5, top * 2 + .5, .22), (0, 0, hh + .02), "trim", bevel=.08, seg=2))
+    P.append(sph(.32, (0, 0, hh + .35), "white", n=12, rings=8))
+    P.append(lathe([(0, 0), (.08, 0), (.04, .5), (0, .75)], "trim", loc=(0, 0, hh + .6), n=8))
+    # festao
+    for side in range(4):
+        L = w
+        cnt = 7
+        wd = L / cnt
+        for i in range(cnt):
+            u = -L / 2 + wd * (i + .5)
+            pts = ellipse_pts(wd / 2 - .03, .34, 8, pi, 2 * pi)
+            m = "base" if i % 2 else "accent"
+            if side < 2:
+                sy = -1 if side == 0 else 1
+                P.append(prism(pts, .08, "xz", m, loc=(u, sy * (d / 2 + .05), .3), bevel=.02, seg=1))
+            else:
+                sx = -1 if side == 2 else 1
+                P.append(prism(pts, .08, "xz", m, loc=(sx * (w / 2 + .05), u, .3), rot=(0, 0, pi / 2), bevel=.02, seg=1))
+    # chamine
+    P.append(box((1.0, 1.0, 2.3), (2.5, 1.6, 1.6), "white", bevel=.1, seg=2))
+    P.append(box((1.3, 1.3, .3), (2.5, 1.6, 2.85), "accent", bevel=.1, seg=2))
+    P.append(box((.7, .7, .08), (2.5, 1.6, 3.04), "deep", bevel=.0, seg=1))
+    return P
+
+
+def piece_gazebo():
+    """coreto: plataforma redonda de ~7 m, 6 colunas, festao e domo cebola com ponta dourada (origem no centro, no chao)."""
+    P = []
+    R = 2.7
+    P.append(lathe([(0, 0), (3.85, 0), (3.85, .14), (0, .14)], "accent", n=30))
+    P.append(lathe([(0, .14), (3.4, .14), (3.45, .2), (3.4, .38), (0, .38)], "white", n=30))
+    P.append(tube([Vector((3.35 * cos(t), 3.35 * sin(t), .4)) for t in [2 * pi * i / 30 for i in range(30)]], .05, "trim", minor=6, closed=True))
+    P.append(lathe([(0, .38), (3.0, .38), (3.0, .4), (0, .4)], "soft", n=30))
+    angs = [-pi / 2 + pi / 6 + k * pi / 3 for k in range(6)]
+    for a in angs:
+        x, y = R * cos(a), R * sin(a)
+        P.append(lathe([(0, .4), (.3, .4), (.3, .55), (.2, .62), (.17, .7), (.17, 3.1), (.24, 3.2), (.24, 3.5), (0, 3.5)], "white", loc=(x, y, 0), n=10))
+        P.append(sph(.2, (x, y, .78), "trim", n=8, rings=5))
+    P.append(tube([Vector((R * cos(t), R * sin(t), 3.55)) for t in [2 * pi * i / 30 for i in range(30)]], .16, "accent2", minor=8, closed=True))
+    P.append(tube([Vector((R * cos(t), R * sin(t), 3.72)) for t in [2 * pi * i / 30 for i in range(30)]], .05, "trim", minor=6, closed=True))
+    for k in range(6):
+        a = angs[k] + pi / 6
+        arcw = 2 * R * sin(pi / 6) / 2 - .12
+        pts = ellipse_pts(arcw, .75, 10, pi, 2 * pi)
+        P.append(prism(pts, .1, "xz", "accent" if k % 2 else "soft", loc=(R * cos(a), R * sin(a), 3.55), rot=(0, 0, a + pi / 2), bevel=.03, seg=2))
+        P.append(sph(.09, (R * cos(a), R * sin(a), 2.78), "trim", n=8, rings=5))
+        if k != 5:
+            # grade baixa entre as colunas (o vao da frente fica livre)
+            a0, a1 = angs[k], angs[k + 1]
+            P.append(tube([Vector((R * cos(a0 + (a1 - a0) * i / 5), R * sin(a0 + (a1 - a0) * i / 5), 1.15)) for i in range(6)], .045, "trim", minor=5))
+            P.append(tube([Vector((R * cos(a0 + (a1 - a0) * i / 5), R * sin(a0 + (a1 - a0) * i / 5), .72)) for i in range(6)], .035, "trim", minor=5))
+            for i in range(1, 5):
+                aa = a0 + (a1 - a0) * i / 5
+                P.append(cyl(.05, .45, (R * cos(aa), R * sin(aa), .93), "white", n=6))
+    # domo
+    P.append(lathe([(0, 3.75), (3.3, 3.75), (3.4, 3.85), (3.3, 4.0), (3.05, 4.3), (2.4, 4.9), (1.5, 5.55), (.75, 6.1), (.3, 6.5), (0, 6.85)],
+                   "accent2", n=30, smooth=1, flute=(6, .05)))
+    P.append(tube([Vector((3.28 * cos(t), 3.28 * sin(t), 3.95)) for t in [2 * pi * i / 30 for i in range(30)]], .07, "trim", minor=6, closed=True))
+    P.append(sph(.3, (0, 0, 6.95), "white", n=12, rings=8))
+    P.append(lathe([(0, 0), (.08, 0), (.04, .6), (0, .9)], "trim", loc=(0, 0, 7.15), n=8))
+    return P
+
+
+def piece_bridge_small():
+    """ponte arqueada de 8,4 m (eixo Y do Blender -> Z do GLB), largura 3 m, flecha de 0,9 m, com balaustrada de perolas."""
+    P = []
+    L, H, W = 4.2, .9, 3.0
+
+    def hz(y):
+        return H * (1 - (y / L) ** 2)
+    N = 14
+    ys = [-L + 2 * L * i / N for i in range(N + 1)]
+
+    def strip(width, thick, zoff, mat, bevel=.05):
+        bm = bmesh.new()
+        top = [[bm.verts.new((sx * width / 2, y, hz(y) + zoff)) for sx in (-1, 1)] for y in ys]
+        bot = [[bm.verts.new((sx * width / 2, y, hz(y) + zoff - thick)) for sx in (-1, 1)] for y in ys]
+        for i in range(N):
+            bm.faces.new((top[i][0], top[i][1], top[i + 1][1], top[i + 1][0]))
+            bm.faces.new((bot[i][1], bot[i][0], bot[i + 1][0], bot[i + 1][1]))
+            bm.faces.new((top[i][0], top[i + 1][0], bot[i + 1][0], bot[i][0]))
+            bm.faces.new((top[i][1], bot[i][1], bot[i + 1][1], top[i + 1][1]))
+        bm.faces.new((top[0][1], top[0][0], bot[0][0], bot[0][1]))
+        bm.faces.new((top[N][0], top[N][1], bot[N][1], bot[N][0]))
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        return _obj_from_bm(bm, mat, (0, 0, 0), (0, 0, 0), bevel=bevel, seg=2, ang=35)
+    P.append(strip(W, .5, 0, "white"))
+    P.append(strip(W - .9, .04, .035, "accent", bevel=.0))
+    P.append(strip(W + .12, .16, -.1, "trim", bevel=.03))
+    for sx in (-1, 1):
+        xr = sx * (W / 2 - .12)
+        P.append(tube([Vector((xr, y, hz(y) + .95)) for y in ys], .06, "trim", minor=6))
+        P.append(tube([Vector((xr, y, hz(y) + .3)) for y in ys], .045, "trim", minor=5))
+        for i in range(2, N - 1, 2):
+            y = ys[i]
+            P.append(cyl(.07, .7, (xr, y, hz(y) + .6), "white", n=8))
+            P.append(sph(.08, (xr, y, hz(y) + .27), "accent", n=8, rings=5))
+        for y in (-L + .1, L - .1):
+            P.append(lathe([(0, 0), (.2, 0), (.17, .15), (.14, 1.05), (.2, 1.12), (0, 1.12)], "white", loc=(xr, y, hz(y)), n=10))
+            P.append(sph(.15, (xr, y, hz(y) + 1.25), "trim", n=10, rings=6))
+        P.append(heart(.5, .1, (xr, 0, hz(0) + .62), "accent2", rot=(0, 0, pi / 2), bevel=.04))
+    return P
+
+
 PIECES = [
     ("wall_plain", piece_wall_plain), ("wall_window", piece_wall_window), ("wall_door", piece_wall_door),
     ("wall_corner", piece_wall_corner), ("column_rococo", piece_column_rococo), ("arch_gate", piece_arch_gate),
@@ -947,6 +1229,8 @@ PIECES = [
     ("lamp_post", piece_lamp_post), ("bench_tufted", piece_bench_tufted), ("planter_round", piece_planter_round),
     ("hedge_heart", piece_hedge_heart), ("fence_segment", piece_fence_segment), ("balloon_heart", piece_balloon_heart),
     ("fountain_center", piece_fountain_center), ("paving_tile", piece_paving_tile),
+    ("house_shell", piece_house_shell), ("house_shell_wide", piece_house_shell_wide), ("facade_win", piece_facade_win),
+    ("facade_door", piece_facade_door), ("roof_pitched", piece_roof_pitched), ("gazebo", piece_gazebo), ("bridge_small", piece_bridge_small),
 ]
 
 # colisores sugeridos (em coordenadas do jogo, Y-up: x largura, y altura, z profundidade; centro relativo a origem)
@@ -970,6 +1254,13 @@ META = {
     "balloon_heart": dict(collider=None, note="flutuante; preso por fio, sem colisao"),
     "fountain_center": dict(collider=("cylinder", [2.65, 1.0], [0, .5, 0]), note="colisor so da bacia; o topo e decorativo"),
     "paving_tile": dict(walkable=True, collider=None, note="amostra 2x2 m para virar textura/padrao do piso da praca"),
+    "house_shell": dict(mount="corpo 8x8x8 m (2 andares), centro da planta na origem; frente +Z; encaixe facade_win/facade_door em z=+4 e roof_pitched em y=8", collider=("box", [8.4, 8, 8.4], [0, 4, 0])),
+    "house_shell_wide": dict(mount="corpo 12x12x8 m, idem house_shell; usado no miolo da Casa dos Sonhos", collider=("box", [12.4, 8, 12.4], [0, 4, 0])),
+    "facade_win": dict(mount="modulo de fachada 4x4 m, plano de fundo em z=0, sai para +Z (empilhe 2 andares a cada 4 m)", collider=None),
+    "facade_door": dict(mount="idem facade_win; porta no centro com degraus", collider=None),
+    "roof_pitched": dict(mount="sobre house_shell (y=8): telhado de 4 aguas com beiral festonado + chamine", collider=None),
+    "gazebo": dict(mount="coreto redondo r=3.85 m, vao de entrada virado para +Z; plataforma 0.4 m; ~7 m de altura", collider=("boxes", [[.45, 3.5, .45, 1.35, 1.75, -2.34], [.45, 3.5, .45, 2.7, 1.75, 0], [.45, 3.5, .45, 1.35, 1.75, 2.34], [.45, 3.5, .45, -1.35, 1.75, 2.34], [.45, 3.5, .45, -2.7, 1.75, 0], [.45, 3.5, .45, -1.35, 1.75, -2.34]], None)),
+    "bridge_small": dict(mount="ponte arqueada, eixo no Z do GLB (8.4 m), 3 m de largura, topo 0.9 m; colisor montado no jogo (rampas + grades)", collider=None, walkable=True),
 }
 
 
@@ -1019,6 +1310,9 @@ def export_all(objs):
         kit["pieces"][name] = info
     with open(os.path.join(OUT, "kit.json"), "w", encoding="utf-8") as f:
         json.dump(kit, f, indent=2, ensure_ascii=False)
+    # copia para o codigo (o jogo importa o JSON; ver src/game/world/city/kit.tsx)
+    with open(os.path.join(ROOT, "src", "game", "world", "city", "kitRomantic.json"), "w", encoding="utf-8") as f:
+        json.dump(kit, f, indent=1, ensure_ascii=False)
     return kit
 
 

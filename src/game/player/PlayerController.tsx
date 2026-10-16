@@ -10,6 +10,8 @@ import { PLAYER as C } from './config'
 import { useAppearanceStore } from '../../state/appearanceStore'
 import { Character } from '../character/Character'
 import { useEmoteStore } from '../character/animation/emoteStore'
+import { SEAT_HIPS_GAP, useSitStore } from '../sit/sitStore'
+import type { Seat } from '../sit/seats'
 
 type Rapier = ReturnType<typeof useRapier>
 type CharacterController = ReturnType<Rapier['world']['createCharacterController']>
@@ -41,6 +43,9 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       stuck: 0,
       desired: { x: 0, y: 0, z: 0 },
       moved: false,
+      seated: false,
+      groundY: 0,
+      lastSeat: null as Seat | null,
     }),
     [],
   )
@@ -78,6 +83,49 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
     if (!cc || !rb || !collider) return
     const dt = Math.min(rawDelta, 0.05)
     if (dt <= 0) return
+
+    // ---- sentada: gruda no assento (sem fisica) ate haver comando de movimento ----
+    const seat = useSitStore.getState().seat
+    if (seat) {
+      if (!sim.seated) {
+        sim.seated = true
+        sim.groundY = sim.pos.y
+        sim.lastSeat = seat
+        sim.hv.set(0, 0, 0)
+        sim.vy = 0
+        clearMoveTarget()
+        useEmoteStore.getState().stop()
+      }
+      if (intent.move.x * intent.move.x + intent.move.y * intent.move.y > 1e-4 || intent.target) {
+        useSitStore.getState().standUp()
+      } else {
+        const k = 1 - Math.exp(-9 * dt)
+        const ty = sim.groundY + seat.y + SEAT_HIPS_GAP - useSitStore.getState().sitHipsY
+        sim.pos.x += (seat.x - sim.pos.x) * k
+        sim.pos.z += (seat.z - sim.pos.z) * k
+        sim.pos.y += (ty - sim.pos.y) * k
+        const diff = seat.yaw - sim.yaw
+        sim.yaw += Math.atan2(Math.sin(diff), Math.cos(diff)) * k
+        rb.setTranslation(sim.pos, true)
+        const vs = visual.current
+        if (vs) {
+          vs.position.copy(sim.pos)
+          vs.rotation.y = sim.yaw
+        }
+        const ss = usePlayerStore.getState()
+        ss.position.copy(sim.pos)
+        ss.velocity.set(0, 0, 0)
+        ss.speed = 0
+        ss.yaw = sim.yaw
+        return
+      }
+    }
+    if (sim.seated) {
+      // levantou: um passo a frente do banco, no chao onde sentou
+      sim.seated = false
+      const ls = sim.lastSeat
+      if (ls) sim.pos.set(ls.ax, sim.groundY, ls.az)
+    }
 
     // ---- direcao desejada, relativa a camera ----
     const camYaw = useCameraStore.getState().yaw

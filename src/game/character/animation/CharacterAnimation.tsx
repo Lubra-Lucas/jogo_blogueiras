@@ -7,6 +7,7 @@ import type { CharacterHandle } from '../Character'
 import { applyRestPose } from '../pose'
 import { ANIMS_URL, CharacterAnimator, type AnimInput, type ClipName } from './animator'
 import { useEmoteStore } from './emoteStore'
+import { useSitStore } from '../../sit/sitStore'
 
 /**
  * Como o personagem e animado:
@@ -15,7 +16,7 @@ import { useEmoteStore } from './emoteStore'
  */
 export type AnimDriver = 'player' | { clip: ClipName; t?: number }
 
-const input: AnimInput = { speed: 0, emote: null, desfile: false }
+const input: AnimInput = { speed: 0, emote: null, desfile: false, seated: false }
 
 /** Componente sem render: cria o mixer do personagem e o atualiza uma vez por frame. */
 export function CharacterAnimation({ rig, driver }: { rig: CharacterHandle; driver: AnimDriver }) {
@@ -24,6 +25,17 @@ export function CharacterAnimation({ rig, driver }: { rig: CharacterHandle; driv
     applyRestPose(rig.bones, rig.root) // base do idle procedural (bracos relaxados)
     return new CharacterAnimator(rig.root, rig.bones, gltf.animations)
   }, [rig, gltf])
+  useEffect(() => {
+    // altura do quadril no clipe de sentar: o SitController usa para posicionar a personagem no assento
+    const t = gltf.animations.find((c) => c.name === 'sit')?.tracks.find((k) => k.name === 'mixamorigHips.position')
+    if (t) useSitStore.setState({ sitHipsY: t.values[1] })
+    // fim do pulo (one-shot): solta o emote
+    const onFinished = (e: { action: { getClip: () => { name: string } } }) => {
+      if (e.action.getClip().name === 'jump') useEmoteStore.getState().stop()
+    }
+    animator.mixer.addEventListener('finished', onFinished as never)
+    return () => animator.mixer.removeEventListener('finished', onFinished as never)
+  }, [animator, gltf])
   useEffect(() => {
     if (import.meta.env.DEV && driver === 'player') (window as unknown as { __animator?: CharacterAnimator }).__animator = animator
     return () => animator.dispose()
@@ -36,6 +48,7 @@ export function CharacterAnimation({ rig, driver }: { rig: CharacterHandle; driv
       const e = useEmoteStore.getState()
       input.emote = e.emote
       input.desfile = e.desfile
+      input.seated = useSitStore.getState().seat !== null
       animator.update(dt, input)
     } else if (driver.t !== undefined) {
       animator.seek(driver.clip, driver.t)
