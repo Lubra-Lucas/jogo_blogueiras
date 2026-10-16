@@ -40,7 +40,7 @@ Veja [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 2. Fisica e capsula com WASD e click-to-move (feito)
 3. Camera em terceira pessoa (feito)
 4. Controles mobile (feito)
-5. Personagem boneca com animacoes
+5. Personagem: 5a boneca riggada do Meshy com morphs, cores por mascara (pele, macacao, cabelo, batom) e painel de sliders `?editor=1` (feito); 5b animacoes (proximo)
 6. Praca central
 7. Ruas e fachadas
 8. Polimento e qualidade

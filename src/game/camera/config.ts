@@ -1,6 +1,6 @@
 /** Numeros ajustaveis da camera em terceira pessoa e do input de camera. */
 export const CAMERA = {
-  pivotHeight: 1.5, // m acima dos pes do jogador (altura do ombro/cabeca)
+  pivotHeight: 1.5, // m acima dos pes do jogador (cabeca/pescoco; a boneca tem 1,60 m sem cabelo)
   defaultPitchDeg: 18, // camera acima do pivo olhando levemente para baixo
   minPitchDeg: -10, // camera abaixo do pivo (olhando um pouco para cima)
   maxPitchDeg: 70, // quase de cima

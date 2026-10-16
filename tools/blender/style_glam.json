@@ -1,0 +1,542 @@
+{
+  "name": "base_female_glam",
+  "rig": "mixamo",
+  "target_height_m": 1.62,
+  "eyes_mesh": "low-poly",
+  "eye_color": "brownlight",
+  "eyelashes": "eyelashes04",
+  "eyebrows": "eyebrow008",
+  "lash_scale": 0.8,
+  "brow_tilt": 0.07,
+  "hair": "long01",
+  "skin": "young_caucasian_female",
+  "skin_texture_size": 2048,
+  "skin_jpeg_quality": 88,
+  "skin_tint": [
+    1.0,
+    0.78,
+    0.64,
+    1.0
+  ],
+  "skin_roughness": 0.55,
+  "macros": {
+    "gender": 0.0,
+    "age": 0.5,
+    "muscle": 0.5,
+    "weight": 0.3,
+    "proportions": 0.7,
+    "height": 0.6,
+    "cupsize": 0.55,
+    "firmness": 0.35,
+    "race": {
+      "asian": 0.3,
+      "caucasian": 0.45,
+      "african": 0.25
+    }
+  },
+  "targets": {
+    "mouth-upperlip-volume-incr": 0.9,
+    "mouth-lowerlip-volume-incr": 0.5,
+    "mouth-lowerlip-height-incr": 0.5,
+    "mouth-upperlip-height-incr": 0.4,
+    "mouth-cupidsbow-incr": 1.6,
+    "mouth-cupidsbow-width-incr": 0.9,
+    "mouth-philtrum-volume-incr": 0.4,
+    "nose-scale-vert-decr": 1.0,
+    "nose-scale-horiz-decr": 0.6,
+    "nose-width2-decr": 0.5,
+    "nose-width3-decr": 0.5,
+    "nose-volume-decr": 0.4,
+    "nose-nostrils-width-decr": 0.5,
+    "nose-point-width-decr": 0.4,
+    "nose-flaring-decr": 0.4,
+    "LR:cheek-bones-incr": 0.8,
+    "chin-width-decr": 0.7,
+    "chin-bones-decr": 0.7,
+    "head-oval": 0.7,
+    "neck-scale-horiz-decr": 0.5,
+    "neck-scale-depth-decr": 0.4,
+    "measure-waist-circ-decr": 0.6,
+    "measure-hips-circ-incr": 0.2,
+    "measure-shoulder-dist-decr": 0.2,
+    "head-invertedtriangular": 1.0,
+    "chin-height-decr": 0.7,
+    "nose-scale-depth-decr": 0.6,
+    "mouth-scale-horiz-incr": 0.4,
+    "LR:eye-height1-incr": 0.4,
+    "LR:eye-height2-incr": 0.4,
+    "LR:eye-height3-incr": 0.2,
+    "neck-scale-vert-decr": 1.0,
+    "LR:ear-scale-decr": 1.5,
+    "LR:ear-shape-round": 1.0,
+    "LR:ear-wing-decr": 1.0,
+    "chin-prominent-incr": 0.6,
+    "chin-triangle": 0.25,
+    "head-fat-decr": 0.3,
+    "LR:cheek-volume-decr": 0.5
+  },
+  "custom_ops": [
+    {
+      "op": "leg_scale",
+      "scale": 0.88
+    },
+    {
+      "op": "band_scale",
+      "ref": "neck",
+      "axis": [
+        0.0,
+        -0.005
+      ],
+      "z": [
+        -0.09,
+        -0.05,
+        -0.01,
+        0.035
+      ],
+      "scale": [
+        0.8,
+        0.84
+      ]
+    },
+    {
+      "op": "head_scale",
+      "ref": "neck",
+      "pivot": {
+        "lm": "neck",
+        "off": [
+          0.0,
+          -0.045,
+          0.0
+        ]
+      },
+      "z0": -0.045,
+      "z1": 0.035,
+      "scale": [
+        1.95,
+        1.08,
+        1.72
+      ]
+    },
+    {
+      "op": "lower_face_compress",
+      "top": {
+        "lm": "eye_l",
+        "off": [
+          0,
+          0,
+          -0.01
+        ]
+      },
+      "bottom": {
+        "lm": "chin"
+      },
+      "scale": 0.92
+    },
+    {
+      "op": "face_taper",
+      "top": {
+        "lm": "nose_tip",
+        "off": [
+          0,
+          0,
+          0.03
+        ]
+      },
+      "bottom": {
+        "lm": "chin"
+      },
+      "scale": 0.8
+    },
+    {
+      "op": "region_scale",
+      "center": {
+        "lm": "eye_l"
+      },
+      "radius": [
+        0.09,
+        0.08,
+        0.065
+      ],
+      "scale": [
+        1.6,
+        1.0,
+        1.4
+      ],
+      "mirror": true
+    },
+    {
+      "op": "region_move",
+      "center": {
+        "lm": "eye_l"
+      },
+      "radius": [
+        0.1,
+        0.08,
+        0.07
+      ],
+      "delta": [
+        0.0,
+        0.0,
+        -0.008
+      ],
+      "mirror": true
+    },
+    {
+      "op": "region_move",
+      "center": {
+        "lm": "lid_u"
+      },
+      "radius": [
+        0.05,
+        0.05,
+        0.022
+      ],
+      "delta": [
+        0,
+        0,
+        -0.003
+      ],
+      "mirror": true
+    },
+    {
+      "op": "region_scale",
+      "center": {
+        "lm": "nose_tip"
+      },
+      "radius": [
+        0.05,
+        0.06,
+        0.06
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.72
+      ],
+      "mirror": false
+    },
+    {
+      "op": "region_scale",
+      "center": {
+        "lm": "lips"
+      },
+      "radius": [
+        0.07,
+        0.05,
+        0.04
+      ],
+      "scale": [
+        1.0,
+        1.05,
+        1.2
+      ],
+      "mirror": false
+    },
+    {
+      "op": "region_move",
+      "center": {
+        "lm": "eye_l",
+        "off": [
+          0.045,
+          0.0,
+          0.05
+        ]
+      },
+      "radius": [
+        0.05,
+        0.06,
+        0.035
+      ],
+      "delta": [
+        0,
+        0,
+        0.018
+      ],
+      "mirror": true
+    },
+    {
+      "op": "region_move",
+      "center": {
+        "lm": "eye_l",
+        "off": [
+          -0.02,
+          0.0,
+          0.05
+        ]
+      },
+      "radius": [
+        0.04,
+        0.06,
+        0.03
+      ],
+      "delta": [
+        0,
+        0,
+        0.018
+      ],
+      "mirror": true
+    },
+    {
+      "op": "group_move",
+      "groups": [
+        "helper-l-eye",
+        "helper-r-eye"
+      ],
+      "delta": [
+        0.0,
+        0.006,
+        0.0
+      ]
+    }
+  ],
+  "doll_smooth": {
+    "bust": {"radius": 0.095, "iters": 40, "fade": 0.5, "tol": 0.0012},
+    "pelvis": {"half_width": 0.055, "height": 0.14, "iters": 300, "back_iters": 60}
+  },
+  "morphs": {
+    "waistThin": {
+      "label": "Cintura fina",
+      "group": "corpo",
+      "targets": {
+        "measure-waist-circ-decr": 0.9
+      }
+    },
+    "hipsWide": {
+      "label": "Quadril largo",
+      "group": "corpo",
+      "targets": {
+        "measure-hips-circ-incr": 0.9,
+        "hip-scale-horiz-incr": 0.4
+      }
+    },
+    "bustBig": {
+      "label": "Busto maior",
+      "group": "corpo",
+      "macros": {
+        "cupsize": 0.95
+      }
+    },
+    "bustSmall": {
+      "label": "Busto menor",
+      "group": "corpo",
+      "macros": {
+        "cupsize": 0.05
+      }
+    },
+    "weightUp": {
+      "label": "Mais peso",
+      "group": "corpo",
+      "macros": {
+        "weight": 0.75
+      }
+    },
+    "weightDown": {
+      "label": "Menos peso",
+      "group": "corpo",
+      "macros": {
+        "weight": 0.0
+      }
+    },
+    "shouldersNarrow": {
+      "label": "Ombros estreitos",
+      "group": "corpo",
+      "targets": {
+        "measure-shoulder-dist-decr": 1.0
+      }
+    },
+    "lipsFull": {
+      "label": "Labios volumosos",
+      "group": "rosto",
+      "targets": {
+        "mouth-upperlip-volume-incr": 0.6,
+        "mouth-lowerlip-volume-incr": 0.8,
+        "mouth-lowerlip-height-incr": 0.4
+      }
+    },
+    "lipsThin": {
+      "label": "Labios finos",
+      "group": "rosto",
+      "targets": {
+        "mouth-upperlip-volume-incr": -1.4,
+        "mouth-lowerlip-volume-incr": -1.6,
+        "mouth-lowerlip-height-incr": -0.8,
+        "mouth-upperlip-height-incr": -0.6
+      }
+    },
+    "lipsWide": {
+      "label": "Boca larga",
+      "group": "rosto",
+      "targets": {
+        "mouth-scale-horiz-incr": 1.0
+      }
+    },
+    "noseSmall": {
+      "label": "Nariz menor",
+      "group": "rosto",
+      "targets": {
+        "nose-scale-vert-decr": 0.4,
+        "nose-scale-depth-decr": 0.4,
+        "nose-scale-horiz-decr": 0.3,
+        "nose-volume-decr": 0.3
+      }
+    },
+    "noseNarrow": {
+      "label": "Nariz fino",
+      "group": "rosto",
+      "targets": {
+        "nose-width1-decr": 1.0,
+        "nose-width2-decr": 0.6,
+        "nose-width3-decr": 0.6,
+        "nose-nostrils-width-decr": 0.6
+      }
+    },
+    "noseBridgeHigh": {
+      "label": "Ponte do nariz alta",
+      "group": "rosto",
+      "targets": {
+        "nose-greek-incr": 1.0,
+        "nose-compression-compress": 0.4
+      }
+    },
+    "eyesBig": {
+      "label": "Olhos maiores",
+      "group": "rosto",
+      "ops": [
+        {
+          "op": "region_scale",
+          "center": {
+            "lm": "eye_l"
+          },
+          "radius": [
+            0.08,
+            0.08,
+            0.06
+          ],
+          "scale": [
+            1.18,
+            1.0,
+            1.22
+          ],
+          "mirror": true
+        }
+      ]
+    },
+    "eyesAlmond": {
+      "label": "Olhos amendoados",
+      "group": "rosto",
+      "ops": [
+        {
+          "op": "region_move",
+          "center": {
+            "lm": "eye_l",
+            "off": [
+              0.035,
+              0.0,
+              0.0
+            ]
+          },
+          "radius": [
+            0.04,
+            0.06,
+            0.03
+          ],
+          "delta": [
+            0.003,
+            0.0,
+            0.012
+          ],
+          "mirror": true
+        }
+      ]
+    },
+    "cheekbonesHigh": {
+      "label": "Macas do rosto altas",
+      "group": "rosto",
+      "targets": {
+        "LR:cheek-bones-incr": 1.0,
+        "LR:cheek-trans-up": 0.6
+      }
+    },
+    "jawNarrow": {
+      "label": "Mandibula fina",
+      "group": "rosto",
+      "targets": {
+        "chin-bones-decr": 1.0
+      }
+    },
+    "chinPointed": {
+      "label": "Queixo fino",
+      "group": "rosto",
+      "targets": {
+        "chin-width-decr": 1.0,
+        "chin-triangle": 0.8
+      }
+    },
+    "browLift": {
+      "label": "Sobrancelha alta",
+      "group": "rosto",
+      "ops": [
+        {
+          "op": "region_move",
+          "center": {
+            "lm": "eye_l",
+            "off": [
+              0.0,
+              0.0,
+              0.045
+            ]
+          },
+          "radius": [
+            0.07,
+            0.07,
+            0.035
+          ],
+          "delta": [
+            0.0,
+            0.0,
+            0.012
+          ],
+          "mirror": true
+        }
+      ]
+    },
+    "faceThin": {
+      "label": "Rosto fino",
+      "group": "rosto",
+      "targets": {
+        "head-fat-decr": 1.0,
+        "LR:cheek-volume-decr": 1.0
+      }
+    }
+  },
+  "hair_tint": [
+    0.28,
+    0.17,
+    0.13,
+    1.0
+  ],
+  "preview": {
+    "top_xlim": 0.175,
+    "top_color": [
+      0.95,
+      0.93,
+      0.97,
+      1.0
+    ],
+    "shorts_color": [
+      0.72,
+      0.5,
+      0.8,
+      1.0
+    ],
+    "top_off": [
+      0.225,
+      0.375
+    ],
+    "shorts_off": [
+      -0.15,
+      0.085
+    ]
+  },
+  "iris_scale": 1.5
+}

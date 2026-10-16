@@ -1,0 +1,286 @@
+{
+  "version": 1,
+  "source": "Meshy glam doll (prepare_meshy.py -> rig_meshy.py)",
+  "files": {
+    "body": "doll_base.glb",
+    "hair": "hair_meshy_updo.glb"
+  },
+  "heightMeters": 1.694,
+  "heightBodyMeters": 1.6,
+  "restPose": "A-pose ~42 deg arms, feet ~0.27 m apart, feet en pointe (lowest point z=0)",
+  "axes": "glTF Y-up, character faces +Z",
+  "bones": [
+    "mixamorig:Hips",
+    "mixamorig:Spine",
+    "mixamorig:Spine1",
+    "mixamorig:Spine2",
+    "mixamorig:Neck",
+    "mixamorig:Head",
+    "mixamorig:LeftShoulder",
+    "mixamorig:LeftArm",
+    "mixamorig:LeftForeArm",
+    "mixamorig:LeftHand",
+    "mixamorig:LeftHandIndex1",
+    "mixamorig:LeftHandIndex2",
+    "mixamorig:LeftHandIndex3",
+    "mixamorig:LeftHandMiddle1",
+    "mixamorig:LeftHandMiddle2",
+    "mixamorig:LeftHandMiddle3",
+    "mixamorig:LeftHandRing1",
+    "mixamorig:LeftHandRing2",
+    "mixamorig:LeftHandRing3",
+    "mixamorig:LeftHandPinky1",
+    "mixamorig:LeftHandPinky2",
+    "mixamorig:LeftHandPinky3",
+    "mixamorig:LeftHandThumb1",
+    "mixamorig:LeftHandThumb2",
+    "mixamorig:LeftHandThumb3",
+    "mixamorig:RightShoulder",
+    "mixamorig:RightArm",
+    "mixamorig:RightForeArm",
+    "mixamorig:RightHand",
+    "mixamorig:RightHandIndex1",
+    "mixamorig:RightHandIndex2",
+    "mixamorig:RightHandIndex3",
+    "mixamorig:RightHandMiddle1",
+    "mixamorig:RightHandMiddle2",
+    "mixamorig:RightHandMiddle3",
+    "mixamorig:RightHandRing1",
+    "mixamorig:RightHandRing2",
+    "mixamorig:RightHandRing3",
+    "mixamorig:RightHandPinky1",
+    "mixamorig:RightHandPinky2",
+    "mixamorig:RightHandPinky3",
+    "mixamorig:RightHandThumb1",
+    "mixamorig:RightHandThumb2",
+    "mixamorig:RightHandThumb3",
+    "mixamorig:LeftUpLeg",
+    "mixamorig:LeftLeg",
+    "mixamorig:LeftFoot",
+    "mixamorig:LeftToeBase",
+    "mixamorig:RightUpLeg",
+    "mixamorig:RightLeg",
+    "mixamorig:RightFoot",
+    "mixamorig:RightToeBase"
+  ],
+  "boneCount": 52,
+  "rootBone": "mixamorig:Hips",
+  "boneNote": "Mixamo names; three.js GLTFLoader strips ':' -> mixamorigHips ...",
+  "morphs": [
+    {
+      "name": "bustBig",
+      "label": "Busto maior",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "bustSmall",
+      "label": "Busto menor",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "buttBig",
+      "label": "Bumbum maior",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "buttSmall",
+      "label": "Bumbum menor",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "hipsWide",
+      "label": "Quadril largo",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "waistThin",
+      "label": "Cintura fina",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "thighsThick",
+      "label": "Coxas grossas",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "weightUp",
+      "label": "Mais peso",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "weightDown",
+      "label": "Menos peso",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "shouldersNarrow",
+      "label": "Ombros estreitos",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "lipsFull",
+      "label": "Labios cheios",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "lipsWide",
+      "label": "Boca larga",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "noseSmall",
+      "label": "Nariz pequeno",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "noseNarrow",
+      "label": "Nariz fino",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "cheekbonesHigh",
+      "label": "Macas do rosto altas",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "jawNarrow",
+      "label": "Mandibula fina",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body",
+        "hair"
+      ]
+    },
+    {
+      "name": "chinPointed",
+      "label": "Queixo pontudo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "faceThin",
+      "label": "Rosto fino",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body",
+        "hair"
+      ]
+    },
+    {
+      "name": "eyesBig",
+      "label": "Olhos grandes",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "browLift",
+      "label": "Sobrancelhas altas",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    }
+  ],
+  "morphGroups": [
+    "Corpo",
+    "Rosto"
+  ],
+  "triangles": {
+    "body": 35505,
+    "hair": 24999
+  },
+  "sizesBytes": {
+    "doll_base.glb": 3583312,
+    "hair_meshy_updo.glb": 2965216
+  },
+  "license": "Meshy-generated asset (check Meshy plan terms); rig/morph tooling: project code"
+}

@@ -7,6 +7,7 @@ import { initDeviceDetection, useDeviceStore } from './game/systems/device'
 import { Hud } from './ui/Hud'
 import { Joystick } from './ui/Joystick'
 import { FullscreenButton } from './ui/FullscreenButton'
+import { EditorPanel, editorEnabled } from './ui/EditorPanel'
 
 const tier = getQuality()
 const settings = QUALITY_SETTINGS[tier]
@@ -33,6 +34,7 @@ export default function App() {
       </Suspense>
       <div className="ui-layer">
         <Hud />
+        {editorEnabled() && <EditorPanel />}
         {isTouch && <FullscreenButton />}
         {isTouch && <Joystick />}
       </div>

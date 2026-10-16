@@ -1,14 +1,22 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo } from 'react'
-import { Color, Mesh, MeshPhysicalMaterial, type Material, type Object3D } from 'three'
-import type { Appearance, ItemRef } from '../../shared/appearance'
-import { buildBody } from './body'
-import { createFaceDecalGeometry, FaceTexture } from './face'
-import { buildItem, type BuiltPart } from './items'
-import { ALBEDO, skinGlow, skinMaterial } from './materials'
-import { createRig, type CharacterRig } from './rig'
+import { forwardRef, Suspense, use, useEffect, useImperativeHandle, useMemo } from 'react'
+import { useGLTF, useTexture } from '@react-three/drei'
+import { Color, MeshPhysicalMaterial, NoColorSpace, Skeleton, type Bone, type Group, type Object3D, type SkinnedMesh, type Texture } from 'three'
+import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
+import type { GLTF } from 'three-stdlib'
+import type { Appearance } from '../../shared/appearance'
+import { BASES, loadBaseMeta } from './assets'
+import { applyBodyLook, createBodyMaterial, createHairMaterial } from './dollMaterial'
+import { getWearable, itemColor, WEARABLES, type WearableDef } from './items'
+import { applyRestPose } from './pose'
+import { ensureTangents } from './tangents'
 
-export type { CharacterRig } from './rig'
-export { JOINT_NAMES, type JointName } from './joints'
+export interface CharacterHandle {
+  /** raiz (pes em y=0, olhando para +Z) */
+  root: Group
+  /** esqueleto da base (nomes `mixamorigHips`...); cabelo e roupa usam estes mesmos ossos */
+  skeleton: Skeleton
+  bones: Record<string, Bone>
+}
 
 export interface CharacterProps {
   appearance: Appearance
@@ -16,117 +24,194 @@ export interface CharacterProps {
   shadows?: boolean
 }
 
-function setShadows(o: Object3D, on: boolean) {
-  o.traverse((c) => {
-    if ((c as Mesh).isMesh) c.castShadow = on
+interface Rig extends CharacterHandle {
+  armature: Object3D
+  body: SkinnedMesh
+  /** texturas do GLB (atlas baked + normal), reaproveitadas pelo cabelo (mesmo atlas) */
+  map: Texture | null
+  normalMap: Texture | null
+}
+
+function buildRig(scene: Group): Rig {
+  const root = cloneSkinned(scene) as Group
+  const bones: Record<string, Bone> = {}
+  let body: SkinnedMesh | null = null
+  root.traverse((o) => {
+    if ((o as Bone).isBone) bones[o.name] = o as Bone
+    if ((o as SkinnedMesh).isSkinnedMesh && !body) body = o as SkinnedMesh
   })
+  const b = body as SkinnedMesh | null
+  if (!b) throw new Error('doll_base.glb sem SkinnedMesh')
+  ensureTangents(b.geometry) // geometria e compartilhada entre clones; faz uma vez
+  const m = b.material as MeshPhysicalMaterial
+  return { root, bones, skeleton: b.skeleton, armature: b.parent!, body: b, map: m.map, normalMap: m.normalMap }
 }
 
-function disposeObject(o: Object3D) {
-  o.traverse((c) => {
-    const m = c as Mesh & { dispose?: () => void }
-    if (!m.isMesh) return
-    m.geometry.dispose()
-    const mat = m.material as Material | Material[]
-    if (Array.isArray(mat)) mat.forEach((x) => x.dispose())
-    else mat.dispose()
-    m.dispose?.() // InstancedMesh
-  })
+interface Attachment {
+  def: WearableDef
+  meshes: SkinnedMesh[]
+  material: MeshPhysicalMaterial
+  setColor: (c: string) => void
+  skeletons: Skeleton[]
 }
-
-/** Cria/atualiza as partes de um grupo de itens; descarta tudo ao mudar a chave ou desmontar. */
-function useBuilt(rig: CharacterRig, key: string, make: () => BuiltPart[], shadows: boolean) {
-  useEffect(() => {
-    const parts = make()
-    for (const p of parts) {
-      rig.joints[p.joint].add(p.object)
-      setShadows(p.object, shadows)
-    }
-    return () => {
-      for (const p of parts) {
-        p.object.removeFromParent()
-        disposeObject(p.object)
-      }
-    }
-    // `make` e recriada a cada render; so reconstruimos quando a chave (JSON do trecho) muda.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rig, key, shadows])
-}
-
-const FACE_DECAL_ORDER = 2
 
 /**
- * Boneca: rig rigido + corpo + rosto (decalque 2D) + cabelo + roupas + acessorios, tudo a partir
- * do JSON `appearance`. Troca de skinTone/rosto so redesenha; cabelo/roupa/acessorios sao
- * reconstruidos por trecho. O `ref` expoe o `CharacterRig` (juntas) para animacao.
+ * Peca (cabelo/roupa) presa ao MESMO esqueleto do corpo: clona o GLB da peca e recria o `Skeleton` de cada
+ * SkinnedMesh usando os ossos do corpo (casados por nome) + as boneInverses originais da peca. Assim a peca
+ * segue a animacao dos ossos do corpo sem duplicar a hierarquia (e cada personagem tem seus proprios ossos).
+ * Os GLB da peca vem do mesmo pipeline/esqueleto, entao as boneInverses coincidem.
  */
-export const Character = forwardRef<CharacterRig, CharacterProps>(function Character(
-  { appearance, shadows = false },
-  ref,
-) {
-  const rig = useMemo(() => createRig(), [])
-  const skin = useMemo(() => skinMaterial('#f6d7c3'), [])
-  const face = useMemo(() => new FaceTexture(), [])
-  useImperativeHandle(ref, () => rig, [rig])
-
-  // corpo + decalque do rosto (geometria fixa)
-  useEffect(() => {
-    const body = buildBody(rig, skin)
-    const decalMat = new MeshPhysicalMaterial({
-      map: face.texture,
-      color: new Color('#ffffff').multiplyScalar(ALBEDO),
-      transparent: true,
-      polygonOffset: true,
-      polygonOffsetFactor: -2,
-      polygonOffsetUnits: -2,
-      roughness: 0.55,
-      metalness: 0,
-      clearcoat: 0.12,
-      clearcoatRoughness: 0.5,
-    })
-    const decal = new Mesh(createFaceDecalGeometry(), decalMat)
-    decal.name = 'face'
-    decal.renderOrder = FACE_DECAL_ORDER
-    decal.position.y = 0.17
-    rig.joints.head.add(decal)
-    for (const m of body.meshes) m.castShadow = shadows
-    return () => {
-      for (const m of body.meshes) {
-        m.removeFromParent()
-        m.geometry.dispose()
-      }
-      decal.removeFromParent()
-      decal.geometry.dispose()
-      decalMat.dispose()
+function buildAttachment(rig: Rig, def: WearableDef, gltf: GLTF): Attachment {
+  const src = cloneSkinned(gltf.scene) as Group
+  const found: SkinnedMesh[] = []
+  src.traverse((o) => {
+    if ((o as SkinnedMesh).isSkinnedMesh) found.push(o as SkinnedMesh)
+  })
+  const skeletons: Skeleton[] = []
+  const meshes: SkinnedMesh[] = []
+  for (const m of found) {
+    ensureTangents(m.geometry)
+    const bones = m.skeleton.bones.map((b) => rig.bones[b.name])
+    if (bones.some((b) => !b)) continue
+    const skel = new Skeleton(bones, m.skeleton.boneInverses.map((x) => x.clone()))
+    m.removeFromParent()
+    m.bind(skel, m.bindMatrix)
+    m.frustumCulled = false
+    skeletons.push(skel)
+    meshes.push(m)
+  }
+  let material: MeshPhysicalMaterial
+  let setColor: (c: string) => void
+  if (def.kind === 'hair') {
+    const h = createHairMaterial(rig.map, rig.normalMap)
+    material = h.material
+    setColor = (c) => {
+      ;(h.uniforms.uHair.value as Color).set(c)
+      material.sheenColor.set(c).lerp(new Color('#ffffff'), 0.25).multiplyScalar(0.7)
     }
-  }, [rig, skin, face, shadows])
+  } else {
+    material = new MeshPhysicalMaterial({ roughness: 0.38, metalness: 0, sheen: 0.8, sheenRoughness: 0.4 })
+    setColor = (c) => material.color.set(c)
+  }
+  for (const m of meshes) m.material = material
+  return { def, meshes, material, setColor, skeletons }
+}
 
-  // tom de pele + rosto
-  const faceKey = JSON.stringify([appearance.face, appearance.skinTone])
-  useEffect(() => {
-    skin.color.set(appearance.skinTone).multiplyScalar(ALBEDO)
-    skin.sheenColor = new Color(appearance.skinTone).lerp(new Color('#ffffff'), 0.4)
-    skin.emissive.copy(skinGlow(new Color(appearance.skinTone)))
-    face.redraw(appearance.face, appearance.skinTone)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [skin, face, faceKey])
+function applyMorphs(mesh: SkinnedMesh, morphs: Record<string, number>) {
+  const dict = mesh.morphTargetDictionary
+  const inf = mesh.morphTargetInfluences
+  if (!dict || !inf) return
+  for (const name in dict) inf[dict[name]] = morphs[name] ?? 0
+}
 
-  useBuilt(rig, JSON.stringify(appearance.hair), () => buildItem({ id: appearance.hair.id }, [appearance.hair.color, appearance.hair.color2 ?? appearance.hair.color]), shadows)
-
+function CharacterImpl({ appearance, shadows = false, handle }: CharacterProps & { handle: React.Ref<CharacterHandle> }) {
+  use(loadBaseMeta(appearance.base))
+  const base = BASES[appearance.base]
+  const hairDef = getWearable(appearance.hair.id)
   const o = appearance.outfit
-  const outfitRefs: Array<ItemRef | undefined> = o.dress ? [o.dress, o.shoes] : [o.top, o.bottom, o.shoes]
-  useBuilt(rig, JSON.stringify(outfitRefs), () => outfitRefs.flatMap((r) => buildItem(r)), shadows)
+  const itemRefs = o.dress ? [o.dress, o.shoes] : [o.top, o.bottom, o.shoes]
+  const defs: Array<{ def: WearableDef; color: string }> = []
+  if (hairDef) defs.push({ def: hairDef, color: appearance.hair.color })
+  for (const r of itemRefs) {
+    const d = r && WEARABLES[r.id]
+    if (r && d) defs.push({ def: d, color: itemColor(r, d) })
+  }
+  const gltfs = useGLTF([base.glb, ...defs.map((d) => d.def.glb)]) as GLTF[]
+  const masks = useTexture([base.mask, base.mask2])
 
-  useBuilt(rig, JSON.stringify(appearance.accessories), () => appearance.accessories.flatMap((r) => buildItem(r)), shadows)
+  // ---- esqueleto + malha do corpo (clone por instancia) ----
+  const rig = useMemo(() => buildRig(gltfs[0].scene), [gltfs[0]]) // eslint-disable-line react-hooks/exhaustive-deps
+  useImperativeHandle(handle, () => rig, [rig])
+  useEffect(() => {
+    applyRestPose(rig.bones, rig.root)
+  }, [rig])
 
-  // libera a textura/materiais ao desmontar
+  // mascaras: dados lineares, UV do glTF (sem flip)
+  useMemo(() => {
+    for (const t of masks) {
+      t.flipY = false
+      t.colorSpace = NoColorSpace
+      t.anisotropy = 4
+      t.needsUpdate = true
+    }
+  }, [masks])
+
+  // ---- material do corpo (um por instancia) ----
+  const bodyMat = useMemo(() => createBodyMaterial(rig.map, rig.normalMap, masks[0], masks[1]), [rig, masks])
+  useEffect(() => {
+    rig.body.material = bodyMat.material
+    rig.body.frustumCulled = false
+    return () => bodyMat.material.dispose()
+  }, [rig, bodyMat])
+
+  const lookKey = JSON.stringify([appearance.skin, appearance.suit, appearance.lips, appearance.hair.color])
+  useEffect(() => {
+    applyBodyLook(bodyMat, { skin: appearance.skin.tone, suit: appearance.suit.color, finish: appearance.suit.finish, lips: appearance.lips, hair: appearance.hair.color })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bodyMat, lookKey])
+
+  // ---- cabelo e roupa: presos ao mesmo esqueleto ----
+  const attachKey = defs.map((d) => d.def.id).join('|')
+  const attachments = useMemo(
+    () => defs.map((d, i) => buildAttachment(rig, d.def, gltfs[i + 1])),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [rig, attachKey, gltfs.length],
+  )
+  useEffect(() => {
+    for (const a of attachments) for (const m of a.meshes) rig.armature.add(m)
+    return () => {
+      for (const a of attachments) {
+        for (const m of a.meshes) m.removeFromParent()
+        a.material.dispose()
+        for (const s of a.skeletons) s.dispose()
+      }
+    }
+  }, [rig, attachments])
+
+  const colorKey = defs.map((d) => d.color).join('|')
+  useEffect(() => {
+    attachments.forEach((a, i) => a.setColor(defs[i].color))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attachments, colorKey])
+
+  // ---- morphs (corpo e cabelo compartilham os nomes) ----
+  const morphKey = JSON.stringify(appearance.morphs)
+  useEffect(() => {
+    applyMorphs(rig.body, appearance.morphs)
+    for (const a of attachments) for (const m of a.meshes) applyMorphs(m, appearance.morphs)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rig, attachments, morphKey])
+
+  // ---- sombras ----
+  useEffect(() => {
+    rig.body.castShadow = shadows
+    for (const a of attachments) for (const m of a.meshes) m.castShadow = shadows
+  }, [rig, attachments, shadows])
+
   useEffect(
     () => () => {
-      face.dispose()
-      skin.dispose()
+      rig.skeleton.dispose()
     },
-    [face, skin],
+    [rig],
   )
 
   return <primitive object={rig.root} />
+}
+
+/**
+ * Personagem: base GLB (esqueleto Mixamo + corpo com textura baked) + cabelo/roupas presos ao mesmo
+ * esqueleto, tudo a partir do JSON `appearance` (morphs, pele, macacao, labios, cabelo). Um clone por instancia.
+ * O `ref` expoe `{ root, skeleton, bones }` para a animacao.
+ */
+export const Character = forwardRef<CharacterHandle, CharacterProps>(function Character(props, ref) {
+  return (
+    <Suspense fallback={null}>
+      <CharacterImpl {...props} handle={ref} />
+    </Suspense>
+  )
 })
+
+// pre-carrega os GLB e mascaras (cache do drei)
+useGLTF.preload([BASES.doll.glb, ...Object.values(WEARABLES).map((w) => w.glb)])
+useTexture.preload([BASES.doll.mask, BASES.doll.mask2])
+void loadBaseMeta('doll')

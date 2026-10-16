@@ -9,8 +9,8 @@ export type ViewMode = 'character' | 'face'
 
 const FRAMING = {
   // alvo do orbit + posicao inicial da camera
-  character: { target: [0, 0.95, 0] as const, cam: [0, 1.25, 4.3] as const },
-  face: { target: [0, 1.6, 0] as const, cam: [0, 1.62, 1.05] as const },
+  character: { target: [0, 0.85, 0] as const, cam: [0, 1.05, 3.6] as const },
+  face: { target: [0, 1.46, 0] as const, cam: [0, 1.47, 0.85] as const },
 }
 
 /** Le `?view=character|face` da URL; null = jogo normal. */
@@ -62,7 +62,8 @@ export function CharacterViewer({ mode, shadows }: { mode: ViewMode; shadows: bo
         const geo = me.geometry
         t += ((geo.index ? geo.index.count : geo.attributes.position.count) / 3) * (me.isInstancedMesh ? me.count : 1)
       })
-      console.info(`CHARSTATS meshes=${m} tris=${t}`)
+      const r = three.gl.info.render
+      console.info(`CHARSTATS meshes=${m} tris=${t} | frame: calls=${r.calls} triangles=${r.triangles}`)
     }
     if (!g || still) return
     const t = state.clock.elapsedTime

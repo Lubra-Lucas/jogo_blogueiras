@@ -1,7 +1,7 @@
 /** Numeros ajustaveis do jogador. */
 export const PLAYER = {
-  radius: 0.35,
-  halfHeight: 0.55, // trecho reto; altura total = 2*(0.55+0.35) = 1.8 m
+  radius: 0.28,
+  halfHeight: 0.545, // trecho reto; altura total = 2*(0.545+0.28) = 1.65 m (boneca: corpo 1,60 m, coque ate ~1,70 m)
   spawn: [0, 5] as const, // x, z (y calculado)
   walkSpeed: 3.5,
   runSpeed: 6.5,
