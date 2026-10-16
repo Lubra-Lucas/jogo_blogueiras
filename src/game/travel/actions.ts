@@ -17,8 +17,8 @@ import { arrivalOf } from './worlds'
  * -> o overlay some. O perfil guarda a cidade atual e as visitadas; a primeira viagem rende a conquista "Primeira viagem".
  */
 const params = new URLSearchParams(window.location.search)
-/** so em desenvolvimento: ?travelunlock=1 (ou window.__travelUnlock = true) ignora o nivel minimo */
-export const devUnlock = () => import.meta.env.DEV && (params.get('travelunlock') === '1' || (window as unknown as { __travelUnlock?: boolean }).__travelUnlock === true)
+/** ?viagem=livre (versao de teste, tambem no site) ou, em desenvolvimento, ?travelunlock=1 / window.__travelUnlock: ignora o nivel minimo */
+export const devUnlock = () => params.get('viagem') === 'livre' || (import.meta.env.DEV && (params.get('travelunlock') === '1' || (window as unknown as { __travelUnlock?: boolean }).__travelUnlock === true))
 
 export type TravelCheck = { ok: true } | { ok: false; reason: 'level' | 'coins' | 'busy' | 'same' | 'unknown'; msg: string }
 

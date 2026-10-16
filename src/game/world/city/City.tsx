@@ -28,8 +28,8 @@ export function City({ shadows, propDist, buildingDist }: { shadows: boolean; pr
       <ParqueDeco shadows={shadows} />
       <Lago shadows={shadows} />
       <Buildings shadows={shadows} />
-      <KitScene items={CENTRO_BUILDINGS} shadows={shadows} lod={60} chunk={56} />
-      <KitScene items={CENTRO_PROPS} shadows={shadows} cull="props" lod={26} chunk={60} pad={6} />
+      <KitScene items={CENTRO_BUILDINGS} shadows={shadows} lod={50} chunk={56} />
+      <KitScene items={CENTRO_PROPS} shadows={shadows} cull="props" lod={21} chunk={60} pad={6} />
       {/* Jardim + Parque: massas (casas, Casa dos Sonhos, fonte, coreto) projetam sombra; detalhes e props pequenos nao, e somem a ~70 m */}
       <KitScene items={ROMANTIC_BIG} shadows={shadows} lod={60} chunk={56} />
       <KitScene items={ROMANTIC_SMALL} shadows={shadows} cast={false} max={SMALL_DIST} lod={24} chunk={60} pad={6} />

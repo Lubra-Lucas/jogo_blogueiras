@@ -6,6 +6,7 @@ import { CITY, ROAD_SPEC } from './layout'
 import { flatShape, merge, paint, ribbon } from './geo'
 import { CENTRO_ITEMS } from './centro'
 import { registerGlowEmissive, registerWet } from '../environment/registry'
+import { addGrain } from './grain'
 
 const WALK = { walkable: true }
 
@@ -165,7 +166,10 @@ export function Surfaces({ shadows }: { shadows: boolean }) {
           <meshPhysicalMaterial
             ref={(m) => {
               // chuva: ruas e pracas ficam molhadas (mais lisas, mais escuras, com verniz)
-              if (m) registerWet(m, i === 1 ? { roughWet: 0.3, ccWet: 0.6, dark: 0.1 } : i < 5 ? { roughWet: 0.34, ccWet: 0.95, dark: 0.22 } : { roughWet: 0.16, ccWet: 1, dark: 0.12 })
+              if (!m) return
+              registerWet(m, i === 1 ? { roughWet: 0.3, ccWet: 0.6, dark: 0.1 } : i < 5 ? { roughWet: 0.34, ccWet: 0.95, dark: 0.22 } : { roughWet: 0.16, ccWet: 1, dark: 0.12 })
+              // graniado leve: calcada (2), meio-fio plano (3) e asfalto (4) ganham pedrisco/relevo perto da camera
+              if (i >= 2 && i <= 4) addGrain(m, i === 4 ? { bump: 0.05, scale: 3.2, tone: 0.09, far: 34, channel: 1 } : { bump: 0.035, scale: 2.2, tone: 0.1, far: 30, channel: 0 })
             }}
             vertexColors
             roughness={i === 1 ? 0.45 : i >= 5 ? 0.35 : 0.9}
