@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAppearanceStore } from '../state/appearanceStore'
 import { loadBaseMeta, type MorphMeta } from '../game/character/assets'
+import { getWearable, hairStyles } from '../game/character/items'
 import { FINISH_LABELS, type Appearance, type SuitFinish } from '../shared/appearance'
 
 /** Painel de desenvolvimento (precursor do editor de personagem): `?editor=1` ou `?view=character`. */
@@ -30,6 +31,29 @@ export function EditorPanel() {
       </button>
       {open && (
         <div className="editor-body">
+          <h3>Cabelo</h3>
+          <label className="editor-row">
+            <span>Estilo</span>
+            <select
+              value={appearance.hair.id ?? ''}
+              onChange={(e) => {
+                const id = e.target.value || null
+                // cada estilo tem a sua cor padrao (ao trocar, volta para ela)
+                patch({ hair: { id, color: (id && getWearable(id)?.defaultColor) || appearance.hair.color } })
+              }}
+            >
+              <option value="">Sem cabelo</option>
+              {hairStyles().map((h) => (
+                <option key={h.id} value={h.id}>
+                  {h.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="editor-row">
+            <span>Cor do cabelo</span>
+            <input type="color" value={appearance.hair.color} onChange={(e) => patch({ hair: { ...appearance.hair, color: e.target.value } })} />
+          </label>
           <h3>Cores</h3>
           <label className="editor-row">
             <span>Pele</span>
@@ -48,10 +72,6 @@ export function EditorPanel() {
                 </option>
               ))}
             </select>
-          </label>
-          <label className="editor-row">
-            <span>Cabelo</span>
-            <input type="color" value={appearance.hair.color} onChange={(e) => patch({ hair: { ...appearance.hair, color: e.target.value } })} />
           </label>
           <label className="editor-row">
             <span>Batom</span>

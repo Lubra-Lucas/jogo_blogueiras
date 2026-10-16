@@ -1,6 +1,6 @@
 import { forwardRef, Suspense, use, useEffect, useImperativeHandle, useMemo } from 'react'
 import { useGLTF, useTexture } from '@react-three/drei'
-import { Color, MeshPhysicalMaterial, NoColorSpace, Skeleton, type Bone, type Group, type Object3D, type SkinnedMesh, type Texture } from 'three'
+import { Color, MeshPhysicalMaterial, NoColorSpace, Skeleton, type Bone, type Group, type MeshStandardMaterial, type Object3D, type SkinnedMesh, type Texture } from 'three'
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import type { GLTF } from 'three-stdlib'
 import type { Appearance } from '../../shared/appearance'
@@ -69,6 +69,8 @@ function buildAttachment(rig: Rig, def: WearableDef, gltf: GLTF): Attachment {
   })
   const skeletons: Skeleton[] = []
   const meshes: SkinnedMesh[] = []
+  // cabelo com textura propria: baseColor/normal vem do material do proprio GLB (compartilhados no cache, nao descartar)
+  const own = def.texture === 'own' ? (found[0]?.material as MeshStandardMaterial | undefined) : undefined
   for (const m of found) {
     ensureTangents(m.geometry)
     const bones = m.skeleton.bones.map((b) => rig.bones[b.name])
@@ -83,7 +85,7 @@ function buildAttachment(rig: Rig, def: WearableDef, gltf: GLTF): Attachment {
   let material: MeshPhysicalMaterial
   let setColor: (c: string) => void
   if (def.kind === 'hair') {
-    const h = createHairMaterial(rig.map, rig.normalMap)
+    const h = own ? createHairMaterial(own.map, own.normalMap, def.refLum) : createHairMaterial(rig.map, rig.normalMap)
     material = h.material
     setColor = (c) => {
       ;(h.uniforms.uHair.value as Color).set(c)

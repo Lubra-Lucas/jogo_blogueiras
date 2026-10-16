@@ -36,6 +36,8 @@ export function CharacterViewer({ mode, shadows }: { mode: ViewMode; shadows: bo
     const v = q.get(k)?.split(',').map(Number)
     return v && v.length === 3 && v.every(Number.isFinite) ? [v[0], v[1], v[2]] : null
   }
+  // ?yaw=graus gira a plataforma (so com ?still=1): vista de costas = 180
+  const yaw = ((Number(q.get('yaw')) || 0) * Math.PI) / 180
   const f = { cam: num('cam') ?? base.cam, target: num('at') ?? base.target }
 
   useLayoutEffect(() => {
@@ -73,7 +75,7 @@ export function CharacterViewer({ mode, shadows }: { mode: ViewMode; shadows: bo
 
   return (
     <>
-      <group ref={turntable} position={[0, 0.03, 0]}>
+      <group ref={turntable} position={[0, 0.03, 0]} rotation={[0, yaw, 0]}>
         <Character appearance={appearance} shadows={shadows} />
       </group>
       <OrbitControls

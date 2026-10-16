@@ -14,12 +14,43 @@ export interface WearableDef {
   /** 'hair' = malha de cabelo (textura do atlas, recolorida); 'garment' = roupa (cor lisa) */
   kind: 'hair' | 'garment'
   defaultColor: string
+  /** rotulo (pt) para a UI */
+  label: string
+  /**
+   * Cabelo: de onde vem a textura. 'atlas' (padrao) = atlas do corpo (o coque usa o mesmo UV do corpo);
+   * 'own' = textura propria do GLB do cabelo (baseColor + normal proprios).
+   */
+  texture?: 'atlas' | 'own'
+  /** Cabelo: luminancia linear media da textura (referencia da recoloracao por razao de luminancia). */
+  refLum?: number
 }
 
 const A = `${import.meta.env.BASE_URL}assets/characters/`
 
 export const WEARABLES: Record<string, WearableDef> = {
-  'hair.meshyUpdo': { id: 'hair.meshyUpdo', slot: 'hair', glb: `${A}hair_meshy_updo.glb`, kind: 'hair', defaultColor: '#d8b46e' },
+  'hair.meshyUpdo': { id: 'hair.meshyUpdo', slot: 'hair', glb: `${A}hair_meshy_updo.glb`, kind: 'hair', defaultColor: '#d8b46e', label: 'Coque loiro' },
+  'hair.chestnutWaves': {
+    id: 'hair.chestnutWaves',
+    slot: 'hair',
+    glb: `${A}hair_chestnutWaves.glb`,
+    kind: 'hair',
+    defaultColor: '#816b58',
+    label: 'Ondas castanhas',
+    texture: 'own',
+    refLum: 0.157,
+  },
+}
+
+/** Estilos de cabelo disponiveis (ordem do registro), para o seletor do editor. */
+export function hairStyles(): WearableDef[] {
+  return Object.values(WEARABLES).filter((w) => w.slot === 'hair')
+}
+
+/** Aceita `chestnutWaves` ou `hair.chestnutWaves`; null se desconhecido. */
+export function resolveHairId(raw: string | null | undefined): string | null {
+  if (!raw) return null
+  const id = raw.startsWith('hair.') ? raw : `hair.${raw}`
+  return WEARABLES[id] ? id : null
 }
 
 export function getWearable(id: string | null | undefined): WearableDef | null {

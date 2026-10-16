@@ -164,8 +164,8 @@ export function applyBodyLook(m: DollBodyMaterial, look: BodyLook) {
 }
 
 /** Cabelo: recolore mantendo o detalhe de luminancia (mechas/brilho); brilho suave de cabelo. */
-export function createHairMaterial(map: Texture | null, normalMap: Texture | null): { material: MeshPhysicalMaterial; uniforms: U } {
-  const uniforms: U = { uHair: u(new Color('#d8b46e')) }
+export function createHairMaterial(map: Texture | null, normalMap: Texture | null, refLum = REF_HAIR_LUM): { material: MeshPhysicalMaterial; uniforms: U } {
+  const uniforms: U = { uHair: u(new Color('#d8b46e')), uRefLum: u(refLum) }
   const material = new MeshPhysicalMaterial({
     map,
     normalMap,
@@ -181,18 +181,18 @@ export function createHairMaterial(map: Texture | null, normalMap: Texture | nul
   material.onBeforeCompile = (shader: WebGLProgramParametersWithUniforms) => {
     Object.assign(shader.uniforms, uniforms)
     shader.fragmentShader = shader.fragmentShader
-      .replace('void main() {', 'uniform vec3 uHair;\nvoid main() {')
+      .replace('void main() {', 'uniform vec3 uHair; uniform float uRefLum;\nvoid main() {')
       .replace(
         '#include <map_fragment>',
         /* glsl */ `
 #ifdef USE_MAP
   vec4 sampledDiffuseColor = texture2D( map, vMapUv );
   float hl = dot(sampledDiffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722));
-  float hr = clamp(hl / ${REF_HAIR_LUM}, 0.4, 1.3);
+  float hr = clamp(hl / uRefLum, 0.4, 1.3);
   diffuseColor.rgb *= uHair * mix(1.0, hr, 0.85);
 #endif`,
       )
   }
-  material.customProgramCacheKey = () => 'doll-hair-v1'
+  material.customProgramCacheKey = () => 'doll-hair-v2'
   return { material, uniforms }
 }
