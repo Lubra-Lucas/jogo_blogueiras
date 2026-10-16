@@ -5,11 +5,14 @@ import { CITY } from '../game/world/city/layout'
 import { usePlayerStore } from '../state/playerStore'
 import { useUiStore } from '../state/uiStore'
 import { drawBig, drawMini } from './mapDraw'
+import { activeDoors, activeWorld } from '../game/travel/worlds'
+import { useTravelStore } from '../game/travel/travelStore'
 
 const MINI_RADIUS_M = 85
 
 /** Minimapa redondo (canto superior direito, abaixo do FPS). Toque/clique abre o mapa grande; M tambem. */
 export function Minimap() {
+  useTravelStore((s) => s.cityId) // (game/travel) refaz a legenda ao trocar de cidade
   const inside = useInteriorStore((s) => s.roomId !== null) // dentro de um interior o minimapa some
   const mini = useRef<HTMLCanvasElement>(null)
   const big = useRef<HTMLCanvasElement>(null)
@@ -80,14 +83,14 @@ export function Minimap() {
         <div className="bigmap" onClick={() => setOpen(false)}>
           <div className="bigmap__panel" onClick={(e) => e.stopPropagation()}>
             <div className="bigmap__head">
-              <span>Mapa da cidade</span>
+              <span>{activeWorld()?.mapTitle ?? 'Mapa da cidade'}</span>
               <button type="button" className="bigmap__close" onClick={() => setOpen(false)} aria-label="Fechar mapa">
                 ×
               </button>
             </div>
             <canvas ref={big} className="bigmap__canvas" />
             <ul className="bigmap__legend">
-              {CITY.pois.map((p) => (
+              {(activeWorld() ? activeDoors() : CITY.pois).map((p) => (
                 <li key={p.id}>
                   <i style={{ background: p.color }}>{p.icon}</i>
                   {p.name}

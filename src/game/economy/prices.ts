@@ -133,3 +133,46 @@ export function basePrice(rarity: Rarity, slot: string, currency: Currency): num
   const table = currency === 'brilhos' ? BASE_BRILHOS : BASE_DIAMANTES
   return roundPrice(table[rarity] * (SLOT_MULT[slot] ?? 1))
 }
+
+// ---------------------------------------------------------------- Pets (Petshop do Jardim)
+/** Preco em Brilhos por raca (pelagem rara = + PET_TIER_ADD). Sem sorteio: a jogadora escolhe raca e pelagem. Id do item: `pet.<raca>.<pelagem>`. */
+export const PET_BREED_PRICE: Record<string, number> = { poodle: 1400, shiba: 1500, dachshund: 1300, caramelo: 900, siames: 1400, persa: 1600, srd: 800 }
+export const PET_TIER_ADD: Record<string, number> = { comum: 0, raro: 600 }
+/** Pelagens que tambem podem ser pagas em Diamantes (todas continuam disponiveis em Brilhos). */
+export const PET_DIAMOND_COATS: Record<string, number> = { 'persa.branco': 150, 'shiba.creme': 140 }
+
+export interface PetFoodDef {
+  id: string
+  label: string
+  blurb: string
+  price: number
+  /** quanto enche a barra de fome (0-100) */
+  fill: number
+  /** alegria extra ao comer */
+  joy: number
+}
+export const PET_FOOD: PetFoodDef[] = [
+  { id: 'food.racao', label: 'Ração do dia', blurb: 'Equilibrada e crocante.', price: 30, fill: 45, joy: 2 },
+  { id: 'food.sache', label: 'Sachê gourmet', blurb: 'Patê macio, o favorito de muitos.', price: 55, fill: 60, joy: 8 },
+  { id: 'food.biscoito', label: 'Biscoitinho', blurb: 'Para premiar o adestramento.', price: 20, fill: 15, joy: 14 },
+]
+
+export type PetAccSlot = 'collar' | 'bow' | 'outfit'
+export interface PetAccDef {
+  id: string
+  label: string
+  slot: PetAccSlot
+  color: string
+  price: number
+}
+/** Acessorios de pet (id `petacc.*`). */
+export const PET_ACCESSORIES: PetAccDef[] = [
+  { id: 'petacc.coleira-vinho', label: 'Coleira vinho', slot: 'collar', color: '#7a2332', price: 180 },
+  { id: 'petacc.coleira-marinho', label: 'Coleira azul-marinho', slot: 'collar', color: '#1f3556', price: 180 },
+  { id: 'petacc.coleira-dourada', label: 'Coleira dourada', slot: 'collar', color: '#c49a3a', price: 420 },
+  { id: 'petacc.laco-creme', label: 'Laço creme', slot: 'bow', color: '#efe3cf', price: 150 },
+  { id: 'petacc.laco-verde', label: 'Laço verde-musgo', slot: 'bow', color: '#4f7a55', price: 150 },
+  { id: 'petacc.laco-rosa', label: 'Laço rosé', slot: 'bow', color: '#e8a7b4', price: 260 },
+  { id: 'petacc.roupinha-listrada', label: 'Roupinha listrada', slot: 'outfit', color: '#2c4a6e', price: 380 },
+  { id: 'petacc.roupinha-mostarda', label: 'Roupinha mostarda', slot: 'outfit', color: '#c8932f', price: 380 },
+]

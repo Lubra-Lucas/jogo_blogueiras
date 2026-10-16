@@ -62,7 +62,7 @@ export function ShopScreen() {
     }
   }, [open, close])
 
-  if (!open || !shop) return null
+  if (!open || !shop || open === 'petshop') return null
   const tabs: ShopTab[] = open === 'salao' ? ['vitrine', 'catalogo', 'servicos', 'diamantes', 'diario'] : ['vitrine', 'catalogo', 'diamantes', 'diario']
   const ctx = { stage: true }
   const names = tried.map((id) => ({ id, label: items[id]?.label ?? id }))

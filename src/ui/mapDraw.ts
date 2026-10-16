@@ -1,4 +1,5 @@
 import { CITY, ROAD_SPEC, type Shape } from '../game/world/city/layout'
+import { activeWorld } from '../game/travel/worlds'
 
 /** Desenho 2D da cidade a partir dos dados de layout (minimapa e mapa grande). Norte para cima. */
 
@@ -163,6 +164,8 @@ function arrow(g: CanvasRenderingContext2D, x: number, y: number, yaw: number, s
 
 /** Minimapa redondo centrado no jogador (norte para cima). */
 export function drawMini(g: CanvasRenderingContext2D, px: number, size: number, ox: number, oz: number, yaw: number, radiusM: number) {
+  const alt = activeWorld() // cidade nova ativa (game/travel): mapa proprio
+  if (alt) return alt.map.mini(g, px, size, ox, oz, yaw, radiusM)
   const base = getBaseMap()
   g.clearRect(0, 0, px, px)
   g.save()
@@ -192,6 +195,8 @@ export function drawMini(g: CanvasRenderingContext2D, px: number, size: number, 
 
 /** Mapa grande: cidade inteira com nomes dos bairros. */
 export function drawBig(g: CanvasRenderingContext2D, px: number, ox: number, oz: number, yaw: number) {
+  const alt = activeWorld()
+  if (alt) return alt.map.big(g, px, ox, oz, yaw)
   const base = getBaseMap()
   g.clearRect(0, 0, px, px)
   const span = (CITY.half + 12) * 2

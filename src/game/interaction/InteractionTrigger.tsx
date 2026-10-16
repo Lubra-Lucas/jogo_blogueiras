@@ -6,11 +6,14 @@ import { driveBridge } from '../vehicles/driveStore'
 import { useMinigameStore } from '../minigames/minigameStore'
 import { interiorBridge } from '../interiors/interiorBridge'
 import { hasInterior } from '../interiors/interiorStore'
+import { activeDoors } from '../travel/worlds'
 import { interact, poiMinigames, poiShops, useInteractionStore, type NearbyPoi } from './interactionStore'
 
 /** Distancia (m) ate a porta para aparecer o aviso. */
 export const INTERACT_RADIUS = 3.5
 const DOORS = CITY.pois.filter((p) => p.kind !== 'spawn')
+/** (game/travel) portas da cidade onde a jogadora esta; na principal sao as de DOORS */
+const doorsNow = () => activeDoors() ?? DOORS
 
 /**
  * Dentro do Canvas (nao renderiza nada): a ~8 Hz acha a porta mais proxima do jogador e publica em
@@ -46,7 +49,7 @@ export function InteractionTrigger() {
     if (!useMinigameStore.getState().active && !driveBridge.active && !interiorBridge.active) {
       const p = usePlayerStore.getState().position
       let bd = INTERACT_RADIUS * INTERACT_RADIUS
-      for (const d of DOORS) {
+      for (const d of doorsNow()) {
         const dd = (d.x - p.x) ** 2 + (d.z - p.z) ** 2
         if (dd < bd) {
           bd = dd

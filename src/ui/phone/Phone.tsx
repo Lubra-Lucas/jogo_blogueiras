@@ -16,6 +16,8 @@ import { GCar } from '../vehicles/CarArt'
 import { useVehicleStore } from '../../game/vehicles/driveStore'
 import { openMarket } from '../market/marketUi'
 import { IconTag } from '../shop/icons'
+import { IPlane } from '../travel/icons'
+import { useTravelStore } from '../../game/travel/travelStore'
 import '../shop/shop.css'
 import '../phone/phone.css'
 
@@ -62,6 +64,7 @@ const APPS: Array<{ id: string; label: string; color: string; icon: ReactNode; r
   { id: 'mercado', label: 'Mercado', color: '#b8892f', icon: <GMercado />, run: () => (useUiStore.getState().closePhone(), openMarket()) },
   { id: 'garagem', label: 'Garagem', color: '#4a6a8a', icon: <GCar />, run: () => (useUiStore.getState().closePhone(), useVehicleStore.getState().setGarage(true)) },
   { id: 'mapa', label: 'Mapa', color: '#4b8fcf', icon: <GMap />, run: () => (useUiStore.getState().closePhone(), useUiStore.getState().setBigMap(true)) },
+  { id: 'viagens', label: 'Viagens', color: '#2f8fa8', icon: <IPlane />, run: () => (useUiStore.getState().closePhone(), useTravelStore.getState().setPanel(true)) },
   { id: 'camera', label: 'Câmera', color: '#4a3a56', icon: <GCamera />, run: () => useUiStore.getState().setCameraMode(true) },
   { id: 'guarda', label: 'Guarda-roupa', color: '#7d63b0', icon: <GWardrobe />, run: () => useUiStore.getState().openMenu('guardaroupa') },
   { id: 'perfil', label: 'Perfil', color: '#c4688a', icon: <GProfile />, run: () => useUiStore.getState().openMenu('perfil') },

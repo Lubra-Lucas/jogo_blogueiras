@@ -1,0 +1,350 @@
+/* Vôlei de Praia: ceu turquesa, areia e creme (cores reais de Miami Beach), vidro perolado nos paineis. */
+.vb-root {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: calc(8px + env(safe-area-inset-top)) calc(10px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));
+  background: linear-gradient(180deg, #6cc4f0 0%, #cdeff6 20%, #f5e4bc 22%, #e9cf9a 100%);
+  color: #26404a;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  overflow: hidden;
+  pointer-events: auto;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  animation: vb-in 0.3s ease;
+}
+@keyframes vb-in {
+  from { opacity: 0; transform: scale(1.02); }
+}
+.vb-root button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.vb-top {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+.vb-title {
+  flex: 1;
+  margin: 0;
+  font: italic 700 clamp(18px, 4.6vw, 24px) 'Playfair Display', 'Times New Roman', serif;
+  color: #14566e;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.vb-x,
+.vb-pause {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 2px 8px rgba(20, 70, 90, 0.2);
+}
+.vb-hearts {
+  display: inline-flex;
+  gap: 2px;
+  color: rgba(40, 80, 100, 0.22);
+}
+.vb-hearts svg.on {
+  color: #e9553b;
+}
+.vb-hud {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+  flex: none;
+}
+.vb-hud span {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 6px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 8px rgba(20, 70, 90, 0.14);
+}
+.vb-hud small {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5b8594;
+}
+.vb-hud b {
+  font-size: 18px;
+}
+.vb-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.vb-hint {
+  position: relative;
+  z-index: 3;
+  margin-top: auto;
+  text-align: center;
+  font-weight: 800;
+  font-size: 14px;
+  color: #14566e;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+}
+.vb-pad {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  flex: none;
+}
+.vb-lane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 76px;
+  border-radius: 22px;
+  font-weight: 800;
+  font-size: 14px;
+  color: #fff;
+  background: linear-gradient(160deg, #3bb7b3, #2a86ad);
+  box-shadow: 0 8px 18px rgba(30, 100, 130, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  touch-action: none;
+}
+.vb-lane--1 {
+  background: linear-gradient(160deg, #f0a65a, #e9855b);
+}
+.vb-lane:active {
+  transform: translateY(2px) scale(0.98);
+}
+.vb-lane__ar {
+  font-size: 26px;
+  line-height: 1;
+}
+.vb-card {
+  position: relative;
+  z-index: 4;
+  margin: auto;
+  width: min(460px, 100%);
+  max-height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 26px;
+  background: rgba(255, 253, 248, 0.9);
+  box-shadow: 0 14px 40px rgba(20, 70, 90, 0.3), inset 0 0 0 1px rgba(201, 154, 46, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.vb-card--sm {
+  width: min(380px, 100%);
+}
+.vb-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  padding: 12px;
+  background: rgba(20, 60, 80, 0.35);
+}
+.vb-hero {
+  position: relative;
+  height: 110px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #6cc4f0, #cdeff6 56%, #f5e4bc 56%);
+}
+.vb-hero__sun {
+  position: absolute;
+  right: 16%;
+  top: 14%;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffbe8 30%, rgba(255, 244, 200, 0) 72%);
+  box-shadow: 0 0 30px 14px rgba(255, 240, 190, 0.6);
+}
+.vb-hero__sea {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 42%;
+  height: 14%;
+  background: linear-gradient(180deg, #34b9d4, #8fe6df);
+}
+.vb-hero__ball {
+  position: absolute;
+  left: 46%;
+  top: 38%;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, #e6e1d6);
+  box-shadow: inset -4px -4px 0 rgba(47, 159, 208, 0.45), 0 14px 6px -6px rgba(90, 70, 30, 0.35);
+  animation: vb-bob 1.4s ease-in-out infinite alternate;
+}
+@keyframes vb-bob {
+  to { transform: translateY(-24px); }
+}
+.vb-lead {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: #3d5a66;
+}
+.vb-diff {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.vb-diff button {
+  padding: 9px 4px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 13px;
+  background: rgba(20, 90, 120, 0.08);
+}
+.vb-diff button.on {
+  color: #fff;
+  background: linear-gradient(160deg, #3bb7b3, #2a86ad);
+  box-shadow: 0 4px 10px rgba(30, 100, 130, 0.3);
+}
+.vb-daily {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #3d5a66;
+}
+.vb-best {
+  font-size: 13px;
+  color: #5b8594;
+}
+.vb-actions {
+  display: flex;
+  gap: 10px;
+}
+.vb-btn {
+  flex: 1;
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 15px;
+  background: rgba(20, 90, 120, 0.1);
+}
+.vb-btn--pri {
+  color: #fff;
+  background: linear-gradient(160deg, #f0a65a, #e9855b);
+  box-shadow: 0 6px 14px rgba(200, 110, 70, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+.vb-res-title {
+  margin: 0;
+  font: italic 700 24px 'Playfair Display', serif;
+  color: #14566e;
+  text-align: center;
+}
+.vb-step {
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+  color: #5b8594;
+}
+.vb-stars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  color: rgba(40, 80, 100, 0.2);
+}
+.vb-stars svg.on {
+  color: #f0b429;
+  filter: drop-shadow(0 2px 4px rgba(200, 140, 20, 0.45));
+}
+.vb-score {
+  text-align: center;
+  font: 800 38px/1 system-ui, sans-serif;
+  color: #14566e;
+}
+.vb-score small {
+  font-size: 13px;
+  color: #e9553b;
+}
+.vb-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12.5px;
+  color: #5b8594;
+}
+.vb-stats li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(20, 90, 120, 0.07);
+}
+.vb-stats b {
+  color: #26404a;
+}
+.vb-rew {
+  text-align: center;
+  font-weight: 800;
+  color: #b8792d;
+}
+.vb-board {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+}
+.vb-board li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+.vb-board li.you {
+  background: rgba(240, 166, 90, 0.25);
+  font-weight: 800;
+}
+.vb-board li span {
+  width: 18px;
+  color: #5b8594;
+}
+.vb-board li b {
+  flex: 1;
+}
+.vb-board li em {
+  font-style: normal;
+}
+.vb-note {
+  text-align: center;
+  font-size: 12px;
+  color: #5b8594;
+}

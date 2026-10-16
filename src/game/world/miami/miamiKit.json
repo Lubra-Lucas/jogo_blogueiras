@@ -1,0 +1,1546 @@
+{
+ "units": "m",
+ "up": "Y",
+ "front": "+Z",
+ "style": "Miami Beach Art Deco (Ocean Drive) + praia",
+ "pieces": {
+  "deco_hotel_a": {
+   "file": "kit/deco_hotel_a.glb",
+   "tris": 912,
+   "bytes": 56212,
+   "size": [
+    18.5,
+    13.4,
+    15.51
+   ],
+   "materials": [
+    "base",
+    "white",
+    "accent2",
+    "glass",
+    "glow",
+    "deep",
+    "trim",
+    "glow2"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     18.0,
+     13.0,
+     13.0
+    ],
+    "center": [
+     0,
+     6.5,
+     0
+    ]
+   }
+  },
+  "lod_deco_hotel_a": {
+   "file": "kit/lod_deco_hotel_a.glb",
+   "tris": 432,
+   "bytes": 30180,
+   "size": [
+    18.5,
+    13.4,
+    15.51
+   ],
+   "materials": [
+    "base",
+    "white",
+    "accent",
+    "glass",
+    "glow",
+    "deep",
+    "accent2",
+    "glow2"
+   ],
+   "walkable": false
+  },
+  "deco_hotel_b": {
+   "file": "kit/deco_hotel_b.glb",
+   "tris": 1032,
+   "bytes": 47772,
+   "size": [
+    17.8,
+    13.35,
+    16.05
+   ],
+   "materials": [
+    "base",
+    "white",
+    "glass",
+    "accent",
+    "glow",
+    "deep",
+    "trim",
+    "glow2"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     16.0,
+     11.0,
+     14.0
+    ],
+    "center": [
+     0,
+     5.5,
+     0
+    ]
+   }
+  },
+  "lod_deco_hotel_b": {
+   "file": "kit/lod_deco_hotel_b.glb",
+   "tris": 480,
+   "bytes": 27884,
+   "size": [
+    17.746,
+    13.35,
+    15.984
+   ],
+   "materials": [
+    "base",
+    "white",
+    "glass",
+    "accent",
+    "glow",
+    "deep",
+    "glow2"
+   ],
+   "walkable": false
+  },
+  "deco_hotel_c": {
+   "file": "kit/deco_hotel_c.glb",
+   "tris": 804,
+   "bytes": 44256,
+   "size": [
+    24.5,
+    11.2,
+    13.15
+   ],
+   "materials": [
+    "base",
+    "white",
+    "deep",
+    "accent",
+    "glass",
+    "glow",
+    "glow2",
+    "trim",
+    "accent2"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     24.0,
+     8.0,
+     12.0
+    ],
+    "center": [
+     0,
+     4.0,
+     0.0
+    ]
+   }
+  },
+  "lod_deco_hotel_c": {
+   "file": "kit/lod_deco_hotel_c.glb",
+   "tris": 540,
+   "bytes": 32308,
+   "size": [
+    24.5,
+    11.2,
+    13.15
+   ],
+   "materials": [
+    "base",
+    "white",
+    "deep",
+    "accent",
+    "glass",
+    "glow",
+    "glow2",
+    "trim",
+    "accent2"
+   ],
+   "walkable": false
+  },
+  "deco_tower": {
+   "file": "kit/deco_tower.glb",
+   "tris": 864,
+   "bytes": 50696,
+   "size": [
+    9.35,
+    27.1,
+    11.075
+   ],
+   "materials": [
+    "base",
+    "white",
+    "accent",
+    "trim",
+    "glow",
+    "glass",
+    "deep",
+    "accent2"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     9.0,
+     14.0,
+     9.0
+    ],
+    "center": [
+     0,
+     7.0,
+     0
+    ]
+   }
+  },
+  "lod_deco_tower": {
+   "file": "kit/lod_deco_tower.glb",
+   "tris": 468,
+   "bytes": 29320,
+   "size": [
+    9.35,
+    27.1,
+    11.075
+   ],
+   "materials": [
+    "base",
+    "white",
+    "accent",
+    "trim",
+    "glow",
+    "glass",
+    "deep",
+    "accent2"
+   ],
+   "walkable": false
+  },
+  "deco_shop": {
+   "file": "kit/deco_shop.glb",
+   "tris": 264,
+   "bytes": 21188,
+   "size": [
+    11.4,
+    7.3,
+    11.32
+   ],
+   "materials": [
+    "base",
+    "white",
+    "glass",
+    "trim",
+    "deep",
+    "accent2",
+    "glow",
+    "glow2"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     11.0,
+     5.0,
+     9.0
+    ],
+    "center": [
+     0,
+     2.5,
+     0
+    ]
+   }
+  },
+  "lod_deco_shop": {
+   "file": "kit/lod_deco_shop.glb",
+   "tris": 252,
+   "bytes": 20616,
+   "size": [
+    11.4,
+    7.3,
+    11.32
+   ],
+   "materials": [
+    "base",
+    "white",
+    "glass",
+    "trim",
+    "deep",
+    "accent2",
+    "glow",
+    "glow2"
+   ],
+   "walkable": false
+  },
+  "airport_terminal": {
+   "file": "kit/airport_terminal.glb",
+   "tris": 728,
+   "bytes": 37644,
+   "size": [
+    44.0,
+    21.74,
+    19.1
+   ],
+   "materials": [
+    "base",
+    "white",
+    "glass",
+    "trim",
+    "accent",
+    "glow",
+    "accent2",
+    "glow2",
+    "deep"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "boxes",
+    "size": [
+     [
+      14.0,
+      7.2,
+      16.0,
+      -12.0,
+      3.6,
+      0.0
+     ],
+     [
+      14.0,
+      7.2,
+      16.0,
+      12.0,
+      3.6,
+      0.0
+     ],
+     [
+      10.0,
+      7.2,
+      1.0,
+      0.0,
+      3.6,
+      -7.5
+     ],
+     [
+      3.2,
+      16.0,
+      3.2,
+      -22.0,
+      8.0,
+      -1.5
+     ]
+    ],
+    "center": null
+   }
+  },
+  "lod_airport_terminal": {
+   "file": "kit/lod_airport_terminal.glb",
+   "tris": 716,
+   "bytes": 36656,
+   "size": [
+    44.0,
+    21.74,
+    19.1
+   ],
+   "materials": [
+    "base",
+    "white",
+    "glass",
+    "trim",
+    "accent",
+    "glow",
+    "accent2",
+    "glow2",
+    "deep"
+   ],
+   "walkable": false
+  },
+  "checkin_counter": {
+   "file": "kit/checkin_counter.glb",
+   "tris": 384,
+   "bytes": 20740,
+   "size": [
+    6.2,
+    3.455,
+    2.96
+   ],
+   "materials": [
+    "white",
+    "deep",
+    "accent2",
+    "glass",
+    "trim",
+    "glow"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     6.2,
+     1.1,
+     1.6
+    ],
+    "center": [
+     0,
+     0.55,
+     0
+    ]
+   }
+  },
+  "airplane_deco": {
+   "file": "kit/airplane_deco.glb",
+   "tris": 746,
+   "bytes": 33976,
+   "size": [
+    10.4,
+    4.391,
+    9.0
+   ],
+   "materials": [
+    "white",
+    "glass",
+    "accent2",
+    "trim",
+    "deep",
+    "accent"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "cylinder",
+    "size": [
+     1.2,
+     2.5
+    ],
+    "center": [
+     0,
+     0.0,
+     0
+    ]
+   }
+  },
+  "lod_airplane_deco": {
+   "file": "kit/lod_airplane_deco.glb",
+   "tris": 494,
+   "bytes": 18568,
+   "size": [
+    10.4,
+    4.391,
+    9.0
+   ],
+   "materials": [
+    "white",
+    "glass",
+    "accent2",
+    "trim"
+   ],
+   "walkable": false
+  },
+  "palm_royal": {
+   "file": "kit/palm_royal.glb",
+   "tris": 894,
+   "bytes": 26572,
+   "size": [
+    8.4,
+    9.14,
+    7.295
+   ],
+   "materials": [
+    "wood",
+    "leaf"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "cylinder",
+    "size": [
+     0.3,
+     6.0
+    ],
+    "center": [
+     0,
+     3.0,
+     0
+    ]
+   }
+  },
+  "lod_palm_royal": {
+   "file": "kit/lod_palm_royal.glb",
+   "tris": 258,
+   "bytes": 10800,
+   "size": [
+    8.4,
+    9.035,
+    8.4
+   ],
+   "materials": [
+    "wood",
+    "leaf"
+   ],
+   "walkable": false
+  },
+  "palm_coconut": {
+   "file": "kit/palm_coconut.glb",
+   "tris": 798,
+   "bytes": 24256,
+   "size": [
+    6.536,
+    6.356,
+    6.496
+   ],
+   "materials": [
+    "wood",
+    "leaf"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "cylinder",
+    "size": [
+     0.25,
+     4.0
+    ],
+    "center": [
+     0,
+     2.0,
+     0
+    ]
+   }
+  },
+  "lod_palm_coconut": {
+   "file": "kit/lod_palm_coconut.glb",
+   "tris": 248,
+   "bytes": 9936,
+   "size": [
+    6.131,
+    6.32,
+    6.131
+   ],
+   "materials": [
+    "wood",
+    "leaf"
+   ],
+   "walkable": false
+  },
+  "palm_small": {
+   "file": "kit/palm_small.glb",
+   "tris": 306,
+   "bytes": 11652,
+   "size": [
+    3.4,
+    1.976,
+    3.246
+   ],
+   "materials": [
+    "wood",
+    "leaf"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "cylinder",
+    "size": [
+     0.2,
+     1.4
+    ],
+    "center": [
+     0,
+     0.7,
+     0
+    ]
+   }
+  },
+  "shrub": {
+   "file": "kit/shrub.glb",
+   "tris": 328,
+   "bytes": 8620,
+   "size": [
+    1.777,
+    0.975,
+    1.489
+   ],
+   "materials": [
+    "leaf",
+    "accent2"
+   ],
+   "walkable": false
+  },
+  "lifeguard_tower": {
+   "file": "kit/lifeguard_tower.glb",
+   "tris": 504,
+   "bytes": 29740,
+   "size": [
+    2.7,
+    5.8,
+    4.745
+   ],
+   "materials": [
+    "white",
+    "wood",
+    "base",
+    "glass",
+    "accent2",
+    "trim",
+    "cloth"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "boxes",
+    "size": [
+     [
+      0.5,
+      3.0,
+      0.5,
+      0.85,
+      1.5,
+      0.85
+     ],
+     [
+      0.5,
+      3.0,
+      0.5,
+      -0.85,
+      1.5,
+      0.85
+     ],
+     [
+      0.5,
+      3.0,
+      0.5,
+      0.85,
+      1.5,
+      -0.85
+     ],
+     [
+      0.5,
+      3.0,
+      0.5,
+      -0.85,
+      1.5,
+      -0.85
+     ]
+    ],
+    "center": null
+   }
+  },
+  "umbrella": {
+   "file": "kit/umbrella.glb",
+   "tris": 76,
+   "bytes": 5604,
+   "size": [
+    2.3,
+    2.985,
+    2.3
+   ],
+   "materials": [
+    "trim",
+    "accent2",
+    "white"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "cylinder",
+    "size": [
+     0.08,
+     2.2
+    ],
+    "center": [
+     0,
+     1.1,
+     0
+    ]
+   }
+  },
+  "lounger": {
+   "file": "kit/lounger.glb",
+   "tris": 504,
+   "bytes": 14848,
+   "size": [
+    0.68,
+    0.947,
+    2.046
+   ],
+   "materials": [
+    "trim",
+    "accent",
+    "accent2"
+   ],
+   "walkable": false
+  },
+  "beach_towel": {
+   "file": "kit/beach_towel.glb",
+   "tris": 36,
+   "bytes": 4072,
+   "size": [
+    0.8,
+    0.035,
+    1.7
+   ],
+   "materials": [
+    "accent2",
+    "white"
+   ],
+   "walkable": false
+  },
+  "beach_bar": {
+   "file": "kit/beach_bar.glb",
+   "tris": 568,
+   "bytes": 26568,
+   "size": [
+    7.0,
+    4.45,
+    7.0
+   ],
+   "materials": [
+    "wood",
+    "white",
+    "deep",
+    "glow",
+    "soft",
+    "accent2",
+    "trim"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "boxes",
+    "size": [
+     [
+      5.0,
+      1.3,
+      1.2,
+      0,
+      0.65,
+      0.55
+     ],
+     [
+      0.4,
+      2.6,
+      0.4,
+      2.3,
+      1.3,
+      -1.35
+     ],
+     [
+      0.4,
+      2.6,
+      0.4,
+      -2.3,
+      1.3,
+      -1.35
+     ]
+    ],
+    "center": null
+   }
+  },
+  "cabana": {
+   "file": "kit/cabana.glb",
+   "tris": 748,
+   "bytes": 25592,
+   "size": [
+    4.45,
+    2.77,
+    3.0
+   ],
+   "materials": [
+    "wood",
+    "white",
+    "accent2",
+    "cloth",
+    "soft",
+    "accent"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     3.0,
+     0.9,
+     1.8
+    ],
+    "center": [
+     0,
+     0.45,
+     0
+    ]
+   }
+  },
+  "vball_net": {
+   "file": "kit/vball_net.glb",
+   "tris": 288,
+   "bytes": 18908,
+   "size": [
+    9.1,
+    2.5,
+    0.087
+   ],
+   "materials": [
+    "trim",
+    "white",
+    "accent2",
+    "deep"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "boxes",
+    "size": [
+     [
+      0.2,
+      2.5,
+      0.2,
+      4.5,
+      1.25,
+      0
+     ],
+     [
+      0.2,
+      2.5,
+      0.2,
+      -4.5,
+      1.25,
+      0
+     ]
+    ],
+    "center": null
+   }
+  },
+  "surf_rack": {
+   "file": "kit/surf_rack.glb",
+   "tris": 448,
+   "bytes": 14740,
+   "size": [
+    2.88,
+    2.245,
+    0.6
+   ],
+   "materials": [
+    "accent2",
+    "base",
+    "white",
+    "accent",
+    "soft",
+    "wood"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.8,
+     2.2,
+     0.6
+    ],
+    "center": [
+     0,
+     1.1,
+     0
+    ]
+   }
+  },
+  "icecream_cart": {
+   "file": "kit/icecream_cart.glb",
+   "tris": 532,
+   "bytes": 23352,
+   "size": [
+    2.2,
+    3.15,
+    1.785
+   ],
+   "materials": [
+    "white",
+    "accent2",
+    "accent",
+    "deep",
+    "trim",
+    "glow2",
+    "glow"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     2.2,
+     1.2,
+     1.4
+    ],
+    "center": [
+     0,
+     0.6,
+     0
+    ]
+   }
+  },
+  "kiosk_deco": {
+   "file": "kit/kiosk_deco.glb",
+   "tris": 204,
+   "bytes": 14028,
+   "size": [
+    4.3,
+    3.99,
+    4.004
+   ],
+   "materials": [
+    "base",
+    "white",
+    "accent",
+    "glass",
+    "accent2",
+    "glow",
+    "wood",
+    "glow2"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     4.0,
+     3.0,
+     3.0
+    ],
+    "center": [
+     0,
+     1.5,
+     0
+    ]
+   }
+  },
+  "lamp_deco": {
+   "file": "kit/lamp_deco.glb",
+   "tris": 260,
+   "bytes": 11488,
+   "size": [
+    1.39,
+    4.055,
+    0.38
+   ],
+   "materials": [
+    "white",
+    "deep",
+    "trim",
+    "glow"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "cylinder",
+    "size": [
+     0.2,
+     4.0
+    ],
+    "center": [
+     0,
+     2.0,
+     0
+    ]
+   }
+  },
+  "lod_lamp_deco": {
+   "file": "kit/lod_lamp_deco.glb",
+   "tris": 188,
+   "bytes": 10580,
+   "size": [
+    1.4,
+    4.055,
+    0.4
+   ],
+   "materials": [
+    "white",
+    "deep",
+    "trim",
+    "glow"
+   ],
+   "walkable": false
+  },
+  "bench_deco": {
+   "file": "kit/bench_deco.glb",
+   "tris": 48,
+   "bytes": 4684,
+   "size": [
+    1.8,
+    0.923,
+    0.566
+   ],
+   "materials": [
+    "wood",
+    "accent2"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.8,
+     0.8,
+     0.6
+    ],
+    "center": [
+     0,
+     0.4,
+     0
+    ]
+   }
+  },
+  "trash_bin": {
+   "file": "kit/trash_bin.glb",
+   "tris": 96,
+   "bytes": 4728,
+   "size": [
+    0.6,
+    0.905,
+    0.6
+   ],
+   "materials": [
+    "base",
+    "deep"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "cylinder",
+    "size": [
+     0.3,
+     0.9
+    ],
+    "center": [
+     0,
+     0.45,
+     0
+    ]
+   }
+  },
+  "planter_deco": {
+   "file": "kit/planter_deco.glb",
+   "tris": 184,
+   "bytes": 6896,
+   "size": [
+    1.9,
+    1.4,
+    1.1
+   ],
+   "materials": [
+    "white",
+    "accent2",
+    "leaf"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "box",
+    "size": [
+     1.8,
+     0.8,
+     1.0
+    ],
+    "center": [
+     0,
+     0.4,
+     0
+    ]
+   }
+  },
+  "bollard": {
+   "file": "kit/bollard.glb",
+   "tris": 64,
+   "bytes": 3812,
+   "size": [
+    0.26,
+    0.8,
+    0.26
+   ],
+   "materials": [
+    "white",
+    "accent2"
+   ],
+   "walkable": false,
+   "collider": {
+    "type": "cylinder",
+    "size": [
+     0.14,
+     0.8
+    ],
+    "center": [
+     0,
+     0.4,
+     0
+    ]
+   }
+  },
+  "pier_deck": {
+   "file": "kit/pier_deck.glb",
+   "tris": 392,
+   "bytes": 21192,
+   "size": [
+    5.02,
+    4.555,
+    8.0
+   ],
+   "materials": [
+    "wood",
+    "deep",
+    "white"
+   ],
+   "walkable": true,
+   "collider": {
+    "type": "boxes",
+    "size": [
+     [
+      5.0,
+      0.3,
+      8.0,
+      0,
+      0.15,
+      0
+     ],
+     [
+      0.2,
+      1.3,
+      8.0,
+      -2.45,
+      0.65,
+      0
+     ],
+     [
+      0.2,
+      1.3,
+      8.0,
+      2.45,
+      0.65,
+      0
+     ]
+    ],
+    "center": null
+   }
+  },
+  "lod_pier_deck": {
+   "file": "kit/lod_pier_deck.glb",
+   "tris": 276,
+   "bytes": 16884,
+   "size": [
+    5.02,
+    4.555,
+    8.0
+   ],
+   "materials": [
+    "wood",
+    "white",
+    "deep"
+   ],
+   "walkable": true
+  },
+  "pier_head": {
+   "file": "kit/pier_head.glb",
+   "tris": 544,
+   "bytes": 28752,
+   "size": [
+    10.02,
+    7.42,
+    9.01
+   ],
+   "materials": [
+    "wood",
+    "white",
+    "accent2",
+    "glow",
+    "base",
+    "deep"
+   ],
+   "walkable": true,
+   "collider": {
+    "type": "boxes",
+    "size": [
+     [
+      10.0,
+      0.3,
+      9.0,
+      0,
+      0.15,
+      0
+     ],
+     [
+      0.2,
+      1.3,
+      9.0,
+      -4.95,
+      0.65,
+      0
+     ],
+     [
+      0.2,
+      1.3,
+      9.0,
+      4.95,
+      0.65,
+      0
+     ],
+     [
+      10.0,
+      1.3,
+      0.2,
+      0,
+      0.65,
+      4.4
+     ]
+    ],
+    "center": null
+   }
+  },
+  "sign_blade": {
+   "file": "kit/sign_blade.glb",
+   "tris": 96,
+   "bytes": 9732,
+   "size": [
+    1.1,
+    6.0,
+    0.43
+   ],
+   "materials": [
+    "deep",
+    "white",
+    "glow",
+    "glow2",
+    "trim"
+   ],
+   "walkable": false
+  },
+  "sign_hotel": {
+   "file": "kit/sign_hotel.glb",
+   "tris": 556,
+   "bytes": 27924,
+   "size": [
+    3.6,
+    0.95,
+    0.265
+   ],
+   "materials": [
+    "deep",
+    "glow"
+   ],
+   "walkable": false
+  },
+  "sign_beach": {
+   "file": "kit/sign_beach.glb",
+   "tris": 2128,
+   "bytes": 90084,
+   "size": [
+    5.2,
+    1.0,
+    0.265
+   ],
+   "materials": [
+    "deep",
+    "glow"
+   ],
+   "walkable": false
+  },
+  "sign_gelato": {
+   "file": "kit/sign_gelato.glb",
+   "tris": 960,
+   "bytes": 43796,
+   "size": [
+    3.6,
+    0.95,
+    0.265
+   ],
+   "materials": [
+    "deep",
+    "glow"
+   ],
+   "walkable": false
+  },
+  "sign_surf": {
+   "file": "kit/sign_surf.glb",
+   "tris": 2864,
+   "bytes": 117360,
+   "size": [
+    4.6,
+    0.95,
+    0.265
+   ],
+   "materials": [
+    "deep",
+    "glow"
+   ],
+   "walkable": false
+  },
+  "sign_airport": {
+   "file": "kit/sign_airport.glb",
+   "tris": 2280,
+   "bytes": 94860,
+   "size": [
+    8.0,
+    1.2,
+    0.265
+   ],
+   "materials": [
+    "deep",
+    "glow"
+   ],
+   "walkable": false
+  },
+  "sign_miami": {
+   "file": "kit/sign_miami.glb",
+   "tris": 1164,
+   "bytes": 55076,
+   "size": [
+    7.0,
+    1.2,
+    0.265
+   ],
+   "materials": [
+    "deep",
+    "glow"
+   ],
+   "walkable": false
+  }
+ },
+ "slots": [
+  "base",
+  "accent",
+  "accent2",
+  "soft",
+  "deep",
+  "white",
+  "trim",
+  "glass",
+  "glow",
+  "glow2",
+  "leaf",
+  "wood",
+  "cloth"
+ ],
+ "metals": {
+  "brass_white": {
+   "color": "#ece6d4",
+   "roughness": 0.28,
+   "metallic": 0.55
+  },
+  "chrome": {
+   "color": "#f5f7fb",
+   "roughness": 0.12,
+   "metallic": 0.9
+  }
+ },
+ "palettes": {
+  "mint": {
+   "label": "Menta",
+   "base": "#a8dcc6",
+   "accent": "#fffaf0",
+   "accent2": "#e9856b",
+   "soft": "#f6ecd2",
+   "deep": "#277c86",
+   "white": "#fffaf0",
+   "glass": "#6fbcd8",
+   "glow": "#37e6e0",
+   "glow2": "#ff7f5e",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#fffaf0",
+   "metal": "brass_white"
+  },
+  "peach": {
+   "label": "Pessego",
+   "base": "#f6c6a2",
+   "accent": "#fff6e6",
+   "accent2": "#2fb5b0",
+   "soft": "#f7e0c6",
+   "deep": "#a64b3a",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#ff8f6b",
+   "glow2": "#37e6e0",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#fff6e6",
+   "metal": "brass_white"
+  },
+  "cream": {
+   "label": "Creme",
+   "base": "#f5ead0",
+   "accent": "#8fd0cf",
+   "accent2": "#e9856b",
+   "soft": "#fff6e0",
+   "deep": "#3a7f86",
+   "white": "#fffaf0",
+   "glass": "#7cc6dc",
+   "glow": "#ffb347",
+   "glow2": "#37e6e0",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#8fd0cf",
+   "metal": "brass_white"
+  },
+  "sky": {
+   "label": "Celeste",
+   "base": "#a8d0ea",
+   "accent": "#fffaf0",
+   "accent2": "#f2a65a",
+   "soft": "#d9ecf8",
+   "deep": "#2b5f8f",
+   "white": "#fffaf0",
+   "glass": "#6fbcd8",
+   "glow": "#52e0ff",
+   "glow2": "#ffb86b",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#fffaf0",
+   "metal": "brass_white"
+  },
+  "lemon": {
+   "label": "Limao",
+   "base": "#f4e29a",
+   "accent": "#fffaf0",
+   "accent2": "#3bbdb8",
+   "soft": "#fff3c4",
+   "deep": "#8a6a2a",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#ff7f5e",
+   "glow2": "#37e6e0",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#fffaf0",
+   "metal": "brass_white"
+  },
+  "white": {
+   "label": "Branco",
+   "base": "#fbf7ee",
+   "accent": "#7fd0d0",
+   "accent2": "#f08a73",
+   "soft": "#e8e2d2",
+   "deep": "#2f6d78",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#37e6e0",
+   "glow2": "#ffb347",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#7fd0d0",
+   "metal": "brass_white"
+  },
+  "aqua": {
+   "label": "Aqua",
+   "base": "#8fd6d2",
+   "accent": "#fffaf0",
+   "accent2": "#f6c6a2",
+   "soft": "#d8f0ec",
+   "deep": "#1f6d78",
+   "white": "#fffaf0",
+   "glass": "#6fbcd8",
+   "glow": "#ff7f5e",
+   "glow2": "#ffe27a",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#fffaf0",
+   "metal": "brass_white"
+  },
+  "lg_yellow": {
+   "label": "Salva-vidas amarelo",
+   "base": "#f6cf45",
+   "accent": "#fffaf0",
+   "accent2": "#e9856b",
+   "soft": "#fff0b0",
+   "deep": "#2b5f8f",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#ff7f5e",
+   "glow2": "#37e6e0",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#e9553b",
+   "metal": "brass_white"
+  },
+  "lg_turq": {
+   "label": "Salva-vidas turquesa",
+   "base": "#35c0bd",
+   "accent": "#fffaf0",
+   "accent2": "#f6c6a2",
+   "soft": "#bfeeea",
+   "deep": "#1f6d78",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#ffb347",
+   "glow2": "#ff7f5e",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#f6cf45",
+   "metal": "brass_white"
+  },
+  "lg_coral": {
+   "label": "Salva-vidas coral",
+   "base": "#f08a73",
+   "accent": "#fffaf0",
+   "accent2": "#35c0bd",
+   "soft": "#ffe0d2",
+   "deep": "#8a3a2c",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#37e6e0",
+   "glow2": "#ffe27a",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#35c0bd",
+   "metal": "brass_white"
+  },
+  "lg_blue": {
+   "label": "Salva-vidas azul",
+   "base": "#4a9fd8",
+   "accent": "#fffaf0",
+   "accent2": "#f6cf45",
+   "soft": "#cfe7f7",
+   "deep": "#1f4f7f",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#ffe27a",
+   "glow2": "#ff7f5e",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#f08a73",
+   "metal": "brass_white"
+  },
+  "lg_green": {
+   "label": "Salva-vidas verde",
+   "base": "#5cc49a",
+   "accent": "#fffaf0",
+   "accent2": "#f6cf45",
+   "soft": "#d3f1e3",
+   "deep": "#256f58",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#ffe27a",
+   "glow2": "#ff7f5e",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#4a9fd8",
+   "metal": "brass_white"
+  },
+  "nat": {
+   "label": "Natural",
+   "base": "#e9ddbf",
+   "accent": "#fffaf0",
+   "accent2": "#e9856b",
+   "soft": "#f3e8cc",
+   "deep": "#6b4a2f",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#ffb347",
+   "glow2": "#37e6e0",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#fffaf0",
+   "metal": "brass_white"
+  },
+  "terra": {
+   "label": "Terracota",
+   "base": "#d98a63",
+   "accent": "#fffaf0",
+   "accent2": "#35c0bd",
+   "soft": "#f0c7a8",
+   "deep": "#7a3f2b",
+   "white": "#fffaf0",
+   "glass": "#78c2dc",
+   "glow": "#ffb347",
+   "glow2": "#37e6e0",
+   "leaf": "#3f9b4f",
+   "wood": "#b88a5c",
+   "cloth": "#fffaf0",
+   "metal": "brass_white"
+  }
+ }
+}
