@@ -3,7 +3,8 @@ import { useMinigameStore } from '../minigames/minigameStore'
 import { minigamesAtPoi } from '../../ui/minigames/registry'
 import { shopsAtPoi } from '../../ui/shop/registry'
 import { useShopStore } from '../../ui/shop/shopStore'
-import { enterRoom } from '../interiors/interiorStore'
+import { interiorBridge } from '../interiors/interiorBridge'
+import { enterRoom, isTransitioning } from '../interiors/interiorStore'
 
 export interface NearbyMinigame {
   id: string

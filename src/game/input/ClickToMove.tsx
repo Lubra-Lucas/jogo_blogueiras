@@ -76,6 +76,7 @@ export function ClickToMove() {
       walkables.length = 0
       scene.traverse(collect)
       const hit = ray.intersectObjects(walkables, false)[0]
+      if (import.meta.env.DEV) (window as unknown as Record<string, unknown>).__c2m = { n: walkables.length, hit: hit ? [hit.point.x, hit.point.y, hit.point.z] : null, t: now }
       if (!hit || !hit.face) return
       normalMatrix.getNormalMatrix(hit.object.matrixWorld)
       normal.copy(hit.face.normal).applyMatrix3(normalMatrix).normalize()

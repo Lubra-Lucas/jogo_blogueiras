@@ -1,0 +1,690 @@
+{
+ "version": 1,
+ "anims": [
+  "idle",
+  "walk",
+  "run",
+  "sit",
+  "lie",
+  "happy",
+  "eat"
+ ],
+ "facing": "+Z",
+ "note": "Gerado por tools/blender/pets/build_pets.py. Cores por slot de material: coat, coat2, coat3, belly, nose, eye, iris, pupil, glint, inner, tongue.",
+ "breeds": [
+  {
+   "id": "poodle",
+   "label": "Poodle",
+   "species": "dog",
+   "file": "poodle.glb",
+   "meta": {
+    "hr": 0.098,
+    "L": 0.3,
+    "bh": 0.105,
+    "bw": 0.088,
+    "zc": 0.2172,
+    "n0": [
+     0.0,
+     0.2435,
+     0.14
+    ],
+    "hn": [
+     0.0,
+     0.3249,
+     0.1829
+    ],
+    "hc": [
+     0.0,
+     0.3445,
+     0.2221
+    ],
+    "neckR": 0.0686,
+    "height": 0.443
+   },
+   "coats": [
+    {
+     "id": "creme",
+     "label": "Creme",
+     "tier": "comum",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#efe6d2",
+      "coat2": "#efe6d2",
+      "coat3": "#efe6d2",
+      "belly": "#efe6d2"
+     }
+    },
+    {
+     "id": "damasco",
+     "label": "Damasco",
+     "tier": "raro",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#d19a63",
+      "coat2": "#d19a63",
+      "coat3": "#d19a63",
+      "belly": "#d19a63"
+     }
+    },
+    {
+     "id": "preto",
+     "label": "Preto",
+     "tier": "comum",
+     "colors": {
+      "nose": "#0c0b0d",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#26242a",
+      "coat2": "#26242a",
+      "coat3": "#26242a",
+      "belly": "#26242a"
+     }
+    },
+    {
+     "id": "prata",
+     "label": "Prata",
+     "tier": "raro",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#a7a6ab",
+      "coat2": "#a7a6ab",
+      "coat3": "#a7a6ab",
+      "belly": "#a7a6ab"
+     }
+    }
+   ]
+  },
+  {
+   "id": "shiba",
+   "label": "Shiba",
+   "species": "dog",
+   "file": "shiba.glb",
+   "meta": {
+    "hr": 0.104,
+    "L": 0.33,
+    "bh": 0.115,
+    "bw": 0.095,
+    "zc": 0.2117,
+    "n0": [
+     0.0,
+     0.2405,
+     0.155
+    ],
+    "hn": [
+     0.0,
+     0.3206,
+     0.2021
+    ],
+    "hc": [
+     0.0,
+     0.3414,
+     0.2458
+    ],
+    "neckR": 0.0749,
+    "height": 0.445
+   },
+   "coats": [
+    {
+     "id": "vermelho",
+     "label": "Vermelho",
+     "tier": "comum",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#c6762f",
+      "coat2": "#c6762f",
+      "coat3": "#efe0c6",
+      "belly": "#f2e6d0"
+     }
+    },
+    {
+     "id": "gergelim",
+     "label": "Gergelim",
+     "tier": "comum",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#8a5a38",
+      "coat2": "#c6762f",
+      "coat3": "#e7d6b8",
+      "belly": "#efe2c8"
+     }
+    },
+    {
+     "id": "preto-fogo",
+     "label": "Preto e fogo",
+     "tier": "raro",
+     "colors": {
+      "nose": "#0c0b0d",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#211d1f",
+      "coat2": "#c6762f",
+      "coat3": "#b5733a",
+      "belly": "#b5733a"
+     }
+    },
+    {
+     "id": "creme",
+     "label": "Creme",
+     "tier": "raro",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#e8cf9f",
+      "coat2": "#c6762f",
+      "coat3": "#fbf3e3",
+      "belly": "#fbf3e3"
+     }
+    }
+   ]
+  },
+  {
+   "id": "dachshund",
+   "label": "Salsicha",
+   "species": "dog",
+   "file": "dachshund.glb",
+   "meta": {
+    "hr": 0.085,
+    "L": 0.52,
+    "bh": 0.082,
+    "bw": 0.072,
+    "zc": 0.1289,
+    "n0": [
+     0.0,
+     0.1494,
+     0.25
+    ],
+    "hn": [
+     0.0,
+     0.2184,
+     0.3247
+    ],
+    "hc": [
+     0.0,
+     0.2354,
+     0.3588
+    ],
+    "neckR": 0.0578,
+    "height": 0.32
+   },
+   "coats": [
+    {
+     "id": "ruivo",
+     "label": "Ruivo",
+     "tier": "comum",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#8d4a23",
+      "coat2": "#8d4a23",
+      "coat3": "#8d4a23",
+      "belly": "#a85e2c"
+     }
+    },
+    {
+     "id": "chocolate",
+     "label": "Chocolate e fogo",
+     "tier": "comum",
+     "colors": {
+      "nose": "#0c0b0d",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#3a2419",
+      "coat2": "#8d4a23",
+      "coat3": "#3a2419",
+      "belly": "#b06a35"
+     }
+    },
+    {
+     "id": "creme",
+     "label": "Creme",
+     "tier": "raro",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#e3c795",
+      "coat2": "#8d4a23",
+      "coat3": "#e3c795",
+      "belly": "#efd9b2"
+     }
+    },
+    {
+     "id": "preto",
+     "label": "Preto e fogo",
+     "tier": "raro",
+     "colors": {
+      "nose": "#0c0b0d",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#1f1c1e",
+      "coat2": "#8d4a23",
+      "coat3": "#1f1c1e",
+      "belly": "#a8622c"
+     }
+    }
+   ]
+  },
+  {
+   "id": "caramelo",
+   "label": "Caramelo",
+   "species": "dog",
+   "file": "caramelo.glb",
+   "meta": {
+    "hr": 0.1,
+    "L": 0.36,
+    "bh": 0.112,
+    "bw": 0.092,
+    "zc": 0.2354,
+    "n0": [
+     0.0,
+     0.2634,
+     0.17
+    ],
+    "hn": [
+     0.0,
+     0.356,
+     0.2266
+    ],
+    "hc": [
+     0.0,
+     0.376,
+     0.2686
+    ],
+    "neckR": 0.072,
+    "height": 0.476
+   },
+   "coats": [
+    {
+     "id": "caramelo",
+     "label": "Caramelo",
+     "tier": "comum",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#c98a45",
+      "coat2": "#c98a45",
+      "coat3": "#c98a45",
+      "belly": "#f4e8d2"
+     }
+    },
+    {
+     "id": "dourado",
+     "label": "Dourado",
+     "tier": "comum",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#b8742f",
+      "coat2": "#c98a45",
+      "coat3": "#b8742f",
+      "belly": "#ecd9b6"
+     }
+    },
+    {
+     "id": "preto-branco",
+     "label": "Preto e branco",
+     "tier": "raro",
+     "colors": {
+      "nose": "#0c0b0d",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#222126",
+      "coat2": "#c98a45",
+      "coat3": "#222126",
+      "belly": "#f3f0ea"
+     }
+    }
+   ]
+  },
+  {
+   "id": "siames",
+   "label": "Siamês",
+   "species": "cat",
+   "file": "siames.glb",
+   "meta": {
+    "hr": 0.092,
+    "L": 0.32,
+    "bh": 0.088,
+    "bw": 0.07,
+    "zc": 0.1646,
+    "n0": [
+     0.0,
+     0.1866,
+     0.15
+    ],
+    "hn": [
+     0.0,
+     0.2643,
+     0.1911
+    ],
+    "hc": [
+     0.0,
+     0.2827,
+     0.2243
+    ],
+    "neckR": 0.0506,
+    "height": 0.375
+   },
+   "coats": [
+    {
+     "id": "seal",
+     "label": "Seal point",
+     "tier": "comum",
+     "colors": {
+      "nose": "#3a2a28",
+      "eye": "#171214",
+      "iris": "#79a9d6",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#c9928c",
+      "tongue": "#d9788a",
+      "coat": "#eadfc9",
+      "coat2": "#4a3227",
+      "coat3": "#eadfc9",
+      "belly": "#eadfc9"
+     }
+    },
+    {
+     "id": "blue",
+     "label": "Blue point",
+     "tier": "raro",
+     "colors": {
+      "nose": "#5b6068",
+      "eye": "#171214",
+      "iris": "#6fa0d0",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#c9928c",
+      "tongue": "#d9788a",
+      "coat": "#e9e6e1",
+      "coat2": "#6b7685",
+      "coat3": "#eadfc9",
+      "belly": "#e9e6e1"
+     }
+    },
+    {
+     "id": "chocolate",
+     "label": "Chocolate point",
+     "tier": "raro",
+     "colors": {
+      "nose": "#6c4a42",
+      "eye": "#171214",
+      "iris": "#7fa9cf",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#c9928c",
+      "tongue": "#d9788a",
+      "coat": "#efe5d3",
+      "coat2": "#80594a",
+      "coat3": "#eadfc9",
+      "belly": "#efe5d3"
+     }
+    }
+   ]
+  },
+  {
+   "id": "persa",
+   "label": "Persa",
+   "species": "cat",
+   "file": "persa.glb",
+   "meta": {
+    "hr": 0.098,
+    "L": 0.27,
+    "bh": 0.105,
+    "bw": 0.1,
+    "zc": 0.1472,
+    "n0": [
+     0.0,
+     0.1735,
+     0.125
+    ],
+    "hn": [
+     0.0,
+     0.2245,
+     0.1462
+    ],
+    "hc": [
+     0.0,
+     0.2441,
+     0.1757
+    ],
+    "neckR": 0.0784,
+    "height": 0.342
+   },
+   "coats": [
+    {
+     "id": "branco",
+     "label": "Branco",
+     "tier": "comum",
+     "colors": {
+      "nose": "#c98f8f",
+      "eye": "#171214",
+      "iris": "#d08a3a",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#e0b0a8",
+      "tongue": "#d9788a",
+      "coat": "#f0ece4",
+      "coat2": "#f0ece4",
+      "coat3": "#f0ece4",
+      "belly": "#f0ece4"
+     }
+    },
+    {
+     "id": "cinza",
+     "label": "Azul",
+     "tier": "raro",
+     "colors": {
+      "nose": "#4d535c",
+      "eye": "#171214",
+      "iris": "#d9923a",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#e0b0a8",
+      "tongue": "#d9788a",
+      "coat": "#8b95a3",
+      "coat2": "#8b95a3",
+      "coat3": "#8b95a3",
+      "belly": "#8b95a3"
+     }
+    },
+    {
+     "id": "creme",
+     "label": "Creme",
+     "tier": "comum",
+     "colors": {
+      "nose": "#c98f8f",
+      "eye": "#171214",
+      "iris": "#c47f2f",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#e0b0a8",
+      "tongue": "#d9788a",
+      "coat": "#e7bd84",
+      "coat2": "#e7bd84",
+      "coat3": "#e7bd84",
+      "belly": "#e7bd84"
+     }
+    }
+   ]
+  },
+  {
+   "id": "srd",
+   "label": "Vira-lata (gato)",
+   "species": "cat",
+   "file": "srd.glb",
+   "meta": {
+    "hr": 0.094,
+    "L": 0.3,
+    "bh": 0.09,
+    "bw": 0.075,
+    "zc": 0.1555,
+    "n0": [
+     0.0,
+     0.178,
+     0.14
+    ],
+    "hn": [
+     0.0,
+     0.2423,
+     0.1743
+    ],
+    "hc": [
+     0.0,
+     0.2611,
+     0.21
+    ],
+    "neckR": 0.0564,
+    "height": 0.355
+   },
+   "coats": [
+    {
+     "id": "frajola",
+     "label": "Frajola",
+     "tier": "comum",
+     "colors": {
+      "nose": "#bf8a8a",
+      "eye": "#171214",
+      "iris": "#c4b24a",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#1c1b20",
+      "coat2": "#1c1b20",
+      "coat3": "#1c1b20",
+      "belly": "#f5f2ec"
+     }
+    },
+    {
+     "id": "tricolor",
+     "label": "Tricolor",
+     "tier": "raro",
+     "colors": {
+      "nose": "#d49a98",
+      "eye": "#171214",
+      "iris": "#b5a24a",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#f4f0e8",
+      "coat2": "#d98a3b",
+      "coat3": "#26252b",
+      "belly": "#f4f0e8"
+     }
+    },
+    {
+     "id": "laranja",
+     "label": "Laranja",
+     "tier": "comum",
+     "colors": {
+      "nose": "#d49a98",
+      "eye": "#171214",
+      "iris": "#a9b04a",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#df9448",
+      "coat2": "#c97a35",
+      "coat3": "#e9ad6c",
+      "belly": "#f5ead8"
+     }
+    },
+    {
+     "id": "cinza",
+     "label": "Cinza e branco",
+     "tier": "comum",
+     "colors": {
+      "nose": "#c99a9a",
+      "eye": "#171214",
+      "iris": "#b8b04a",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#8f939b",
+      "coat2": "#7b7f88",
+      "coat3": "#a6a9b0",
+      "belly": "#f3f1ec"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -25,6 +25,10 @@ import { NavigationRunner } from './navigation/NavigationRunner'
 import { VehicleSystem } from './vehicles/VehicleSystem'
 import { InteriorHost } from './interiors/InteriorHost'
 import { useInteriorStore } from './interiors/interiorStore'
+import { TravelWorlds } from './travel/TravelWorlds'
+import { useTravelStore } from './travel/travelStore'
+import { PetSystem } from './pets/PetSystem'
+import { PET_SHEET, PetSheetScene } from './pets/PetSheet'
 
 const VIEW = getViewMode()
 const MAP_MODE = new URLSearchParams(window.location.search).get('map') === '1'
@@ -36,6 +40,8 @@ export function Game({ tier }: { tier: QualityTier }) {
   const gl = useThree((s) => s.gl)
   // dentro de um interior (game/interiors) a cidade, o ceu e o sol ficam ocultos: so a sala e desenhada
   const inside = useInteriorStore((s) => s.roomId !== null)
+  // (game/travel) carros e vida da cidade principal so existem nela; a cidade ativa e a unica montada
+  const homeCity = useTravelStore((s) => s.cityId === 'main')
   useEffect(() => {
     gl.toneMappingExposure = 0.88
   }, [gl])
@@ -46,6 +52,8 @@ export function Game({ tier }: { tier: QualityTier }) {
       scene.fog = null
     }
   }, [scene, q.fogFar])
+
+  if (PET_SHEET) return <PetSheetScene />
 
   return (
     <>
@@ -88,12 +96,16 @@ export function Game({ tier }: { tier: QualityTier }) {
         <>
           <Physics timeStep="vary" gravity={[0, -9.81, 0]} debug={DEBUG_PHYSICS}>
             <group visible={!inside}>
-              <City shadows={q.shadows} propDist={MAP_MODE ? 1e5 : q.propDist} buildingDist={MAP_MODE ? 1e5 : q.buildingDist} />
+              <TravelWorlds shadows={q.shadows} propDist={MAP_MODE ? 1e5 : q.propDist} buildingDist={MAP_MODE ? 1e5 : q.buildingDist}>
+                <City shadows={q.shadows} propDist={MAP_MODE ? 1e5 : q.propDist} buildingDist={MAP_MODE ? 1e5 : q.buildingDist} />
+              </TravelWorlds>
             </group>
             <PlayerController shadows={q.shadows} />
-            <group visible={!inside}>
-              <VehicleSystem />
-            </group>
+            {homeCity && (
+              <group visible={!inside}>
+                <VehicleSystem />
+              </group>
+            )}
             <InteriorHost />
             <NavigationRunner />
             {/* depois do PlayerController: useFrame na ordem de montagem */}
@@ -108,9 +120,12 @@ export function Game({ tier }: { tier: QualityTier }) {
           <PhotoCapture />
           <InteractionTrigger />
           <SitController />
-          <group visible={!inside}>
-            <LifeDriver />
-          </group>
+          <PetSystem />
+          {homeCity && (
+            <group visible={!inside}>
+              <LifeDriver />
+            </group>
+          )}
         </>
       )}
       <Sparkles

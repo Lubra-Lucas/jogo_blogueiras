@@ -706,28 +706,29 @@
     },
     "house_shell": {
       "file": "kit/house_shell.glb",
-      "tris": 1100,
-      "bytes": 51004,
+      "tris": 2100,
+      "bytes": 109128,
       "size": [
-        8.737,
+        8.78,
         7.978,
-        8.737
+        8.78
       ],
       "bbox_min": [
-        -4.368,
+        -4.39,
         0.022,
-        -4.368
+        -4.39
       ],
       "bbox_max": [
-        4.368,
+        4.39,
         8.0,
-        4.368
+        4.39
       ],
       "materials": [
         "base",
         "white",
         "accent",
         "trim",
+        "deep",
         "accent2",
         "glass"
       ],
@@ -749,28 +750,29 @@
     },
     "house_shell_wide": {
       "file": "kit/house_shell_wide.glb",
-      "tris": 1700,
-      "bytes": 70620,
+      "tris": 3200,
+      "bytes": 154464,
       "size": [
-        12.737,
+        12.78,
         8.0,
-        12.737
+        12.78
       ],
       "bbox_min": [
-        -6.368,
+        -6.39,
         0.0,
-        -6.368
+        -6.39
       ],
       "bbox_max": [
-        6.368,
+        6.39,
         8.0,
-        6.368
+        6.39
       ],
       "materials": [
         "base",
         "white",
         "accent",
         "trim",
+        "deep",
         "accent2",
         "glass"
       ],
@@ -792,12 +794,12 @@
     },
     "facade_win": {
       "file": "kit/facade_win.glb",
-      "tris": 620,
-      "bytes": 24768,
+      "tris": 760,
+      "bytes": 26212,
       "size": [
         3.504,
         3.487,
-        0.562
+        0.564
       ],
       "bbox_min": [
         -1.752,
@@ -807,7 +809,7 @@
       "bbox_max": [
         1.752,
         3.744,
-        0.575
+        0.578
       ],
       "materials": [
         "accent",
@@ -822,16 +824,16 @@
     },
     "facade_door": {
       "file": "kit/facade_door.glb",
-      "tris": 680,
-      "bytes": 24544,
+      "tris": 800,
+      "bytes": 26524,
       "size": [
         3.504,
-        3.744,
+        3.752,
         1.129
       ],
       "bbox_min": [
         -1.752,
-        0.008,
+        0.0,
         -0.0
       ],
       "bbox_max": [

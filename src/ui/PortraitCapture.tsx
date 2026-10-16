@@ -1,12 +1,13 @@
 import { useEffect, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { PerspectiveCamera, SRGBColorSpace, WebGLRenderTarget } from 'three'
+import { PerspectiveCamera, SRGBColorSpace, Vector3, WebGLRenderTarget } from 'three'
 import { create } from 'zustand'
 import { usePlayerStore } from '../state/playerStore'
 import { useCameraStore } from '../state/cameraStore'
 import { useAppearanceStore } from '../state/appearanceStore'
 import { CAMERA } from '../game/camera/config'
 import { PLAYER } from '../game/player/config'
+import { getHeadInfo } from './selfie/headFrame'
 
 const SIZE = 128
 const REFRESH_S = 0.5
@@ -24,7 +25,7 @@ export function PortraitCapture() {
   const ctx = useMemo(() => {
     const rt = new WebGLRenderTarget(SIZE, SIZE, { colorSpace: SRGBColorSpace })
     const cam = new PerspectiveCamera(28, 1, 0.05, 40)
-    return { rt, cam, buf: new Uint8Array(SIZE * SIZE * 4), img: new ImageData(SIZE, SIZE), t: 99, dirty: true, g2d: portraitCanvas.getContext('2d') }
+    return { rt, cam, buf: new Uint8Array(SIZE * SIZE * 4), img: new ImageData(SIZE, SIZE), t: 99, dirty: true, v: new Vector3(), g2d: portraitCanvas.getContext('2d') }
   }, [])
 
   useEffect(() => {
@@ -48,13 +49,27 @@ export function PortraitCapture() {
     // personagem some quando a camera chega muito perto: nao tem rosto para fotografar
     if (useCameraStore.getState().distance <= (CAMERA.fadeStart + CAMERA.fadeEnd) / 2) return
     ctx.t = 0
+    const wasDirty = ctx.dirty
     ctx.dirty = false
     const p = player.position
-    const headY = p.y - (PLAYER.halfHeight + PLAYER.radius) + 1.36
+    // rosto pelo osso Head (acompanha altura/postura); sem o osso, estimativa pela capsula
+    const info = getHeadInfo(scene, p.x, p.y, p.z, wasDirty ? 0 : Infinity) // remede o topo (cabelo/chapeu) so quando a aparencia muda
+    let headY = p.y - (PLAYER.halfHeight + PLAYER.radius) + 1.36
+    let dist = 0.85
+    let hx = p.x
+    let hz = p.z
+    if (info) {
+      info.head.updateWorldMatrix(true, false)
+      info.head.getWorldPosition(ctx.v)
+      headY = ctx.v.y + 0.07
+      hx = ctx.v.x
+      hz = ctx.v.z
+      dist *= Math.max(1, (info.topY - headY + 0.09) / 0.3) // cabelo alto / chapeu: afasta para caber
+    }
     const fx = Math.sin(player.yaw)
     const fz = Math.cos(player.yaw)
-    ctx.cam.position.set(p.x + fx * 0.85, headY + 0.02, p.z + fz * 0.85)
-    ctx.cam.lookAt(p.x, headY + 0.01, p.z)
+    ctx.cam.position.set(hx + fx * dist, headY + 0.02, hz + fz * dist)
+    ctx.cam.lookAt(hx, headY + 0.01, hz)
     ctx.cam.updateMatrixWorld()
 
     const prev = gl.getRenderTarget()

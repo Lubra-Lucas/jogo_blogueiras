@@ -153,3 +153,38 @@
 @media (max-width: 700px) {
   .phone-wrap { right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); }
 }
+
+/* ===== minimizar ===== */
+.pmin { margin-left: 2px; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; background: rgba(255, 255, 255, 0.55); color: var(--ui-ink-2); position: relative; z-index: 5; }
+.pmin::after { content: ''; position: absolute; inset: -6px; } /* alvo de toque maior */
+.pmin:hover { background: #fff; color: var(--ui-ink); }
+.pstatus .pmin svg { width: 15px; height: 15px; }
+.phone-wrap { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, visibility 0s; transform-origin: 100% 100%; }
+.phone-wrap--min { transform: translate(-6px, -40px) scale(0.1); opacity: 0; visibility: hidden; pointer-events: none; animation: none; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.22s ease, visibility 0s 0.3s; }
+.phone-tab {
+  position: absolute; z-index: 24; right: calc(12px + env(safe-area-inset-right)); bottom: calc(172px + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: 8px; max-width: min(210px, calc(100vw - 24px)); padding: 5px 10px 5px 6px; border-radius: 999px; cursor: pointer;
+  font-family: var(--f-sans); color: var(--ui-ink); text-align: left;
+  background: var(--ui-glass-2); border: 1px solid var(--ui-line); box-shadow: var(--sh-1), inset 0 0 0 1px rgba(201, 154, 46, 0.4);
+  -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+  opacity: 0; transform: translateY(14px) scale(0.85); transform-origin: 100% 100%; pointer-events: none; visibility: hidden;
+  transition: opacity 0.25s ease 0.08s, transform 0.3s cubic-bezier(0.2, 0.9, 0.25, 1) 0.08s, visibility 0s 0.4s;
+  touch-action: manipulation;
+}
+.phone-tab--on { opacity: 1; transform: none; pointer-events: auto; visibility: visible; transition-delay: 0.1s, 0.1s, 0s; }
+.phone-tab:hover { background: #fff; }
+.phone-tab__ic { position: relative; flex: none; width: 30px; height: 30px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; background: #d99a2b; }
+.phone-tab__ic svg { width: 18px; height: 18px; }
+.phone-tab__ic .dock__badge { right: -3px; top: -3px; width: 10px; height: 10px; }
+.phone-tab__txt { min-width: 0; display: flex; flex-direction: column; line-height: 1.15; }
+.phone-tab__txt b { font: 800 12px var(--f-sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.phone-tab__txt small { font: 700 10px var(--f-sans); color: var(--ui-ink-3); }
+.phone-tab__up { flex: none; width: 16px; height: 16px; color: var(--ui-ink-2); }
+@media (hover: none) and (pointer: coarse) { .phone-tab { bottom: calc(158px + env(safe-area-inset-bottom)); } }
+@media (prefers-reduced-motion: reduce) { .phone-wrap, .phone-tab { transition-duration: 0.01s; } }
+
+/* selfie: ferramentas da camera frontal */
+.cam__tools { position: absolute; left: 0; right: 0; bottom: calc(100px + env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: center; gap: 10px; pointer-events: none; }
+.cam__t { pointer-events: auto; height: 38px; min-width: 38px; padding: 0 10px; border-radius: 999px; border: 0; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: rgba(40, 25, 50, 0.55); color: #fff; font: 800 12px var(--f-sans); touch-action: manipulation; }
+.cam__t svg { width: 18px; height: 18px; }
+.cam__x[aria-pressed='true'] { background: var(--ac-plum); }

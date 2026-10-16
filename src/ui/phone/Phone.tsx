@@ -7,12 +7,17 @@ import { useEnvStore } from '../../game/world/environment/envStore'
 import { WEATHER_LABEL } from '../../game/world/environment/config'
 import { fastTravelTo, navigateTo } from '../navBridge'
 import { portraitCanvas, usePortraitStore } from '../PortraitCapture'
-import { GBack, GBlogram, GCamera, GCheck, GCloud, GMap, GMercado, GMessages, GMissions, GMoon, GPin, GProfile, GRain, GSettings, GStar, GSun, GWardrobe, GBolt, GClose } from '../glyphs'
+import { GBack, GBlogram, GCamera, GCheck, GCloud, GMap, GMercado, GMessages, GMissions, GMoon, GPin, GProfile, GRain, GSettings, GStar, GSun, GWardrobe, GBolt, GClose, GMinimize, GRestore, GFlipCam, GZoomIn, GZoomOut } from '../glyphs'
+import { dismissPhone, minimizePhone, restorePhone, usePhoneMin } from './phoneMin'
+import { SELFIE_POSES, useSelfieStore } from '../selfie/selfieStore'
+import { playEmote, stopEmote } from '../../game/character/animation/emoteStore'
 import { PhoneShop } from '../shop/PhoneShop'
 import { GCar } from '../vehicles/CarArt'
 import { useVehicleStore } from '../../game/vehicles/driveStore'
 import { openMarket } from '../market/marketUi'
 import { IconTag } from '../shop/icons'
+import { IPlane } from '../travel/icons'
+import { useTravelStore } from '../../game/travel/travelStore'
 import '../shop/shop.css'
 import '../phone/phone.css'
 
@@ -43,6 +48,9 @@ function StatusBar() {
       <span className="pstatus__r">
         <WeatherGlyph />
         <i className="pbatt" />
+        <button type="button" className="pmin" aria-label="Minimizar celular" title="Minimizar" onClick={minimizePhone}>
+          <GMinimize />
+        </button>
       </span>
     </div>
   )
@@ -56,6 +64,7 @@ const APPS: Array<{ id: string; label: string; color: string; icon: ReactNode; r
   { id: 'mercado', label: 'Mercado', color: '#b8892f', icon: <GMercado />, run: () => (useUiStore.getState().closePhone(), openMarket()) },
   { id: 'garagem', label: 'Garagem', color: '#4a6a8a', icon: <GCar />, run: () => (useUiStore.getState().closePhone(), useVehicleStore.getState().setGarage(true)) },
   { id: 'mapa', label: 'Mapa', color: '#4b8fcf', icon: <GMap />, run: () => (useUiStore.getState().closePhone(), useUiStore.getState().setBigMap(true)) },
+  { id: 'viagens', label: 'Viagens', color: '#2f8fa8', icon: <IPlane />, run: () => (useUiStore.getState().closePhone(), useTravelStore.getState().setPanel(true)) },
   { id: 'camera', label: 'Câmera', color: '#4a3a56', icon: <GCamera />, run: () => useUiStore.getState().setCameraMode(true) },
   { id: 'guarda', label: 'Guarda-roupa', color: '#7d63b0', icon: <GWardrobe />, run: () => useUiStore.getState().openMenu('guardaroupa') },
   { id: 'perfil', label: 'Perfil', color: '#c4688a', icon: <GProfile />, run: () => useUiStore.getState().openMenu('perfil') },
@@ -246,15 +255,38 @@ function Shop() {
   )
 }
 
-/** Celular: desliza de baixo; P abre/fecha, Esc fecha. Mostra hora e clima do jogo (somente leitura). */
+/** Abinha do celular minimizado: mostra o essencial (missao acompanhada ou hora) e restaura com um clique. */
+function PhoneTab({ show }: { show: boolean }) {
+  const tracked = useProfileStore((s) => s.tracked)
+  const hour = useEnvStore((s) => s.hour)
+  const q = QUESTS.find((x) => x.id === tracked)
+  return (
+    <button type="button" className={`phone-tab${show ? ' phone-tab--on' : ''}`} aria-label="Restaurar celular (P)" tabIndex={show ? 0 : -1} onClick={restorePhone}>
+      <span className="phone-tab__ic">
+        <GMissions />
+        {q && <i className="dock__badge" />}
+      </span>
+      <span className="phone-tab__txt">
+        <b>{q ? q.title : 'Celular'}</b>
+        <small>{q ? 'Missão ativa' : hhmm(hour)}</small>
+      </span>
+      <GRestore className="phone-tab__up" />
+    </button>
+  )
+}
+
+/** Celular: desliza de baixo; P abre/fecha (minimizado: P restaura), Esc fecha. Minimizar guarda a tela atual e deixa so uma abinha. */
 export function Phone() {
   const open = useUiStore((s) => s.phoneOpen)
   const app = useUiStore((s) => s.phoneApp)
+  const min = usePhoneMin((s) => s.min)
+  const hideTab = useUiStore((s) => s.menuOpen || s.cameraMode)
   const [mounted, setMounted] = useState(false)
   const [out, setOut] = useState(false)
+  const active = open || min
 
   useEffect(() => {
-    if (open) {
+    if (active) {
       setMounted(true)
       setOut(false)
       return
@@ -262,16 +294,18 @@ export function Phone() {
     setOut(true)
     const t = window.setTimeout(() => setMounted(false), 220)
     return () => window.clearTimeout(t)
-  }, [open])
+  }, [active])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const ui = useUiStore.getState()
+      const minimized = usePhoneMin.getState().min
       if (e.code === 'Escape') {
-        if (ui.phoneOpen) ui.closePhone()
+        if (ui.phoneOpen || minimized) dismissPhone()
         else if (ui.cameraMode) ui.setCameraMode(false)
       } else if (e.code === 'KeyP' && !e.repeat && !e.ctrlKey && !e.metaKey && !isTyping(e.target) && !ui.menuOpen) {
-        ui.phoneOpen ? ui.closePhone() : ui.openPhone()
+        if (minimized) restorePhone()
+        else ui.phoneOpen ? ui.closePhone() : ui.openPhone()
       }
     }
     window.addEventListener('keydown', onKey)
@@ -281,30 +315,52 @@ export function Phone() {
   if (!mounted) return null
   const screens: Record<PhoneApp, ReactNode> = { home: <Home />, missoes: <Missions />, blogram: <Blogram />, mensagens: <Messages />, loja: <Shop /> }
   return (
-    <div className={`phone-wrap${out ? ' phone-wrap--out' : ''}`} role="dialog" aria-label="Celular">
-      <div className="phone">
-        <div className="phone__screen">
-          <div className="phone__notch" />
-          <StatusBar />
-          {screens[app]}
+    <>
+      <div className={`phone-wrap${out ? ' phone-wrap--out' : ''}${min ? ' phone-wrap--min' : ''}`} role="dialog" aria-label="Celular" aria-hidden={min}>
+        <div className="phone">
+          <div className="phone__screen">
+            <div className="phone__notch" />
+            <StatusBar />
+            {screens[app]}
+          </div>
         </div>
       </div>
-    </div>
+      <PhoneTab show={min && !hideTab} />
+    </>
   )
 }
 
-/** Viewfinder da camera do celular: o botao tira a foto da tela e salva no Blogram. */
+/** Viewfinder da camera do celular: traseira (foto normal) ou frontal (selfie); o botao tira a foto da tela e salva no Blogram. */
 export function CameraOverlay() {
   const on = useUiStore((s) => s.cameraMode)
   const flash = usePhotoStore((s) => s.flash)
+  const front = useSelfieStore((s) => s.front)
+  const zoom = useSelfieStore((s) => s.zoom)
+  const pose = useSelfieStore((s) => s.pose)
   const [tip, setTip] = useState('Enquadre e toque no obturador')
   useEffect(() => {
     if (flash > 0) setTip('Foto salva no Blogram')
   }, [flash])
   useEffect(() => {
-    if (on) setTip('Enquadre e toque no obturador')
+    if (on) setTip(useSelfieStore.getState().front ? 'Selfie: o rosto no quadro' : 'Enquadre e toque no obturador')
+  }, [on, front])
+  // sai da camera: volta para a traseira e solta a pose da selfie
+  useEffect(() => {
+    if (on) return
+    const sf = useSelfieStore.getState()
+    if (sf.front || sf.pose !== 0) {
+      useSelfieStore.setState({ front: false, pose: 0 })
+      stopEmote()
+    }
   }, [on])
   if (!on) return null
+  const setZoom = useSelfieStore.getState().setZoom
+  const choosePose = () => {
+    useSelfieStore.getState().nextPose()
+    const emote = SELFIE_POSES[useSelfieStore.getState().pose].emote
+    if (emote) playEmote(emote, { once: true, silent: true })
+    else stopEmote()
+  }
   return (
     <div className="cam">
       <span className="cam__c cam__c--tl" />
@@ -313,12 +369,40 @@ export function CameraOverlay() {
       <span className="cam__c cam__c--br" />
       <div className="cam__tip">{tip}</div>
       {flash > 0 && <div key={flash} className="cam__flash" />}
+      {front && (
+        <div className="cam__tools">
+          <button type="button" className="cam__t" aria-label="Afastar (mais busto)" onClick={() => setZoom(zoom + 0.2)}>
+            <GZoomOut />
+          </button>
+          <button type="button" className="cam__t" aria-label="Aproximar (rosto)" onClick={() => setZoom(zoom - 0.2)}>
+            <GZoomIn />
+          </button>
+          <button type="button" className="cam__t cam__t--pose" aria-label="Trocar pose" onClick={choosePose}>
+            <GStar /> {SELFIE_POSES[pose].label}
+          </button>
+        </div>
+      )}
       <div className="cam__bar">
         <button type="button" className="cam__x" aria-label="Fechar câmera" onClick={() => useUiStore.getState().setCameraMode(false)}>
           <GClose />
         </button>
         <button type="button" className="cam__shutter" aria-label="Tirar foto" onClick={() => usePhotoStore.getState().shoot()} />
-        <span style={{ width: 44 }} />
+        <button
+          type="button"
+          className="cam__x"
+          aria-label={front ? 'Câmera traseira' : 'Câmera frontal (selfie)'}
+          aria-pressed={front}
+          onClick={() => {
+            const sf = useSelfieStore.getState()
+            sf.setFront(!sf.front)
+            if (sf.front) {
+              useSelfieStore.setState({ pose: 0 })
+              stopEmote()
+            }
+          }}
+        >
+          <GFlipCam />
+        </button>
       </div>
     </div>
   )

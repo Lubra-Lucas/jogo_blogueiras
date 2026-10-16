@@ -44,15 +44,10 @@ export function InteriorUi() {
       )}
       {room && prompt && !mg && !shop && !seated && (
         <div className="in-prompt" key={prompt.key} role="status">
-          {isTouch ? (
-            <button type="button" className="in-btn" onClick={() => triggerPrompt()}>
-              {prompt.spot.action === 'exit' && <DoorIcon />} {prompt.label}
-            </button>
-          ) : (
-            <span className="in-text">
-              <span className="in-key">E</span> {prompt.spot.action === 'exit' && <DoorIcon />} {prompt.label}
-            </span>
-          )}
+          {/* botao nos dois modos: no desktop tambem se clica no aviso (alem da tecla E) */}
+          <button type="button" className="in-btn" onClick={() => triggerPrompt()}>
+            {!isTouch && <span className="in-key">E</span>} {prompt.spot.action === 'exit' && <DoorIcon />} {prompt.label}
+          </button>
         </div>
       )}
       {msg && (

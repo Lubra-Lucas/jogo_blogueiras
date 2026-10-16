@@ -1,6 +1,7 @@
 import { CITY, polylineLength, type Vec2 } from '../world/city/layout'
 import { BRIDGE, ISLET } from '../world/city/romantic'
 import { hasLineOfSight, isFree, colliderCount } from './probe'
+import { externalNavSeeds } from '../travel/worlds'
 
 /**
  * Grafo de navegacao a partir dos dados da cidade:
@@ -60,6 +61,8 @@ function samplePolyline(pts: readonly Vec2[], step: number, out: [number, number
 }
 
 function buildGraph(): Graph {
+  const seeds = externalNavSeeds() // cidade nova ativa (game/travel): grafo proprio
+  if (seeds) return buildGraphFromSeeds(seeds)
   const nodes: GNode[] = []
   const dedupe = new Set<string>()
   const add = (x: number, z: number, trusted = false, check = true) => {
@@ -154,6 +157,42 @@ function buildGraph(): Graph {
     if (j !== head && !nodes[j].trusted && Math.hypot(nodes[j].x - nodes[head].x, nodes[j].z - nodes[head].z) < 12 && !adj[head].some((e) => e.to === j)) link(head, j)
   }
 
+  return { nodes, adj, colliders: colliderCount(), cell }
+}
+
+/** Grafo de uma cidade nova: pontos candidatos filtrados por colisores, ligados por linha de visao (mesma regra do grafo da principal). */
+function buildGraphFromSeeds(seeds: [number, number][]): Graph {
+  const nodes: GNode[] = []
+  const dedupe = new Set<string>()
+  for (const [x, z] of seeds) {
+    const k = `${Math.round(x * 2)},${Math.round(z * 2)}`
+    if (dedupe.has(k) || !isFree(x, z)) continue
+    dedupe.add(k)
+    nodes.push({ x, z })
+  }
+  const cell = new Map<number, number[]>()
+  nodes.forEach((n, i) => {
+    const k = key(cellOf(n.x), cellOf(n.z))
+    const l = cell.get(k)
+    if (l) l.push(i)
+    else cell.set(k, [i])
+  })
+  const adj: Edge[][] = nodes.map(() => [])
+  for (let i = 0; i < nodes.length; i++) {
+    const a = nodes[i]
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dz = -1; dz <= 1; dz++) {
+        for (const j of cell.get(key(cellOf(a.x) + dx, cellOf(a.z) + dz)) ?? []) {
+          if (j <= i) continue
+          const b = nodes[j]
+          const w = Math.hypot(a.x - b.x, a.z - b.z)
+          if (w > LINK_R || !hasLineOfSight(a.x, a.z, b.x, b.z)) continue
+          adj[i].push({ to: j, w })
+          adj[j].push({ to: i, w })
+        }
+      }
+    }
+  }
   return { nodes, adj, colliders: colliderCount(), cell }
 }
 

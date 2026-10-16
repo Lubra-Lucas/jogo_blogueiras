@@ -126,6 +126,12 @@ export function snapWeather(w: Weather) {
   env.weather = w
 }
 
+/** Gancho por cidade (game/travel): ajusta `env` depois do ciclo (ex.: ceu tropical de Miami). */
+let envHook: ((e: typeof env, hour: number) => void) | null = null
+export function setEnvHook(fn: typeof envHook) {
+  envHook = fn
+}
+
 /** Interpola entre keyframes e aplica o clima. dt em segundos reais. */
 export function updateEnv(hour: number, weather: Weather, dt: number) {
   env.hour = hour
@@ -218,4 +224,5 @@ export function updateEnv(hour: number, weather: Weather, dt: number) {
   if (rbTime < 1e8) rbTime += dt
   const D = ENV_CFG.rainbowSeconds
   env.rainbow = rbTime < D ? sstep(rbTime, 0, 7) * (1 - sstep(rbTime, D - 14, D)) * env.day : 0
+  envHook?.(env, hour)
 }

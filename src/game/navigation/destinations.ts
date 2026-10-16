@@ -1,4 +1,5 @@
 import { CITY } from '../world/city/layout'
+import { externalDestination } from '../travel/worlds'
 
 export interface Destination {
   id: string
@@ -23,6 +24,8 @@ const ALIAS: Record<string, string> = {
 
 /** Resolve um id (porta de loja, bairro, area ou ponto de captura) em posicao + direcao de chegada. */
 export function resolveDestination(rawId: string): Destination | null {
+  const ext = externalDestination(rawId) // cidade nova ativa (game/travel)
+  if (ext !== undefined) return ext
   const id = ALIAS[rawId] ?? rawId
   const poi = CITY.pois.find((p) => p.id === id)
   if (poi && poi.kind !== 'spawn') {

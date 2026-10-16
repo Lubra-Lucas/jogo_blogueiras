@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react'
+import { worldMods } from '../travel/worldMods'
 import { useFrame } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody, useRapier, type RapierRigidBody } from '@react-three/rapier'
 import { MathUtils, Vector3, type Group } from 'three'
@@ -304,6 +305,10 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
         turnState.active = false
       }
     }
+
+    // ---- agua rasa / areia (game/travel/worldMods): reduz a velocidade desejada ----
+    tvx *= worldMods.speedMul
+    tvz *= worldMods.speedMul
 
     // ---- aceleracao / desaceleracao (independente de frame rate) ----
     const k = wantsMove ? C.accel : C.decel

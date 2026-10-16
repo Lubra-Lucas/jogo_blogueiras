@@ -31,11 +31,11 @@ export function InteractionPrompt() {
       {entries.map((g, i) =>
         isTouch || !single ? (
           <button className="ia-btn" key={g.id} onClick={() => interact(i)}>
-            {!isTouch && KEYS[i] && <span className="ia-key">{KEYS[i]}</span>} {single ? (nearby.minigames.length ? 'Jogar' : g.label) : g.label}
+            {!isTouch && KEYS[i] && <span className="ia-key">{KEYS[i]}</span>} {single ? (nearby.minigames.length && g.id !== 'viagem' ? 'Jogar' : g.label) : g.label}
           </button>
         ) : (
           <span className="ia-sub" key={g.id}>
-            <span className="ia-key">E</span> {nearby.minigames.length ? 'Jogar' : g.label}
+            <span className="ia-key">E</span> {nearby.minigames.length && g.id !== 'viagem' ? 'Jogar' : g.label}
           </span>
         ),
       )}

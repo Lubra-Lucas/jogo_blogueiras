@@ -28,6 +28,9 @@ const CURSOR_SVG =
   "<path d='M16 11.2c-1.7-1.9-4.3-.4-2.8 1.6L16 15l2.8-2.2c1.5-2-1.1-3.5-2.8-1.6z' fill='#fff'/></svg>"
 export const SEAT_CURSOR = `url("data:image/svg+xml,${encodeURIComponent(CURSOR_SVG)}") 16 16, pointer`
 
+/** pontos de uso que abrem tela (minijogo, loja, menu): o [E] e o aviso sao deles, nao do assento ao lado */
+const isGameSpot = (a: unknown) => typeof a === 'object' && a !== null && ['minigame', 'shop', 'menu'].includes((a as { type: string }).type)
+
 const POIS = new Map(CITY.pois.map((p) => [p.id, p]))
 
 /** [E] senta no lugar mais proximo. Registrado na captura ANTES do InteractionTrigger (modulo importado primeiro). */
@@ -269,7 +272,9 @@ export function SitController() {
       }
       // ponto de uso de interior (balcao, porta de saida...) mais perto que o assento: o aviso e dele
       const ip = useInteriorStore.getState().prompt
-      if (best && ip && ip.d2 < bd) best = null
+      // (dentro de uma sala, um ponto de uso de verdade -- minijogo, loja, cama -- vence o assento mesmo que ele esteja mais perto:
+      //  o aviso e o [E] ficam com o ponto; clicar no assento ainda senta)
+      if (best && ip && (ip.d2 < bd || isGameSpot(ip.spot.action))) best = null
       // se uma porta (cafe...) esta mais perto que o assento, o aviso e dela
       const door = useInteractionStore.getState().nearby
       const poi = door && POIS.get(door.id)

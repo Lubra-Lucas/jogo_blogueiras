@@ -20,6 +20,7 @@ export const SHOPS: ShopDef[] = [
   { id: 'boutique', title: 'Boutique da Avenida', label: 'Loja de roupas', poi: 'boutique', blurb: 'Roupas, meias, luvas e sapatos.' },
   { id: 'joalheria', title: 'Joalheria', label: 'Loja de joias', poi: 'joalheria', blurb: 'Colares, brincos, tiaras, pulseiras e anéis.' },
   { id: 'salao', title: 'Salão & Spa', label: 'Loja do salão', poi: 'salao-spa', blurb: 'Cabelos e serviços de coloração.' },
+  { id: 'petshop', title: 'Petshop Patinhas', label: 'Loja de pets', poi: 'petshop', blurb: 'Pets, ração e acessórios.' },
 ]
 
 export const getShop = (id: string | null | undefined) => SHOPS.find((s) => s.id === id) ?? null

@@ -5,6 +5,8 @@
  * o minimapa e, no futuro, o servidor.
  */
 
+import { AIRPORT_POI, AIRPORT_ROAD } from '../../travel/airportSite'
+
 export type DistrictStyle = 'y2k' | 'luxo' | 'neon' | 'romantico' | 'futuro'
 export type Vec2 = readonly [number, number]
 
@@ -322,6 +324,7 @@ const SHOPS: {
   { id: 'palco-neon', name: 'Palco Neon', district: 'neon', x: 187, z: 0, w: 38, d: 18, h: 15, facing: -Math.PI / 2, icon: 'P', color: '#35e8ff' },
   { id: 'cassino', name: 'Lounge de Jogos', district: 'neon', x: 170, z: -50, w: 20, d: 14, h: 12, facing: 0, icon: 'L', color: '#c9a15a' },
   { id: 'casa-sonhos', name: 'Casa dos Sonhos', district: 'jardim', x: 0, z: 189, w: 28, d: 18, h: 13, facing: Math.PI, icon: 'H', color: '#ff9ccb' },
+  { id: 'petshop', name: 'Petshop Patinhas', district: 'jardim', x: -54, z: 172, w: 16, d: 12, h: 9, facing: Math.PI, icon: 'Z', color: '#3a9f8a' },
 ]
 
 // ---------------------------------------------------------------- geracao
@@ -716,6 +719,14 @@ function buildCity(): City {
 
 export const CITY: City = buildCity()
 
+// Aeroporto (game/travel): via + porta somadas DEPOIS de gerar os bairros, para nao mexer na semente dos predios.
+CITY.roads.push(AIRPORT_ROAD)
+CITY.pois.push(AIRPORT_POI)
+CITY.spawns[AIRPORT_POI.id] = [AIRPORT_POI.x + Math.sin(AIRPORT_POI.facing) * 4, AIRPORT_POI.z + Math.cos(AIRPORT_POI.facing) * 4]
+
+/** Gancho de cidades novas (game/travel): quando ha outra cidade ativa, `locate` responde por ela. */
+export const locateHook: { fn: ((x: number, z: number) => Locale | null) | null } = { fn: null }
+
 // ---------------------------------------------------------------- consultas
 
 export interface Locale {
@@ -725,6 +736,8 @@ export interface Locale {
 
 /** Onde o ponto (x, z) esta: lago/parque/praca > via com nome > bairro > cidade. */
 export function locate(x: number, z: number): Locale {
+  const alt = locateHook.fn?.(x, z)
+  if (alt) return alt
   for (const a of CITY.areas) if (inShape(a.bounds, x, z)) return { id: a.id, name: a.name }
   for (const r of CITY.roads) {
     if (r.name && distToPolyline(x, z, r.points) <= r.width / 2) return { id: r.id, name: r.name }

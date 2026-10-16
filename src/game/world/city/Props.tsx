@@ -7,6 +7,7 @@ import {
   Color,
   ConeGeometry,
   CylinderGeometry,
+  Float32BufferAttribute,
   Mesh,
   Object3D,
   SphereGeometry,
@@ -24,7 +25,7 @@ import { CENTRO_R } from './centro'
 import { romanticReserved } from './romantic'
 import './streetProps' // reserva discos (parquinho, piquenique...) antes de filtrar as arvores
 import { merge, paint, place, placement } from './geo'
-import { Cull, chunkKey, useCullDist } from './cull'
+import { Cull, LodCull, chunkKey, useCullDist } from './cull'
 import { registerGlowColor, registerGlowEmissive } from '../environment/registry'
 
 /** Material "porcelana/vinil de brinquedo" compartilhado por todos os props. */
@@ -70,8 +71,11 @@ function InstChunk({ geometry, items, shadows, children, cast }: { geometry: Buf
   )
 }
 
-/** InstancedMesh dividido em celulas espaciais: frustum culling por celula + corte por distancia. */
-function Instances({ geometry, items, shadows, children, cast = true }: { geometry: BufferGeometry; items: Inst[]; shadows: boolean; children: ReactNode; cast?: boolean }) {
+/**
+ * InstancedMesh dividido em celulas espaciais: frustum culling por celula + corte por distancia.
+ * `far` + `lod` (m): alem dessa distancia a celula troca para uma geometria mais simples (mesmas instancias).
+ */
+function Instances({ geometry, items, shadows, children, cast = true, far, lod = 42 }: { geometry: BufferGeometry; items: Inst[]; shadows: boolean; children: ReactNode; cast?: boolean; far?: BufferGeometry; lod?: number }) {
   const dist = useCullDist()
   const chunks = useMemo(() => {
     const map = new Map<number, Inst[]>()
@@ -90,13 +94,33 @@ function Instances({ geometry, items, shadows, children, cast = true }: { geomet
   }, [items])
   return (
     <>
-      {chunks.map((c, i) => (
-        <Cull key={i} cx={c.cx} cz={c.cz} r={c.r} max={dist.props}>
-          <InstChunk geometry={geometry} items={c.list} shadows={shadows} cast={cast}>
-            {children}
-          </InstChunk>
-        </Cull>
-      ))}
+      {chunks.map((c, i) =>
+        far ? (
+          <LodCull
+            key={i}
+            cx={c.cx}
+            cz={c.cz}
+            r={c.r}
+            max={dist.props}
+            lod={lod}
+            lo={
+              <InstChunk geometry={far} items={c.list} shadows={shadows} cast={cast}>
+                {children}
+              </InstChunk>
+            }
+          >
+            <InstChunk geometry={geometry} items={c.list} shadows={shadows} cast={cast}>
+              {children}
+            </InstChunk>
+          </LodCull>
+        ) : (
+          <Cull key={i} cx={c.cx} cz={c.cz} r={c.r} max={dist.props}>
+            <InstChunk geometry={geometry} items={c.list} shadows={shadows} cast={cast}>
+              {children}
+            </InstChunk>
+          </Cull>
+        ),
+      )}
     </>
   )
 }
@@ -142,6 +166,107 @@ function blossomGeometry(): BufferGeometry {
     list.push(s)
   }
   return merge(list)
+}
+
+
+/** o scanner de vento (life/scanner.ts) decide pelo `geometry.type`: troncos = 'CylinderGeometry' (parados), copas = qualquer outro (balancam) */
+const retype = (g: BufferGeometry, t: string) => {
+  Object.defineProperty(g, 'type', { value: t, writable: true })
+}
+
+/** deslocamento determinístico (ruido de vertice) para copas e folhagem "irregulares" */
+function lumpy(g: BufferGeometry, amp: number, seed: number): BufferGeometry {
+  const p = g.attributes.position
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i)
+    const y = p.getY(i)
+    const z = p.getZ(i)
+    const n = Math.sin(x * 5.3 + seed) * Math.cos(z * 4.7 - seed * 1.3) + Math.sin(y * 6.1 + seed * 0.7) * 0.6
+    const k = 1 + amp * n
+    p.setXYZ(i, x * k, y * k, z * k)
+  }
+  g.computeVertexNormals()
+  return g
+}
+
+/** pinta tons de luz/sombra por altura (multiplica a cor de instancia): base escura, topo claro */
+function shadeByHeight(g: BufferGeometry, lo: number, hi: number, y0: number, y1: number): BufferGeometry {
+  const p = g.attributes.position
+  const c = new Float32Array(p.count * 3)
+  for (let i = 0; i < p.count; i++) {
+    const t = Math.min(1, Math.max(0, (p.getY(i) - y0) / (y1 - y0)))
+    const k = lo + (hi - lo) * t
+    c[i * 3] = k
+    c[i * 3 + 1] = k * 1.01
+    c[i * 3 + 2] = k * 0.97
+  }
+  g.setAttribute('color', new Float32BufferAttribute(c, 3))
+  return g
+}
+
+/** Copa "de folhagem": 7 massas achatadas e irregulares (nuvem de folhas) em vez de uma bola; raio ~1, altura ~1.45. Perto das arvores apenas. */
+function canopyCluster(): BufferGeometry {
+  const lobes: [number, number, number, number, number][] = [
+    [0, 0.05, 0, 0.78, 0.82],
+    [0.62, -0.12, 0.22, 0.5, 0.78],
+    [-0.58, -0.1, -0.28, 0.54, 0.8],
+    [0.12, -0.16, -0.66, 0.46, 0.76],
+    [-0.28, -0.12, 0.62, 0.48, 0.78],
+    [-0.2, 0.52, 0.18, 0.5, 0.8],
+    [0.3, 0.6, -0.22, 0.4, 0.78],
+  ]
+  const list: BufferGeometry[] = lobes.map(([x, y, z, r, sy], i) => {
+    const g = new SphereGeometry(r, 8, 6)
+    g.scale(1, sy, 1)
+    lumpy(g, 0.14, i * 1.7)
+    g.translate(x, y, z)
+    return g
+  })
+  const g = merge(list)
+  g.translate(0, -0.3, 0) // centro na origem, como a esfera unitaria que ela substitui
+  g.scale(1, 1.2, 1)
+  shadeByHeight(g, 0.74, 1.12, -0.95, 0.95)
+  retype(g, 'CanopyGeometry')
+  return g
+}
+
+/** Pinheiro/cone em 3 andares sobrepostos (copa em camadas), unidade de altura 1. */
+function tieredCone(): BufferGeometry {
+  const list: BufferGeometry[] = []
+  const tiers: [number, number, number][] = [[1.0, 0.5, 0.0], [0.76, 0.46, 0.26], [0.5, 0.42, 0.52]]
+  for (const [r, h, y] of tiers) {
+    const c = new ConeGeometry(r, h * 1.15, 10)
+    lumpy(c, 0.05, y * 9)
+    c.translate(0, y + h * 0.5, 0)
+    list.push(c)
+  }
+  const g = merge(list)
+  g.translate(0, -0.5, 0) // mesma caixa do cone unitario (-0,5..0,5)
+  shadeByHeight(g, 0.76, 1.12, -0.5, 0.5)
+  retype(g, 'CanopyGeometry')
+  return g
+}
+
+/** Tronco com alargamento na base e 3 galhos que sobem para dentro da copa (coordenadas unitarias; y escalado pela altura do tronco). */
+function forkedTrunk(): BufferGeometry {
+  const list: BufferGeometry[] = []
+  const base = new CylinderGeometry(0.14, 0.2, 1, 8, 1)
+  list.push(base)
+  const flare = new CylinderGeometry(0.2, 0.34, 0.1, 8, 1)
+  flare.translate(0, -0.45, 0)
+  list.push(flare)
+  const arms: [number, number][] = [[0.34, 0.1], [-0.3, 0.2], [0.04, -0.34]]
+  for (const [dx, dz] of arms) {
+    const a = new CylinderGeometry(0.035, 0.08, 0.36, 6, 1)
+    a.translate(0, 0.18, 0)
+    a.rotateZ(-dx * 1.4)
+    a.rotateX(dz * 1.4)
+    a.translate(0, 0.46, 0)
+    list.push(a)
+  }
+  const g = merge(list)
+  retype(g, 'CylinderGeometry') // o scanner de vento trata como tronco (nao balanca)
+  return g
 }
 
 /** Palmeira estilizada: vaso branco + tronco em curva (segmentos) + folhas pastel. */
@@ -254,11 +379,13 @@ export function Trees({ shadows }: { shadows: boolean }) {
   const geos = useMemo(() => {
     const palm = palmGeometries()
     return {
-      trunk: new CylinderGeometry(0.14, 0.2, 1, 8),
+      trunk: forkedTrunk(),
       ring: new TorusGeometry(0.22, 0.05, 4, 10).rotateX(Math.PI / 2),
-      sphere: new SphereGeometry(1, 14, 9),
+      sphere: paint(new SphereGeometry(1, 14, 9), '#ffffff'),
       heart: heartGeometry(),
-      cone: new ConeGeometry(1, 1, 14),
+      cone: paint(new ConeGeometry(1, 1, 14), '#ffffff'),
+      tiers: tieredCone(),
+      cluster: canopyCluster(),
       blossom: blossomGeometry(),
       orbRing: new TorusGeometry(1.32, 0.035, 4, 28).rotateX(Math.PI / 2 + 0.5),
       darkRing: new TorusGeometry(1.1, 0.045, 4, 24).rotateX(Math.PI / 2 - 0.45),
@@ -277,14 +404,14 @@ export function Trees({ shadows }: { shadows: boolean }) {
       <Instances geometry={geos.ring} items={data.rings} shadows={false}>
         <meshPhysicalMaterial color="#f0c35a" metalness={0.9} roughness={0.25} clearcoat={0.5} />
       </Instances>
-      <Instances geometry={geos.sphere} items={data.round} shadows={shadows}>
-        <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" />
+      <Instances geometry={geos.cluster} far={geos.sphere} lod={34} items={data.round} shadows={shadows}>
+        <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" vertexColors />
       </Instances>
       <Instances geometry={geos.heart} items={data.heart} shadows={shadows}>
         <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" />
       </Instances>
-      <Instances geometry={geos.cone} items={data.cone} shadows={shadows}>
-        <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" />
+      <Instances geometry={geos.tiers} far={geos.cone} lod={34} items={data.cone} shadows={shadows}>
+        <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" vertexColors />
       </Instances>
       <Instances geometry={geos.blossom} items={data.blossom} shadows={shadows}>
         <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" />
@@ -479,6 +606,23 @@ export function Landmarks({ shadows }: { shadows: boolean }) {
       const top = paint(new RoundedBoxGeometry(2.9, 0.3, 2.5, 2, 0.12), k.color)
       place(top, m, 0, 2.5, 0)
       list.push(top)
+      // acabamento: franja festonada do toldo, balcao com friso, caixilhos da vitrine e lanterna no teto
+      for (let i = 0; i < 9; i++) {
+        const f = paint(new CylinderGeometry(0.17, 0.17, 0.05, 8).rotateX(Math.PI / 2), i % 2 ? '#fff7ee' : k.color)
+        place(f, m, -1.6 + i * 0.4, 2.47, 2.3)
+        list.push(f)
+      }
+      const ledge = paint(new RoundedBoxGeometry(2.9, 0.1, 0.5, 1, 0.04), '#c9b896')
+      place(ledge, m, 0, 1.05, 1.28)
+      list.push(ledge)
+      for (const gx of [-0.9, 0, 0.9]) {
+        const mu = paint(new BoxGeometry(0.06, 1.1, 0.06), '#7a6a52')
+        place(mu, m, gx, 1.65, 1.13)
+        list.push(mu)
+      }
+      const lant = paint(new SphereGeometry(0.2, 10, 6), '#ffe9b0')
+      place(lant, m, 0, 2.95, 0)
+      list.push(lant)
     }
     // cerca do Bairro Futuro
     const orange = '#ffb347'

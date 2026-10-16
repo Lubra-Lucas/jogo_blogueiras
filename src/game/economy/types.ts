@@ -14,7 +14,7 @@ export const AVAILABILITY_LABEL: Record<Availability, string> = {
   missao: 'Missão',
 }
 
-export type ShopId = 'boutique' | 'joalheria' | 'salao' | 'concessionaria' | 'imobiliaria'
+export type ShopId = 'boutique' | 'joalheria' | 'salao' | 'concessionaria' | 'imobiliaria' | 'petshop'
 
 /** Categoria de produto (roupas/joias/cabelos hoje; carros/casas/moveis em breve). */
 export type ProductKind = 'hair' | 'garment' | 'jewelry' | 'car' | 'house' | 'furniture'

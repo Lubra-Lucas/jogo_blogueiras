@@ -1,3 +1,4 @@
+import { useTravelStore } from '../travel/travelStore'
 import { create } from 'zustand'
 import { loadJson, saveJson } from '../../shared/storage'
 import { useProfileStore } from '../../state/profileStore'
@@ -49,6 +50,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: 'brilhos-5000', title: 'Brilho de verdade', desc: 'Ganhe 5.000 Brilhos no total.', diamonds: 15 },
   { id: 'fotos-10', title: 'Feed em dia', desc: 'Tire 10 fotos.', diamonds: 10 },
   { id: 'nivel-10', title: 'It Girl', desc: 'Chegue ao nível 10.', diamonds: 15 },
+  { id: 'primeira-viagem', title: 'Primeira viagem', desc: 'Viaje de avião para outra cidade.', diamonds: 8 },
 ]
 
 /** Recompensa de login: 7 dias, o 7º traz Diamantes. */
@@ -213,6 +215,7 @@ export const useEconomyStore = create<EconomyState>()((set, get) => ({
       'brilhos-5000': s.totals.earned >= 5000,
       'fotos-10': s.totals.photos >= 10,
       'nivel-10': p.level >= 10,
+      'primeira-viagem': useTravelStore.getState().visited.some((id) => id !== 'main'),
     }
     const fresh = ACHIEVEMENTS.filter((a) => checks[a.id] && !s.achievements.includes(a.id))
     if (!fresh.length) return
