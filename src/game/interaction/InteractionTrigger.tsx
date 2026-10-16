@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { CITY } from '../world/city/layout'
 import { usePlayerStore } from '../../state/playerStore'
 import { useMinigameStore } from '../minigames/minigameStore'
-import { POI_MINIGAMES, interact, useInteractionStore, type NearbyPoi } from './interactionStore'
+import { interact, poiMinigames, useInteractionStore, type NearbyPoi } from './interactionStore'
 
 /** Distancia (m) ate a porta para aparecer o aviso. */
 export const INTERACT_RADIUS = 3.5
@@ -16,11 +16,12 @@ const DOORS = CITY.pois.filter((p) => p.kind !== 'spawn')
 export function InteractionTrigger() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.code !== 'KeyE' || e.repeat || e.ctrlKey || e.metaKey || e.altKey) return
+      const idx = e.code === 'KeyE' ? 0 : e.code === 'KeyR' ? 1 : e.code === 'KeyT' ? 2 : -1
+      if (idx < 0 || e.repeat || e.ctrlKey || e.metaKey || e.altKey) return
       const t = e.target
       if (t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return
       if (useMinigameStore.getState().active) return
-      if (interact()) {
+      if (interact(idx)) {
         // [E] tambem gira a camera: nao deixa o teclado do jogo ver esta tecla
         e.stopPropagation()
         e.preventDefault()
@@ -46,7 +47,7 @@ export function InteractionTrigger() {
         const dd = (d.x - p.x) ** 2 + (d.z - p.z) ** 2
         if (dd < bd) {
           bd = dd
-          best = { id: d.id, name: d.name, minigame: POI_MINIGAMES[d.id] ?? null }
+          best = { id: d.id, name: d.name, minigames: poiMinigames(d.id) }
         }
       }
     }

@@ -1,10 +1,7 @@
-import { playEmote } from '../../game/character/animation/emoteStore'
-import { useCafeStore } from '../../game/minigames/cafe/store'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { clearMoveTarget, setKeyboardAxis, setKeyboardCameraYaw, setStickAxis } from '../../game/input/intent'
 import { useMinigameStore } from '../../game/minigames/minigameStore'
-import { CafeGame } from './cafe/CafeGame'
-import { DesfileGame } from './desfile/DesfileGame'
+import { getMinigame } from './registry'
 
 const DEV_OPEN = new URLSearchParams(window.location.search).get('minigame')
 
@@ -12,14 +9,13 @@ const DEV_OPEN = new URLSearchParams(window.location.search).get('minigame')
  * Hospeda o minijogo aberto em tela cheia. Enquanto ha um aberto: o overlay cobre o canvas (nenhum
  * toque chega ao mundo), as teclas de jogo (WASD, Q/E, emotes...) sao engolidas na captura e o
  * movimento fica zerado. Ao sair tudo volta ao normal sozinho.
- * Dev: `?minigame=cafe` abre direto.
+ * Dev: `?minigame=<id>` abre direto. Minijogos vêm do registro (./registry.ts).
  */
 export function MinigameHost() {
   const active = useMinigameStore((s) => s.active)
 
   useEffect(() => {
-    if (DEV_OPEN === 'cafe') useMinigameStore.getState().open('cafe')
-    if (DEV_OPEN === 'desfile') useMinigameStore.getState().open('desfile')
+    if (DEV_OPEN && getMinigame(DEV_OPEN)) useMinigameStore.getState().open(DEV_OPEN)
   }, [])
 
   useEffect(() => {
@@ -45,18 +41,17 @@ export function MinigameHost() {
     }
   }, [active])
 
-  if (active === 'cafe') {
-    return (
-      <CafeGame
+  const def = getMinigame(active)
+  if (!def) return null
+  const Game = def.component
+  return (
+    <Suspense fallback={null}>
+      <Game
         onExit={() => {
-          // saiu com 2+ estrelas: a personagem no mundo agradece
-          const stars = useCafeStore.getState().results?.stars ?? 0
           useMinigameStore.getState().close()
-          if (stars >= 2) setTimeout(() => playEmote('thankful', { once: true, silent: true }), 500)
+          def.afterExit?.()
         }}
       />
-    )
-  }
-  if (active === 'desfile') return <DesfileGame onExit={() => useMinigameStore.getState().close()} />
-  return null
+    </Suspense>
+  )
 }

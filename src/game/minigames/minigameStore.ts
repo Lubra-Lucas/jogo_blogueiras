@@ -1,7 +1,8 @@
 import { create } from 'zustand'
 import { clearMoveTarget, setKeyboardAxis, setKeyboardCameraYaw, setStickAxis } from '../input/intent'
 
-export type MinigameId = 'cafe' | 'desfile'
+/** id de um minijogo do registro (src/ui/minigames/registry.ts) */
+export type MinigameId = string
 
 interface MinigameState {
   active: MinigameId | null
