@@ -6,7 +6,7 @@ export const J = async (c, e) => JSON.parse(await c.ev(`JSON.stringify(${e})`))
 /** Teleporta para a porta e espera o aviso "Entrar" da cidade. */
 export async function goToDoor(c, poi) {
   await c.ev(`window.__interior.door('${poi}')`)
-  for (let i = 0; i < 60; i++) {
+  for (let i = 0; i < 400; i++) {
     await sleep(300)
     if (await c.ev(`window.__ia.getState().nearby?.id === '${poi}'`)) return true
   }
