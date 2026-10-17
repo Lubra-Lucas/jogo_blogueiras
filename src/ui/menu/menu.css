@@ -334,7 +334,7 @@
 .card:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px color-mix(in srgb, var(--rar) 45%, transparent); }
 .card[aria-pressed='true'] { box-shadow: 0 0 0 3px var(--acc), 0 6px 16px color-mix(in srgb, var(--acc) 45%, transparent); }
 .card:disabled { cursor: default; opacity: 0.55; filter: grayscale(0.7); border-style: dashed; }
-.card__icon { width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255, 255, 255, 0.85); border: 1.5px solid color-mix(in srgb, var(--rar) 60%, #fff); }
+.card__icon { width: 80px; height: auto; aspect-ratio: 1; max-width: 100%; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255, 255, 255, 0.85); border: 1.5px solid color-mix(in srgb, var(--rar) 60%, #fff); }
 .card__icon svg { width: 34px; height: 34px; }
 .card__rar { font: 800 9px var(--corpo); letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--rar) 80%, #000); }
 .card__eq { position: absolute; top: 6px; right: 6px; width: 20px; height: 20px; border-radius: 50%; background: var(--acc); color: #fff; display: flex; align-items: center; justify-content: center; }
