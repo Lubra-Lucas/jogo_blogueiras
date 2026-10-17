@@ -1085,7 +1085,7 @@
    "label": "Cafe Rose",
    "base": "#d8c3a2",
    "accent": "#f1e7d6",
-   "accent2": "#c0476a",
+   "accent2": "#9e4a55",
    "soft": "#e9d9bd",
    "deep": "#4a3024",
    "white": "#f6f2ea",
@@ -1105,7 +1105,7 @@
    "glass": "#a5bccd",
    "metal": "steel",
    "seat": "#5a5f78",
-   "glow": "#ffe0f0"
+   "glow": "#fff0d0"
   },
   "boutique": {
    "label": "Boutique",

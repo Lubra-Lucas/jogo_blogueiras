@@ -4,7 +4,7 @@ import type { KitItem } from './kit'
 /** Raio (m) em que lampadas/bancos usam o kit Y2K novo (o resto da cidade segue com as pecas antigas). */
 export const CENTRO_R = 80
 
-/** Paletas do Centro: azul bebe, menta, manteiga, lilas, pessego e perola; rosa so como um acento. */
+/** Paletas do Centro: base de cores reais (aco, salvia, areia, ardosia, arenito, perola) com acentos rosa/lilas e neon, em porcelana brilhante. */
 const CYCLE = ['babyblue', 'mint', 'butter', 'lilac', 'peach', 'pearl', 'mint', 'babyblue', 'peach', 'butter', 'pearl', 'lilac', 'bubblegum']
 const SHOP_PAL: Record<string, string> = { 'cafe-rose': 'peach', 'salao-spa': 'lilac' }
 
@@ -68,7 +68,7 @@ function build(): KitItem[] {
   }
 
   // ---------------------------------------------------------------- praca central
-  out.push({ piece: 'plaza_centerpiece', x: 0, z: 0, s: 1.25, pal: 'bubblegum', over: { trim: '#f1d27a', glow: '#ff9ccb', glow2: '#8fdcff' } })
+  out.push({ piece: 'plaza_centerpiece', x: 0, z: 0, s: 1.25, pal: 'bubblegum', over: { trim: '#f1d27a', glow: '#ff7ad9', glow2: '#7ad9ff' } })
   // vasos-orbe em anel ao redor da fonte
   for (let i = 0; i < 8; i++) {
     const a = ((i + 0.5) / 8) * Math.PI * 2

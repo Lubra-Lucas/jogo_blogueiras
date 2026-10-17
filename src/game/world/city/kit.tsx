@@ -75,9 +75,9 @@ export function kitMaterials(): Record<Cls, Material> {
   if (MATS) return MATS
   MATS = {
     // porcelana / vinil de brinquedo
-    por: new MeshPhysicalMaterial({ vertexColors: true, roughness: 0.24, clearcoat: 1, clearcoatRoughness: 0.08, envMapIntensity: 0.9 }),
+    por: new MeshPhysicalMaterial({ vertexColors: true, roughness: 0.18, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 1.1 }),
     // ouro-joia / perola / cromo (a cor vem do vertice; leve iridescencia perolada)
-    metal: new MeshPhysicalMaterial({ vertexColors: true, metalness: 0.72, roughness: 0.22, envMapIntensity: 3, iridescence: 0.5, iridescenceIOR: 1.4, iridescenceThicknessRange: [150, 450] }),
+    metal: new MeshPhysicalMaterial({ vertexColors: true, metalness: 0.9, roughness: 0.12, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 3.4, iridescence: 0.5, iridescenceIOR: 1.4, iridescenceThicknessRange: [150, 450] }),
     // vidro perolado Y2K
     glass: new MeshPhysicalMaterial({
       vertexColors: true, transparent: true, opacity: 0.62, roughness: 0.05, metalness: 0.1, clearcoat: 1, clearcoatRoughness: 0.03,
@@ -94,7 +94,7 @@ export function kitMaterials(): Record<Cls, Material> {
   addGrain(MATS.por, { bump: 0.03, scale: 1.4, tone: 0.09, far: 50 })
   addGrain(MATS.cloth, { bump: 0.025, scale: 2.2, tone: 0.12, far: 30, channel: 2 })
   nightGlass(MATS.glass as MeshPhysicalMaterial)
-  registerGlowColor(MATS.glow as MeshBasicMaterial, 0.8, 1.35)
+  registerGlowColor(MATS.glow as MeshBasicMaterial, 1.0, 1.6)
   return MATS
 }
 
