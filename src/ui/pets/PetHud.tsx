@@ -8,7 +8,7 @@ import { useVehicleStore } from '../../game/vehicles/driveStore'
 import { useShopStore } from '../shop/shopStore'
 import { useDeviceStore } from '../../game/systems/device'
 import { useUiStore } from '../../state/uiStore'
-import { PET_ACCESSORIES, PET_FOOD, type PetAccSlot } from '../../game/economy/prices'
+import { PET_ACCESSORIES, PET_FOOD, petAccFits, type PetAccSlot } from '../../game/economy/prices'
 import { findPet, loadPetCatalog, PET_NAME_IDEAS, usePetCatalog } from '../../game/pets/catalog'
 import { usePetStore } from '../../game/pets/petStore'
 import { petRuntime } from '../../game/pets/runtime'
@@ -122,12 +122,12 @@ export function PetHud() {
           </button>
         </div>
       )}
-      {open && <PetPanel id={active} breedLabel={info.breed.label} coatLabel={info.coat.label} />}
+      {open && <PetPanel id={active} breedId={info.breed.id} breedLabel={info.breed.label} coatLabel={info.coat.label} />}
     </>
   )
 }
 
-function PetPanel({ id, breedLabel, coatLabel }: { id: string; breedLabel: string; coatLabel: string }) {
+function PetPanel({ id, breedId, breedLabel, coatLabel }: { id: string; breedId: string; breedLabel: string; coatLabel: string }) {
   const owned = useProfileStore((s) => s.owned)
   const breeds = usePetCatalog((s) => s.breeds)
   const names = usePetStore((s) => s.names)
@@ -243,12 +243,24 @@ function PetPanel({ id, breedLabel, coatLabel }: { id: string; breedLabel: strin
                   <button type="button" className="pet-chipbtn" aria-pressed={!equip[slot]} onClick={() => usePetStore.getState().setEquip(id, slot, null)}>
                     Nenhum
                   </button>
-                  {list.map((a) => (
-                    <button key={a.id} type="button" className="pet-chipbtn" aria-pressed={equip[slot] === a.id} onClick={() => usePetStore.getState().setEquip(id, slot, a.id)}>
-                      <i style={{ background: a.color }} />
-                      {a.label}
-                    </button>
-                  ))}
+                  {list.map((a) => {
+                    const fits = petAccFits(a, breedId)
+                    return (
+                      <button
+                        key={a.id}
+                        type="button"
+                        className="pet-chipbtn"
+                        aria-pressed={equip[slot] === a.id}
+                        disabled={!fits}
+                        title={fits ? undefined : 'Só para cães'}
+                        onClick={() => usePetStore.getState().setEquip(id, slot, a.id)}
+                      >
+                        <i style={{ background: a.color }} />
+                        {a.label}
+                        {fits ? '' : ' (Só para cães)'}
+                      </button>
+                    )
+                  })}
                 </div>
               )
             })}

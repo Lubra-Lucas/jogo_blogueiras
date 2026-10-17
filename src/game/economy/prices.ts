@@ -164,7 +164,17 @@ export interface PetAccDef {
   slot: PetAccSlot
   color: string
   price: number
+  /** GLB rigido (caminho relativo a assets/pets/) que substitui a geometria procedural */
+  file?: string
+  /** GLB com skin, por id de raca (assets/pets/); raca sem entrada nao pode usar o item */
+  files?: Record<string, string>
+  /** nome do material tingivel do GLB; sem isso a cor nao e aplicada */
+  tint?: string
+  /** sem material tingivel: a UI nao oferece tingimento */
+  fixedColor?: boolean
 }
+/** O acessorio pode ser usado nesta raca? (a polo so existe para os caes com arquivo) */
+export const petAccFits = (a: PetAccDef, breedId: string | undefined): boolean => !a.files || (!!breedId && !!a.files[breedId])
 /** Acessorios de pet (id `petacc.*`). */
 export const PET_ACCESSORIES: PetAccDef[] = [
   { id: 'petacc.coleira-vinho', label: 'Coleira vinho', slot: 'collar', color: '#7a2332', price: 180 },
@@ -175,4 +185,24 @@ export const PET_ACCESSORIES: PetAccDef[] = [
   { id: 'petacc.laco-rosa', label: 'Laço rosé', slot: 'bow', color: '#e8a7b4', price: 260 },
   { id: 'petacc.roupinha-listrada', label: 'Roupinha listrada', slot: 'outfit', color: '#2c4a6e', price: 380 },
   { id: 'petacc.roupinha-mostarda', label: 'Roupinha mostarda', slot: 'outfit', color: '#c8932f', price: 380 },
+  { id: 'petacc.coleira-strass', label: 'Coleira de strass com coração neon', slot: 'collar', color: '#f3c6d3', price: 650, file: 'acc/coleira-strass.glb', tint: 'tira_tint' },
+  { id: 'petacc.bandana-xadrez', label: 'Bandana xadrez', slot: 'collar', color: '#1f3556', price: 220, file: 'acc/bandana-xadrez.glb', fixedColor: true },
+  { id: 'petacc.laco-cetim', label: 'Laço de cetim', slot: 'bow', color: '#c96f86', price: 180, file: 'acc/laco-cetim.glb', tint: 'cetim_tint' },
+  {
+    id: 'petacc.polo-rosa',
+    label: 'Camisa polo rosa',
+    slot: 'outfit',
+    color: '#f29bb5',
+    price: 480,
+    tint: 'polo_corpo_tint',
+    files: {
+      poodle: 'acc/polo-rosa/poodle.glb',
+      shiba: 'acc/polo-rosa/shiba.glb',
+      dachshund: 'acc/polo-rosa/dachshund.glb',
+      caramelo: 'acc/polo-rosa/caramelo.glb',
+      maltes: 'acc/polo-rosa/maltes.glb',
+      cavalier: 'acc/polo-rosa/cavalier.glb',
+      golden: 'acc/polo-rosa/golden.glb',
+    },
+  },
 ]
