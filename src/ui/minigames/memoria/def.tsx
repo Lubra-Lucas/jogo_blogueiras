@@ -8,5 +8,6 @@ export const def: MinigameDef = {
   poi: 'estudio-fotos',
   order: 5,
   profession: 'Estilista',
+  category: 'diversao', description: 'Ache os pares de peças ou lembre e remonte o look.',
   component: lazy(() => import('./MemoriaGame').then((m) => ({ default: m.MemoriaGame }))),
 }

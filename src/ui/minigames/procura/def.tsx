@@ -7,5 +7,6 @@ export const def: MinigameDef = {
   poi: 'cassino',
   order: 5,
   profession: 'Fotógrafa',
+  category: 'diversao', description: 'Ache as blogueiras, os pets e o fotógrafo no meio da multidão.',
   component: lazy(() => import('./ProcuraGame').then((m) => ({ default: m.ProcuraGame }))),
 }
