@@ -65,6 +65,8 @@ interface Engine {
   paused: boolean
   /** quanto do voo do corte ja passou (para a bloqueadora) */
   lost: boolean
+  /** a jogadora tocou para sacar (o ponto só começa depois disso) */
+  go: boolean
 }
 
 function startRally(e: Engine) {
@@ -76,6 +78,7 @@ function startRally(e: Engine) {
   e.pressed = false
   e.after = null
   e.lost = false
+  e.go = false
   e.lastRating = null
 }
 
@@ -338,6 +341,19 @@ function draw(g: CanvasRenderingContext2D, W: number, H: number, e: Engine, time
   g.stroke()
   g.restore()
 
+  // espera pelo saque
+  if (e.phase === 'intro' && !e.go) {
+    g.globalAlpha = 0.65 + 0.35 * Math.sin(time * 5)
+    g.font = `800 ${Math.round(W * 0.06)}px system-ui, sans-serif`
+    g.textAlign = 'center'
+    g.lineWidth = 6
+    g.strokeStyle = 'rgba(255,255,255,0.95)'
+    g.strokeText('Toque para sacar', W / 2, H * 0.62)
+    g.fillStyle = '#1b6f94'
+    g.fillText('Toque para sacar', W / 2, H * 0.62)
+    g.globalAlpha = 1
+  }
+
   // popups
   for (const p of e.popups) {
     g.globalAlpha = Math.max(0, 1 - p.t / 1.1)
@@ -414,10 +430,11 @@ export default function VoleiGame({ onExit }: { onExit: () => void }) {
     const rand = daily ? rng(dailySeed(ID + ':' + diff)) : rng((Date.now() ^ 0x9e3779b9) >>> 0)
     const e = {
       cfg, rand, idx: 0, phase: 'intro', t: 0, dur: 0.7, from: [0.5, 0.07], to: DIG, peak: 1, lane: 1, pressed: false, tally: newTally(), popups: [], after: null,
-      lastRating: null, over: false, paused: false, lost: false,
+      lastRating: null, over: false, paused: false, lost: false, go: false,
     } as unknown as Engine
     startRally(e)
     eng.current = e
+    if (import.meta.env.DEV) (window as unknown as Record<string, unknown>).__vb = { eng: e, blocker: () => blockerLane(e) } // depuração/testes
     setHud({ score: 0, combo: 0, hearts: HEARTS, rally: 1, phase: 'intro' })
     setRes(null)
     setPaused(false)
@@ -447,6 +464,13 @@ export default function VoleiGame({ onExit }: { onExit: () => void }) {
   const press = useCallback((lane: number) => {
     const e = eng.current
     if (!e || e.over || pausedRef.current) return
+    if (e.phase === 'intro' && !e.go) {
+      e.go = true
+      e.t = 0
+      e.dur = e.idx === 0 ? 1.1 : 0.7
+      playSfx('click')
+      return
+    }
     if (e.phase !== 'receive' && e.phase !== 'set' && e.phase !== 'spike') return
     if (e.pressed) return
     const err = e.t - e.dur
@@ -512,7 +536,7 @@ export default function VoleiGame({ onExit }: { onExit: () => void }) {
       g.setTransform(dpr, 0, 0, dpr, 0, 0)
       if (!pausedRef.current && !e.over) {
         time += dt
-        e.t += dt
+        if (e.phase !== 'intro' || e.go) e.t += dt
         if (e.after) e.after.t += dt
         for (const p of e.popups) p.t += dt
         e.popups = e.popups.filter((p) => p.t < 1.1)
@@ -614,7 +638,7 @@ export default function VoleiGame({ onExit }: { onExit: () => void }) {
           </div>
           <canvas ref={canvas} className="vb-canvas" onPointerDown={() => press(1)} />
           <div className="vb-hint">
-            {hud.phase === 'set' ? 'Escolha a faixa: verde está livre' : hud.phase === 'spike' ? 'Corte agora no tempo certo' : hud.phase === 'receive' ? 'Manchete: toque quando o anel encostar' : ' '}
+            {hud.phase === 'intro' ? 'Toque para sacar' : hud.phase === 'set' ? 'Escolha a faixa: verde está livre' : hud.phase === 'spike' ? 'Corte agora no tempo certo' : hud.phase === 'receive' ? 'Manchete: toque quando o anel encostar' : ' '}
           </div>
           <div className="vb-pad">
             {['Esquerda', 'Centro', 'Direita'].map((l, i) => (

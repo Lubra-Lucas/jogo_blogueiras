@@ -1,6 +1,6 @@
 import type { WorldDef } from '../../travel/worlds'
 import { miamiEnvHook } from './env'
-import { MIAMI, MIAMI_ARRIVAL, MIAMI_POIS, MIAMI_ROADS, MIAMI_SPAWNS, SEA, miamiLocate } from './layout'
+import { LAND_W, MIAMI, MIAMI_ARRIVAL, MIAMI_POIS, MIAMI_ROADS, MIAMI_SPAWNS, SEA, miamiLocate } from './layout'
 import { MIAMI_MAP } from './map'
 import type { LampSpot } from '../environment/lamps'
 
@@ -29,6 +29,18 @@ function lamps(): LampSpot[] {
     .map((i) => ({ x: i.x, y: (i.y ?? 0) + 3.95, z: i.z, color: '#ffd9a0', y2k: false }))
 }
 
+/** o pet fica na terra e na areia: nunca entra na água nem no píer, e não atravessa prédios */
+function petFree(x: number, z: number): boolean {
+  if (x < LAND_W + 12 || x > SEA.shoreX - 0.5 || Math.abs(z) > 130) return false
+  for (const b of MIAMI.buildings) {
+    const rot = Math.abs(Math.sin(b.rot)) > 0.5
+    const hw = (rot ? b.d : b.w) / 2 + 0.5
+    const hd = (rot ? b.w : b.d) / 2 + 0.5
+    if (Math.abs(x - b.x) < hw && Math.abs(z - b.z) < hd) return false
+  }
+  return true
+}
+
 export const MIAMI_WORLD: WorldDef = {
   id: 'miami',
   name: 'Miami Beach',
@@ -37,6 +49,7 @@ export const MIAMI_WORLD: WorldDef = {
   arrival: MIAMI_ARRIVAL,
   locate: miamiLocate,
   navSeeds,
+  petFree,
   map: MIAMI_MAP,
   lamps,
   envHook: miamiEnvHook,

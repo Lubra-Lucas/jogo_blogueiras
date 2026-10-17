@@ -13,6 +13,14 @@ import { locateHook } from '../world/city/layout'
 
 const MiamiCity = lazy(() => import('../world/miami/MiamiCity'))
 
+/** avisa a viagem que a cidade (e seus modelos) terminou de montar: a transicao de volta so some depois disso */
+function HomeReady() {
+  useEffect(() => {
+    useTravelStore.getState().markReady(HOME_ID)
+  }, [])
+  return null
+}
+
 /** Aeroporto da cidade principal: terminal Art Deco, balcao de check-in, escultura de aviao, palmeiras e postes. */
 function mainAirportItems(): KitItem[] {
   const { cx, cz, rot } = MAIN_AIRPORT
@@ -67,7 +75,10 @@ export function TravelWorlds({ shadows, propDist, buildingDist, children }: { sh
   if (cityId === HOME_ID) {
     return (
       <>
-        <Suspense fallback={null}>{children}</Suspense>
+        <Suspense fallback={null}>
+          {children}
+          <HomeReady />
+        </Suspense>
         <CullCtx.Provider value={{ props: propDist, buildings: buildingDist }}>
           <Suspense fallback={null}>
             <MiamiKitScene items={items} shadows={shadows} cull="props" lod={40} chunk={70} pad={14} />

@@ -1,5 +1,6 @@
 import { CITY } from '../world/city/layout'
 import { interiorBridge } from '../interiors/interiorBridge'
+import { activeWorld } from '../travel/worlds'
 import { freeAt } from '../interiors/resolve'
 
 const PAD = 0.32
@@ -9,6 +10,8 @@ const LIMIT = CITY.half - 6
 export function petFree(x: number, z: number): boolean {
   const room = interiorBridge.room
   if (interiorBridge.active && room) return freeAt(room.rects, room.ox, room.oz, x, z, 0.24, room.layout)
+  const w = activeWorld() // cidade nova (viagem): regras próprias
+  if (w) return w.petFree ? w.petFree(x, z) : true
   if (Math.abs(x) > LIMIT || Math.abs(z) > LIMIT) return false
   const f = CITY.futuro
   if (x > f.x0 - 1 && x < f.x1 + 1 && z > f.z0 - 1 && z < f.z1 + 1) return false

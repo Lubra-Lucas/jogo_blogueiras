@@ -105,7 +105,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 14px;
-  overflow: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  flex: 1 1 auto;
+  min-height: 0;
   padding: 2px;
   -webkit-overflow-scrolling: touch;
 }
@@ -576,5 +579,27 @@
   .fl-wing,
   .fl-ground__glint {
     animation: none;
+  }
+}
+
+/* telas baixas (celular na horizontal, janelas pequenas): cartões compactos, sem a arte do céu; a lista rola e o botão fica sempre à vista */
+@media (max-height: 600px) {
+  .tv-panel {
+    gap: 8px;
+    padding: 12px;
+  }
+  .tv-list {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+  }
+  .tv-card__sky {
+    display: none;
+  }
+  .tv-card__body {
+    gap: 6px;
+    padding: 10px 12px;
+  }
+  .tv-card__body p {
+    display: none;
   }
 }

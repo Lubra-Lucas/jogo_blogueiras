@@ -36,6 +36,8 @@ export interface WorldDef {
   lamps?: () => LampSpot[]
   /** ajuste do ambiente (ceu, sol) depois do ciclo dia/noite */
   envHook?: (e: typeof env, hour: number) => void
+  /** o pet (seguidor) pode pisar aqui? Sem isto, a cidade nova não restringe o pet */
+  petFree?: (x: number, z: number) => boolean
   /** titulo do mapa grande */
   mapTitle: string
 }

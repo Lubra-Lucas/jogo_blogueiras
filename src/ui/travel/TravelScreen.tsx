@@ -9,6 +9,7 @@ import './travel.css'
 
 /** cartao do destino: ceu do destino, nome, descricao, nivel, preco e botao (ou cadeado e "Nivel X necessario") */
 function Card({ d, here, onGo, busy }: { d: TravelDestination; here: boolean; onGo: (id: string) => void; busy: boolean }) {
+  const [confirm, setConfirm] = useState(false)
   const level = useProfileStore((s) => s.level)
   const coins = useProfileStore((s) => s.coins)
   const visited = useTravelStore((s) => s.visited.includes(d.id))
@@ -44,14 +45,26 @@ function Card({ d, here, onGo, busy }: { d: TravelDestination; here: boolean; on
           </div>
         ) : locked ? (
           <div className="tv-locked" role="status">
-            <ILock width={16} height={16} /> Nível {d.minLevel} necessário
+            <ILock width={16} height={16} /> Libera no nível {d.minLevel}
             <small>Você está no nível {level}</small>
           </div>
         ) : (
-          <button type="button" className="tv-go" disabled={busy || poor} onClick={() => onGo(d.id)}>
-            <IPlane width={18} height={18} />
-            {poor ? `Faltam ${d.price - coins} ${CURRENCY_NAME}` : free ? 'Embarcar (grátis)' : `Comprar passagem · ${d.price}`}
-          </button>
+          <>
+            <button
+              type="button"
+              className="tv-go"
+              disabled={busy || poor}
+              onClick={() => (free || confirm ? onGo(d.id) : setConfirm(true))}
+            >
+              <IPlane width={18} height={18} />
+              {poor ? `Faltam ${d.price - coins} ${CURRENCY_NAME}` : free ? 'Embarcar (grátis)' : confirm ? `Confirmar · ${d.price} ${CURRENCY_NAME}` : `Comprar passagem · ${d.price}`}
+            </button>
+            {confirm && !poor && (
+              <button type="button" className="tv-link tv-cancel" onClick={() => setConfirm(false)}>
+                Cancelar
+              </button>
+            )}
+          </>
         )}
       </div>
     </article>
@@ -60,7 +73,7 @@ function Card({ d, here, onGo, busy }: { d: TravelDestination; here: boolean; on
 
 /**
  * Tela de check-in do aeroporto (balcao): lista os destinos do registro com nivel minimo e preco. Destino bloqueado mostra o
- * cadeado e "Nivel X necessario". `mode="phone"`: so informativo (celular), com atalho para ir ao aeroporto.
+ * cadeado e "Nivel X necessario". `mode="phone"`: o mesmo painel pelo celular (com atalho para ir ao aeroporto). Comprar pede uma confirmacao do preco.
  */
 export function TravelScreen({ onClose, mode = 'counter' }: { onClose: () => void; mode?: 'counter' | 'phone' }) {
   const cityId = useTravelStore((s) => s.cityId)
@@ -95,7 +108,7 @@ export function TravelScreen({ onClose, mode = 'counter' }: { onClose: () => voi
 
   return (
     <div className="tv-root" role="dialog" aria-label={mode === 'phone' ? 'Viagens' : 'Check-in do aeroporto'}>
-      <div className="tv-panel glass">
+      <div className="tv-panel glass" onWheel={(e) => e.stopPropagation()} onTouchMove={(e) => e.stopPropagation()}>
         <header className="tv-head">
           <span className="tv-head__ic">
             <IPlane width={22} height={22} />
@@ -136,7 +149,7 @@ export function TravelScreen({ onClose, mode = 'counter' }: { onClose: () => voi
         )}
         {mode === 'phone' ? (
           <div className="tv-foot">
-            <span>As passagens são vendidas no balcão do aeroporto{cityId === 'main' ? ' (borda oeste da cidade)' : ''}.</span>
+            <span>Compre aqui ou no balcão do aeroporto{cityId === 'main' ? ' (borda oeste da cidade)' : ''}.</span>
             <button type="button" className="tv-link" onClick={toAirport}>
               <IPin width={15} height={15} /> Ir ao aeroporto
             </button>

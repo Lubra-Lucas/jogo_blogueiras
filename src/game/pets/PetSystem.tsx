@@ -126,6 +126,21 @@ function PetActor({ id, breed, colors }: { id: string; breed: PetBreed; colors: 
         return true
       }
     }
+    // sem lugar livre perto (ex.: jogadora na água): procura em anéis maiores em vez de ficar em cima dela
+    for (let r = 2.5; r <= 40; r += 1.5) {
+      for (let k = 0; k < 12; k++) {
+        const ang = (k / 12) * Math.PI * 2
+        const x = px + Math.sin(ang) * r
+        const z = pz + Math.cos(ang) * r
+        if (petFree(x, z)) {
+          s.x = x
+          s.z = z
+          s.yaw = Math.atan2(px - x, pz - z)
+          s.stuck = 0
+          return true
+        }
+      }
+    }
     s.x = px
     s.z = pz
     return false
