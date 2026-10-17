@@ -255,11 +255,9 @@ html[data-compact='1'] .tc-wheel { width: 180px; height: 104px; }
 html[data-compact='1'] .tc-side { right: auto; left: 50%; top: calc(8px + var(--sat)); transform: translateX(-50%); grid-auto-flow: column; }
 html[data-compact='1'] .tc-mini { min-height: 44px; }
 
-/* ---------- minijogos: cartoes de introducao cabem na paisagem baixa ---------- */
-html[data-compact='1'] :is(.cf-card, .dz-theme, .vb-card, .jo-card, .mn-card, .sl-card, .fg-card, .ps-card, .es-card) { zoom: 0.82; }
-@media (max-height: 400px) {
-  html[data-compact='1'] :is(.cf-card, .dz-theme, .vb-card, .jo-card, .mn-card, .sl-card, .fg-card, .ps-card, .es-card) { zoom: 0.74; }
-}
+/* ---------- minijogos: cartoes de introducao mais compactos na paisagem baixa (os demais ja cabem/rolam) ---------- */
+html[data-compact='1'] :is(.dz-theme, .mn-card, .fg-card, .sl-card, .vb-card) { zoom: 0.88; }
+html[data-compact='1'] :is(.dz-theme, .mn-card, .fg-card, .sl-card, .vb-card) button { min-height: 50px; }
 
 /* sobras da auditoria (alvos e textos de minijogos / mercado) */
 @media (pointer: coarse) {
