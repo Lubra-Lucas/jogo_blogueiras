@@ -96,7 +96,7 @@ export const palco: RoomLayout = {
   exposure: 1.1,
   envIntensity: 0.35,
   npcs: [
-    npc('pista1', -1.8, 0.4, 20, 'dance_twerk', { hair: 'hair.caramelCurls', hairColor: '#2a1a40', suit: '#3b6bff', skin: SKINS[2], line: 'Essa batida está demais!' }),
+    npc('pista1', -1.8, 0.4, 20, 'wave', { hair: 'hair.caramelCurls', hairColor: '#2a1a40', suit: '#3b6bff', skin: SKINS[2], line: 'Essa batida está demais!' }),
     npc('pista2', 1.9, 1.2, 200, 'clap', { hair: 'hair.chestnutWaves', hairColor: '#15233f', suit: '#e8ecf6', skin: SKINS[0] }),
     npc('barman', 7.0, -0.6, 270, 'idle', { hair: 'hair.platinumUndercut', hairColor: '#e8dcc8', suit: '#0d0f14', skin: SKINS[3], line: 'Hoje o suco neon é por conta da casa.' }),
   ],
