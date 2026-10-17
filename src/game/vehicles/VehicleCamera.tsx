@@ -6,7 +6,10 @@ import { cameraIntent } from '../input/intent'
 import { useCameraStore } from '../../state/cameraStore'
 import { usePlayerStore } from '../../state/playerStore'
 import { drive, driveBridge, useVehicleStore } from './driveStore'
+import { carBySlug } from './catalog'
 import { vin } from './vehicleInput'
+
+const _eye = new Vector3()
 
 const BASE_FOV = 52
 
@@ -119,9 +122,11 @@ export function VehicleCamera() {
 
     if (mode === 2) {
       // capo: camera na altura dos olhos, a frente do banco
-      const fx = Math.sin(carYaw)
-      const fz = Math.cos(carYaw)
-      camera.position.set(driveBridge.seatPos.x + fx * 0.25, driveBridge.seatPos.y + 0.65, driveBridge.seatPos.z + fz * 0.25)
+      // (olhos a 0,65 m acima do banco e 0,25 m a frente, no referencial do carro: acompanha a inclinacao da cabine)
+      const car = useVehicleStore.getState()
+      const eyeY = carBySlug(car.cars.find((c) => c.uid === car.drivingUid)?.slug ?? 'compacto').olhoY ?? 0.65
+      _eye.set(0, eyeY, 0.25).applyQuaternion(driveBridge.quat).add(driveBridge.seatPos)
+      camera.position.copy(_eye)
       yaw = carYaw + rig.look * 0.8 + rig.back
       camera.lookAt(camera.position.x + Math.sin(yaw) * 10, camera.position.y - 0.6 + rig.lookPitch * -3, camera.position.z + Math.cos(yaw) * 10)
       fov = 66 + sp * 12 + boost * 6

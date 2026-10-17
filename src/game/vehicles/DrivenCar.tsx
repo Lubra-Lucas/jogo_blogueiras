@@ -151,7 +151,7 @@ export function DrivenCar({ inst, asset, shadows }: { inst: CarInst; asset: CarA
       _qb.copy(_q)
       if (tilt.current) _qb.multiply(tilt.current.quaternion)
       const seat = asset.seat
-      _p.set(seat.x, seat.y, seat.z).applyQuaternion(_qb)
+      _p.set(seat.x, seat.y + (spec.bancoDy ?? 0), seat.z).applyQuaternion(_qb)
       driveBridge.seatPos.set(g.position.x + _p.x, g.position.y + _p.y, g.position.z + _p.z)
     }
     driveBridge.yaw = yaw
