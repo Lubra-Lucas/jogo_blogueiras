@@ -59,8 +59,21 @@ export function WalletChips({ onDiamonds }: { onDiamonds?: () => void }) {
   )
 }
 
+/** Icones sao tracos: cores quase brancas (ex.: Saia de baile rococo #fff0f6) somem no cartao claro; escurece ate dar contraste. */
+export function iconTint(hex: string): string {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim())
+  if (!m) return hex
+  const n = parseInt(m[1], 16)
+  const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255]
+  const lum = (0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2]) / 255
+  if (lum < 0.72) return hex
+  const t = Math.min(0.75, (lum - 0.6) * 2.2) // quanto mais claro, mais mistura com o rosa-escuro da interface
+  const dark = [168, 98, 140]
+  return '#' + ch.map((c, i) => Math.round(c + (dark[i] - c) * t).toString(16).padStart(2, '0')).join('')
+}
+
 export function ItemArt({ s }: { s: Sellable }) {
-  const tint = s.tint
+  const tint = iconTint(s.tint)
   if (s.kind === 'car') return <IconCar style={{ color: tint }} />
   if (s.kind === 'house') return <IconHouse style={{ color: tint }} />
   const Icon = SLOT_ICONS[s.slot ?? 'top']

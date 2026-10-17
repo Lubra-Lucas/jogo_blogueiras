@@ -9,7 +9,7 @@ import { useEconomyStore } from '../../game/economy/economyStore'
 import { PREMIUM_FINISH_PRICE } from '../../game/economy/prices'
 import { useSellables, useStatuses } from '../../game/economy/sellables'
 import { useProfileStore } from '../../state/profileStore'
-import { Money } from '../shop/parts'
+import { Money, iconTint } from '../shop/parts'
 import { useShopStore } from '../shop/shopStore'
 import { endTryOn, toggleTry, unownedWorn, useTryStore } from '../shop/tryon'
 import { Swatches } from './controls'
@@ -128,7 +128,7 @@ export function WardrobeTab() {
                 const mine = ownedSet.has(it.id)
                 const st = statuses.get(it.id)
                 const slot = (it.item?.slot ?? 'hair') as ItemSlot
-                const tint = it.item?.mats[0]?.color ?? getWearable(it.id)?.defaultColor ?? '#c9a8d8'
+                const tint = iconTint(it.item?.mats[0]?.color ?? getWearable(it.id)?.defaultColor ?? '#c9a8d8')
                 return (
                   <button key={it.id} type="button" className={`card${mine ? '' : ' card--locked'}`} style={{ ['--rar' as string]: RARITY_COLORS[tags.rarity] }} aria-pressed={selected === it.id} onClick={() => click(it.id, slot)}>
                     <span className="card__icon">{SLOT_ICONS[slot]({ style: { color: tint } })}</span>
