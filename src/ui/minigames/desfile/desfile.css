@@ -161,7 +161,7 @@
   position: absolute;
   inset: 0;
   display: grid;
-  place-items: center;
+  place-items: safe center;
   padding: 56px 14px 14px;
   overflow: auto;
 }

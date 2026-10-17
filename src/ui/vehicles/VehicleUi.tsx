@@ -4,6 +4,9 @@ import { enterCar, useCarFade } from '../../game/vehicles/enterExit'
 import { STATIONS, vehicleAudio } from '../../game/vehicles/vehicleAudio'
 import { resolveDestination } from '../../game/navigation/destinations'
 import { useDeviceStore } from '../../game/systems/device'
+import { useUiStore } from '../../state/uiStore'
+import { useShopStore } from '../shop/shopStore'
+import { useMinigameStore } from '../../game/minigames/minigameStore'
 import { useInteractionStore } from '../../game/interaction/interactionStore'
 import { carBySlug } from '../../game/vehicles/catalog'
 import { Garage } from './Garage'
@@ -27,7 +30,11 @@ function DrivePrompt() {
   const car = useVehicleStore((s) => s.cars.find((c) => c.uid === uid))
   const isTouch = useDeviceStore((s) => s.isTouch)
   const stacked = useInteractionStore((s) => s.nearby !== null)
-  if (driving || !car) return null
+  // menus, telefone, mapa, lojas e minijogos cobrem o aviso
+  const modal = useUiStore((s) => s.menuOpen || s.phoneOpen || s.bigMapOpen || s.cameraMode)
+  const shop = useShopStore((s) => !!s.open)
+  const mg = useMinigameStore((s) => !!s.active)
+  if (driving || !car || modal || shop || mg) return null
   return (
     <div className={`car-prompt${stacked ? ' car-prompt--stacked' : ''}`} key={car.uid} role="status">
       <span className="car-prompt__name">{carBySlug(car.slug).nome}</span>

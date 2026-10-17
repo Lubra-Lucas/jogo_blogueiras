@@ -126,7 +126,7 @@
 .fg-shutterrow .fg-btn { justify-self: end; }
 
 /* ---- cartões e telas ---- */
-.fg-center, .fg-results, .fg-modal { position: absolute; inset: 48px 0 0 0; display: grid; place-items: center; padding: 12px; background: rgba(12,12,14,0.55); backdrop-filter: blur(3px); z-index: 4; touch-action: pan-y; }
+.fg-center, .fg-results, .fg-modal { position: absolute; inset: 48px 0 0 0; display: grid; place-items: safe center; overflow-y: auto; padding: 12px; background: rgba(12,12,14,0.55); backdrop-filter: blur(3px); z-index: 4; touch-action: pan-y; }
 .fg-modal { inset: 0; z-index: 6; background: rgba(12,12,14,0.62); }
 .fg-results { place-items: start center; overflow-y: auto; }
 .fg-card { position: relative; width: min(94vw, 460px); max-height: 100%; overflow-y: auto; padding: 18px 18px 16px; border-radius: var(--r-l); background: rgba(250, 248, 244, 0.97); border: 1px solid var(--ui-line); box-shadow: var(--sh-2), inset 0 0 0 1px rgba(201,154,46,0.3); display: grid; gap: 10px; }

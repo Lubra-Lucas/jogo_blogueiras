@@ -246,6 +246,10 @@
 .sh-notice small { display: block; font: 600 11.5px var(--f-sans); color: var(--sh-diamantes); }
 .sh-daily-invite { top: 14px; }
 .sh-daily-invite > svg { width: 22px; height: 22px; color: var(--sh-gold); }
+/* celular: o convite nao pode cobrir o cartao da jogadora nem o minimapa (canto superior) */
+@media (max-width: 760px) {
+  .sh-daily-invite { top: calc(200px + env(safe-area-inset-top)); max-width: calc(100vw - 24px); }
+}
 @keyframes sh-drop { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
 /* ---- compacto (celular) ---- */

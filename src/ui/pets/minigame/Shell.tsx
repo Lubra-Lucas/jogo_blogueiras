@@ -35,6 +35,12 @@ export interface ShellProps {
   typical: Record<Difficulty, number>
   max: number
   accent: string
+  /** nome da profissão mostrado na tela inicial (o XP é o mesmo dos minijogos do petshop) */
+  professionLabel?: string
+  /** ids de PET_UNLOCKS que valem neste minijogo (padrão: todos) */
+  unlockIds?: string[]
+  /** textos próprios (por id) para os bônus deste minijogo */
+  unlockText?: Record<string, { label: string; note: string }>
   icon: ReactNode
   play: (p: PlayProps) => ReactNode
   onExit: () => void
@@ -63,7 +69,10 @@ export function Shell(p: ShellProps) {
       if (e.code !== 'Escape') return
       e.stopPropagation()
       if (phase === 'play') setPaused((v) => !v)
-      else if (phase === 'how') setPhase(howFrom === 'start' ? 'play' : 'menu')
+      else if (phase === 'how') {
+        if (howFrom === 'start') p.onExit() // tutorial da primeira partida: Esc sai
+        else setPhase('menu')
+      }
       else p.onExit()
     }
     window.addEventListener('keydown', onKey, true)
@@ -104,9 +113,9 @@ export function Shell(p: ShellProps) {
               <p>{p.tagline}</p>
             </div>
           </div>
-          <div className="ps-lvl" title="XP de Tosadora">
+          <div className="ps-lvl" title="XP de profissão do Petshop (compartilhado entre Banho e Tosa e Adestramento)">
             <span>
-              Nível {level} de Tosadora · treinando <b>{look.name}</b>
+              Nível {level} de {p.professionLabel ?? 'Tosadora'} · treinando <b>{look.name}</b>
             </span>
             <i>
               <b style={{ width: `${Math.min(100, Math.round(((xp - lo) / Math.max(1, hi - lo)) * 100))}%` }} />
@@ -140,9 +149,9 @@ export function Shell(p: ShellProps) {
             </button>
           </div>
           <ul className="ps-unlocks">
-            {PET_UNLOCKS.map((u) => (
+            {PET_UNLOCKS.filter((u) => !p.unlockIds || p.unlockIds.includes(u.id)).map((u) => (
               <li key={u.id} className={level >= u.level ? 'ok' : ''}>
-                <b>{u.label}</b> <small>{level >= u.level ? 'liberado' : `nível ${u.level}`} · {u.note}</small>
+                <b>{p.unlockText?.[u.id]?.label ?? u.label}</b> <small>{level >= u.level ? 'liberado' : `nível ${u.level}`} · {p.unlockText?.[u.id]?.note ?? u.note}</small>
               </li>
             ))}
           </ul>

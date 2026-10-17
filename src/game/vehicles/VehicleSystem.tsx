@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { Object3D, SpotLight } from 'three'
 import { usePlayerStore } from '../../state/playerStore'
 import { useUiStore } from '../../state/uiStore'
+import { useShopStore } from '../../ui/shop/shopStore'
 import { useMinigameStore } from '../minigames/minigameStore'
 import { env } from '../world/environment/envState'
 import { carBySlug } from './catalog'
@@ -32,6 +33,11 @@ function VehicleKeys() {
     const blocked = () => {
       const ui = useUiStore.getState()
       return ui.menuOpen || ui.chatOpen || !!useMinigameStore.getState().active
+    }
+    // telefone, mapa grande e lojas cobrem a tela: nao entra no carro por baixo deles
+    const overlayOpen = () => {
+      const ui = useUiStore.getState()
+      return ui.phoneOpen || ui.bigMapOpen || !!useShopStore.getState().open
     }
     const setK = (code: string, down: boolean): boolean => {
       switch (code) {
@@ -84,7 +90,7 @@ function VehicleKeys() {
       if (e.code === 'KeyF' && !e.repeat) {
         if (blocked()) return
         if (st.drivingUid) exitCar()
-        else if (st.nearbyUid) {
+        else if (st.nearbyUid && !overlayOpen()) {
           enterCar(st.nearbyUid)
           vehicleAudio.door()
         }

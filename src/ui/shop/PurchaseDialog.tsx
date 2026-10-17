@@ -80,7 +80,7 @@ function Dialog({ req }: { req: ConfirmRequest }) {
       if (r.ok) {
         if (req.kind === 'finish') useEconomyStore.getState().unlockFinish(req.finish)
         req.onDone?.()
-        setPhase({ t: 'done', message: req.kind === 'finish' ? `Acabamento ${req.label.toLowerCase()} liberado.` : r.message })
+        setPhase({ t: 'done', message: req.kind === 'finish' ? `Acabamento ${req.label.toLowerCase()} liberado.` : (req.doneMessage ?? r.message) })
       } else setPhase({ t: 'fail', message: r.message, saldo: r.reason === 'saldo' })
     }
   }

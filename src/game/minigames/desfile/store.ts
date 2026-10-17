@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import type { Appearance } from '../../../shared/appearance'
 import { useAppearanceStore } from '../../../state/appearanceStore'
+import { useProfileStore } from '../../../state/profileStore'
 import { grantRewards } from '../rewards'
 import { lookFromAppearance, lookToAppearance } from './adapters'
 import { addFame, saveBest, getBest } from './persist'
@@ -105,6 +106,8 @@ export const useDesfileStore = create<DesfileState>()((set, get) => ({
     const rewards = rewardsFor(playerRank, me.score100)
     grantRewards({ coins: rewards.coins, xp: rewards.xp, professionXp: { Modelo: rewards.modelXp } })
     addFame(rewards.fame)
+    // a missão só conclui quando o desfile termina de verdade (não ao abrir/fechar o minijogo)
+    useProfileStore.getState().completeQuest('runway')
     const prev = getBest()[s.theme.id]?.score100 ?? null
     const newBest = saveBest(s.theme.id, me.score100, playerRank)
     set({

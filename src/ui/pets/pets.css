@@ -3,7 +3,7 @@
   position: fixed;
   left: 12px;
   top: calc(118px + env(safe-area-inset-top));
-  z-index: 40;
+  z-index: 5; /* abaixo do chat (6), menus e lojas */
   pointer-events: auto;
   display: flex;
   align-items: center;
@@ -37,7 +37,7 @@
   left: 50%;
   bottom: calc(96px + env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  z-index: 120;
+  z-index: 20; /* abaixo de telefone (24), menus e lojas (30+) */
   pointer-events: auto;
   display: flex;
   align-items: center;
@@ -49,6 +49,8 @@
   box-shadow: 0 4px 0 #e0d3bb, 0 12px 24px rgba(70, 48, 76, 0.25), inset 0 2px 0 #fff;
   font-family: var(--f-sans);
 }
+/* celular: sobe acima do chat e do joystick (canto inferior esquerdo) */
+@media (max-width: 760px) { .pet-prompt { bottom: calc(240px + env(safe-area-inset-bottom)); } }
 .pet-prompt__name { font: italic 700 17px var(--f-serif); }
 .pet-btn {
   display: inline-flex;

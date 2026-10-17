@@ -4,6 +4,7 @@ import { useInteractionStore } from '../../game/interaction/interactionStore'
 import { useInteriorStore } from '../../game/interiors/interiorStore'
 import { useSitStore } from '../../game/sit/sitStore'
 import { useMinigameStore } from '../../game/minigames/minigameStore'
+import { useVehicleStore } from '../../game/vehicles/driveStore'
 import { useShopStore } from '../shop/shopStore'
 import { useDeviceStore } from '../../game/systems/device'
 import { useUiStore } from '../../state/uiStore'
@@ -69,6 +70,8 @@ export function PetHud() {
   const nearbyPoi = useInteractionStore((s) => s.nearby !== null)
   const sitBusy = useSitStore((s) => s.nearest !== null || s.seat !== null)
   const roomPrompt = useInteriorStore((s) => s.prompt !== null)
+  // o aviso do carro ("F Dirigir") tem prioridade sobre o carinho
+  const carBusy = useVehicleStore((s) => s.nearbyUid !== null || s.drivingUid !== null)
   useEffect(() => loadPetCatalog(), [])
   useEffect(() => {
     const t = window.setInterval(() => {
@@ -86,6 +89,7 @@ export function PetHud() {
       const p = usePetStore.getState()
       if (!p.active || petRuntime.dist > 2.7 || petUi.get()) return
       if (useInteractionStore.getState().nearby || useSitStore.getState().nearest || useSitStore.getState().seat || useInteriorStore.getState().prompt) return
+      if (useVehicleStore.getState().nearbyUid || useVehicleStore.getState().drivingUid) return
       if (useShopStore.getState().open || useMinigameStore.getState().active) return
       p.caress(p.active)
     }
@@ -109,7 +113,7 @@ export function PetHud() {
           </span>
         </button>
       )}
-      {near && !nearbyPoi && !sitBusy && !roomPrompt && !open && !busy && (
+      {near && !nearbyPoi && !sitBusy && !roomPrompt && !carBusy && !open && !busy && (
         <div className="pet-prompt" role="status">
           <span className="pet-prompt__name">{label}</span>
           <button type="button" className="pet-btn" onClick={() => usePetStore.getState().caress(active)}>

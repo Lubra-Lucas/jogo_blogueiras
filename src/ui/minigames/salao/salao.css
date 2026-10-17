@@ -34,7 +34,7 @@
 :where(.sl-root) button:disabled { cursor: default; }
 
 /* ---------- topo ---------- */
-.sl-top { display: flex; align-items: center; gap: 8px; flex: none; }
+.sl-top { position: relative; z-index: 30; display: flex; align-items: center; gap: 8px; flex: none; }
 .sl-title { flex: 1; min-width: 0; font-family: var(--f-serif, 'Playfair Display', serif); font-style: italic; font-weight: 600; font-size: clamp(0.9rem, 3.6vw, 1.4rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sl-iconbtn { width: 42px; height: 42px; flex: none; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(180deg, #fffdf8, #e9e0d1); box-shadow: 0 3px 0 var(--greige-d), 0 6px 10px rgba(60, 45, 30, 0.18), inset 0 2px 0 #fff; transition: transform 0.08s, box-shadow 0.08s; }
 .sl-iconbtn:active:not(:disabled) { transform: translateY(3px); box-shadow: inset 0 2px 0 #fff; }
@@ -157,7 +157,7 @@
 @keyframes sl-ring { to { box-shadow: 0 0 0 6px rgba(176, 141, 74, 0.4); } }
 
 /* ---------- cartões / telas ---------- */
-.sl-overlay { position: absolute; inset: 0; z-index: 20; display: grid; place-items: center; padding: 12px; overflow-y: auto; background: rgba(43, 38, 34, 0.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.sl-overlay { position: absolute; inset: 0; z-index: 20; display: grid; place-items: safe center; padding: 12px; overflow-y: auto; background: rgba(43, 38, 34, 0.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .sl-card { width: min(100%, 440px); max-height: 100%; overflow-y: auto; padding: 18px 16px; border-radius: 26px; text-align: center; background: linear-gradient(180deg, #fffdf8, #efe8db); box-shadow: var(--sh-2, 0 10px 34px rgba(0, 0, 0, 0.3)), inset 0 0 0 1.5px var(--brass); display: flex; flex-direction: column; gap: 10px; align-items: center; animation: sl-card 0.4s ease; }
 @keyframes sl-card { from { transform: translateY(16px) scale(0.96); opacity: 0; } }
 .sl-card h1, .sl-card h2, .sl-card h3 { margin: 0; font-family: var(--f-serif, serif); font-style: italic; }

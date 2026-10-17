@@ -83,8 +83,8 @@ function Stage({ breed, coat, equip }: { breed: PetBreed; coat: PetCoat; equip?:
   )
 }
 
-function ask(label: string, currency: 'brilhos' | 'diamantes', price: number, onDone: () => void) {
-  useShopStore.getState().ask({ kind: 'service', label, currency, price, onDone })
+function ask(label: string, currency: 'brilhos' | 'diamantes', price: number, onDone: () => void, doneMessage?: string) {
+  useShopStore.getState().ask({ kind: 'service', label, currency, price, onDone, doneMessage })
 }
 
 /** Loja do Petshop: pets (raça + pelagem, preço fixo, sem sorteio), ração e acessórios. */
@@ -149,18 +149,18 @@ export function PetShopScreen() {
       grantOwnedItem(id)
       usePetStore.getState().setActive(id)
       setTab('meus')
-    })
+    }, `${b.label} ${c.label} é seu!`)
   }
   const buyFood = (f: PetFoodDef, qty: number) => {
     const price = qty === 1 ? f.price : Math.round(f.price * qty * 0.9)
-    ask(`${f.label}${qty > 1 ? ` (pacote com ${qty})` : ''}`, 'brilhos', price, () => usePetStore.getState().addFood(f.id, qty))
+    ask(`${f.label}${qty > 1 ? ` (pacote com ${qty})` : ''}`, 'brilhos', price, () => usePetStore.getState().addFood(f.id, qty), `Compra feita: ${f.label}${qty > 1 ? ` (pacote com ${qty})` : ''}.`)
   }
   const buyAcc = (a: PetAccDef) =>
     ask(a.label, 'brilhos', a.price, () => {
       grantOwnedItem(a.id)
       const act = usePetStore.getState().active
       if (act) usePetStore.getState().setEquip(act, a.slot, a.id)
-    })
+    }, `Compra feita: ${a.label}.`)
 
   const stageBreed = tab === 'pets' || !activeInfo ? breed : activeInfo.breed
   const stageCoat = tab === 'pets' || !activeInfo ? coat : activeInfo.coat

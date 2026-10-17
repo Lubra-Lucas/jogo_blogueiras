@@ -236,6 +236,7 @@ canvas {
   background: rgba(90, 58, 85, 0.45);
   pointer-events: auto;
   padding: 12px;
+  z-index: 150; /* acima de todo o HUD (chip/aviso do pet, chat, dock, avisos) */
 }
 .bigmap__panel {
   display: flex;
