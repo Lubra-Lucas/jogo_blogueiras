@@ -77,11 +77,15 @@ export function InteriorHost() {
     let best: PromptState | null = null
     if (!useSitStore.getState().seat && !useMinigameStore.getState().active && !useShopStore.getState().open && canInteract()) {
       let bd = Infinity
+      const curKey = useInteriorStore.getState().prompt?.key
       for (const s of room.spots) {
         const d2 = (s.x - p.x) ** 2 + (s.z - p.z) ** 2
-        // conversar com NPC nunca encobre um ponto de uso (minijogo, loja...) ao alcance: so entra na disputa com penalidade
-        const rank = d2 + (s.action === 'talk' ? 100 : 0)
-        if (d2 < s.radius * s.radius && rank < bd) {
+        // histerese: o ponto que ja esta no aviso so sai um pouco alem do raio (evita piscar na borda)
+        const r = s.radius + (s.key === curKey ? 0.35 : 0)
+        // conversar com NPC nunca encobre um ponto de uso (minijogo, loja...) ao alcance: so entra na disputa com penalidade;
+        // o ponto atual tem um pequeno bonus para dois pontos proximos nao se alternarem
+        const rank = d2 + (s.action === 'talk' ? 100 : 0) - (s.key === curKey ? 0.4 : 0)
+        if (d2 < r * r && rank < bd) {
           bd = rank
           best = { key: s.key, label: s.label, spot: s, d2 }
         }
