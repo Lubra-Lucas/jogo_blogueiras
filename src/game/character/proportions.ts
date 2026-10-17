@@ -188,6 +188,8 @@ export function postureAngles(p: number) {
   }
 }
 
+/** parte da correcao de olhar que vai para o pescoco (o resto, para a cabeca) */
+const HEAD_LIFT_NECK = 0.4
 const LORD_MAX = 0.2
 const SLOPE_MAX = 0.2
 
@@ -224,6 +226,12 @@ export class BodyRig {
   private neutral = true
   /** pesos suavizados pelo chamador (0 = sem postura) */
   weights: PostureWeights = { posture: 1, lordosis: 1 }
+  /**
+   * Correcao de postura da cabeca (rad, >0 = levanta o olhar), ja suavizada e atenuada pelo chamador. Soma-se DEPOIS da cifose
+   * (que compensa a cabeca contra a flexao da coluna e deixa o olhar no mesmo lugar): uma e a outra atuam em eixos
+   * independentes (a cifose pelo tronco, esta pelo olhar medio da animacao), entao nao acumulam.
+   */
+  headLift = 0
 
   constructor(root: Object3D, bones: Record<string, Bone>) {
     this.root = root
@@ -305,7 +313,8 @@ export class BodyRig {
     const hunch = Math.abs(p.posture) > 1e-3 && wp > 1e-3
     const lord = Math.abs(p.lordosis) > 1e-3 && wl > 1e-3
     const slope = Math.abs(p.slope) > 1e-3
-    if (!hunch && !lord && !slope) return
+    const lift = Math.abs(this.headLift) > 1e-4
+    if (!hunch && !lord && !slope && !lift) return
     this.root.updateWorldMatrix(true, false)
     if (lord) {
       const a = LORD_MAX * p.lordosis * wl
@@ -325,6 +334,11 @@ export class BodyRig {
       this.rot('RightArm', arm, AX)
       this.rot('Neck', t.neck, AX)
       this.rot('Head', t.head, AX)
+    }
+    if (lift) {
+      // levantar o olhar = girar para tras (angulo negativo em X); reparte entre o pescoco e a cabeca
+      this.rot('Neck', -this.headLift * HEAD_LIFT_NECK, AX)
+      this.rot('Head', -this.headLift * (1 - HEAD_LIFT_NECK), AX)
     }
     if (slope) {
       const d = SLOPE_MAX * p.slope
