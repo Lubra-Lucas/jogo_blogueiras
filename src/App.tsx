@@ -44,7 +44,7 @@ export default function App() {
         <Canvas
           frameloop={menuOpen ? 'never' : 'always'}
           dpr={settings.dpr}
-          shadows={settings.shadows}
+          shadows={settings.shadows ? "percentage" : false}
           camera={{ position: [0, 4.5, 11], fov: 50, near: 0.1, far: 400 }}
           gl={{
             antialias: tier !== 'low',

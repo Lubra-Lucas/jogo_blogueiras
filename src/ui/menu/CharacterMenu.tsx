@@ -1,6 +1,8 @@
 import { Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useUiStore, type MenuTab } from '../../state/uiStore'
 import { useProfileStore } from '../../state/profileStore'
+import { useAppearanceStore } from '../../state/appearanceStore'
+import { unownedWorn } from '../shop/tryon'
 import { CharacterPreview, type StageFocus } from './CharacterPreview'
 import { ProfileTab } from './ProfileTab'
 import { AppearanceTab } from './AppearanceTab'
@@ -25,19 +27,31 @@ const TABS: Array<{ id: MenuTab; label: string; color: string; icon: ReactNode; 
 const isTyping = (t: EventTarget | null) => t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))
 
 /** Atalhos: C / Tab abre e fecha, Esc fecha. */
-function useMenuHotkeys() {
+/** ha alteracoes de aparencia nao salvas (inclui pecas apenas provadas) */
+const isDirty = () => {
+  const { appearance, saved } = useAppearanceStore.getState()
+  return appearance !== saved && JSON.stringify(appearance) !== JSON.stringify(saved)
+}
+
+function useMenuHotkeys(tryClose: () => void) {
+  const ref = useRef(tryClose)
+  ref.current = tryClose
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.code === 'Escape') {
-        if (useUiStore.getState().menuOpen) useUiStore.getState().closeMenu()
+        if (useUiStore.getState().menuOpen) ref.current()
         return
       }
       if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return
       if (e.code === 'Tab') {
         if (isTyping(e.target) && !useUiStore.getState().menuOpen) return
         e.preventDefault()
-        useUiStore.getState().toggleMenu()
-      } else if (e.code === 'KeyC' && !isTyping(e.target)) useUiStore.getState().toggleMenu()
+        if (useUiStore.getState().menuOpen) ref.current()
+        else useUiStore.getState().openMenu()
+      } else if (e.code === 'KeyC' && !isTyping(e.target)) {
+        if (useUiStore.getState().menuOpen) ref.current()
+        else useUiStore.getState().openMenu()
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -45,11 +59,16 @@ function useMenuHotkeys() {
 }
 
 export function CharacterMenu() {
-  useMenuHotkeys()
+  const [askDiscard, setAskDiscard] = useState(false)
+  const tryClose = () => {
+    if (isDirty() && useProfileStore.getState().named) setAskDiscard(true)
+    else useUiStore.getState().closeMenu()
+  }
+  useMenuHotkeys(tryClose)
   const open = useUiStore((s) => s.menuOpen)
   const tab = useUiStore((s) => s.tab)
   const setTab = useUiStore((s) => s.setTab)
-  const close = useUiStore((s) => s.closeMenu)
+  const close = tryClose
   const named = useProfileStore((s) => s.named)
   const [mounted, setMounted] = useState(false)
   const [closing, setClosing] = useState(false)
@@ -65,6 +84,9 @@ export function CharacterMenu() {
       return
     }
     setClosing(true)
+    setAskDiscard(false)
+    // fechou sem salvar (por qualquer caminho): o look salvo volta para a personagem
+    if (isDirty()) useAppearanceStore.getState().revert()
     const t = window.setTimeout(() => setMounted(false), 200)
     return () => window.clearTimeout(t)
   }, [open])
@@ -140,6 +162,27 @@ export function CharacterMenu() {
           </div>
         </div>
         {!named && <NameModal />}
+        {askDiscard && (
+          <div className="modal">
+            <div className="modal__box">
+              <h3>Descartar alterações?</h3>
+              <p>Seu visual ainda não foi salvo. Se fechar agora, a personagem volta ao último look salvo.</p>
+              <div className="actions">
+                {unownedWorn(useAppearanceStore.getState().appearance).length === 0 && (
+                  <button type="button" className="btn btn--primary" autoFocus onClick={() => (useAppearanceStore.getState().save(), useUiStore.getState().closeMenu())}>
+                    Salvar look
+                  </button>
+                )}
+                <button type="button" className="btn btn--danger" onClick={() => useUiStore.getState().closeMenu()}>
+                  Descartar
+                </button>
+                <button type="button" className="btn" onClick={() => setAskDiscard(false)}>
+                  Continuar editando
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

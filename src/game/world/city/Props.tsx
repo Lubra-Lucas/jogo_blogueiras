@@ -460,7 +460,7 @@ function toyMaterial(src: MeshStandardMaterial): Material {
     const emissive = src.emissiveIntensity > 0 && src.emissive && src.emissive.getHex() !== 0
     m = new MeshPhysicalMaterial({
       color: src.color,
-      emissive: emissive ? src.emissive : undefined,
+      emissive: emissive ? src.emissive : new Color(0x000000),
       emissiveIntensity: emissive ? Math.min(src.emissiveIntensity, 1.6) : 0,
       roughness: 0.28,
       clearcoat: 0.8,
