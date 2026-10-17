@@ -29,6 +29,7 @@ import { TravelWorlds } from './travel/TravelWorlds'
 import { useTravelStore } from './travel/travelStore'
 import { PetSystem } from './pets/PetSystem'
 import { PET_SHEET, PetSheetScene } from './pets/PetSheet'
+import { BODYTEST, BodyTest } from './character/BodyTest'
 
 const VIEW = getViewMode()
 const MAP_MODE = new URLSearchParams(window.location.search).get('map') === '1'
@@ -54,6 +55,7 @@ export function Game({ tier }: { tier: QualityTier }) {
   }, [scene, q.fogFar])
 
   if (PET_SHEET) return <PetSheetScene />
+  if (BODYTEST) return <BodyTest />
 
   return (
     <>

@@ -1,5 +1,24 @@
+import {
+  BODY_KEYS,
+  DEFAULT_BODY,
+  DEFAULT_FACE,
+  FACE_LISTS,
+  FACE_RANGES,
+  LEGACY_BROW_TO_ID,
+  LEGACY_LASH_TO_ID,
+  bodyFromMorphs,
+  browHeightFromMorph,
+  catalogIds,
+  eyeSizeFromMorph,
+  type BodyParams,
+  type FaceListKey,
+  type FaceParams,
+} from './faceCatalog'
+
+export type { BodyParams, FaceParams }
+
 /**
- * Aparencia de um personagem: JSON puro (sem tipos do three), versionado (`v: 4`).
+ * Aparencia de um personagem: JSON puro (sem tipos do three), versionado (`v: 5`).
  * Salvar, enviar pela rede ou trocar de look e so trocar este objeto.
  * Cores sao strings CSS hex ("#ffb3d1"). Ids de itens apontam para o registro em
  * `src/game/character/items.ts` (id desconhecido e ignorado sem erro; nomes de morph desconhecidos tambem).
@@ -7,6 +26,10 @@
  * v4 (personalizacao): `makeup` (camadas de maquiagem), `eyes`, acabamento da pele, base do corpo (`suit.base`),
  * cabelo bicolor/ombre/mechas/brilho, unhas e padroes de roupa (`ItemRef.pattern`). Todos os campos novos sao
  * opcionais ou ganham padrao em `normalizeAppearance`, entao v3 salvo (e looks de NPC/minijogos) continuam validos.
+ *
+ * v5 (avatar mutavel): blocos `face` (formatos de olho/boca/nariz/rosto, cilios, sobrancelhas; ids PROVISORIOS de
+ * `faceCatalog.ts`) e `body` (controles bipolares -1..1). Migracao v4 -> v5 em `normalizeAppearance`: `face`/`body` sao
+ * derivados de `makeup.lashes/brows` e dos `morphs` antigos (que continuam intactos, entao nada salvo se perde).
  */
 
 export interface ItemRef {
@@ -65,7 +88,7 @@ export interface Makeup {
 
 export interface Appearance {
   /** versao do formato (para migracoes futuras) */
-  v: 4
+  v: 5
   /** qual malha base (GLB) */
   base: 'doll'
   /** nome do morph target -> 0..1 (corpo e rosto); nomes desconhecidos sao ignorados */
@@ -80,6 +103,10 @@ export interface Appearance {
   eyes?: { color: string | null; colorR?: string | null; ring: number }
   /** maquiagem (camadas projetadas no rosto) */
   makeup?: Makeup
+  /** rosto por pecas (v5): formatos de olho/boca/nariz/rosto, cilios e sobrancelhas (ver `faceCatalog.ts`) */
+  face: FaceParams
+  /** corpo (v5): controles bipolares -1..1; os que ja tem morph na base espelham `morphs` */
+  body: BodyParams
   /** id do cabelo (null = careca), cor, e opcionais de coloracao */
   hair: { id: string | null; color: string; color2?: string; mode?: HairStyleMode; amount?: number; gloss?: number }
   outfit: { top?: ItemRef; bottom?: ItemRef; dress?: ItemRef; shoes?: ItemRef; gloves?: ItemRef; legwear?: ItemRef }
@@ -110,7 +137,7 @@ export const DEFAULT_MAKEUP: Makeup = {
 
 /** Look padrao: porcelana, base do corpo na cor da pele, labios rosados, cabelo loiro preso. */
 export const DEFAULT_APPEARANCE: Appearance = {
-  v: 4,
+  v: 5,
   base: 'doll',
   morphs: {},
   skin: { tone: '#efcdbd', finish: 'natural' },
@@ -118,21 +145,26 @@ export const DEFAULT_APPEARANCE: Appearance = {
   lips: { color: '#da7076', gloss: 0.5 },
   eyes: { color: null, ring: 0.35 },
   makeup: DEFAULT_MAKEUP,
+  face: DEFAULT_FACE,
+  body: DEFAULT_BODY,
   hair: { id: 'hair.meshyUpdo', color: '#d8b46e' },
   outfit: { top: { id: 'tee' }, bottom: { id: 'aline' } },
   accessories: [],
 }
 
 /** Look de teste alternativo (?look=2): pele escura, macacao preto, labios malva, cabelo castanho escuro, morphs marcados. */
+const ALT_MORPHS = { bustBig: 0.5, buttBig: 0.6, hipsWide: 0.5, waistThin: 0.6, lipsFull: 0.7 }
 export const ALT_APPEARANCE: Appearance = {
-  v: 4,
+  v: 5,
   base: 'doll',
-  morphs: { bustBig: 0.5, buttBig: 0.6, hipsWide: 0.5, waistThin: 0.6, lipsFull: 0.7 },
+  morphs: ALT_MORPHS,
   skin: { tone: '#6b4128', finish: 'dewy' },
   suit: { color: '#16141a', finish: 'latex', base: 'color' },
   lips: { color: '#a8566e', gloss: 0.7 },
   eyes: { color: null, ring: 0.35 },
   makeup: DEFAULT_MAKEUP,
+  face: DEFAULT_FACE,
+  body: bodyFromMorphs(ALT_MORPHS),
   hair: { id: 'hair.meshyUpdo', color: '#3a2417' },
   outfit: {},
   accessories: [],
@@ -161,22 +193,42 @@ function legacyBase(b: unknown): BodyBase | undefined {
   return b === 'auto' || b === 'under' || b === 'color' ? b : undefined
 }
 
+/** Rosto v5 a partir do que existia antes: estilo/cor/espessura de cilios e sobrancelhas da maquiagem, `eyesBig` e `browLift`. */
+export function deriveFace(makeup: Makeup, morphs: Record<string, number>): FaceParams {
+  return {
+    ...DEFAULT_FACE,
+    eyeSize: eyeSizeFromMorph(morphs.eyesBig),
+    lashStyle: LEGACY_LASH_TO_ID[makeup.lashes.style] ?? DEFAULT_FACE.lashStyle,
+    browStyle: LEGACY_BROW_TO_ID[makeup.brows.style] ?? DEFAULT_FACE.browStyle,
+    browColor: makeup.brows.color,
+    browThickness: makeup.brows.thickness,
+    browHeight: browHeightFromMorph(morphs.browLift),
+  }
+}
+
 /**
- * Normaliza qualquer aparencia (v3 salvo, v4 parcial, look de NPC) para v4 completa.
+ * Normaliza qualquer aparencia (v3 salvo, v4 parcial, v5, look de NPC) para v5 completa.
  * v3 -> v4: ganha `makeup` padrao, `eyes` padrao, acabamento natural e `suit.base = 'color'` (o look salvo nao muda).
+ * v4 -> v5: `face` e `body` ausentes sao derivados de `makeup` e `morphs` (que ficam intactos); campos presentes valem.
  */
 export function normalizeAppearance(a: Partial<Omit<Appearance, 'v'>> & { v?: number }): Appearance {
-  const fromV3 = a.v !== 4
+  const fromV3 = a.v !== 4 && a.v !== 5
+  const morphs = a.morphs && typeof a.morphs === 'object' ? a.morphs : {}
+  const makeup = normalizeMakeup(a.makeup)
+  const faceIn = a.face && typeof a.face === 'object' ? a.face : {}
+  const bodyIn = a.body && typeof a.body === 'object' ? a.body : {}
   return {
     ...DEFAULT_APPEARANCE,
     ...a,
-    v: 4,
+    v: 5,
     skin: { ...DEFAULT_APPEARANCE.skin, ...a.skin },
     suit: { ...DEFAULT_APPEARANCE.suit, ...a.suit, base: legacyBase(a.suit?.base) ?? (fromV3 ? 'color' : 'auto') },
     eyes: { ...DEFAULT_APPEARANCE.eyes!, ...a.eyes },
-    makeup: normalizeMakeup(a.makeup),
+    makeup,
+    face: { ...deriveFace(makeup, morphs), ...faceIn },
+    body: { ...bodyFromMorphs(morphs), ...bodyIn },
     hair: { ...DEFAULT_APPEARANCE.hair, ...a.hair },
-    morphs: a.morphs ?? {},
+    morphs,
     outfit: a.outfit ?? {},
     accessories: Array.isArray(a.accessories) ? a.accessories : [],
   }
@@ -259,7 +311,7 @@ export function sanitizeMakeup(raw: unknown): Makeup {
   return out as unknown as Makeup
 }
 
-/** Aparencia de origem desconhecida -> aparencia v4 valida (itens por id nao sao verificados aqui). */
+/** Aparencia de origem desconhecida -> aparencia v5 valida (itens por id nao sao verificados aqui). */
 export function sanitizeAppearance(raw: unknown): Appearance | null {
   if (!raw || typeof raw !== 'object') return null
   const r = raw as Record<string, unknown>
@@ -284,10 +336,20 @@ export function sanitizeAppearance(raw: unknown): Appearance | null {
   }
   const hairId = n.hair.id
   const e = n.eyes ?? DEFAULT_APPEARANCE.eyes!
+  const f = n.face as unknown as Record<string, unknown>
+  const faceOut: Record<string, unknown> = { ...DEFAULT_FACE }
+  for (const k of Object.keys(FACE_LISTS) as FaceListKey[]) faceOut[k] = pick(f[k], catalogIds(FACE_LISTS[k]), DEFAULT_FACE[k])
+  for (const k of ['eyeSize', 'eyeTilt', 'browThickness', 'browHeight'] as const) faceOut[k] = num(f[k], FACE_RANGES[k][0], FACE_RANGES[k][1], DEFAULT_FACE[k])
+  faceOut.browColor = hex(f.browColor, DEFAULT_FACE.browColor)
+  const b = n.body as unknown as Record<string, unknown>
+  const bodyOut: Record<string, number> = {}
+  for (const k of BODY_KEYS) bodyOut[k] = num(b[k], -1, 1, 0)
   return {
-    v: 4,
+    v: 5,
     base: 'doll',
     morphs,
+    face: faceOut as unknown as FaceParams,
+    body: bodyOut as unknown as BodyParams,
     skin: { tone: hex(n.skin.tone, '#efcdbd'), finish: pick(n.skin.finish, ['matte', 'natural', 'dewy', 'porcelain'], 'natural'), bodyFreckles: num(n.skin.bodyFreckles, 0, 1, 0) },
     suit: { color: hex(n.suit.color, '#f39ab3'), finish: pick(n.suit.finish, ['latex', 'satin', 'matte'], 'satin'), base: pick(n.suit.base, ['auto', 'under', 'color'], 'auto') },
     lips: n.lips ? { color: hex(n.lips.color, '#da7076'), gloss: num(n.lips.gloss, 0, 1, 0.5) } : undefined,

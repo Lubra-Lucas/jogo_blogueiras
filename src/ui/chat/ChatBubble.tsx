@@ -14,7 +14,7 @@ export function ChatBubble() {
     const g = group.current
     if (!g) return
     const p = usePlayerStore.getState().position
-    g.position.set(p.x, p.y + 1.02, p.z)
+    g.position.set(p.x, p.y - 0.825 + 1.845 * usePlayerStore.getState().fit.heightScale, p.z) // 1,845 m acima dos pes na altura original
     const b = useChatStore.getState().bubble
     if (b && performance.now() > b.until) useChatStore.setState({ bubble: null })
   })

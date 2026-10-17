@@ -107,7 +107,7 @@ export function ThirdPersonCamera() {
 
     // ---- pivo seguindo o jogador (Y mais amortecido) ----
     const gx = ps.position.x
-    const gy = ps.position.y - FEET_OFFSET + C.pivotHeight
+    const gy = ps.position.y - FEET_OFFSET + C.pivotHeight * ps.fit.heightScale
     const gz = ps.position.z
     if (!rig.inited) {
       rig.pivot.set(gx, gy, gz)

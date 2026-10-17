@@ -144,7 +144,7 @@ export function SelfieCamera() {
     head.getWorldPosition(_p)
 
     // ---- enquadramento: rosto -> busto, contando o topo (cabelo, coque, chapeu) ----
-    const eyeY = _p.y + EYE_UP
+    const eyeY = _p.y + EYE_UP * ps.fit.heightScale
     const z = sf.zoom
     // altura (m) do quadro: do rosto ao busto; cresce se o topo (coque, cachos, chapeu) nao coubesse
     const span = Math.max(MathUtils.lerp(0.55, 1.0, z), (info.topY + 0.04 - eyeY) / EYE_LINE)
@@ -208,7 +208,7 @@ export function SelfieCamera() {
     // ---- cabeca olha para a lente (apos a animacao do frame) ----
     const emoting = useEmoteStore.getState().emote !== null
     st.headW += ((emoting ? 0.55 : 0.9) - st.headW) * (1 - Math.exp(-6 * dt))
-    _e.set(_p.x, _p.y + EYE_UP, _p.z)
+    _e.set(_p.x, _p.y + EYE_UP * ps.fit.heightScale, _p.z)
     _c.copy(camera.position).sub(_e).normalize()
     head.getWorldQuaternion(_qa)
     _a.copy(FWD).applyQuaternion(_qa) // frente do rosto (+Z do osso, como no repouso do Mixamo)

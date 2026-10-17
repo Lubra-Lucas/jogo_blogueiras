@@ -54,7 +54,7 @@ export function PortraitCapture() {
     const p = player.position
     // rosto pelo osso Head (acompanha altura/postura); sem o osso, estimativa pela capsula
     const info = getHeadInfo(scene, p.x, p.y, p.z, wasDirty ? 0 : Infinity) // remede o topo (cabelo/chapeu) so quando a aparencia muda
-    let headY = p.y - (PLAYER.halfHeight + PLAYER.radius) + 1.36
+    let headY = p.y - (PLAYER.halfHeight + PLAYER.radius) + 1.36 * usePlayerStore.getState().fit.heightScale
     let dist = 0.85
     let hx = p.x
     let hz = p.z

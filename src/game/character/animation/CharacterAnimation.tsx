@@ -11,6 +11,7 @@ import { useSitStore } from '../../sit/sitStore'
 import { driveBridge } from '../../vehicles/driveStore'
 import { CORE_URL, EMOTES_URL, EMOTE_CLIPS, CharacterAnimator, type AnimInput, type ClipName } from './animator'
 import { turnState } from './turnState'
+import { selfieBridge } from '../../../ui/selfie/selfieStore'
 import { EMOTE_BY_ID, playEmote, useEmoteStore } from './emoteStore'
 
 /**
@@ -92,8 +93,32 @@ export function CharacterAnimation({ rig, driver }: { rig: CharacterHandle; driv
     }
   }, [animator, driver])
 
+  const fit = useMemo(() => ({ post: 1, lord: 1 }), [])
   useFrame((_, rawDelta) => {
     const dt = Math.min(rawDelta, 0.05)
+    const body = rig.proportions
+    body.begin()
+    animator.stride = body.p.stride
+    // postura aditiva atenuada onde a pose ja define a coluna: sentada/dirigindo, emotes, selfie, desfile
+    let tp = 1
+    let tl = 1
+    const seated = driver === 'player' ? useSitStore.getState().seat !== null || driveBridge.active : typeof driver === 'object' && (driver.clip === 'sit' || driver.clip === 'stand_to_sit' || driver.clip === 'sit_to_stand')
+    if (seated) (tp = 0.35), (tl = 0)
+    else if (driver === 'player' ? useEmoteStore.getState().emote !== null : typeof driver === 'object' && EMOTE_CLIPS.has(driver.clip)) (tp = 0.6), (tl = 0.6)
+    if (driver === 'player' && selfieBridge.active) tp = Math.min(tp, 0.5)
+    const k = 1 - Math.exp(-6 * dt)
+    fit.post += (tp - fit.post) * k
+    fit.lord += (tl - fit.lord) * k
+    body.weights.posture = fit.post
+    body.weights.lordosis = fit.lord
+    try {
+      frame(dt)
+    } finally {
+      body.apply()
+    }
+  })
+
+  const frame = (dt: number) => {
     if (driver === 'player') {
       input.speed = usePlayerStore.getState().speed
       const e = useEmoteStore.getState()
@@ -112,7 +137,7 @@ export function CharacterAnimation({ rig, driver }: { rig: CharacterHandle; driv
       animator.play(driver.clip, 0)
       animator.mixer.update(dt)
     }
-  })
+  }
 
   useEffect(() => () => animator.dispose(), [animator])
   useEffect(() => {

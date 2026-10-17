@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { Vector3 } from 'three'
 import type { RapierRigidBody } from '@react-three/rapier'
+import { DEFAULT_FIT, type BodyFit } from '../game/character/proportions'
 
 /**
  * Estado do jogador local. `position`, `velocity`, `speed`, `yaw` e `grounded` sao MUTADOS no
@@ -20,6 +21,8 @@ export interface PlayerState {
   hasMoved: boolean
   /** corpo rigido do jogador (para excluir da colisao da camera); null ate montar */
   body: RapierRigidBody | null
+  /** medidas do corpo da jogadora (altura, passo, quadril): capsula, camera e assento acompanham */
+  fit: BodyFit
 }
 
 export const usePlayerStore = create<PlayerState>()(() => ({
@@ -30,4 +33,5 @@ export const usePlayerStore = create<PlayerState>()(() => ({
   grounded: true,
   hasMoved: false,
   body: null,
+  fit: DEFAULT_FIT,
 }))

@@ -11,6 +11,8 @@ import { IconCheck, SLOT_ICONS } from '../icons'
 import * as D from './data'
 import { Block, Choice, NamedSwatches, Row, Toggle, useLook } from './ui'
 import { randomLook } from './random'
+import { randomProportions } from '../../../shared/randomAppearance'
+import type { BodyKey } from '../../../shared/faceCatalog'
 
 const FACE_GROUPS: Array<[string, string[]]> = [
   ['Formato do rosto', ['faceThin', 'jawNarrow', 'chinPointed', 'cheekbonesHigh']],
@@ -291,12 +293,55 @@ export function SkinSection() {
   )
 }
 
+/** Proporcoes e postura por osso (Appearance.body): sliders bipolares, 0 = proporcao original da boneca. */
+const PROPORTION_SLIDERS: Array<{ id: BodyKey; label: string; minus: string; plus: string }> = [
+  { id: 'height', label: 'Altura', minus: 'baixa', plus: 'alta' },
+  { id: 'legs', label: 'Pernas', minus: 'curtas', plus: 'longas' },
+  { id: 'torso', label: 'Tronco', minus: 'curto', plus: 'longo' },
+  { id: 'arms', label: 'Braços', minus: 'curtos', plus: 'longos' },
+  { id: 'neck', label: 'Pescoço', minus: 'curto', plus: 'longo' },
+  { id: 'headSize', label: 'Cabeça', minus: 'menor', plus: 'maior' },
+  { id: 'hands', label: 'Mãos', minus: 'menores', plus: 'maiores' },
+  { id: 'feet', label: 'Pés', minus: 'menores', plus: 'maiores' },
+  { id: 'shoulders', label: 'Largura dos ombros', minus: 'estreitos', plus: 'largos' },
+]
+const POSTURE_SLIDERS: Array<{ id: BodyKey; label: string; minus: string; plus: string }> = [
+  { id: 'posture', label: 'Postura', minus: 'ereta', plus: 'corcunda' },
+  { id: 'lordosis', label: 'Lombar', minus: 'reta', plus: 'curvada' },
+  { id: 'shouldersSlope', label: 'Ombros', minus: 'erguidos', plus: 'caídos' },
+]
+
+function ProportionSliders({ list }: { list: typeof PROPORTION_SLIDERS }) {
+  const { a, edit } = useLook()
+  return (
+    <>
+      {list.map((c) => (
+        <BipolarSlider key={c.id} label={c.label} minusLabel={c.minus} plusLabel={c.plus} value={a.body[c.id]} onChange={(v) => edit((x) => ({ ...x, body: { ...x.body, [c.id]: v } }), `b.${c.id}`)} />
+      ))}
+    </>
+  )
+}
+
 export function BodySection() {
   const { a, edit } = useLook()
   const set = (k: string, v: number) => edit((x) => ({ ...x, morphs: { ...x.morphs, [k]: v } }), `m.${k}`)
   const cur = D.BODY_PRESETS.find((p) => D.BODY_KEYS.every((k) => Math.abs((a.morphs[k] ?? 0) - (p.morphs[k] ?? 0)) < 0.011))?.id
   return (
     <>
+      <Block title="Altura e proporções" hint="Mudam o comprimento dos ossos: a roupa acompanha. O meio é a proporção original.">
+        <ProportionSliders list={PROPORTION_SLIDERS} />
+      </Block>
+      <Block title="Postura" hint="Ereta, corcunda, lombar e ombros. Em movimento a postura é suavizada.">
+        <ProportionSliders list={POSTURE_SLIDERS} />
+      </Block>
+      <Row>
+        <button type="button" className="btn" onClick={() => edit((x) => ({ ...x, body: randomProportions(Math.floor(Math.random() * 4294967296), x.body) }))}>
+          Aleatório (corpo)
+        </button>
+        <button type="button" className="btn" onClick={() => edit((x) => ({ ...x, body: { ...x.body, ...Object.fromEntries([...PROPORTION_SLIDERS, ...POSTURE_SLIDERS].map((c) => [c.id, 0])) } }))}>
+          Zerar proporções
+        </button>
+      </Row>
       <Block title="Silhuetas" hint="Todas as formas são bonitas: escolha a que combina com a sua personagem.">
         <PresetCards list={D.BODY_PRESETS} current={cur} onPick={(p) => edit((x) => D.applyMorphGroup(x, D.BODY_KEYS, p.morphs))} />
       </Block>
