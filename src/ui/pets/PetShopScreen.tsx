@@ -43,8 +43,10 @@ function Preview3D({ breed, coat, rot, equip }: { breed: PetBreed; coat: PetCoat
     model.mixer.update(Math.min(dt, 0.05))
     if (g.current) g.current.rotation.y = 0.55 + rot.current.yaw
   })
+  // racas grandes (ex.: golden) encolhem para caber na vitrine, enquadrada para ~0,5 m de altura
+  const fit = Math.min(1, 0.5 / breed.meta.height)
   return (
-    <group ref={g}>
+    <group ref={g} scale={fit}>
       <primitive object={model.scene} />
     </group>
   )

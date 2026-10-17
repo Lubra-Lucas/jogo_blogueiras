@@ -136,7 +136,7 @@ export function basePrice(rarity: Rarity, slot: string, currency: Currency): num
 
 // ---------------------------------------------------------------- Pets (Petshop do Jardim)
 /** Preco em Brilhos por raca (pelagem rara = + PET_TIER_ADD). Sem sorteio: a jogadora escolhe raca e pelagem. Id do item: `pet.<raca>.<pelagem>`. */
-export const PET_BREED_PRICE: Record<string, number> = { poodle: 1400, shiba: 1500, dachshund: 1300, caramelo: 900, siames: 1400, persa: 1600, srd: 800 }
+export const PET_BREED_PRICE: Record<string, number> = { poodle: 1400, shiba: 1500, dachshund: 1300, caramelo: 900, siames: 1400, persa: 1600, srd: 800, maltes: 1500, cavalier: 1700, golden: 1600 }
 export const PET_TIER_ADD: Record<string, number> = { comum: 0, raro: 600 }
 /** Pelagens que tambem podem ser pagas em Diamantes (todas continuam disponiveis em Brilhos). */
 export const PET_DIAMOND_COATS: Record<string, number> = { 'persa.branco': 150, 'shiba.creme': 140 }
