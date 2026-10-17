@@ -1,0 +1,77 @@
+{
+  "canvas": {
+    "eye": [
+      0.1,
+      0.09
+    ],
+    "brow": [
+      0.09,
+      0.034
+    ],
+    "mouth": [
+      0.09,
+      0.052
+    ],
+    "blush": [
+      0.1,
+      0.075
+    ]
+  },
+  "eyes": [
+    {
+      "id": "natural",
+      "label": "Natural"
+    },
+    {
+      "id": "almond",
+      "label": "Amendoado"
+    },
+    {
+      "id": "doll",
+      "label": "Boneca (grande)"
+    }
+  ],
+  "lashes": [
+    {
+      "id": "none",
+      "label": "Sem cilios"
+    },
+    {
+      "id": "natural",
+      "label": "Natural"
+    },
+    {
+      "id": "doll",
+      "label": "Boneca (volumosos)"
+    }
+  ],
+  "brows": [
+    {
+      "id": "thick",
+      "label": "Reta grossa"
+    },
+    {
+      "id": "arched",
+      "label": "Arqueada"
+    },
+    {
+      "id": "thin",
+      "label": "Fina natural"
+    }
+  ],
+  "mouths": [
+    {
+      "id": "natural",
+      "label": "Natural masculina"
+    },
+    {
+      "id": "thin",
+      "label": "Fina"
+    },
+    {
+      "id": "doll",
+      "label": "Boneca glossy"
+    }
+  ],
+  "files": "eye_<id>_{sclera,iris,hi,line}.png, lash_<lash>_<eye>.png, brow_<id>.png, mouth_<id>_{lips,gloss}.png, blush.png"
+}

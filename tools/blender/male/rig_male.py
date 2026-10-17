@@ -435,6 +435,7 @@ def stage_export():
                               export_try_sparse_sk=True, export_cameras=False, export_lights=False)
     names = [b.name for b in rig.data.bones]; topb = float(getco(body)[:, 2].max())
     J = json.load(open(os.path.join(CACHE, "male_joints.json")))
+    LMK = json.load(open(os.path.join(CACHE, "landmarks.json")))
     meta = {
         "version": 1, "source": "Meshy male (male_meshy.glb, malha sem textura) -> tools/blender/male/{prepare_male,paint_male,rig_male}.py",
         "files": {"body": "male_base.glb", "mask": "male_mask.png", "mask2": "male_mask2.png", "mask3": "male_mask3.png", "mask4": "male_mask4.png", "baseColor": "male_basecolor.png"},
@@ -445,6 +446,8 @@ def stage_export():
         "boneNote": "Mesmos nomes/hierarquia e MESMA orientacao de repouso dos ossos da boneca (rotacoes locais iguais), posicoes pelas proporcoes masculinas; doll_anims_*.glb servem sem retarget de rotacao. A trilha de translacao do Hips (absoluta, em metros da boneca) precisa ser escalada por hipsHeight/0.8436.",
         "hipsHeight": round(float(rig.data.bones[P + "Hips"].head_local[2]), 4),
         "maskConvention": "R pele, G base/boxer, B feicoes (olhos, sobrancelhas, labios); mask2 R labios; mask3 R iris G sobrancelha B cilios; mask4 vazio. Textura base pintada com REF_SKIN/REF_SUIT do dollMaterial.ts (tingimento exato).",
+        "face": {k: round(LMK[k], 4) for k in ("eye_x", "eye_z", "brow_z", "mouth_z", "nose_z", "chin_z")},
+        "faceNote": "y do glTF = z do Blender: eyeY=eye_z etc. Camadas do rosto sao projetadas de frente no espaco de repouso (x,y) da malha.",
         "morphs": [{"name": k, "label": v[0], "group": v[1], "min": 0, "max": 1, "targets": ["body"]} for k, v in LABELS.items()],
         "morphGroups": ["Corpo"],
         "triangles": {"body": len(body.data.polygons)},

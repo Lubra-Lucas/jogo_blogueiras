@@ -72,6 +72,15 @@
   "boneNote": "Mesmos nomes/hierarquia e MESMA orientacao de repouso dos ossos da boneca (rotacoes locais iguais), posicoes pelas proporcoes masculinas; doll_anims_*.glb servem sem retarget de rotacao. A trilha de translacao do Hips (absoluta, em metros da boneca) precisa ser escalada por hipsHeight/0.8436.",
   "hipsHeight": 0.925,
   "maskConvention": "R pele, G base/boxer, B feicoes (olhos, sobrancelhas, labios); mask2 R labios; mask3 R iris G sobrancelha B cilios; mask4 vazio. Textura base pintada com REF_SKIN/REF_SUIT do dollMaterial.ts (tingimento exato).",
+  "face": {
+    "eye_x": 0.0485,
+    "eye_z": 1.5827,
+    "brow_z": 1.609,
+    "mouth_z": 1.5019,
+    "nose_z": 1.5423,
+    "chin_z": 1.4552
+  },
+  "faceNote": "y do glTF = z do Blender: eyeY=eye_z etc. Camadas do rosto sao projetadas de frente no espaco de repouso (x,y) da malha.",
   "morphs": [
     {
       "name": "weightUp",
@@ -181,7 +190,7 @@
     "body": 15044
   },
   "sizesBytes": {
-    "male_base.glb": 1277688
+    "male_base.glb": 1466924
   },
   "license": "Meshy-generated asset (check Meshy plan terms); rig/morph/paint tooling: project code"
 }

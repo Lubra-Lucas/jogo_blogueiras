@@ -48,6 +48,7 @@ def stage_prepare():
     bpy.ops.mesh.fill_holes(sides=60); bpy.ops.object.mode_set(mode='OBJECT')
     bm = bmesh.new(); bm.from_mesh(me); log("bordas apos fill_holes:", sum(1 for e in bm.edges if e.is_boundary)); bm.free()
     co = getco(o); tv = tris(me); e = edges_of(me); n = len(co)
+    sp = me.attributes.new('srcpos', 'FLOAT_VECTOR', 'POINT'); sp.data.foreach_set('vector', co.astype(np.float32).ravel())
     # ---- bordas da boxer: os dois lacos duros (cos e barra) NAO sao horizontais; mede os pontos dos vincos e ajusta curvas z(theta)
     bm = bmesh.new(); bm.from_mesh(me)
     pts = []
@@ -102,6 +103,11 @@ def stage_prepare():
     for sg in (1, -1):
         eyes = np.maximum(eyes, bell(np.sqrt(((x - sg * EYE_X) / 0.028) ** 2 + ((z - EYE_Z) / 0.020) ** 2)) * (y < -0.02))
     P = laplace(P, e, eyes * 0.9, it=14, lam=0.6)
+    # boca/queixo lisos: os labios agora sao camadas em tempo real, entao a malha nao pode ter relevo de labio/vinco de bochecha
+    mo = bell(np.sqrt((x / 0.065) ** 2 + ((z - 0.352) / 0.042) ** 2)) * (y < 0.0)
+    P = taubin(P, e, mo * 0.95, it=40)
+    jaw = bell(np.sqrt((x / 0.09) ** 2 + ((z - 0.338) / 0.05) ** 2)) * (y < 0.03)
+    P = taubin(P, e, jaw * 0.85, it=22)
     # cabeca um pouco maior (visual "boneca", sem exagero): escala em torno da base do pescoco
     HS, PIV = 1.12, np.array([0.0, 0.007, 0.300])
     def head_xf(Q):
