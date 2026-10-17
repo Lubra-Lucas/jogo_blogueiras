@@ -18,7 +18,8 @@ function build(): KitItem[] {
     const pal = SHOP_PAL[b.shopId ?? ''] ?? (b.shopId ? 'pearl' : CYCLE[(n * 5 + k) % CYCLE.length])
     k++
     const poi = b.shopId ? CITY.pois.find((p) => p.id === b.shopId) : undefined
-    const over = poi ? { accent: poi.color, glow: poi.color } : undefined
+    // cor da marca so nos detalhes (acento fino e neon); as faixas largas ficam na paleta do predio
+    const over = poi ? { accent2: poi.color, glow: poi.color } : undefined
     const c = Math.cos(b.rot)
     const s = Math.sin(b.rot)
     // posicao/giro local do bloco -> mundo
