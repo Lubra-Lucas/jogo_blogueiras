@@ -44,11 +44,13 @@ function atDoor(id: string, fwd: number, lat: number) {
       [3.4, -3.6 * flip, 'flower_buckets', 'buckets', 1.0, CL],
       [11.5, 0.2, 'patio_heater', 'char', 0.6, CL],
       [8.5, -1.3, 'dog_bowl_post', 'wood', 0.6, CL],
-      [4.6, 0.0, 'cafe_rug', 'rug', 0.4, { bucket: 'walk', collide: false, plaza: true, y: 0.012 } as Opt],
     ] as [number, number, string, string, number, Opt][]) {
       const d = atDoor(id, fwd, lat)
-      around(piece, d.x, d.z, d.rot + (piece === 'cafe_rug' ? 0 : lat * 0.05), pal, { plaza: true, r, ...o }, 3)
+      around(piece, d.x, d.z, d.rot + lat * 0.05, pal, { plaza: true, r, ...o }, 3)
     }
+    // tapete EXATO no eixo da porta (force: `around` o empurrava para o lado quando o ponto estava ocupado)
+    const rug = atDoor(id, 4.6, 0)
+    force('cafe_rug', rug.x, rug.z, rug.rot, 'rug', { bucket: 'walk', collide: false, y: 0.012 })
     const o1 = atDoor(id, 3.0, -7.4 * flip)
     around('potted_olive', o1.x, o1.z, 0, 'olive', { plaza: true, r: 0.9, ...CL }, 3)
     const o2 = atDoor(id, 3.0, 7.0 * flip)
