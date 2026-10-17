@@ -49,6 +49,7 @@ export function enterCar(uid: string) {
   bump()
   driveBridge.active = true
   driveBridge.yaw = inst.yaw
+  driveBridge.quat.set(0, Math.sin(inst.yaw / 2), 0, Math.cos(inst.yaw / 2))
   driveBridge.seatPos.set(inst.x, 0.8, inst.z)
   drive.speed = 0
   useVehicleStore.setState({ drivingUid: uid, nearbyUid: null, garageOpen: false })
