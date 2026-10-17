@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "source": "Meshy male (male_meshy.glb, malha sem textura) -> tools/blender/male/{prepare_male,paint_male,rig_male}.py",
+  "files": {
+    "body": "male_base.glb",
+    "mask": "male_mask.png",
+    "mask2": "male_mask2.png",
+    "mask3": "male_mask3.png",
+    "mask4": "male_mask4.png",
+    "baseColor": "male_basecolor.png"
+  },
+  "heightMeters": 1.75,
+  "heightBodyMeters": 1.75,
+  "restPose": "A-pose ~42 deg arms (igual a boneca), pes retos ~0.27 m entre tornozelos, sola em z=0",
+  "axes": "glTF Y-up, character faces +Z",
+  "bones": [
+    "mixamorig:Hips",
+    "mixamorig:Spine",
+    "mixamorig:Spine1",
+    "mixamorig:Spine2",
+    "mixamorig:Neck",
+    "mixamorig:Head",
+    "mixamorig:LeftShoulder",
+    "mixamorig:LeftArm",
+    "mixamorig:LeftForeArm",
+    "mixamorig:LeftHand",
+    "mixamorig:LeftHandIndex1",
+    "mixamorig:LeftHandIndex2",
+    "mixamorig:LeftHandIndex3",
+    "mixamorig:LeftHandMiddle1",
+    "mixamorig:LeftHandMiddle2",
+    "mixamorig:LeftHandMiddle3",
+    "mixamorig:LeftHandRing1",
+    "mixamorig:LeftHandRing2",
+    "mixamorig:LeftHandRing3",
+    "mixamorig:LeftHandPinky1",
+    "mixamorig:LeftHandPinky2",
+    "mixamorig:LeftHandPinky3",
+    "mixamorig:LeftHandThumb1",
+    "mixamorig:LeftHandThumb2",
+    "mixamorig:LeftHandThumb3",
+    "mixamorig:RightShoulder",
+    "mixamorig:RightArm",
+    "mixamorig:RightForeArm",
+    "mixamorig:RightHand",
+    "mixamorig:RightHandIndex1",
+    "mixamorig:RightHandIndex2",
+    "mixamorig:RightHandIndex3",
+    "mixamorig:RightHandMiddle1",
+    "mixamorig:RightHandMiddle2",
+    "mixamorig:RightHandMiddle3",
+    "mixamorig:RightHandRing1",
+    "mixamorig:RightHandRing2",
+    "mixamorig:RightHandRing3",
+    "mixamorig:RightHandPinky1",
+    "mixamorig:RightHandPinky2",
+    "mixamorig:RightHandPinky3",
+    "mixamorig:RightHandThumb1",
+    "mixamorig:RightHandThumb2",
+    "mixamorig:RightHandThumb3",
+    "mixamorig:LeftUpLeg",
+    "mixamorig:LeftLeg",
+    "mixamorig:LeftFoot",
+    "mixamorig:LeftToeBase",
+    "mixamorig:RightUpLeg",
+    "mixamorig:RightLeg",
+    "mixamorig:RightFoot",
+    "mixamorig:RightToeBase"
+  ],
+  "boneCount": 52,
+  "rootBone": "mixamorig:Hips",
+  "boneNote": "Mesmos nomes/hierarquia e MESMA orientacao de repouso dos ossos da boneca (rotacoes locais iguais), posicoes pelas proporcoes masculinas; doll_anims_*.glb servem sem retarget de rotacao. A trilha de translacao do Hips (absoluta, em metros da boneca) precisa ser escalada por hipsHeight/0.8436.",
+  "hipsHeight": 0.925,
+  "maskConvention": "R pele, G base/boxer, B feicoes (olhos, sobrancelhas, labios); mask2 R labios; mask3 R iris G sobrancelha B cilios; mask4 vazio. Textura base pintada com REF_SKIN/REF_SUIT do dollMaterial.ts (tingimento exato).",
+  "morphs": [
+    {
+      "name": "weightUp",
+      "label": "Mais peso",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "weightDown",
+      "label": "Menos peso",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "muscleUp",
+      "label": "Mais musculo",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "bellyUp",
+      "label": "Barriga",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "shouldersBroad",
+      "label": "Ombros largos",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "shouldersNarrow",
+      "label": "Ombros estreitos",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "chestBroad",
+      "label": "Peito largo",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "waistThin",
+      "label": "Cintura fina",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "hipsWide",
+      "label": "Quadril largo",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "thighsThick",
+      "label": "Coxas grossas",
+      "group": "Corpo",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    }
+  ],
+  "morphGroups": [
+    "Corpo"
+  ],
+  "triangles": {
+    "body": 15044
+  },
+  "sizesBytes": {
+    "male_base.glb": 1277688
+  },
+  "license": "Meshy-generated asset (check Meshy plan terms); rig/morph/paint tooling: project code"
+}
