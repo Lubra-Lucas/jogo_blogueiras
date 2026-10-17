@@ -5,6 +5,7 @@ import { ACESFilmicToneMapping, MathUtils, SRGBColorSpace, type Group } from 'th
 import { useAppearanceStore } from '../../state/appearanceStore'
 import { Character } from '../../game/character/Character'
 import type { AnimDriver } from '../../game/character/animation/CharacterAnimation'
+import { fitOf } from '../../game/character/proportions'
 
 export type StageFocus = 'body' | 'face' | 'hair' | 'torso' | 'eyes' | 'mouth' | 'hands'
 
@@ -30,7 +31,10 @@ function Stage({ focus, rot }: { focus: StageFocus; rot: MutableRefObject<Rot> }
   const group = useRef<Group>(null)
   const cur = useRef({ y: FRAMES[focus].y, d: FRAMES[focus].d, x: FRAMES[focus].x ?? 0 })
   useFrame(({ camera }, dt) => {
-    const f = FRAMES[focus]
+    // o enquadramento acompanha a altura do corpo (baixa/alta); mao e perto do quadril (altura menos sensivel)
+    const hs = fitOf(appearance.body).heightScale
+    const f0 = FRAMES[focus]
+    const f = { y: f0.y * hs, d: f0.d * Math.max(hs, 0.95) * (focus === 'body' ? 1.06 : 1), x: f0.x }
     const k = 1 - Math.exp(-7 * Math.min(dt, 0.05))
     cur.current.y = MathUtils.lerp(cur.current.y, f.y, k)
     cur.current.d = MathUtils.lerp(cur.current.d, f.d, k)

@@ -17,6 +17,7 @@ import { applyFinish, applyJewelMaterial, fabricTex, onFabricTextureLoad } from 
 import { motifColor, patternTexture } from './patterns'
 import { morphInfluence } from './morphConfig'
 import { applyRestPose } from './pose'
+import { BodyRig } from './proportions'
 import { ensureTangents } from './tangents'
 import { CharacterAnimation, type AnimDriver } from './animation/CharacterAnimation'
 
@@ -26,6 +27,8 @@ export interface CharacterHandle {
   /** esqueleto da base (nomes `mixamorigHips`...); cabelo e roupa usam estes mesmos ossos */
   skeleton: Skeleton
   bones: Record<string, Bone>
+  /** proporcoes por osso (altura, pernas, postura...); a animacao chama begin()/apply() a cada quadro */
+  proportions: BodyRig
 }
 
 export interface CharacterProps {
@@ -56,7 +59,7 @@ function buildRig(scene: Group): Rig {
   if (!b) throw new Error('doll_base.glb sem SkinnedMesh')
   ensureTangents(b.geometry) // geometria e compartilhada entre clones; faz uma vez
   const m = b.material as MeshPhysicalMaterial
-  return { root, bones, skeleton: b.skeleton, armature: b.parent!, body: b, map: m.map, normalMap: m.normalMap }
+  return { root, bones, proportions: new BodyRig(root, bones), skeleton: b.skeleton, armature: b.parent!, body: b, map: m.map, normalMap: m.normalMap }
 }
 
 /** Peca a montar: cabelo (registro estatico) ou roupa (catalogo de manifesto). */
@@ -172,7 +175,7 @@ function buildAttachment(rig: Rig, part: Part, gltf: GLTF): Attachment {
 
 interface Jewel {
   item: CatalogItem
-  roots: Array<{ bone: Bone; obj: Group }>
+  roots: Array<{ bone: Bone; obj: Group; scale: [number, number, number] }>
   materials: Array<{ slot: string; mat: MeshPhysicalMaterial }>
 }
 
@@ -204,7 +207,7 @@ function buildJewel(rig: Rig, item: CatalogItem, gltf: GLTF, hairFile: string | 
       mesh.material = mat
       mesh.castShadow = false
     })
-    roots.push({ bone, obj })
+    roots.push({ bone, obj, scale: at.scale })
   }
   return { item, roots, materials }
 }
@@ -258,7 +261,23 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
   useImperativeHandle(handle, () => rig, [rig])
   useLayoutEffect(() => {
     applyRestPose(rig.bones, rig.root)
+    rig.proportions.set(appearance.body)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rig])
+  // proporcoes: comprimentos de osso (altura, pernas, bracos...) e postura; a pose animada e somada em CharacterAnimation
+  const bodyKey = JSON.stringify(appearance.body)
+  useLayoutEffect(() => {
+    rig.proportions.set(appearance.body)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rig, bodyKey])
+  // sem animacao propria (poses de minijogo, retratos): so comprimentos/escalas, sem postura aditiva
+  useFrame(() => {
+    if (anim) return
+    rig.proportions.weights.posture = 0
+    rig.proportions.weights.lordosis = 0
+    rig.proportions.begin()
+    rig.proportions.apply()
+  })
 
   // mascaras: dados lineares, UV do glTF (sem flip)
   useMemo(() => {
@@ -350,6 +369,14 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
       }
     }
   }, [jewelObjs])
+  // a escala (uniforme) do osso da mao/cabeca/pe acompanha a joia presa a ele (anel, pulseira, brinco, chapeu: queremos isso),
+  // mas a BOLSA na mao nao deve crescer junto com a mao: compensa
+  useLayoutEffect(() => {
+    for (const j of jewelObjs) {
+      if (j.item.slot !== 'bag') continue
+      for (const r of j.roots) r.obj.scale.set(...r.scale).divideScalar(r.bone.scale.x || 1)
+    }
+  }, [jewelObjs, bodyKey, rig])
   const jewelColorKey = JSON.stringify(jewels.map((j) => j.ref))
   useLayoutEffect(() => {
     jewelObjs.forEach((j, i) => {

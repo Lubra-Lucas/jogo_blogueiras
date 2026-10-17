@@ -12,7 +12,8 @@ import { useAppearanceStore } from '../../state/appearanceStore'
 import { Character } from '../character/Character'
 import { useEmoteStore } from '../character/animation/emoteStore'
 import { turnState } from '../character/animation/turnState'
-import { SEAT_HIPS_GAP, useSitStore } from '../sit/sitStore'
+import { SEAT_HIPS_GAP, useSitStore, type SitClipInfo } from '../sit/sitStore'
+import { fitOf, type BodyFit } from '../character/proportions'
 import { navBridge } from '../navigation/navStore'
 import { driveBridge, drive, useVehicleStore } from '../vehicles/driveStore'
 
@@ -21,6 +22,19 @@ type CharacterController = ReturnType<Rapier['world']['createCharacterController
 
 /** duracao do clipe run_turn (s) */
 const TURN_DUR = 0.67
+
+/** Medidas do clipe de sentar ajustadas ao corpo (quadril mais alto/baixo e passo maior/menor com as pernas). Objeto reutilizado. */
+const _ci = { inDur: 0, outDur: 0, offX: 0, offZ: 0, endY: 0, outX: 0, outZ: 0 }
+function fitClip(c: SitClipInfo, f: BodyFit): SitClipInfo {
+  _ci.inDur = c.inDur
+  _ci.outDur = c.outDur
+  _ci.offX = c.offX * f.stride
+  _ci.offZ = c.offZ * f.stride
+  _ci.endY = c.endY + f.hipsDelta
+  _ci.outX = c.outX * f.stride
+  _ci.outZ = c.outZ * f.stride
+  return _ci
+}
 
 const SPAWN_Y = 0.03 + C.halfHeight + C.radius + 0.05
 
@@ -35,6 +49,10 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
   const body = useRef<RapierRigidBody>(null)
   const visual = useRef<Group>(null)
   const appearance = useAppearanceStore((st) => st.appearance)
+  // corpo: capsula (altura) e demais sistemas (camera, assento) leem `playerStore.fit`
+  const fit = useMemo(() => fitOf(appearance.body), [appearance.body])
+  useMemo(() => usePlayerStore.setState({ fit }), [fit])
+  const capHalf = Math.max(0.3, (C.halfHeight + C.radius) * fit.heightScale - C.radius) // altura 1,65 m x escala; solta para cima, pes fixos
   const controller = useRef<CharacterController | null>(null)
 
   // Estado de simulacao + temporarios reutilizados (sem alocacao por frame).
@@ -125,7 +143,7 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
         useEmoteStore.getState().stop()
         rb.setEnabled(false)
       }
-      const ci = useSitStore.getState().clip
+      const ci = fitClip(useSitStore.getState().clip, usePlayerStore.getState().fit)
       const sn = Math.sin(driveBridge.yaw)
       const cs = Math.cos(driveBridge.yaw)
       const sp = driveBridge.seatPos
@@ -171,7 +189,7 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
     const sitS = useSitStore.getState()
     const seat = sitS.seat
     if (seat) {
-      const ci = sitS.clip
+      const ci = fitClip(sitS.clip, usePlayerStore.getState().fit)
       if (!sim.seated) {
         sim.seated = true
         sim.sitT = 0
@@ -386,7 +404,7 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
   return (
     <>
       <RigidBody ref={body} type="kinematicPosition" colliders={false} position={[sim.pos.x, sim.pos.y, sim.pos.z]}>
-        <CapsuleCollider args={[C.halfHeight, C.radius]} />
+        <CapsuleCollider args={[capHalf, C.radius]} position={[0, -(C.halfHeight + C.radius) + C.radius + capHalf, 0]} />
       </RigidBody>
 
       <group ref={visual} position={[sim.pos.x, sim.pos.y, sim.pos.z]}>

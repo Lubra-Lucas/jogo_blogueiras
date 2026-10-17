@@ -143,6 +143,8 @@ export class CharacterAnimator {
   private moving = false
   private running = false
   timeScale = 1
+  /** passo relativo (comprimento da perna / original): pernas longas dao passos maiores, entao o clipe gira mais devagar */
+  stride = 1
   private lean = 0
   private spine1: Bone | undefined
   private qLean = new Quaternion()
@@ -269,7 +271,7 @@ export class CharacterAnimator {
     let ts = 1
     let leanTarget = 0
     if (this.moving) {
-      const cs = CLIP_SPEED[step] ?? 1
+      const cs = (CLIP_SPEED[step] ?? 1) * this.stride
       ts = MathUtils.clamp(speed / cs, TS_MIN, this.running ? RUN_TS_MAX : WALK_TS_MAX)
       leanTarget = this.running ? LEAN_RUN : LEAN_WALK
     }
