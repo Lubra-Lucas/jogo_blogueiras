@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useRapier } from '@react-three/rapier'
-import { MathUtils, Vector3 } from 'three'
+import { MathUtils, Raycaster, Vector3 } from 'three'
 import { cameraIntent } from '../input/intent'
 import { PLAYER } from '../player/config'
 import { useCameraStore } from '../../state/cameraStore'
@@ -12,6 +12,7 @@ import { driveBridge } from '../vehicles/driveStore'
 import { interiorBridge } from '../interiors/interiorBridge'
 import { SelfieCamera } from '../../ui/selfie/SelfieCamera'
 import { selfieBridge } from '../../ui/selfie/selfieStore'
+import { occ } from './occlusion'
 
 const PITCH_MIN = MathUtils.degToRad(C.minPitchDeg)
 const PITCH_MAX = MathUtils.degToRad(C.maxPitchDeg)
@@ -28,6 +29,7 @@ const FEET_OFFSET = PLAYER.halfHeight + PLAYER.radius // centro da capsula -> pe
  */
 export function ThirdPersonCamera() {
   const camera = useThree((s) => s.camera)
+  const scene = useThree((s) => s.scene)
   const { world, rapier } = useRapier()
 
   const rig = useMemo(
@@ -38,6 +40,7 @@ export function ThirdPersonCamera() {
       zoomDist: C.defaultDistance as number,
       dist: C.defaultDistance as number, // distancia final (com colisao)
       pivot: new Vector3(),
+      lift: 0, // rad: sobe a camera quando uma parede a encurta (olha de cima em vez de colar na parede)
       inited: false,
       // temporarios reutilizados
       origin: { x: 0, y: 0, z: 0 },
@@ -55,6 +58,7 @@ export function ThirdPersonCamera() {
   useFrame((_, rawDelta) => {
     const dt = Math.min(rawDelta, 0.05)
     if (dt <= 0) return
+    occ.k.value = 0 // desliga o esmaecimento (ligado so quando a camera 3a pessoa posiciona)
     if (driveBridge.active) return // dirigindo: a camera e a do carro (game/vehicles/VehicleCamera)
     if (selfieBridge.active) return // selfie: a camera e a do rosto (ui/selfie/SelfieCamera, montada abaixo)
     const ps = usePlayerStore.getState()
@@ -115,33 +119,44 @@ export function ThirdPersonCamera() {
       rig.pivot.y += (gy - rig.pivot.y) * (1 - Math.exp(-C.followRateY * dt))
     }
 
-    // ---- direcao pivo -> camera ----
-    const cp = Math.cos(rig.pitch)
-    rig.dir.x = Math.sin(rig.yaw) * cp
-    rig.dir.y = Math.sin(rig.pitch)
-    rig.dir.z = Math.cos(rig.yaw) * cp
-
     // ---- colisao: esfera do pivo ate a camera desejada ----
+    // Se a parede encurta muito a camera, ela sobe (pitch efetivo maior) em vez de colar na parede; sobe/desce suave.
+    const maxLift = MathUtils.degToRad(80) - rig.pitch
     let allowed = rig.zoomDist
-    rig.origin.x = rig.pivot.x
-    rig.origin.y = rig.pivot.y
-    rig.origin.z = rig.pivot.z
-    const hit = world.castShape(
-      rig.origin,
-      rig.rot,
-      rig.dir,
-      rig.shape,
-      0, // targetDistance: contato
-      rig.zoomDist, // maxToi (dir unitaria => metros)
-      false,
-      rig.flags,
-      undefined,
-      undefined,
-      ps.body ?? undefined,
-    )
-    if (hit) allowed = Math.max(0, Math.min(allowed, hit.time_of_impact - C.collisionMargin))
+    for (let pass = 0; pass < 1; pass++) {
+      const pit = rig.pitch + Math.min(rig.lift, Math.max(0, maxLift))
+      const cp = Math.cos(pit)
+      rig.dir.x = Math.sin(rig.yaw) * cp
+      rig.dir.y = Math.sin(pit)
+      rig.dir.z = Math.cos(rig.yaw) * cp
+      allowed = rig.zoomDist
+      rig.origin.x = rig.pivot.x
+      rig.origin.y = rig.pivot.y
+      rig.origin.z = rig.pivot.z
+      const hit = world.castShape(
+        rig.origin,
+        rig.rot,
+        rig.dir,
+        rig.shape,
+        0, // targetDistance: contato
+        rig.zoomDist, // maxToi (dir unitaria => metros)
+        false,
+        rig.flags,
+        undefined,
+        undefined,
+        ps.body ?? undefined,
+      )
+      if (hit) allowed = Math.max(0, Math.min(allowed, hit.time_of_impact - C.collisionMargin))
+      if (pass === 0) {
+        // alvo da elevacao: quanto mais encurtada, mais sobe (ate ~40 graus)
+        const shortage = MathUtils.clamp(1 - allowed / (rig.zoomDist * 0.75), 0, 1)
+        const target = shortage * MathUtils.degToRad(40)
+        const rate = target > rig.lift ? 6 : 1.6
+        rig.lift += (target - rig.lift) * (1 - Math.exp(-rate * dt))
+      }
+    }
 
-    // para dentro: instantaneo; para fora: suave
+    // para dentro: instantaneo (nunca atravessa); para fora: suave
     if (allowed < rig.dist) rig.dist = allowed
     else rig.dist += (allowed - rig.dist) * (1 - Math.exp(-C.collisionOutRate * dt))
 
@@ -153,10 +168,17 @@ export function ThirdPersonCamera() {
     )
     camera.lookAt(rig.pivot)
 
+    // esmaecimento de obstaculos nao solidos entre a camera e a cabeca (ver occlusion.ts)
+    occ.a.value.copy(camera.position)
+    occ.b.value.copy(rig.pivot)
+    occ.ground.value = ps.position.y - FEET_OFFSET + 0.25
+    occ.k.value = 1
+
     cs.yaw = rig.yaw
     cs.pitch = rig.pitch
     cs.distance = rig.dist
   })
 
+  if (import.meta.env.DEV) (window as unknown as Record<string, unknown>).__cam = { camera, world, rig, scene, occ, Raycaster, Vector3, tp: (x: number, z: number, yaw: number | null = null) => { navBridge.teleport = { x, z, yaw } } }
   return <SelfieCamera />
 }

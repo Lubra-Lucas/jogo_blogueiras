@@ -27,6 +27,7 @@ import './streetProps' // reserva discos (parquinho, piquenique...) antes de fil
 import { merge, paint, place, placement } from './geo'
 import { Cull, LodCull, chunkKey, useCullDist } from './cull'
 import { registerGlowColor, registerGlowEmissive } from '../environment/registry'
+import { makeOccludable } from '../../camera/occlusion'
 
 /** Material "porcelana/vinil de brinquedo" compartilhado por todos os props. */
 export const PORCELAIN = { roughness: 0.3, clearcoat: 0.8, clearcoatRoughness: 0.2 } as const
@@ -405,31 +406,31 @@ export function Trees({ shadows }: { shadows: boolean }) {
         <meshPhysicalMaterial color="#f0c35a" metalness={0.9} roughness={0.25} clearcoat={0.5} />
       </Instances>
       <Instances geometry={geos.cluster} far={geos.sphere} lod={34} items={data.round} shadows={shadows}>
-        <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" vertexColors />
+        <meshPhysicalMaterial ref={(m) => m && makeOccludable(m)} {...PORCELAIN} color="#ffffff" vertexColors />
       </Instances>
       <Instances geometry={geos.heart} items={data.heart} shadows={shadows}>
-        <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" />
+        <meshPhysicalMaterial ref={(m) => m && makeOccludable(m)} {...PORCELAIN} color="#ffffff" />
       </Instances>
       <Instances geometry={geos.tiers} far={geos.cone} lod={34} items={data.cone} shadows={shadows}>
-        <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" vertexColors />
+        <meshPhysicalMaterial ref={(m) => m && makeOccludable(m)} {...PORCELAIN} color="#ffffff" vertexColors />
       </Instances>
       <Instances geometry={geos.blossom} items={data.blossom} shadows={shadows}>
-        <meshPhysicalMaterial {...PORCELAIN} color="#ffffff" />
+        <meshPhysicalMaterial ref={(m) => m && makeOccludable(m)} {...PORCELAIN} color="#ffffff" />
       </Instances>
       <Instances geometry={geos.sphere} items={data.orbs} shadows={shadows}>
-        <meshPhysicalMaterial color="#ffffff" roughness={0.12} clearcoat={1} clearcoatRoughness={0.08} iridescence={0.8} iridescenceIOR={1.4} metalness={0.15} />
+        <meshPhysicalMaterial ref={(m) => m && makeOccludable(m)} color="#ffffff" roughness={0.12} clearcoat={1} clearcoatRoughness={0.08} iridescence={0.8} iridescenceIOR={1.4} metalness={0.15} />
       </Instances>
       <Instances geometry={geos.orbRing} items={data.orbRings} shadows={false}>
         <meshBasicMaterial ref={(m) => m && registerGlowColor(m, 0.85, 1.3)} color="#ffffff" toneMapped={false} />
       </Instances>
       <Instances geometry={geos.palmBase} items={data.palmBase} shadows={shadows}>
-        <meshPhysicalMaterial {...PORCELAIN} vertexColors />
+        <meshPhysicalMaterial ref={(m) => m && makeOccludable(m)} {...PORCELAIN} vertexColors />
       </Instances>
       <Instances geometry={geos.palmLeaves} items={data.palmLeaves} shadows={shadows}>
-        <meshPhysicalMaterial {...PORCELAIN} vertexColors side={2} />
+        <meshPhysicalMaterial ref={(m) => m && makeOccludable(m)} {...PORCELAIN} vertexColors side={2} />
       </Instances>
       <Instances geometry={geos.sphere} items={data.darkTop} shadows={shadows}>
-        <meshPhysicalMaterial color="#ffffff" roughness={0.2} clearcoat={1} clearcoatRoughness={0.1} />
+        <meshPhysicalMaterial ref={(m) => m && makeOccludable(m)} color="#ffffff" roughness={0.2} clearcoat={1} clearcoatRoughness={0.1} />
       </Instances>
       <Instances geometry={geos.darkRing} items={data.darkRing} shadows={false}>
         <meshBasicMaterial ref={(m) => m && registerGlowColor(m, 0.85, 1.3)} color="#ffffff" toneMapped={false} />
@@ -460,7 +461,7 @@ function toyMaterial(src: MeshStandardMaterial): Material {
     const emissive = src.emissiveIntensity > 0 && src.emissive && src.emissive.getHex() !== 0
     m = new MeshPhysicalMaterial({
       color: src.color,
-      emissive: emissive ? src.emissive : undefined,
+      emissive: emissive ? src.emissive : new Color(0x000000),
       emissiveIntensity: emissive ? Math.min(src.emissiveIntensity, 1.6) : 0,
       roughness: 0.28,
       clearcoat: 0.8,
@@ -474,7 +475,7 @@ function toyMaterial(src: MeshStandardMaterial): Material {
 }
 
 /** Instancia todas as malhas de um GLB do kit (1 draw call por malha/material). */
-function KitInstances({ url, items, shadows }: { url: string; items: { x: number; z: number; rot?: number }[]; shadows: boolean }) {
+function KitInstances({ url, items, shadows, fade }: { url: string; items: { x: number; z: number; rot?: number }[]; shadows: boolean; fade?: boolean }) {
   const gltf = useGLTF(url)
   const parts = useMemo(() => {
     gltf.scene.updateMatrixWorld(true)
@@ -484,7 +485,8 @@ function KitInstances({ url, items, shadows }: { url: string; items: { x: number
       if (!m.isMesh) return
       const g = m.geometry.clone()
       g.applyMatrix4(m.matrixWorld)
-      out.push({ geo: g, mat: toyMaterial(m.material as MeshStandardMaterial) })
+      const mat = toyMaterial(m.material as MeshStandardMaterial)
+      out.push({ geo: g, mat: fade ? makeOccludable(mat) : mat })
     })
     return out
   }, [gltf])
@@ -515,8 +517,8 @@ export function Lamps({ shadows }: { shadows: boolean }) {
   }, [])
   return (
     <group>
-      <KitInstances url={URL_LAMP_Y2K} items={sets.lampsY} shadows={shadows} />
-      <KitInstances url={URL_LAMP_ROCOCO} items={sets.lampsR} shadows={shadows} />
+      <KitInstances url={URL_LAMP_Y2K} items={sets.lampsY} shadows={shadows} fade />
+      <KitInstances url={URL_LAMP_ROCOCO} items={sets.lampsR} shadows={shadows} fade />
       <KitInstances url={URL_BENCH_Y2K} items={sets.benchY} shadows={shadows} />
       <KitInstances url={URL_BENCH_ROCOCO} items={sets.benchR} shadows={shadows} />
     </group>
