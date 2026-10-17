@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Vector3 } from 'three'
+import { Quaternion, Vector3 } from 'three'
 import { loadJson, saveJson } from '../../shared/storage'
 import { useProfileStore } from '../../state/profileStore'
 import { CARS, carBySlug } from './catalog'
@@ -153,6 +153,8 @@ export const driveBridge = {
   /** posicao de raiz da jogadora (pes) sentada, mundo */
   seatPos: new Vector3(),
   yaw: 0,
+  /** orientacao COMPLETA do carro (inclinacao incluida); a boneca sentada a acompanha */
+  quat: new Quaternion(),
   /** saida do carro: teletransporte (consumido pelo PlayerController) */
   exitAt: null as { x: number; z: number; yaw: number } | null,
 }
