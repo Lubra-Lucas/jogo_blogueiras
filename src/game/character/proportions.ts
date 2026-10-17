@@ -14,8 +14,9 @@ import { DEFAULT_BODY, type BodyParams } from '../../shared/faceCatalog'
  *    sobrepoe posicoes absolutas (resto x fator) e rotacoes aditivas (postura), tudo em torno do eixo X/Z do esqueleto.
  */
 
-// ---- medidas da boneca (m), do doll_base.glb em repouso ----
-export const DOLL = {
+// ---- medidas do corpo (m) em repouso: valores iniciais = boneca atual; o BodyRig as REMEDE do esqueleto (so nomes e posicoes
+// de ossos), entao um corpo novo com os mesmos ossos mixamorig funciona sem mexer aqui ----
+export const DIMS = {
   /** altura do corpo sem cabelo */
   height: 1.6,
   hipsY: 0.844,
@@ -27,6 +28,30 @@ export const DOLL = {
   headAbove: 0.346,
   /** do osso Head a linha dos olhos (selfie) */
   eyeAboveHead: 0.09,
+  /** altura do osso do tornozelo acima do chao */
+  ankleY: 0.213,
+}
+
+/** Remede o esqueleto em repouso (nenhuma suposicao de malha): comprimentos dos ossos e altura do tornozelo. */
+function measure(root: Object3D, bones: Record<string, Bone>) {
+  const g = (n: string) => bones['mixamorig' + n]
+  const hips = g('Hips')
+  const foot = g('LeftFoot')
+  const leg = g('LeftLeg')
+  if (!hips || !foot || !leg || !g('Neck') || !g('Head')) return
+  root.updateWorldMatrix(true, true)
+  const wy = (b: Bone) => b.getWorldPosition(new Vector3()).y
+  const hipsY = wy(hips)
+  const headY = wy(g('Head'))
+  DIMS.hipsY = hipsY
+  DIMS.legChain = Math.abs(leg.position.y) + Math.abs(foot.position.y)
+  DIMS.ankleY = Math.max(0, wy(foot))
+  DIMS.spine = Math.abs(g('Spine').position.y) + Math.abs(g('Spine1').position.y) + Math.abs(g('Spine2').position.y)
+  DIMS.neck = Math.abs(g('Neck').position.y) + Math.abs(g('Head').position.y)
+  // so para capsula/camera/enquadramento (estimativa por proporcao da boneca; a renderizacao nao usa)
+  DIMS.headAbove = 0.276 * headY
+  DIMS.eyeAboveHead = 0.072 * headY
+  DIMS.height = headY + DIMS.headAbove
 }
 
 /** Altura do corpo (m) nos extremos do slider `height`: baixa ~1,45 m, alta ~1,85 m. */
@@ -45,14 +70,8 @@ const E_HAND = 0.5
 const E_FOOT = 0.85
 const E_SHOULDER = 0.7
 
-/**
- * Quanto o ponto mais baixo do pe desce por unidade de crescimento (comprimento da perna / escala do pe).
- * Medidos na malha (bodytest): mantem a sola no chao.
- */
-const GROUND_PER_LEG = 0.565
-/** pernas mais curtas (comprimidas por escala, ver `writeStatic`): o comprimento geometrico completo */
-const GROUND_PER_LEG_SHORT = 0.612
-const GROUND_PER_FOOT = 0.14
+/** Manter a sola no chao: o quadril sobe/desce o quanto as pernas crescem/encolhem (geometrico, pelos ossos) e o pe escalado afunda ~2/3 da altura do tornozelo. */
+const FOOT_SOLE_RATIO = 0.66
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
@@ -101,10 +120,10 @@ export function proportionsOf(b: BodyParams): Proportions {
   const head = Math.pow(f, E_HEAD) * (1 + 0.2 * b.headSize)
   const hand = Math.pow(f, E_HAND) * (1 + 0.22 * b.hands)
   const foot = Math.pow(f, E_FOOT) * (1 + 0.2 * b.feet)
-  const hipsDelta = (leg < 1 ? GROUND_PER_LEG_SHORT : GROUND_PER_LEG) * (leg - 1) + GROUND_PER_FOOT * (foot - 1)
-  const hipsY = DOLL.hipsY + hipsDelta
-  const spineTop = hipsY + DOLL.spine * torso
-  const headY = spineTop + DOLL.neck * neck
+  const hipsDelta = DIMS.legChain * (leg - 1) + FOOT_SOLE_RATIO * DIMS.ankleY * (foot - 1)
+  const hipsY = DIMS.hipsY + hipsDelta
+  const spineTop = hipsY + DIMS.spine * torso
+  const headY = spineTop + DIMS.neck * neck
   return {
     f,
     leg,
@@ -116,10 +135,10 @@ export function proportionsOf(b: BodyParams): Proportions {
     hand,
     foot,
     hipsDelta,
-    stride: hipsY / DOLL.hipsY,
-    height: headY + DOLL.headAbove * head,
+    stride: hipsY / DIMS.hipsY,
+    height: headY + DIMS.headAbove * head,
     headY,
-    eyeY: headY + DOLL.eyeAboveHead * head,
+    eyeY: headY + DIMS.eyeAboveHead * head,
     posture: b.posture,
     lordosis: b.lordosis,
     slope: b.shouldersSlope,
@@ -139,11 +158,11 @@ export interface BodyFit {
   height: number
 }
 
-export const DEFAULT_FIT: BodyFit = { heightScale: 1, stride: 1, hipsDelta: 0, eyeY: DOLL.hipsY + DOLL.spine + DOLL.neck + DOLL.eyeAboveHead, height: DOLL.height }
+export const DEFAULT_FIT: BodyFit = { heightScale: 1, stride: 1, hipsDelta: 0, eyeY: 1.43, height: 1.6 }
 
 export function fitOf(b: BodyParams): BodyFit {
   const p = proportionsOf(b)
-  return { heightScale: p.height / DOLL.height, stride: p.stride, hipsDelta: p.hipsDelta, eyeY: p.eyeY, height: p.height }
+  return { heightScale: p.height / DIMS.height, stride: p.stride, hipsDelta: p.hipsDelta, eyeY: p.eyeY, height: p.height }
 }
 
 /** Corpo e todo zero (nada a fazer)? */
@@ -210,6 +229,7 @@ export class BodyRig {
     this.root = root
     this.bones = bones
     for (const n in bones) this.rest.set(n, bones[n].position.clone())
+    measure(root, bones)
     this.p = proportionsOf(DEFAULT_BODY)
     this.set(DEFAULT_BODY)
   }

@@ -55,6 +55,9 @@ const SETS: Spec[][] = [
   ],
 ]
 
+// set=2: seis corpos representativos (mais leve para as capturas com roupa: cada roupa e um GLB + material por corpo)
+SETS.push([SETS[0][0], SETS[0][2], SETS[0][3], SETS[0][4], SETS[0][6], SETS[0][10]])
+
 const OUTFITS: Record<string, Appearance['outfit']> = {
   dress: { dress: { id: 'gala_train_gown' }, shoes: { id: 'stiletto_pumps' } },
   pants: { top: { id: 'tee' }, bottom: { id: 'flare_pants' }, shoes: { id: 'chunky_sneakers' } },
