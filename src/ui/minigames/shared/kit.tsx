@@ -170,6 +170,8 @@ export function ResultsCard(p: {
       </div>
       <div className="nj-big">{score}<small>pontos{p.daily ? ' · desafio do dia' : ''}</small></div>
       {p.newBest ? <div className="nj-newbest">Novo recorde!</div> : <div className="nj-keys">Recorde: {p.best}</div>}
+      <div className="nj-cols">
+      <div className="nj-col">
       <div className="nj-lines">
         {p.lines.map(([k, v]) => (
           <div className="nj-line" key={k}><span>{k}</span><b>{v}</b></div>
@@ -181,13 +183,17 @@ export function ResultsCard(p: {
         <div><b>+{p.xp}</b><small>XP</small></div>
         <div><b>+{p.profXp}</b><small>XP {p.profession}</small></div>
       </div>
+      </div>
+      <div className="nj-col">
       <div className="nj-rank">
         <div className="nj-subtitle">Ranking do dia · você em {p.rank}º</div>
         {p.board.map((e, i) => (
           <div key={i} className={e.you ? 'you' : ''}><span>{i + 1}</span><em>{e.name}</em><b>{e.score}</b></div>
         ))}
       </div>
-      <div className="nj-actions">
+      </div>
+      </div>
+      <div className="nj-actions nj-actions--sticky">
         <button className="nj-cta" onClick={() => (playSfx('click'), p.onAgain())}>Jogar de novo</button>
         <button className="nj-cta nj-cta--ghost" onClick={p.onChange}>Mudar opções</button>
         <button className="nj-cta nj-cta--ghost" onClick={p.onExit}>Sair</button>

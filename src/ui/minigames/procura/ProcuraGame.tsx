@@ -298,9 +298,8 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
   }
 
   // ---------------------------------------------------------------- toque
-  const tapAt = useCallback((wx: number, wy: number) => {
+  const hitTest = useCallback((wx: number, wy: number): Entity | null => {
     const G = gRef.current!
-    if (G.phase !== 'playing') return
     const tol = 10 / view.current.z
     let hit: Entity | null = null
     let bestD = Infinity
@@ -308,12 +307,20 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
       const e = G.scene.entities[i]
       const b = boxOf(e)
       if (wx < b.x0 - tol || wx > b.x1 + tol || wy < b.y0 - tol || wy > b.y1 + tol) continue
-      const d = Math.hypot(wx - e.x, (wy - (b.y0 + b.y1) / 2) * 0.8) - (e.y > 0 ? 0 : 0)
+      // prefere o mais próximo na horizontal; empate pelo que está na frente (y maior)
+      const d = Math.abs(wx - e.x) * 1.6 + Math.abs(wy - (b.y0 + b.y1) / 2) * 0.5
       if (d < bestD) {
         bestD = d
         hit = e
       }
     }
+    return hit
+  }, [])
+
+  const tapAt = useCallback((wx: number, wy: number) => {
+    const G = gRef.current!
+    if (G.phase !== 'playing') return
+    const hit = hitTest(wx, wy)
     const now = performance.now()
     if (!hit) {
       G.flashes.push({ x: wx, y: wy, t: now, ok: false })
@@ -371,7 +378,7 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
     if (!t) return
     const id = t.ids.find((i) => !G.found.has(i))!
     const e = G.scene.entities.find((x) => x.id === id)!
-    const R = 240
+    const R = { facil: 260, normal: 210, dificil: 165, estrela: 150 }[G.difficulty]
     const a = ((id * 2654435761) % 628) / 100
     G.hint = { x: e.x + Math.cos(a) * R * 0.45, y: e.y - 50 + Math.sin(a) * R * 0.45, r: R, until: performance.now() + 4500 }
     G.hintsLeft--
@@ -408,7 +415,11 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
     return { x: e.clientX - r.left, y: e.clientY - r.top }
   }
   const onDown = (e: React.PointerEvent) => {
-    ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+    try {
+      ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+    } catch {
+      /* ponteiro sintético (testes) */
+    }
     const p = rel(e)
     ptrs.current.set(e.pointerId, p)
     if (ptrs.current.size === 1) gest.current = { sx: p.x, sy: p.y, moved: false, lastDist: 0 }
@@ -493,7 +504,7 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
     if (!import.meta.env.DEV) return
     const w = window as unknown as { __procura?: unknown }
     w.__procura = {
-      state: () => ({ phase: gRef.current!.phase, round: gRef.current!.round, score: gRef.current!.score, time: gRef.current!.time, theme: gRef.current!.scene.theme, ents: gRef.current!.scene.entities.length, size: [gRef.current!.scene.W, gRef.current!.scene.H] }),
+      state: () => ({ view: { ...view.current }, wrong: gRef.current!.wrong, phase: gRef.current!.phase, round: gRef.current!.round, score: gRef.current!.score, time: gRef.current!.time, theme: gRef.current!.scene.theme, ents: gRef.current!.scene.entities.length, size: [gRef.current!.scene.W, gRef.current!.scene.H] }),
       solveNext: (wrong = false) => {
         const G = gRef.current!
         if (wrong) {
@@ -504,7 +515,12 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
         const t = G.scene.targets.find((x) => x.ids.some((id) => !G.found.has(id)))
         if (!t) return
         const e = G.scene.entities.find((x) => x.id === t.ids.find((id) => !G.found.has(id)))!
-        tapAt(e.x, e.y - 30)
+        const b = boxOf(e)
+        for (let k = 0.08; k < 1; k += 0.06) {
+          const py = b.y0 + (b.y1 - b.y0) * k
+          if (hitTest(e.x, py) === e) return tapAt(e.x, py)
+        }
+        tapAt(e.x, b.y0 + 10)
       },
       setView: (z: number, cx: number, cy: number) => {
         Object.assign(view.current, { z, cx, cy })
@@ -545,9 +561,9 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
     <div className={`nj pr${contrast ? ' nj--hc' : ''}`} data-phase={phase}>
       <TopBar
         title="Cadê a Blogueira?"
-        time={g.time}
+        time={phase === 'intro' ? 0 : g.time}
         total={g.total}
-        score={g.score}
+        score={phase === 'intro' ? 0 : g.score}
         playing={phase === 'playing'}
         muted={muted}
         onExit={onExit}
@@ -593,12 +609,18 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
         <Overlay>
           <h1>Cadê a Blogueira?</h1>
           <p>Uma cena lotada, uma lista de alvos. Ache cada um pela descrição antes que o tempo acabe: {ROUNDS} cenas por partida.</p>
+          <div className="nj-cols">
+          <div className="nj-col">
           <DiffPicker value={difficulty} onChange={setDifficulty} hints={HINTS} />
+          </div>
+          <div className="nj-col">
           <label className="nj-check"><input type="checkbox" checked={daily} onChange={(e) => setDaily(e.target.checked)} /><span>Desafio do dia: mesmas cenas para todas</span></label>
           <label className="nj-check"><input type="checkbox" checked={contrast} onChange={toggleContrast} /><span>Alto contraste: fundo suave e contornos fortes nas pessoas</span></label>
           <div className="nj-stats">
             <div><b>{bestOf('procura', difficulty)}</b><small>Recorde ({DIFFICULTY_LABEL[difficulty]})</small></div>
             <div><b>{DIFF_CFG[difficulty].time}s</b><small>Tempo total</small></div>
+          </div>
+          </div>
           </div>
           <div className="nj-actions">
             <button className="nj-cta" onClick={start}>Começar</button>

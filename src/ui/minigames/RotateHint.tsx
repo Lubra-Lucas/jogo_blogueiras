@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDeviceStore } from '../../game/systems/device'
 
 /** Minijogos que ficam melhores na horizontal (cena larga). Os demais funcionam nas duas posicoes. */
-const PREFER_LANDSCAPE = new Set(['volei'])
+const PREFER_LANDSCAPE = new Set(['volei', 'procura'])
 
 /** Aviso suave "gire o celular": so no toque, so em retrato, some sozinho e pode ser dispensado. */
 export function RotateHint({ id }: { id: string }) {

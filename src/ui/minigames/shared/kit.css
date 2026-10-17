@@ -73,6 +73,7 @@
 .nj-stats b { font-size: 1.15rem; color: var(--nj-brass-hi); }
 .nj-stats small { font-size: 0.75rem; color: var(--nj-ink2); }
 .nj-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.nj-actions--sticky { position: sticky; bottom: -17px; padding: 14px 0 2px; margin-bottom: -2px; background: linear-gradient(180deg, rgba(15, 23, 39, 0), #0f1727 38%); z-index: 2; }
 .nj-cta {
   flex: 1 1 140px; min-height: 48px; padding: 8px 16px; border-radius: 14px; font-weight: 800; font-size: 1rem;
   background: linear-gradient(180deg, #ecd69b, #b58f45); color: #1a1408; border: 1px solid #f7e8bd;
@@ -106,6 +107,19 @@
 .nj-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); }
 .nj-dots i.on { background: var(--nj-brass); }
 
+.nj-cols { display: flex; flex-direction: column; gap: 10px; }
+.nj-col { display: flex; flex-direction: column; gap: 8px; min-width: 0; flex: 1; }
+@media (max-height: 460px) and (orientation: landscape) {
+  .nj-card { width: min(800px, 100%); }
+  .nj-cols { flex-direction: row; gap: 14px; }
+  .nj-card > p { font-size: 0.85rem; }
+  .nj-card h1 { font-size: 1.25rem; }
+  .nj-hint { min-height: 0; font-size: 0.8rem; }
+  .nj-check { min-height: 40px; }
+  .nj-stats > div { padding: 5px; }
+  .nj-cta { min-height: 44px; }
+  .nj-actions--sticky { bottom: -13px; }
+}
 @media (max-height: 460px) {
   .nj-card { padding: 12px 14px; gap: 7px; }
   .nj-card h1 { font-size: 1.35rem; }

@@ -481,7 +481,7 @@ function joinPt(parts: string[]): string {
 
 /** Pontuação e tempo (puros, para testar). */
 export const SCORE = { found: 150, combo: 25, comboMax: 100, roundDone: 60, wrong: 40, hint: 80, timeBonus: 3 }
-export const STAR_TH: readonly [number, number, number] = [800, 1350, 1800]
+export const STAR_TH: readonly [number, number, number] = [900, 1500, 2000]
 export const TYPICAL: Record<Difficulty, number> = { facil: 1500, normal: 1350, dificil: 1200, estrela: 1050 }
 
 export function themeFor(seed: number, round: number): ThemeId {

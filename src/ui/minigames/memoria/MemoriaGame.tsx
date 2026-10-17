@@ -438,9 +438,9 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
     <div className={`nj mm${contrast ? ' nj--hc mm--hc' : ''}${labels ? ' mm--labels' : ''}`} data-phase={ph} data-mode={g.mode}>
       <TopBar
         title={title}
-        time={ph === 'memorize' ? g.memLeft : g.time}
+        time={ph === 'intro' ? 0 : ph === 'memorize' ? g.memLeft : g.time}
         total={ph === 'memorize' ? LOOK_CFG[g.difficulty].memorize : g.total}
-        score={g.score}
+        score={ph === 'intro' ? 0 : g.score}
         playing={playing}
         muted={muted}
         onExit={onExit}
@@ -471,12 +471,18 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
               Lembre o look<small>Decore e remonte</small>
             </button>
           </div>
+          <div className="nj-cols">
+          <div className="nj-col">
           <DiffPicker value={difficulty} onChange={setDifficulty} hints={mode === 'pares' ? HINT_PAIRS : HINT_LOOK} />
+          </div>
+          <div className="nj-col">
           <label className="nj-check"><input type="checkbox" checked={daily} onChange={(e) => setDaily(e.target.checked)} /><span>Desafio do dia: mesma partida para todas</span></label>
           <label className="nj-check"><input type="checkbox" checked={labels} onChange={(e) => (setPref(LABELS_KEY, e.target.checked), setLabels(e.target.checked))} /><span>Mostrar o nome das peças nas cartas</span></label>
           <div className="nj-stats">
             <div><b>{bestOf(mode === 'pares' ? 'memoria' : 'memoria-look', difficulty)}</b><small>Recorde ({DIFFICULTY_LABEL[difficulty]})</small></div>
             <div><b>{mode === 'pares' ? GRID_LABEL[difficulty] : `${LOOK_CFG[difficulty].rounds} looks`}</b><small>{mode === 'pares' ? `${PAIRS_CFG[difficulty].time}s de tempo` : `${LOOK_CFG[difficulty].pieces} peças cada`}</small></div>
+          </div>
+          </div>
           </div>
           <div className="nj-actions">
             <button className="nj-cta" onClick={() => void start()} disabled={!ready}>{ready ? 'Começar' : 'Carregando o catálogo…'}</button>
@@ -560,11 +566,23 @@ function PairsBoard({ g, labels, flip }: { g: G; labels: boolean; flip: (i: numb
     return () => ro.disconnect()
   }, [])
   const grid = GRID[g.difficulty]
-  const landscape = dim.w > dim.h
-  const cols = landscape ? Math.max(grid.cols, grid.rows) : Math.min(grid.cols, grid.rows)
-  const rows = landscape ? Math.min(grid.cols, grid.rows) : Math.max(grid.cols, grid.rows)
+  const N = g.cards.length
   const gap = grid.pairs > 12 ? 5 : 9
-  const cw = Math.max(20, Math.min((dim.w - gap * (cols - 1)) / cols, ((dim.h - gap * (rows - 1)) / rows) * 0.78))
+  // melhor arrumação exata (divisores de N) para a área disponível; a grade nominal vence empates
+  let best = { cols: grid.cols, rows: grid.rows, cw: 0 }
+  if (dim.w > 0 && dim.h > 0) {
+    const size = (c: number, r: number) => Math.min((dim.w - gap * (c - 1)) / c, ((dim.h - gap * (r - 1)) / r) * 0.78)
+    const nominal = dim.w > dim.h ? { cols: Math.max(grid.cols, grid.rows), rows: Math.min(grid.cols, grid.rows) } : { cols: Math.min(grid.cols, grid.rows), rows: Math.max(grid.cols, grid.rows) }
+    best = { ...nominal, cw: size(nominal.cols, nominal.rows) }
+    for (let c = 2; c <= N / 2; c++) {
+      if (N % c) continue
+      const r = N / c
+      const cw = size(c, r)
+      if (cw > best.cw * 1.12) best = { cols: c, rows: r, cw }
+    }
+  }
+  const { cols } = best
+  const cw = Math.max(20, best.cw)
   const ch = cw / 0.78
   return (
     <div className="mm-board" ref={ref}>
