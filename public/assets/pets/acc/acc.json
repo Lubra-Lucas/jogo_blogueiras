@@ -1,0 +1,65 @@
+{
+ "version": 1,
+ "units": "normalizado (rigidas) / metros (skinned)",
+ "up": "+Y",
+ "front": "+Z",
+ "items": [
+  {
+   "id": "petacc.coleira-strass",
+   "label": "Coleira de strass com coração neon",
+   "slot": "collar",
+   "color": "#f3c6d3",
+   "price": 650,
+   "kind": "rigid",
+   "file": "acc/coleira-strass.glb",
+   "mount": "neck",
+   "scale": "neckR*1.04",
+   "tint": "tira_tint",
+   "note": "pedras, ouro e coração pink neon (emissivo) mantêm a cor"
+  },
+  {
+   "id": "petacc.bandana-xadrez",
+   "label": "Bandana xadrez",
+   "slot": "collar",
+   "color": "#1f3556",
+   "price": 220,
+   "kind": "rigid",
+   "file": "acc/bandana-xadrez.glb",
+   "mount": "neck",
+   "scale": "neckR*1.04",
+   "tint": null,
+   "note": "xadrez em textura; sem slot tingível"
+  },
+  {
+   "id": "petacc.laco-cetim",
+   "label": "Laço de cetim",
+   "slot": "bow",
+   "color": "#c96f86",
+   "price": 180,
+   "kind": "rigid",
+   "file": "acc/laco-cetim.glb",
+   "mount": "head",
+   "scale": "hr*0.5",
+   "tint": "cetim_tint"
+  },
+  {
+   "id": "petacc.polo-rosa",
+   "label": "Camisa polo rosa",
+   "slot": "outfit",
+   "color": "#f29bb5",
+   "price": 480,
+   "kind": "skinned",
+   "files": {
+    "poodle": "acc/polo-rosa/poodle.glb",
+    "shiba": "acc/polo-rosa/shiba.glb",
+    "dachshund": "acc/polo-rosa/dachshund.glb",
+    "caramelo": "acc/polo-rosa/caramelo.glb",
+    "maltes": "acc/polo-rosa/maltes.glb",
+    "cavalier": "acc/polo-rosa/cavalier.glb",
+    "golden": "acc/polo-rosa/golden.glb"
+   },
+   "tint": "polo_corpo_tint",
+   "note": "gola, punhos e barra azuis, botões de pérola"
+  }
+ ]
+}
