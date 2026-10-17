@@ -47,12 +47,13 @@ export interface CarSpec {
   fisica: CarPhysics
   /** todos tem direito ao carro inicial */
   inicial?: boolean
-  /**
-   * Ajuste fino do banco do motorista (m, somado ao `seat.y` do GLB; negativo = banco mais baixo). A boneca sentada tem
-   * ~0,94 m do assento ao topo do coque; cabines baixas pedem baixar o quadril (ate ~8 cm, o que a almofada comporta).
-   */
+  /** rebaixamento FIXO do banco (m, somado ao `seat.y` do GLB; negativo = mais baixo). O rebaixamento por altura da boneca e dinamico (`vehicles/seatFit.ts`). */
   bancoDy?: number
-  /** altura dos olhos acima do banco na camera em 1a pessoa (m); padrao 0,65 */
+  /** altura do forro (teto interno) sobre a cabeca, em m acima do `seat.y` do GLB; null/ausente = sem teto (nao rebaixa alem do bancoDy) */
+  forroY?: number | null
+  /** rebaixamento dinamico maximo (m): o quadril nao pode atravessar o piso do carro */
+  bancoMax?: number
+  /** teto (m) para a altura dos olhos acima do banco na camera em 1a pessoa; padrao = olhos da boneca */
   olhoY?: number
 }
 
@@ -92,7 +93,8 @@ export const CARS: CarSpec[] = [
     raridade: 'comum',
     inicial: true,
     stats: { velocidade: 4, aceleracao: 5, controle: 9 },
-    bancoDy: -0.08, // teto interno ~0,84 m acima do banco; o coque ainda encosta no forro
+    forroY: 0.84, // forro medido sobre a cabeca (GLB)
+    bancoMax: 0.2,
     fisica: { mass: 1000, vTop: 27, accel: 3.6, vReverse: 8, steerLow: 0.66, steerHigh: 0.2, driftYaw: 0.35, gripHigh: 12, gripLow: 2.4 },
   },
   {
@@ -107,6 +109,7 @@ export const CARS: CarSpec[] = [
     precoDiamantes: 3200,
     raridade: 'epico',
     stats: { velocidade: 7, aceleracao: 7, controle: 7 },
+    forroY: null, // aberto
     fisica: { mass: 1350, vTop: 34, accel: 4.4, vReverse: 9, steerLow: 0.58, steerHigh: 0.17, driftYaw: 0.42, gripHigh: 11, gripLow: 2.1 },
   },
   {
@@ -120,7 +123,8 @@ export const CARS: CarSpec[] = [
     precoBrilhos: 28000,
     raridade: 'raro',
     stats: { velocidade: 5, aceleracao: 5, controle: 6 },
-    bancoDy: -0.06, // teto interno ~0,89 m acima do banco
+    forroY: 0.91,
+    bancoMax: 0.26,
     fisica: { mass: 1900, vTop: 30, accel: 3.4, vReverse: 8, steerLow: 0.52, steerHigh: 0.15, driftYaw: 0.3, gripHigh: 13, gripLow: 2.8 },
   },
   {
@@ -135,8 +139,8 @@ export const CARS: CarSpec[] = [
     precoDiamantes: 6500,
     raridade: 'lendario',
     stats: { velocidade: 10, aceleracao: 9, controle: 6 },
-    bancoDy: -0.07, // teto interno so ~0,59 m acima do banco: mesmo assim a cabeca nao cabe (ver relatorio)
-    olhoY: 0.5,
+    forroY: 0.58, // GLB atual (cupe). Com o GLB sem teto (conversivel): forroY: null
+    bancoMax: 0.16,
     fisica: { mass: 1250, vTop: 43, accel: 6, vReverse: 10, steerLow: 0.5, steerHigh: 0.13, driftYaw: 0.5, gripHigh: 10, gripLow: 1.8 },
   },
   {
@@ -150,6 +154,8 @@ export const CARS: CarSpec[] = [
     precoBrilhos: 19000,
     raridade: 'raro',
     stats: { velocidade: 3, aceleracao: 3, controle: 5 },
+    forroY: 1.6,
+    bancoMax: 0.38,
     fisica: { mass: 2400, vTop: 24, accel: 2.9, vReverse: 7, steerLow: 0.46, steerHigh: 0.14, driftYaw: 0.25, gripHigh: 13, gripLow: 3.2 },
   },
 ]

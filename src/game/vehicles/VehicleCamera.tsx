@@ -7,6 +7,7 @@ import { useCameraStore } from '../../state/cameraStore'
 import { usePlayerStore } from '../../state/playerStore'
 import { drive, driveBridge, useVehicleStore } from './driveStore'
 import { carBySlug } from './catalog'
+import { eyeHeight } from './seatFit'
 import { vin } from './vehicleInput'
 
 const _eye = new Vector3()
@@ -124,7 +125,7 @@ export function VehicleCamera() {
       // capo: camera na altura dos olhos, a frente do banco
       // (olhos a 0,65 m acima do banco e 0,25 m a frente, no referencial do carro: acompanha a inclinacao da cabine)
       const car = useVehicleStore.getState()
-      const eyeY = carBySlug(car.cars.find((c) => c.uid === car.drivingUid)?.slug ?? 'compacto').olhoY ?? 0.65
+      const eyeY = eyeHeight(carBySlug(car.cars.find((c) => c.uid === car.drivingUid)?.slug ?? 'compacto'), usePlayerStore.getState().fit)
       _eye.set(0, eyeY, 0.25).applyQuaternion(driveBridge.quat).add(driveBridge.seatPos)
       camera.position.copy(_eye)
       yaw = carYaw + rig.look * 0.8 + rig.back
