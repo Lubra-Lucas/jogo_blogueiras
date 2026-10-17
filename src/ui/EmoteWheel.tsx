@@ -6,6 +6,7 @@ import { EmoteGlyph, GChat, GPhone, GRun, GWheel } from './glyphs'
 import { useShopStore } from './shop/shopStore'
 import { useMinigameStore } from '../game/minigames/minigameStore'
 import { useMarketUi } from './market/marketUi'
+import { useVehicleStore } from '../game/vehicles/driveStore'
 import { focusChatInput } from './chat/ChatPanel'
 import { isRunLatched, setRunLatch } from '../game/input/intent'
 import './emotes.css'
@@ -153,6 +154,10 @@ export function Dock() {
   const shopOpen = useShopStore((s) => !!s.open)
   const marketOpen = useMarketUi((s) => !!s.open)
   const gameOpen = useMinigameStore((s) => s.active !== null)
+  const driving = useVehicleStore((s) => s.drivingUid !== null)
+  useEffect(() => {
+    document.documentElement.dataset.driving = driving ? '1' : '0'
+  }, [driving])
   const overlay = fullUi || shopOpen || marketOpen || gameOpen
   useEffect(() => {
     document.documentElement.dataset.overlay = overlay ? '1' : '0'

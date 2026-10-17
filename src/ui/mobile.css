@@ -113,10 +113,10 @@ html[data-compact='1'] .chat--focus .chat__list { max-height: 54px; }
 
 /* ---------- avisos de porta / sentar / pets: acima do joystick (retrato), no centro livre (paisagem) ---------- */
 @media (pointer: coarse) {
-  html .ia-prompt, html .sit-prompt, html .in-prompt { bottom: calc(var(--joy) + 22px + 14px + var(--sab)); max-width: calc(100vw - 20px); }
-  html .sit-prompt--stacked { bottom: calc(var(--joy) + 22px + 14px + 70px + var(--sab)); }
-  html[data-compact='1'] .ia-prompt, html[data-compact='1'] .sit-prompt, html[data-compact='1'] .in-prompt { bottom: calc(14px + var(--sab)); max-width: calc(100vw - 2 * (150px + var(--sal))); }
-  html[data-compact='1'] .sit-prompt--stacked { bottom: calc(14px + 70px + var(--sab)); }
+  html .ia-prompt, html .sit-prompt, html .in-prompt, html .car-prompt { bottom: calc(var(--joy) + 22px + 14px + var(--sab)); max-width: calc(100vw - 20px); }
+  html .sit-prompt--stacked, html .car-prompt--stacked { bottom: calc(var(--joy) + 22px + 14px + 70px + var(--sab)); }
+  html[data-compact='1'] .ia-prompt, html[data-compact='1'] .sit-prompt, html[data-compact='1'] .in-prompt, html[data-compact='1'] .car-prompt { bottom: calc(14px + var(--sab)); max-width: calc(100vw - 2 * (150px + var(--sal))); }
+  html[data-compact='1'] .sit-prompt--stacked, html[data-compact='1'] .car-prompt--stacked { bottom: calc(14px + 70px + var(--sab)); }
 }
 
 /* ---------- roda de emotes ---------- */
@@ -243,4 +243,29 @@ html[data-compact='1'] .menu__body { padding-top: 2px; }
   html .bigmap__legend i, html .bigmap__legend { font-size: 12px; }
   html .bigmap__legend i { width: 20px; height: 20px; }
   html .card__rar { padding: 1px 5px; }
+}
+
+/* ---------- dirigindo: os controles do carro (z 55) ocupam os cantos; o resto do HUD sai da frente ---------- */
+html[data-driving='1'] :is(.dock, .joy-zone, .phone-tab) { visibility: hidden; }
+html[data-driving='1'] .chat:not(.chat--focus) { opacity: 0; pointer-events: none; }
+html[data-compact='1'] .tc-pedal { width: 76px; height: 82px; }
+html[data-compact='1'] .tc-brake { width: 66px; height: 70px; }
+html[data-compact='1'] .tc-small { width: 66px; height: 44px; }
+html[data-compact='1'] .tc-wheel { width: 180px; height: 104px; }
+html[data-compact='1'] .tc-side { right: auto; left: 50%; top: calc(8px + var(--sat)); transform: translateX(-50%); grid-auto-flow: column; }
+html[data-compact='1'] .tc-mini { min-height: 44px; }
+
+/* ---------- minijogos: cartoes de introducao cabem na paisagem baixa ---------- */
+html[data-compact='1'] :is(.cf-card, .dz-theme, .vb-card, .jo-card, .mn-card, .sl-card, .fg-card, .ps-card, .es-card) { zoom: 0.82; }
+@media (max-height: 400px) {
+  html[data-compact='1'] :is(.cf-card, .dz-theme, .vb-card, .jo-card, .mn-card, .sl-card, .fg-card, .ps-card, .es-card) { zoom: 0.74; }
+}
+
+/* sobras da auditoria (alvos e textos de minijogos / mercado) */
+@media (pointer: coarse) {
+  html :is(small, em, s) { font-size: 12px !important; }
+  html :is(.tab > span, .badge-level small, .bar > span, .cf-row-label, .cf-ing-name, .cz-label, .cz-seg button, .dz-chip i, .dj-song-right, .sh-filters label span, .pbg-stats span, .mk-foot span, .es-diffs button span, .fg-diffs button span, .dj-daily-txt small, .cf-combo small, .mn-combo small) { font-size: 12px !important; }
+  html :is(.mk-x, .mk-watch, .cz-iconbtn, .dj-icon, .es-icon, .fg-icon, .fg-x, .sl-iconbtn, .tv-x, .vb-x, .cf-x, .mn-x, .jo-x) { min-width: 44px; min-height: 44px; }
+  html input[type='checkbox'] { width: 22px; height: 22px; }
+  html label:has(> input[type='checkbox']) { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; }
 }
