@@ -29,6 +29,12 @@
     "speed": 0.171,
     "loop": false
   },
+  "run": {
+    "file": "doll_anims_core.glb",
+    "duration": 0.633,
+    "speed": 4.789,
+    "loop": true
+  },
   "run_turn": {
     "file": "doll_anims_core.glb",
     "duration": 0.667,

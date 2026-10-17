@@ -7,7 +7,7 @@ import { Vector2, Vector3 } from 'three'
  * `scale` e `offset` em metros (x lateral, y altura, z para frente). A faixa `band` e a altura (y) em que a calibracao
  * entra (smoothstep), para nao deformar as mechas longas que caem sobre os ombros.
  *
- * Calibrado com tools/blender/jewelry/hair_probe4.py (distancia couro cabeludo -> primeira superficie do cabelo) e
+ * Calibrado medindo a distancia couro cabeludo -> primeira superficie do cabelo (sondas Blender descartadas) e
  * conferido nas capturas frente/perfil/costas. O encaixe de malha (empurrar o que estava dentro da cabeca) e os morphs
  * (faceThin, jawNarrow, chinPointed, cheekbonesHigh, busto, peso...) vem assados no GLB por tools/blender/hair_fitbake.py.
  */

@@ -10,7 +10,7 @@ import os
 import sys
 import json
 import random
-from math import pi, sin, cos, radians
+from math import pi, sin, cos, radians, atan2
 from mathutils import Vector
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -206,6 +206,20 @@ def piece_building_capsule_row():
     P.append(box((5.0, .08, .22), (0, -.12, 3.55), "glow", bevel=.06, seg=2))
     P.append(sph((.5, .3, .5), (-3.0, -.2, 3.55), "glow2", n=8, rings=5))
     P.append(sph((.5, .3, .5), (3.0, -.2, 3.55), "glow2", n=8, rings=5))
+    # acabamento: dentilhoes sob a cornija (ao longo de todo o contorno de capsula), soco com almofadas e fio de vidro
+    def outline(k, z):
+        o = [(x * k, y * k + cy) for x, y in pts]
+        n = len(o)
+        for i in range(0, n, 3):
+            x0, y0 = o[(i - 1) % n]
+            x1, y1 = o[(i + 1) % n]
+            tx, ty = x1 - x0, y1 - y0
+            yield o[i], atan2(ty, tx), z
+    for (x, y), ang, z in outline(1.06, 3.98):
+        P.append(box((.2, .1, .14), (x, y, z), "white", rot=(0, 0, ang)))
+    for (x, y), ang, z in outline(1.035, .5):
+        P.append(box((.75, .05, .34), (x, y, z), "soft", rot=(0, 0, ang)))
+    P.append(tube(loop3([(x * 1.025, y * 1.025 + cy) for x, y in pts], .92), .035, "white", minor=4, closed=True))
     return P
 
 
@@ -250,6 +264,14 @@ def piece_canopy_curved():
         P.append(lathe([(0, 0), (.4, 0), (.38, .12), (0, .15)], "white", loc=(sx * 2.1, .9, 0), n=14, smooth=1))
         P.append(tube(ring3(.3, .16, 14, sx * 2.1, .9), .03, "glow2", minor=4, closed=True))
     P.append(sph((.4, .4, .3), (0, .0, 3.65), "glow2", n=8, rings=5)) if False else None
+    # franja festonada (toldo) na borda da frente e nervuras sob a cobertura
+    u0 = -1.6
+    for k in range(13):
+        x = -L / 2 + .15 + (L - .3) * k / 12
+        P.append(sph((.3, .05, .34), (x, u0, z(u0) - .28), "white" if k % 2 else "accent", n=6, rings=4))
+    for k in range(7):
+        x = -L / 2 + L * (k + .5) / 7
+        P.append(tube([Vector((x, u, z(u) - .1)) for u in us[::3]], .025, "trim", minor=3))
     return P
 
 
@@ -258,13 +280,26 @@ def piece_kiosk_pod():
     P.append(lathe([(0, 0), (1.5, 0), (1.55, .1), (1.5, .85), (1.35, .95), (0, .95)], "accent2", n=28, smooth=1))
     P.append(tube(ring3(1.53, .3, 24), .06, "trim", minor=5, closed=True))
     P.append(tube(ring3(1.53, .12, 24), .035, "glow", minor=4, closed=True))
+    # painéis do balcao (almofadas) e rodape
+    for k in range(10):
+        a = 2 * pi * (k + .5) / 10
+        P.append(box((.6, .05, .36), (1.5 * cos(a), 1.5 * sin(a), .6), "soft", rot=(0, 0, a - pi / 2)))
     P.append(lathe([(0, .95), (1.7, .95), (1.78, 1.02), (1.65, 1.12), (0, 1.12)], "white", n=28, smooth=1))
     prof = [(1.3 * cos(a), 1.1 + 1.25 * sin(a)) for a in [pi / 2 * i / 8 for i in range(9)]][::-1]
     P.append(lathe([(1.3, 1.1)] + prof[1:], "glass", n=24))
+    # caixilhos da cupula de vidro: 8 meridianos + aro
+    for k in range(6):
+        a = 2 * pi * k / 6
+        P.append(tube([Vector((1.32 * cos(pi / 2 * t / 5) * cos(a), 1.32 * cos(pi / 2 * t / 6) * sin(a), 1.1 + 1.27 * sin(pi / 2 * t / 5))) for t in range(6)], .028, "trim", minor=3))
+    P.append(tube(ring3(1.15, 1.9, 24), .03, "trim", minor=4, closed=True))
     P.append(lathe([(0, 1.1), (.6, 1.1), (.5, 1.5), (.0, 1.5)], "soft", n=14))
     P.append(lathe([(0, 2.35), (1.75, 2.35), (1.95, 2.5), (1.6, 2.7), (.5, 2.9), (0, 2.95)], "base", n=28, smooth=1))
     P.append(tube(ring3(1.9, 2.42, 28), .06, "glow", minor=4, closed=True))
     P.append(tube(ring3(1.85, 2.58, 28), .05, "trim", minor=5, closed=True))
+    # franja festonada no beiral do teto (24 pétalas alternando)
+    for k in range(16):
+        a = 2 * pi * (k + .5) / 16
+        P.append(sph((.32, .07, .3), (1.93 * cos(a), 1.93 * sin(a), 2.28), "accent2" if k % 2 else "white", rot=(0, 0, a - pi / 2), n=6, rings=4))
     P.append(sph(.3, (0, 0, 3.1), "glow2", n=10, rings=6))
     P.append(tube(ring3(.45, 3.1, 18), .035, "trim", minor=4, closed=True))
     for k in range(3):
@@ -309,27 +344,52 @@ def piece_lamp_futuristic():
     P = []
     P.append(lathe([(0, 0), (.45, 0), (.5, .06), (.42, .2), (.2, .3), (0, .32)], "accent", n=20, smooth=1))
     P.append(tube(ring3(.47, .1, 20), .035, "glow", minor=4, closed=True))
+    # colar do pe: aneis de cromo e nervuras (6) subindo pela haste
+    P.append(lathe([(0, .3), (.2, .3), (.17, .52), (.11, .66), (0, .66)], "white", n=18, smooth=1))
+    for k in range(6):
+        a = 2 * pi * k / 6
+        P.append(box((.03, .05, .34), (.15 * cos(a), .15 * sin(a), .46), "trim", rot=(0, 0, a)))
+    for z in (.7, 2.0):
+        P.append(tube(ring3(.085, z, 10), .02, "trim", minor=3, closed=True))
     path = [Vector((0, 0, .3)), Vector((0, 0, 1.5)), Vector((0, 0, 2.8))]
     for i in range(1, 9):
         a = pi / 2 * i / 8
         path.append(Vector((.9 - .9 * cos(a), 0, 2.8 + .9 * sin(a))))
     r = [.1, .08, .06] + [.055] * 8
     P.append(tube(path, r, "trim", minor=6))
+    # braco para bandeira/placa: suporte lateral
+    P.append(box((.04, .5, .06), (0, .5, 2.2), "accent2"))
     P.append(sph((.5, .5, .5), (.9, 0, 3.75), "glow", n=14, rings=8))
     P.append(tube([Vector((.9 + .42 * cos(t), .42 * sin(t) * 0.0, 3.75 + .42 * sin(t))) for t in [2 * pi * i / 20 for i in range(20)]], .035, "trim", minor=4, closed=True))
     P.append(tube([Vector((.9 + .42 * cos(t) * .0, .42 * cos(t), 3.75 + .42 * sin(t))) for t in [2 * pi * i / 20 for i in range(20)]], .03, "glow2", minor=4, closed=True))
+    # protetor/aba do globo
+    P.append(lathe([(0, 0), (.3, 0), (.34, .06), (.26, .12), (0, .14)], "white", loc=(.9, 0, 4.02), n=12))
     P.append(sph((.2, .2, .16), (0, 0, 1.2), "glow2", n=8, rings=5))
     return P
 
 
 def piece_bench_bubble():
+    """Banco Y2K de ripas: 5 ripas-capsula no assento (vao entre elas), 3 no encosto, estrutura cromada com pes e apoio de braco."""
     P = []
-    pts = stadium_pts(2.1, .62, 6)
-    P.append(prism(pts, .26, "xy", "accent2", loc=(0, 0, .5), bevel=.1, seg=3))
-    P.append(prism(stadium_pts(1.95, .3, 6), .3, "xy", "base", loc=(0, .22, .92), rot=(-.18, 0, 0), bevel=.1, seg=3))
-    for x in (-.65, .65):
-        P.append(lathe([(0, 0), (.22, 0), (.2, .1), (.12, .38), (0, .38)], "trim", loc=(x, 0, 0), n=12, smooth=1))
-    P.append(tube(loop3(stadium_pts(2.12, .64, 6), .33), .03, "glow", minor=4, closed=True))
+    # assento: ripas longas arredondadas
+    for j in range(5):
+        y = -.27 + j * .135
+        P.append(box((2.04, .115, .05), (0, y, .53), "accent2", bevel=.02, seg=1))
+    # encosto inclinado: 3 ripas
+    for k in range(3):
+        z = .74 + k * .13
+        P.append(box((1.96, .06, .105), (0, .27 + k * .028, z), "base", rot=(-.2, 0, 0), bevel=.02, seg=1))
+    # laterais cromadas (perfil em S) + travessas
+    for sx in (-1, 1):
+        x = sx * .95
+        P.append(tube([Vector((x, -.3, .06)), Vector((x, -.3, .42)), Vector((x, -.05, .5)), Vector((x, .24, .56)), Vector((x, .3, .88))], .034, "trim", minor=6))
+        P.append(tube([Vector((x, .3, .06)), Vector((x, .3, .45)), Vector((x, .24, .56))], .03, "trim", minor=6))
+        P.append(lathe([(0, 0), (.14, 0), (.12, .035), (0, .05)], "trim", loc=(x, -.3, 0), n=10, smooth=1))
+        P.append(lathe([(0, 0), (.14, 0), (.12, .035), (0, .05)], "trim", loc=(x, .3, 0), n=10, smooth=1))
+        P.append(box((.09, .42, .05), (x, -.04, .66), "base", bevel=.015, seg=1))
+    P.append(tube([Vector((-.95, -.3, .44)), Vector((.95, -.3, .44))], .022, "trim", minor=5))
+    P.append(tube([Vector((-.95, .3, .44)), Vector((.95, .3, .44))], .022, "trim", minor=5))
+    P.append(tube([Vector((x, -.31, .43)) for x in (-.9 + 1.8 * i / 10 for i in range(11))], .014, "glow", minor=4))
     return P
 
 
@@ -371,6 +431,14 @@ def piece_plaza_centerpiece():
     for i, (r, z) in enumerate(((1.6, 1.6), (1.1, 2.1), (.7, 2.6))):
         P.append(lathe([(0, z), (r, z), (r + .08, z + .08), (r, z + .16), (0, z + .18)], "base" if i % 2 == 0 else "soft", n=28, smooth=1))
         P.append(tube(ring3(r, z + .08, 28), .04, "glow" if i % 2 == 0 else "glow2", minor=4, closed=True))
+    # borda de pedra em blocos (coping) com juntas e cantoneiras; bancos de luz no piso da bacia
+    for k in range(28):
+        a = 2 * pi * (k + .5) / 28
+        P.append(box((.62, .12, .1), (3.7 * cos(a), 3.7 * sin(a), .64), "soft", rot=(0, 0, a + pi / 2)))
+    for k in range(14):
+        a = 2 * pi * k / 14
+        P.append(box((.22, .1, .5), (3.84 * cos(a), 3.84 * sin(a), .32), "trim", rot=(0, 0, a)))
+        P.append(cyl(.09, .04, (3.05 * cos(a), 3.05 * sin(a), .46), "glow", n=6))
     hp = heart_pts(2.6, 40)
     P.append(tube([Vector((p[0], 0, p[1] + 4.0)) for p in hp], .14, "trim", minor=6, closed=True))
     hp2 = heart_pts(2.15, 40)

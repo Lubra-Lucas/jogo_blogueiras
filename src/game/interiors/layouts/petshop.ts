@@ -82,7 +82,7 @@ export const petshop: RoomLayout = {
     'salao/manicure_table:nails': { type: 'minigame', id: 'petadestra', label: 'Adestramento (minijogo)' },
   },
   uses: [
-    { key: 'petshop:treino', label: 'Adestramento (minijogo)', x: -3.2, z: 2.2, radius: 1.5, action: { type: 'minigame', id: 'petadestra' } },
+    { key: 'petshop:treino', label: 'Adestramento (minijogo)', x: -2.3, z: 1.9, radius: 1.1, action: { type: 'minigame', id: 'petadestra' } },
     { key: 'petshop:acc', label: 'Ver acessórios', x: -3.6, z: 0.5, radius: 1.3, action: { type: 'shop', id: 'petshop' } },
   ],
   lights: [

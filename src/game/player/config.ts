@@ -6,7 +6,7 @@ export const PLAYER = {
   halfHeight: 0.545, // trecho reto; altura total = 2*(0.545+0.28) = 1.65 m (boneca: corpo 1,60 m, coque ate ~1,70 m)
   spawn: spawnFor(new URLSearchParams(window.location.search).get('spawn')), // x, z (y calculado); ?spawn=<id>
   walkSpeed: 1.5, // ~1.46x o passo do clipe Female Walk (1,03 m/s a 1x); ver animation/animator.ts
-  runSpeed: 2.8, // trote feminino (~10 km/h); clipe `run` (provisorio, animation/runClip.ts), ver CLIP_SPEED.run
+  runSpeed: 3.6, // trote (~13 km/h); clipe `run` Mixamo cobre 4,79 m/s a 1x (ver CLIP_SPEED.run em animation/animator.ts)
   accel: 10, // 1/s, amortecimento exponencial ao acelerar
   decel: 13, // 1/s, ao frear
   turnRate: 14, // 1/s, giro suave do corpo

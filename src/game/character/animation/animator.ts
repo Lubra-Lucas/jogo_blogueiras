@@ -40,7 +40,9 @@ export type ClipName =
 export const EMOTE_CLIPS: ReadonlySet<string> = new Set(['clap', 'dance_twerk', 'jump', 'wave', 'kiss', 'bow', 'laugh', 'cry', 'point', 'thankful', 'texting'])
 
 /** Velocidade (m/s) que o clipe de passo cobre por ciclo a 1x; timeScale = velocidade real / este valor (sem deslizar o pe). */
-export const CLIP_SPEED: Partial<Record<ClipName, number>> = { walk_normal: 1.03, desfile: 0.86, run: 1.65 }
+export const CLIP_SPEED: Partial<Record<ClipName, number>> = { walk_normal: 1.03, desfile: 0.86, run: 4.79 }
+/** passo do `run` PROVISORIO (runClip.ts), usado so quando o GLB nao traz o clipe `run` do Mixamo */
+const FALLBACK_RUN_SPEED = 1.65
 
 const BASE = import.meta.env.BASE_URL
 export const CORE_URL = `${BASE}assets/anims/doll_anims_core.glb`
@@ -70,12 +72,12 @@ export interface AnimInput {
 const FADE = 0.25
 const MOVE_ON = 0.45 // m/s: comeca a andar
 const MOVE_OFF = 0.25 // m/s: volta ao idle (histerese)
-const RUN_ON = 2.2 // m/s: passa a correr
-const RUN_OFF = 1.9
+const RUN_ON = 2.1 // m/s: passa a correr
+const RUN_OFF = 1.8
 const WALK_TS_MAX = 2.0
 const RUN_TS_MAX = 1.9
 const TS_MIN = 0.6
-const LEAN_RUN = 0.1 // rad de inclinacao extra do tronco ao correr (soma-se a inclinacao do clipe `run`)
+const LEAN_RUN = 0.03 // rad de inclinacao extra do tronco ao correr (soma-se a inclinacao do clipe `run`)
 const LEAN_WALK = 0.02
 const FIDGET_MIN = 10 // s parada sem fazer nada ate pegar o celular
 const FIDGET_RAND = 5
@@ -156,7 +158,10 @@ export class CharacterAnimator {
     if (!this.actions.has('idle')) this.addClips([makeIdleClip(bones)])
     // corrida provisoria (procedural, a partir da caminhada) enquanto nao houver um clipe `run` retargetado
     const walk = clips.find((c) => c.name === 'walk_normal')
-    if (walk && !this.actions.has('run')) this.addClips([buildRunClip(walk)])
+    if (walk && !this.actions.has('run')) {
+      this.addClips([buildRunClip(walk)])
+      CLIP_SPEED.run = FALLBACK_RUN_SPEED
+    }
   }
 
   /** Adiciona clipes (ex.: o arquivo de emotes carregado sob demanda). */

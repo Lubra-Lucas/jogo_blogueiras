@@ -229,23 +229,30 @@ export function Shell(p: ShellProps) {
 }
 
 function Result({ shell, res, difficulty, daily, look, name, onAgain, onMenu }: { shell: ShellProps; res: ResultInput; difficulty: Difficulty; daily: boolean; look: ArtLook; name: string; onAgain: () => void; onMenu: () => void }) {
-  const done = useRef<{ stars: number; coins: number; board: ReturnType<typeof submitScore>; unlocked: typeof PET_UNLOCKS } | null>(null)
+  const done = useRef<{ stars: number; coins: number; board: ReturnType<typeof submitScore>; unlocked: typeof PET_UNLOCKS; rw: ReturnType<typeof rewardFor>; treat: boolean } | null>(null)
+  const granted = useRef(false)
   if (!done.current) {
     const typical = shell.typical[difficulty]
     const stars = starsFor(res.score, typical)
     const rw = rewardFor(res.score, stars, difficulty, shell.max)
-    const before = petLevel(getProfessionXp(PET_PROFESSION))
     const rid = daily ? `${shell.id}-diario` : shell.id
     const board = submitScore(rid, difficulty, res.score, typical, name)
-    grantRewards({ coins: rw.coins, xp: rw.xp, professionXp: { [PET_PROFESSION]: rw.professionXp } })
-    const after = petLevel(getProfessionXp(PET_PROFESSION))
-    // um pouco de alegria para o pet que ajudou
-    const act = usePetStore.getState().active
-    if (act) usePetStore.getState().joyBoost(act, 6 + stars * 4)
-    done.current = { stars, coins: rw.coins, board, unlocked: PET_UNLOCKS.filter((u) => u.level > before && u.level <= after) }
-    playSfx(stars >= 2 ? 'done' : 'tap')
+    const xp0 = getProfessionXp(PET_PROFESSION)
+    const before = petLevel(xp0)
+    const after = petLevel(xp0 + rw.professionXp)
+    done.current = { stars, coins: rw.coins, board, unlocked: PET_UNLOCKS.filter((u) => u.level > before && u.level <= after), rw, treat: isUnlocked('biscoito', before) }
   }
   const d = done.current
+  // efeitos colaterais (perfil, pet, som) fora do render, uma unica vez
+  useEffect(() => {
+    if (granted.current) return
+    granted.current = true
+    grantRewards({ coins: d.rw.coins, xp: d.rw.xp, professionXp: { [PET_PROFESSION]: d.rw.professionXp } })
+    const act = usePetStore.getState().active
+    if (act) usePetStore.getState().joyBoost(act, 6 + d.stars * 4 + (d.treat ? 8 : 0))
+    if (d.treat) usePetStore.getState().addFood('food.biscoito', 1)
+    playSfx(d.stars >= 2 ? 'done' : 'tap')
+  }, [d])
   return (
     <div className="ps-card ps-result">
       <h2>{res.judge}</h2>
@@ -269,6 +276,12 @@ function Result({ shell, res, difficulty, daily, look, name, onAgain, onMenu }: 
           <dt>Brilhos</dt>
           <dd>+{d.coins}</dd>
         </div>
+        {d.treat && (
+          <div>
+            <dt>Biscoito premiado</dt>
+            <dd>+1 Biscoitinho</dd>
+          </div>
+        )}
       </dl>
       {d.unlocked.map((u) => (
         <div className="ps-unlock" key={u.id}>
