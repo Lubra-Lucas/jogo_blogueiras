@@ -55,7 +55,8 @@ html[data-compact='1'] { --mm: calc(92px * var(--ui-s)); }
     width: 118px; gap: 10px; scale: var(--ui-s); transform-origin: 100% 100%;
   }
   html .dock--touch .dock__btn, html .dock--touch .dock__btn--sm { width: 54px; height: 54px; }
-  html .phone-tab { bottom: calc(24px + 118px * var(--ui-s) + 18px + var(--sab)); right: calc(12px + var(--sar)); }
+  /* celular minimizado: sob o minimapa/missao (nao disputa espaco com o dock nem com os avisos de baixo) */
+  html .phone-tab { bottom: auto; top: calc(8px + var(--mm) + 6px + 60px + var(--sat)); right: calc(10px + var(--sar)); transform-origin: 100% 0; }
   html[data-chat='1'] .dock, html[data-chat='1'] .joy-zone { visibility: hidden; }
 }
 
@@ -97,7 +98,7 @@ html[data-compact='1'] { --mm: calc(92px * var(--ui-s)); }
   html .chat__count { font-size: 12px; }
   html .chat__notice { font-size: 12px; }
   html .chat--behind:not(.chat--focus) { opacity: 0; pointer-events: none; }
-  html:has(.ia-prompt) .chat:not(.chat--focus) { opacity: 0; pointer-events: none; }
+  html:has(.ia-prompt, .car-prompt, .sit-prompt) .chat:not(.chat--focus) { opacity: 0; pointer-events: none; }
 }
 html .chat__close { display: none; }
 @media (pointer: coarse) {
@@ -202,7 +203,7 @@ html[data-compact='1'] .sh-body { padding-bottom: 6px; }
 html[data-compact='1'] .mk-head { padding: 6px 12px; }
 
 /* ---------- sugestao de tela cheia (Android) ---------- */
-html .fs-ask { position: absolute; left: 50%; top: calc(8px + var(--mm) + 64px + var(--sat)); transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 8px; padding: 6px 8px 6px 16px; border-radius: 999px; font: 800 13px var(--f-sans); color: var(--ui-ink); pointer-events: auto; white-space: nowrap; animation: toast-in 0.3s ease both; }
+html .fs-ask { position: absolute; left: 50%; bottom: calc(var(--joy) + 36px + var(--sab)); transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 8px; padding: 6px 8px 6px 16px; border-radius: 999px; font: 800 13px var(--f-sans); color: var(--ui-ink); pointer-events: auto; white-space: nowrap; animation: toast-in 0.3s ease both; }
 html .fs-ask button { height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--ui-gold-soft); font: 800 13px var(--f-sans); cursor: pointer; background: #fff; color: var(--ui-ink); }
 html .fs-ask__go { background: var(--ac-plum) !important; color: #fff !important; border-color: transparent !important; }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, -8px); } to { opacity: 1; transform: translate(-50%, 0); } }
@@ -267,3 +268,5 @@ html[data-compact='1'] :is(.dz-theme, .mn-card, .fg-card, .sl-card, .vb-card) bu
   html input[type='checkbox'] { width: 22px; height: 22px; }
   html label:has(> input[type='checkbox']) { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; }
 }
+html[data-compact='1'] .fs-ask { bottom: calc(14px + var(--sab)); }
+html[data-driving='1'] .sh-daily-invite { display: none; }
