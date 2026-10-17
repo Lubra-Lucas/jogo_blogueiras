@@ -33,13 +33,15 @@ interface Source {
 const keyboard: Source = { x: 0, y: 0, run: false }
 const stick: Source = { x: 0, y: 0, run: false }
 const targetStore = new Vector3()
+/** botao "Correr" do toque: trava o modo corrida (alem do joystick no limite). */
+let runLatch = false
 
 function resolve() {
   // O analogico (joystick do passo 4) tem prioridade sobre o teclado quando em uso.
   const src = stick.x !== 0 || stick.y !== 0 ? stick : keyboard
   intent.move.x = src.x
   intent.move.y = src.y
-  intent.run = keyboard.run || stick.run
+  intent.run = keyboard.run || stick.run || runLatch
 }
 
 function write(s: Source, x: number, y: number, run: boolean) {
@@ -59,6 +61,12 @@ export function setKeyboardAxis(x: number, y: number, run: boolean) {
 export function setStickAxis(x: number, y: number, run: boolean) {
   write(stick, x, y, run)
 }
+
+export function setRunLatch(v: boolean) {
+  runLatch = v
+  resolve()
+}
+export const isRunLatched = () => runLatch
 
 export function setMoveTarget(point: Vector3, run: boolean) {
   targetStore.copy(point)

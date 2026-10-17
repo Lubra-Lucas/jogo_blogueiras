@@ -1,13 +1,17 @@
 import { useEffect, useRef } from 'react'
 import { claimPointer, releasePointer, setStickAxis } from '../game/input/intent'
+import { uiScale, useUiPrefs } from './uiPrefs'
 
-const BASE_R = 58 // raio da base (px)
+const BASE_R0 = 58 // raio da base (px) em tamanho M
 const DEAD = 0.12
 const RUN_ON = 0.85
 const RUN_OFF = 0.78
 
 /**
- * Joystick virtual "flutuante": a base aparece sob o dedo dentro da zona (40% esquerdo, 65% de baixo).
+ * Joystick virtual, dois modos (Ajustes > Interface):
+ * - fixo: a base fica sempre no canto inferior esquerdo; so o toque sobre ela (com folga) o aciona, o resto da tela
+ *   e da camera/toque no chao;
+ * - dinamico: a base aparece sob o dedo dentro da zona (40% esquerdo, 65% de baixo).
  * Reserva o ponteiro (claimPointer) para a camera e o click-to-move ignorarem aquele dedo.
  * Atualiza o DOM direto (sem re-render por movimento).
  */
@@ -15,8 +19,12 @@ export function Joystick() {
   const zone = useRef<HTMLDivElement>(null)
   const base = useRef<HTMLDivElement>(null)
   const knob = useRef<HTMLDivElement>(null)
+  const mode = useUiPrefs((p) => p.joy)
+  const size = useUiPrefs((p) => p.size)
 
   useEffect(() => {
+    const BASE_R = BASE_R0 * uiScale(size)
+    const fixed = mode === 'fixed'
     const z = zone.current!
     const b = base.current!
     const k = knob.current!
@@ -35,8 +43,10 @@ export function Joystick() {
       run = false
       setStickAxis(0, 0, false)
       b.classList.remove('joy-base--active', 'joy-base--run')
-      b.style.left = ''
-      b.style.top = ''
+      if (!fixed) {
+        b.style.left = ''
+        b.style.top = ''
+      }
       setKnob(0, 0)
     }
     const update = (px: number, py: number) => {
@@ -65,10 +75,16 @@ export function Joystick() {
         /* ponteiro ja inativo */
       }
       const r = z.getBoundingClientRect()
-      cx = Math.min(Math.max(e.clientX, r.left + BASE_R), r.right - BASE_R)
-      cy = Math.min(Math.max(e.clientY, r.top + BASE_R), r.bottom - BASE_R)
-      b.style.left = `${cx - r.left - BASE_R}px`
-      b.style.top = `${cy - r.top - BASE_R}px`
+      if (fixed) {
+        const br = b.getBoundingClientRect()
+        cx = br.left + br.width / 2
+        cy = br.top + br.height / 2
+      } else {
+        cx = Math.min(Math.max(e.clientX, r.left + BASE_R), r.right - BASE_R)
+        cy = Math.min(Math.max(e.clientY, r.top + BASE_R), r.bottom - BASE_R)
+        b.style.left = `${cx - r.left - BASE_R}px`
+        b.style.top = `${cy - r.top - BASE_R}px`
+      }
       b.classList.add('joy-base--active')
       update(e.clientX, e.clientY)
     }
@@ -85,6 +101,7 @@ export function Joystick() {
     z.addEventListener('pointercancel', onUp)
     z.addEventListener('lostpointercapture', onUp)
     window.addEventListener('blur', end)
+    window.addEventListener('resize', end)
     return () => {
       z.removeEventListener('pointerdown', onDown)
       z.removeEventListener('pointermove', onMove)
@@ -92,12 +109,13 @@ export function Joystick() {
       z.removeEventListener('pointercancel', onUp)
       z.removeEventListener('lostpointercapture', onUp)
       window.removeEventListener('blur', end)
+      window.removeEventListener('resize', end)
       end()
     }
-  }, [])
+  }, [mode, size])
 
   return (
-    <div ref={zone} className="joy-zone">
+    <div ref={zone} className={`joy-zone joy-zone--${mode}`}>
       <div ref={base} className="joy-base">
         <div ref={knob} className="joy-knob" />
       </div>

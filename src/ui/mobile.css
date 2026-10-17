@@ -1,0 +1,222 @@
+/* ===== Interface no celular: vertical e horizontal =====
+ * Tudo aqui so vale com toque (pointer: coarse) ou em paisagem baixa; o desktop nao muda.
+ * Prefixo `html` = especificidade maior que os CSS de cada tela (que carregam depois, sob demanda).
+ * Variaveis vindas de JS: --ui-s (tamanho da interface P/M/G), --kb (altura do teclado virtual), --vvh (altura visivel).
+ * data-compact="1" = paisagem baixa (844x390, 740x360): HUD nas bordas, menus em 2 colunas.
+ */
+:root {
+  --ui-s: 1;
+  --kb: 0px;
+  --vvh: 100dvh;
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+  --joy: calc(116px * var(--ui-s)); /* diametro do joystick */
+  --mm: calc(clamp(84px, 22vw, 112px) * var(--ui-s)); /* minimapa */
+}
+html[data-compact='1'] { --mm: calc(92px * var(--ui-s)); }
+
+/* alvo de toque sem atraso/zoom e feedback ao tocar */
+@media (pointer: coarse) {
+  html button, html [role='button'], html [role='tab'], html select, html label { touch-action: manipulation; }
+  html .dock__btn:active, html .icon-btn:active, html .tab:active, html .sh-tab:active, html .sh-pill:active, html .pbtn:active,
+  html .pcard:active, html .minimap:active, html .fs-btn:active, html .sh-x:active, html .ia-btn:active, html .chat__close:active { transform: scale(0.94); filter: brightness(0.96); }
+  html .dock__btn { transition: transform 0.08s; }
+}
+
+/* ---------- HUD (celular) ---------- */
+@media (pointer: coarse) {
+  html .pcard {
+    top: calc(8px + var(--sat)); left: calc(10px + var(--sal));
+    scale: var(--ui-s); transform-origin: 0 0;
+    max-width: calc((100vw - var(--mm) - 84px) / var(--ui-s));
+  }
+  html .pcard__face { width: 46px; height: 46px; }
+  html .pcard__title { font-size: 12px; }
+  html .pcard__coins { font-size: 12px; }
+  html .pcard__xp { height: 8px; }
+  html .pcard__xp span { display: none; }
+  html .minimap { top: calc(8px + var(--sat)); right: calc(10px + var(--sar)); width: var(--mm); }
+  html .hud-area { top: calc(8px + var(--mm) + 6px + var(--sat)); right: calc(10px + var(--sar)); font-size: 12px; }
+  html .hud-track { top: calc(8px + var(--mm) + 6px + 30px + var(--sat)); right: calc(10px + var(--sar)); font-size: 12px; }
+  /* tela cheia: ao lado do minimapa (nao empurra o cartao da jogadora) */
+  html .fs-btn { top: calc(8px + var(--sat)); left: auto; right: calc(10px + var(--sar) + var(--mm) + 8px); width: 44px; height: 44px; }
+  html .pet-chip { top: calc(84px * var(--ui-s) + 14px + var(--sat)); left: calc(10px + var(--sal)); }
+  html .env-clock { top: calc(58px + var(--sat)); right: calc(10px + var(--sar) + var(--mm) + 8px); }
+  html .hud-tip { top: calc(8px + var(--mm) + 70px + var(--sat)); bottom: auto; max-width: calc(100vw - 24px); font-size: 13px; }
+}
+
+/* ---------- dock (celular, emotes, chat, correr): 2 colunas no canto inferior direito ---------- */
+@media (pointer: coarse) {
+  html .dock--touch {
+    right: calc(12px + var(--sar)); bottom: calc(20px + var(--sab));
+    display: flex; flex-direction: row; flex-wrap: wrap-reverse; justify-content: flex-start; align-items: flex-end;
+    width: 118px; gap: 10px; scale: var(--ui-s); transform-origin: 100% 100%;
+  }
+  html .dock--touch .dock__btn, html .dock--touch .dock__btn--sm { width: 54px; height: 54px; }
+  html .phone-tab { bottom: calc(24px + 118px * var(--ui-s) + 18px + var(--sab)); right: calc(12px + var(--sar)); }
+  html[data-chat='1'] .dock, html[data-chat='1'] .joy-zone { visibility: hidden; }
+}
+
+/* ---------- joystick ---------- */
+@media (pointer: coarse) {
+  html .joy-base { width: var(--joy); height: var(--joy); }
+  html .joy-knob { width: calc(52px * var(--ui-s)); height: calc(52px * var(--ui-s)); margin: calc(-26px * var(--ui-s)) 0 0 calc(-26px * var(--ui-s)); }
+  /* fixo: base sempre visivel no canto; so ela (com folga) pega o dedo */
+  html .joy-zone--fixed { left: var(--sal); bottom: var(--sab); width: calc(var(--joy) + 70px); height: calc(var(--joy) + 70px); }
+  html .joy-zone--fixed .joy-base, html .joy-zone--fixed .joy-base--active { left: 28px; bottom: 28px; top: auto; opacity: 0.62; }
+  html .joy-zone--fixed .joy-base--active { opacity: 1; }
+  /* dinamico: metade esquerda, parte de baixo */
+  html .joy-zone--dynamic { width: 46%; height: 68%; }
+  html .joy-zone--dynamic .joy-base { left: 28px; bottom: 28px; }
+  html .joy-zone--dynamic .joy-base:not(.joy-base--active) { opacity: 0.3; }
+}
+
+/* ---------- chat: "fantasma" recolhido (ultimas falas), abre ao tocar no botao/nas falas ---------- */
+@media (pointer: coarse) {
+  html .chat {
+    left: calc(10px + var(--sal)); right: auto; width: min(320px, calc(100vw - 150px));
+    bottom: calc(var(--joy) + 22px + 14px + var(--sab));
+    transition: opacity 0.25s;
+  }
+  html .chat__tabs { display: none; }
+  html .chat:not(.chat--focus) .chat__panel { background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; opacity: 1; padding: 0; }
+  html .chat:not(.chat--focus) .chat__list { max-height: none; pointer-events: auto; padding: 4px 10px 4px 8px; border-radius: 12px; background: linear-gradient(90deg, rgba(48, 32, 58, 0.42), rgba(48, 32, 58, 0)); transition: opacity 0.4s; }
+  html .chat:not(.chat--focus):not(.chat--active) .chat__list { opacity: 0.6; }
+  html .chat:not(.chat--focus) .msg:nth-last-child(n + 4) { display: none; }
+  html .chat:not(.chat--focus) .msg { font-size: 13px; line-height: 1.3; }
+  html .chat:not(.chat--focus) .chat__bar, html .chat:not(.chat--focus) .chat__notice { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; margin: 0; }
+  /* aberto (campo focado): acima do teclado, largura toda */
+  html .chat--focus { left: calc(8px + var(--sal)); right: calc(8px + var(--sar)); width: auto; bottom: calc(var(--kb) + 8px + var(--sab)); z-index: 40; }
+  html .chat--focus .chat__panel { padding: 8px 10px 10px; background: rgba(48, 32, 58, 0.82); opacity: 1; }
+  html .chat--focus .chat__list { max-height: none; }
+  html .chat--focus .msg { font-size: 14px; }
+  html .chat__bar { gap: 8px; }
+  html .chat__bar input { height: 44px; font-size: 16px; padding: 0 16px; }
+  html .chat__count { font-size: 12px; }
+  html .chat__notice { font-size: 12px; }
+  html .chat--behind:not(.chat--focus) { opacity: 0; pointer-events: none; }
+  html:has(.ia-prompt) .chat:not(.chat--focus) { opacity: 0; pointer-events: none; }
+}
+html .chat__close { display: none; }
+@media (pointer: coarse) {
+  html .chat--focus .chat__close { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.22); color: #fff; font: 700 26px/1 var(--f-sans); cursor: pointer; }
+}
+html[data-compact='1'] .chat--focus .msg:nth-last-child(n + 3) { display: none; }
+html[data-compact='1'] .chat--focus .chat__list { max-height: 54px; }
+/* paisagem: chat fantasma menor e mais estreito (o centro fica livre) */
+@media (pointer: coarse) {
+  html[data-compact='1'] .chat:not(.chat--focus) { width: min(300px, 36vw); }
+  html[data-compact='1'] .chat:not(.chat--focus) .msg:nth-last-child(n + 3) { display: none; }
+}
+
+/* ---------- avisos de porta / sentar / pets: acima do joystick (retrato), no centro livre (paisagem) ---------- */
+@media (pointer: coarse) {
+  html .ia-prompt, html .sit-prompt, html .in-prompt { bottom: calc(var(--joy) + 22px + 14px + var(--sab)); max-width: calc(100vw - 20px); }
+  html .sit-prompt--stacked { bottom: calc(var(--joy) + 22px + 14px + 70px + var(--sab)); }
+  html[data-compact='1'] .ia-prompt, html[data-compact='1'] .sit-prompt, html[data-compact='1'] .in-prompt { bottom: calc(14px + var(--sab)); max-width: calc(100vw - 2 * (150px + var(--sal))); }
+  html[data-compact='1'] .sit-prompt--stacked { bottom: calc(14px + 70px + var(--sab)); }
+}
+
+/* ---------- roda de emotes ---------- */
+@media (pointer: coarse) {
+  html .ew__wheel { width: min(380px, 92vw, calc(var(--vvh) - 120px)); }
+  html .ew__icon { width: 80px; margin-left: -40px; }
+  html .ew__icon em { font-size: 12px; }
+  html .ew__center span { font-size: 12px; }
+  html .ew__page { height: 44px; padding: 0 16px; font-size: 13px; }
+}
+html[data-compact='1'] .ew__wheel { width: min(calc(var(--vvh) - 24px), 340px); }
+html[data-compact='1'] .ew__pages { left: calc(100% + 16px); bottom: auto; top: 50%; transform: translateY(-50%); flex-direction: column; }
+html[data-compact='1'] .ew__icon svg { width: 28px; height: 28px; }
+
+/* ---------- celular (hub) ---------- */
+@media (pointer: coarse) {
+  html .phone-wrap { width: min(340px, calc(100vw - 16px)); height: min(660px, calc(var(--vvh) - 16px - var(--sat) - var(--sab))); right: calc(8px + var(--sar)); bottom: calc(8px + var(--sab)); }
+  html .papp { font-size: 12px; }
+  html .pbtn { height: 44px; font-size: 13px; }
+  html .pbtn-ic { width: 44px; height: 44px; }
+  html .pstar { width: 44px; height: 44px; }
+  html .pstar svg { width: 22px; height: 22px; }
+  html .pmin::after { inset: -12px; }
+  html .ptag { font-size: 12px; }
+  html .pq p { font-size: 12.5px; }
+  html .prow small { font-size: 12px; }
+  html .phone-tab__txt small { font-size: 12px; }
+  html .pstatus { font-size: 12px; }
+}
+html[data-compact='1'] .phone-wrap { width: min(560px, calc(100vw - 16px)); }
+html[data-compact='1'] .phome { padding: 6px 14px 8px; }
+html[data-compact='1'] .pclock { display: none; }
+html[data-compact='1'] .papps { grid-template-columns: repeat(6, 1fr); gap: 10px 4px; margin-top: 4px; }
+html[data-compact='1'] .papp__ic { width: 48px; height: 48px; }
+html[data-compact='1'] .phome__bar { margin-top: 8px; }
+
+/* ---------- menus (Perfil / Aparencia / Guarda-roupa / Ajustes) ---------- */
+@media (pointer: coarse) {
+  html .icon-btn { width: 44px; height: 44px; }
+  html .stage__views .icon-btn { width: 44px; height: 44px; }
+  html .tab { height: 44px; }
+  html .stage__tip { font-size: 12px; }
+}
+/* paisagem baixa: abas na lateral esquerda, preview + conteudo lado a lado, cabecalho minimo */
+html[data-compact='1'] .menu-root { padding: max(4px, var(--sat)) max(6px, var(--sar)) max(4px, var(--sab)) max(6px, var(--sal)); }
+html[data-compact='1'] .menu { width: 100%; height: 100%; border-radius: 18px; }
+html[data-compact='1'] .menu__inner { display: grid; grid-template-columns: 74px 1fr; grid-template-rows: auto 1fr; border-radius: 16px; }
+html[data-compact='1'] .menu__head { grid-column: 2; grid-row: 1; padding: 4px 8px 0 12px; gap: 8px; }
+html[data-compact='1'] .menu__title { font-size: 20px; }
+html[data-compact='1'] .menu__hint { display: none; }
+html[data-compact='1'] .tabs { grid-column: 1; grid-row: 1 / 3; flex-direction: column; gap: 4px; padding: 6px 4px; overflow-y: auto; overflow-x: hidden; justify-content: flex-start; border-right: 1.5px solid #e6cf85; background: rgba(255, 255, 255, 0.55); -webkit-mask-image: none; mask-image: none; }
+html[data-compact='1'] .tab { flex-direction: column; justify-content: center; gap: 1px; height: 54px; padding: 0 2px; border-radius: 14px; font-size: 11px; flex: none; }
+html[data-compact='1'] .tab svg { width: 22px; height: 22px; }
+html[data-compact='1'] .menu__body { grid-column: 2; grid-row: 2; padding: 2px 8px 8px; gap: 10px; min-height: 0; }
+html[data-compact='1'] .menu__stage { flex: 0 0 31%; }
+html[data-compact='1'] .menu__content { padding-right: 2px; }
+html[data-compact='1'] .panel { padding: 10px 12px; margin-bottom: 8px; }
+/* campo de nome (modal) acima do teclado */
+html .modal { padding-bottom: calc(16px + var(--kb)); }
+html[data-keyboard='1'] .modal__box { padding: 12px; }
+
+/* ---------- lojas / mercado / pets / viagens ---------- */
+@media (pointer: coarse) {
+  html .sh-x { width: 44px; height: 44px; }
+  html .sh-tab { height: 44px; font-size: 14px; }
+  html .sh-pill { height: 40px; font-size: 13px; }
+  html .sh-tabs, html .mk-tabs { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent); padding-right: 30px; }
+  html .mk-tabs button { height: 48px; }
+}
+@media (max-width: 760px) and (pointer: coarse) {
+  html .sh-head { flex-wrap: nowrap; gap: 6px; }
+  html .sh-head h2 { font-size: 18px; line-height: 1.1; }
+  html .sh-head small { display: none; }
+  html .sh-wchip { height: 36px; font-size: 13px; padding: 0 8px 0 6px; }
+}
+html[data-compact='1'] .sh-root { padding: max(4px, var(--sat)) max(6px, var(--sar)) max(4px, var(--sab)) max(6px, var(--sal)); }
+html[data-compact='1'] .sh-shell { height: 100%; }
+html[data-compact='1'] .sh-head { padding: 6px 10px 0 14px; gap: 8px; flex-wrap: nowrap; }
+html[data-compact='1'] .sh-head h2 { font-size: 20px; }
+html[data-compact='1'] .sh-head small { display: none; }
+html[data-compact='1'] .sh-tabs { padding-top: 2px; padding-bottom: 4px; }
+html[data-compact='1'] .sh-body { padding-bottom: 6px; }
+html[data-compact='1'] .mk-head { padding: 6px 12px; }
+
+/* ---------- sugestao de tela cheia (Android) ---------- */
+html .fs-ask { position: absolute; left: 50%; top: calc(8px + var(--mm) + 64px + var(--sat)); transform: translateX(-50%); z-index: 20; display: flex; align-items: center; gap: 8px; padding: 6px 8px 6px 16px; border-radius: 999px; font: 800 13px var(--f-sans); color: var(--ui-ink); pointer-events: auto; white-space: nowrap; animation: toast-in 0.3s ease both; }
+html .fs-ask button { height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--ui-gold-soft); font: 800 13px var(--f-sans); cursor: pointer; background: #fff; color: var(--ui-ink); }
+html .fs-ask__go { background: var(--ac-plum) !important; color: #fff !important; border-color: transparent !important; }
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%, -8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+/* ---------- aviso "gire o celular" (minijogos que preferem horizontal) ---------- */
+html .rot-hint { position: fixed; left: 50%; bottom: calc(18px + var(--sab)); transform: translateX(-50%); z-index: 60; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 0; font: 800 13px var(--f-sans); color: #fff; background: rgba(40, 25, 50, 0.78); backdrop-filter: blur(6px); box-shadow: var(--sh-1); animation: rot-hint 7s ease both; }
+@keyframes rot-hint { 0% { opacity: 0; transform: translate(-50%, 10px); } 8%, 88% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; } }
+
+/* telas cheias abertas: o HUD de baixo (cartao, minimapa, dock, joystick, chat) nao transparece */
+html[data-overlay='1'] :is(.pcard, .minimap, .hud-area, .hud-track, .fs-btn, .dock, .joy-zone, .chat, .pet-chip, .phone-tab, .hud-tip, .env-clock, .fs-ask) { visibility: hidden; }
+
+/* menu em retrato: o cabecalho (titulo + fechar de 44px) fica sobre o corpo; reserva a altura dele */
+@media (max-width: 760px) and (pointer: coarse) {
+  html .menu__body { padding-top: 62px; }
+  html .menu__head { padding-top: 10px; }
+}
+html[data-compact='1'] .menu__body { padding-top: 2px; }

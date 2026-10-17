@@ -223,3 +223,17 @@ const EMOTE_GLYPHS: Record<EmoteId, (p: P) => ReactNode> = {
 export function EmoteGlyph({ id, ...p }: { id: EmoteId } & P) {
   return EMOTE_GLYPHS[id](p)
 }
+
+// ---- acoes de toque (dock) ----
+export const GChat = g(
+  <>
+    <path d="M4.5 5.5h15v10h-7l-4.5 3.5v-3.5h-3.5z" />
+    <path d="M8.5 9.5h7M8.5 12h4" />
+  </>,
+)
+export const GRun = g(
+  <>
+    <circle cx="14.5" cy="5" r="1.8" />
+    <path d="M9 21l2.6-5.2-2.6-2.3 1.4-4.2 3.9-1.2 2.4 3.4 3 .8M11.6 15.8l3.6 1.4 1.3 3.8M8.6 9.2L6 11" />
+  </>,
+)

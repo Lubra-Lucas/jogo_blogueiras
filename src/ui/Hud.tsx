@@ -11,6 +11,7 @@ import { GameToast } from './GameToast'
 import './devBridge'
 import './viewport'
 import './uiPrefs'
+import './mobile.css'
 import { QuestWatcher } from './QuestWatcher'
 import { GStar } from './glyphs'
 

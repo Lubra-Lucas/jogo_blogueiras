@@ -9,6 +9,10 @@ const isTyping = (t: EventTarget | null) => t instanceof HTMLElement && (t.isCon
 const VISIBLE = 6
 const ACTIVE_MS = 6000
 
+/** Foco no campo do chat a partir de um gesto do usuario (botao Conversar do toque). */
+let focusHook: (() => void) | null = null
+export const focusChatInput = () => focusHook?.()
+
 /**
  * Chat sempre visivel: painel fosco com as ultimas mensagens, que esmaece quando ocioso e fica opaco ao passar o
  * mouse, ao focar ou quando chega mensagem. Enter foca o campo, Esc sai. Slot de abas (Geral / Sussurro) para depois.
@@ -21,7 +25,23 @@ export function ChatPanel() {
   const menuOpen = useUiStore((s) => s.menuOpen)
   const [text, setText] = useState('')
   const [active, setActive] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const phoneOpen = useUiStore((s) => s.phoneOpen)
   const input = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    focusHook = () => input.current?.focus()
+    return () => {
+      focusHook = null
+    }
+  }, [])
+  // toque: o campo aberto (teclado) esconde o joystick/dock e o CSS usa --kb para ficar acima do teclado
+  useEffect(() => {
+    document.documentElement.dataset.chat = focused ? '1' : '0'
+    return () => {
+      document.documentElement.dataset.chat = '0'
+    }
+  }, [focused])
 
   // mensagem nova: painel fica opaco por alguns segundos
   const last = messages[messages.length - 1]?.id
@@ -59,7 +79,7 @@ export function ChatPanel() {
   if (menuOpen) return null
 
   return (
-    <div className={`chat${active ? ' chat--active' : ''}`}>
+    <div className={`chat${active ? ' chat--active' : ''}${focused ? ' chat--focus' : ''}${phoneOpen ? ' chat--behind' : ''}`}>
       <div className="chat__panel">
         <div className="chat__tabs" role="tablist" aria-label="Canais">
           <button type="button" role="tab" className="chat__tab" aria-selected="true">
@@ -69,7 +89,7 @@ export function ChatPanel() {
             Sussurro
           </button>
         </div>
-        <div className="chat__list" aria-live="polite">
+        <div className="chat__list" aria-live="polite" onClick={() => input.current?.focus()}>
           {messages.slice(-VISIBLE).map((m) => (
             <div key={m.id} className={`msg msg--${m.kind}${m.self ? ' msg--self' : ''}`}>
               {m.kind === 'system' ? (
@@ -100,9 +120,12 @@ export function ChatPanel() {
             autoComplete="off"
             enterKeyHint="send"
             onChange={(e) => setText(e.target.value)}
-            onFocus={() => setTypingPose(true)}
-            onBlur={() => setTypingPose(false)}
+            onFocus={() => (setTypingPose(true), setFocused(true))}
+            onBlur={() => (setTypingPose(false), setFocused(false))}
           />
+          <button type="button" className="chat__close" aria-label="Fechar chat" onPointerDown={(e) => e.preventDefault()} onClick={() => input.current?.blur()}>
+            &times;
+          </button>
           {text.length > 0 && (
             <span className="chat__count">
               {text.length}/{CHAT_MAX_LENGTH}
