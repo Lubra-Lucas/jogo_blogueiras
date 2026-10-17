@@ -12,6 +12,7 @@ import { driveBridge } from '../../vehicles/driveStore'
 import { CORE_URL, EMOTES_URL, EMOTE_CLIPS, CharacterAnimator, type AnimInput, type ClipName } from './animator'
 import { turnState } from './turnState'
 import { selfieBridge } from '../../../ui/selfie/selfieStore'
+import { headLiftStep, headLiftTarget } from './headPosture'
 import { EMOTE_BY_ID, playEmote, useEmoteStore } from './emoteStore'
 
 /**
@@ -19,7 +20,7 @@ import { EMOTE_BY_ID, playEmote, useEmoteStore } from './emoteStore'
  *  - 'player': maquina de estados guiada por playerStore (velocidade) + emoteStore + sitStore;
  *  - { clip, t }: minigames/visualizador; com `t` congela o clipe nesse instante (capturas).
  */
-export type AnimDriver = 'player' | { clip: ClipName; t?: number }
+export type AnimDriver = 'player' | { clip: ClipName; t?: number; /** 0 = sem correcao de postura da cabeca (minijogos com pose propria) */ head?: number }
 
 const input: AnimInput = { turn: false, speed: 0, emote: null, emoteOnce: false, desfile: false, seat: 'none', typing: false }
 
@@ -111,6 +112,11 @@ export function CharacterAnimation({ rig, driver }: { rig: CharacterHandle; driv
     fit.lord += (tl - fit.lord) * k
     body.weights.posture = fit.post
     body.weights.lordosis = fit.lord
+    // cabeca ereta: correcao por clipe; zero em selfie, minijogos (head: 0) e emotes (a tabela ja os traz em 0; emote em andamento = 0)
+    const emoting = driver === 'player' && useEmoteStore.getState().emote !== null
+    const hw = driver === 'player' ? (emoting ? 0 : 1) : (driver.head ?? 1)
+    const lift = headLiftTarget(animator.currentName, { selfie: driver === 'player' && selfieBridge.active, weight: hw })
+    body.headLift += (lift - body.headLift) * headLiftStep(dt)
     try {
       frame(dt)
     } finally {

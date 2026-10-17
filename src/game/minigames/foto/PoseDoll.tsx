@@ -25,7 +25,7 @@ export function PoseDoll({ appearance }: { appearance: Appearance }) {
   const group = useRef<Group>(null)
   const [clip, setClip] = useState<'kiss' | null>(null)
   /** driver estável: o instante `t` é buscado a cada frame para o beijo coincidir com a janela de pico */
-  const drv = useRef<{ clip: 'kiss'; t: number }>({ clip: 'kiss', t: 0 })
+  const drv = useRef<{ clip: 'kiss'; t: number; head: number }>({ clip: 'kiss', t: 0, head: 0 })
   const st = useRef({
     ready: false,
     targets: new Map<PoseId, Map<string, Quaternion>>(),

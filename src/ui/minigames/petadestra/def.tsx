@@ -8,6 +8,7 @@ export const def: MinigameDef = {
   poi: 'petshop',
   order: 2,
   profession: 'Tosadora',
+  category: 'pets', needsPet: true, description: 'Ensine comandos ao seu pet.',
   component: AdestraGame,
   afterExit: () => {
     setTimeout(() => playEmote('clap', { once: true, silent: true }), 500)

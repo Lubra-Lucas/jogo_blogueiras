@@ -113,7 +113,7 @@ export function Doll({
   const rig = useRef<CharacterHandle>(null)
   const snap = useRef<Map<string, { q: Quaternion; p: Vector3 }> | null>(null)
   const applied = useRef<PoseId | null>(null)
-  const anim: AnimDriver | undefined = clip && !pose ? { clip, t } : undefined
+  const anim: AnimDriver | undefined = clip && !pose ? { clip, t, head: 0 } : undefined
 
   useFrame(() => {
     const r = rig.current

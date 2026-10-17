@@ -2,7 +2,13 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { CATEGORY_LABEL, EMOTES, useEmoteStore, type EmoteCategory, type EmoteDef } from '../game/character/animation/emoteStore'
 import { useDeviceStore } from '../game/systems/device'
 import { useUiStore } from '../state/uiStore'
-import { EmoteGlyph, GPhone, GWheel } from './glyphs'
+import { EmoteGlyph, GChat, GPhone, GRun, GWheel } from './glyphs'
+import { useShopStore } from './shop/shopStore'
+import { useMinigameStore } from '../game/minigames/minigameStore'
+import { useMarketUi } from './market/marketUi'
+import { useVehicleStore } from '../game/vehicles/driveStore'
+import { focusChatInput } from './chat/ChatPanel'
+import { isRunLatched, setRunLatch } from '../game/input/intent'
 import './emotes.css'
 import './phone/phone.css'
 
@@ -142,6 +148,20 @@ export function Dock() {
   const phone = useUiStore((s) => s.phoneOpen)
   const isTouch = useDeviceStore((s) => s.isTouch)
   const toast = useEmoteStore((s) => s.toast)
+  const [run, setRun] = useState(isRunLatched)
+  // telas cheias (menu, loja, mercado, minijogo, mapa): o HUD de baixo some (CSS usa data-overlay)
+  const fullUi = useUiStore((s) => s.menuOpen || s.bigMapOpen)
+  const shopOpen = useShopStore((s) => !!s.open)
+  const marketOpen = useMarketUi((s) => !!s.open)
+  const gameOpen = useMinigameStore((s) => s.active !== null)
+  const driving = useVehicleStore((s) => s.drivingUid !== null)
+  useEffect(() => {
+    document.documentElement.dataset.driving = driving ? '1' : '0'
+  }, [driving])
+  const overlay = fullUi || shopOpen || marketOpen || gameOpen
+  useEffect(() => {
+    document.documentElement.dataset.overlay = overlay ? '1' : '0'
+  }, [overlay])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -170,6 +190,16 @@ export function Dock() {
           <GWheel />
           {!isTouch && <span className="dock__key">G</span>}
         </button>
+        {isTouch && (
+          <button type="button" className="dock__btn dock__btn--sm" aria-label="Conversar" onClick={focusChatInput}>
+            <GChat />
+          </button>
+        )}
+        {isTouch && (
+          <button type="button" className="dock__btn dock__btn--sm" aria-label="Correr" aria-pressed={run} onClick={() => (setRunLatch(!run), setRun(!run))}>
+            <GRun />
+          </button>
+        )}
       </div>
       {open && <Wheel />}
     </>

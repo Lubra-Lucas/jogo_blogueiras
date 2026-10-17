@@ -264,7 +264,7 @@ function CrowdDoll({ index, total }: { index: number; total: number }) {
   const startsIn = index < Math.round(0.3 * (total + 0.4))
   return (
     <group ref={g} position={[startsIn ? home[0] : exit[0], 0, startsIn ? home[1] : exit[1]]} rotation={[0, Math.PI, 0]} visible={startsIn}>
-      <Character appearance={appearance} anim={{ clip }} />
+      <Character appearance={appearance} anim={{ clip, head: 0 }} />
     </group>
   )
 }
@@ -294,7 +294,7 @@ function Dj({ app }: { app: Appearance }) {
   })
   return (
     <group position={[0, STAGE_TOP, STAGE_Z - 0.75]}>
-      <Character appearance={app} anim={{ clip }} />
+      <Character appearance={app} anim={{ clip, head: 0 }} />
     </group>
   )
 }

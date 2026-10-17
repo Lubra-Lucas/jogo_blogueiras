@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Environment, Lightformer } from '@react-three/drei'
-import { Vector3, type Group, type SkinnedMesh } from 'three'
+import { Quaternion, Vector3, type Group, type SkinnedMesh } from 'three'
 import { DEFAULT_APPEARANCE, type Appearance } from '../../shared/appearance'
 import { DEFAULT_BODY, type BodyParams } from '../../shared/faceCatalog'
 import { Character, type CharacterHandle } from './Character'
@@ -136,6 +136,18 @@ export function BodyTest() {
     return () => els.forEach((e) => e.remove())
   }, [set])
   const frames = useRef(0)
+  // window.__gaze(): inclinacao do olhar (graus, + = acima do horizonte) de cada boneca agora; eixo frontal do osso Head = (0, 0.072, 0.997) (medido em repouso)
+  useEffect(() => {
+    const f = new Vector3(0, 0.072, 0.997)
+    const q = new Quaternion()
+    const w = new Vector3()
+    ;(window as unknown as { __gaze: () => number[] }).__gaze = () =>
+      handles.current.map((h) => {
+        if (!h) return NaN
+        h.bones.mixamorigHead.getWorldQuaternion(q)
+        return (Math.asin(w.copy(f).applyQuaternion(q).y) * 180) / Math.PI
+      })
+  }, [])
   const v = useMemo(() => new Vector3(), [])
   useFrame(({ size }) => {
     labels.current.forEach((el, i) => {

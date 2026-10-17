@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useThree } from '@react-three/fiber'
 import { CAMERA_INPUT as K } from '../camera/config'
 import { cameraIntent, isPointerClaimed } from './intent'
+import { useUiPrefs } from '../../ui/uiPrefs'
 
 interface Ptr {
   id: number
@@ -95,7 +96,7 @@ export function CameraInput() {
         el.style.cursor = 'grabbing'
         return
       }
-      const s = p.touch ? K.touchRotate : K.mouseRotate
+      const s = (p.touch ? K.touchRotate : K.mouseRotate) * useUiPrefs.getState().camSens
       cameraIntent.yawDelta -= dx * s
       cameraIntent.pitchDelta += dy * s
     }

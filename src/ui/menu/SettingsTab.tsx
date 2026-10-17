@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { loadJson, removeKey, saveJson, STORAGE_KEYS } from '../../shared/storage'
 import { getQuality, type QualityTier } from '../../game/systems/quality'
 import { useDeviceStore } from '../../game/systems/device'
+import { InterfaceSettings } from './InterfaceSettings'
 
 type Pref = 'auto' | QualityTier
 const PREFS: Array<{ id: Pref; label: string }> = [
@@ -59,6 +60,8 @@ export function SettingsTab() {
         </div>
       </div>
 
+      <InterfaceSettings />
+
       <div className="panel">
         <h3>Som</h3>
         <div className="cfg-row">
@@ -86,6 +89,8 @@ export function SettingsTab() {
           <div className="keys">
             <b>Joystick</b>
             <span>Andar (empurre até o fim para correr)</span>
+            <b>Botão Correr</b>
+            <span>Trava a corrida</span>
             <b>Arrastar</b>
             <span>Girar a câmera</span>
             <b>Pinça</b>

@@ -2,6 +2,7 @@ import { Suspense, useEffect } from 'react'
 import { clearMoveTarget, setKeyboardAxis, setKeyboardCameraYaw, setStickAxis } from '../../game/input/intent'
 import { useMinigameStore } from '../../game/minigames/minigameStore'
 import { getMinigame } from './registry'
+import { RotateHint } from './RotateHint'
 
 const DEV_OPEN = new URLSearchParams(window.location.search).get('minigame')
 
@@ -56,6 +57,7 @@ export function MinigameHost() {
           }}
         />
       </Suspense>
+      <RotateHint id={def.id} />
     </div>
   )
 }

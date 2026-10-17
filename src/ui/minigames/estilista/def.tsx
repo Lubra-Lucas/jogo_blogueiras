@@ -7,5 +7,6 @@ export const def: MinigameDef = {
   poi: 'boutique',
   order: 1,
   profession: 'Estilista',
+  category: 'trabalho', description: 'Vista clientes de acordo com o tema pedido.',
   component: lazy(() => import('./EstilistaGame')),
 }

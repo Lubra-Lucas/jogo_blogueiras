@@ -8,5 +8,6 @@ export const def: MinigameDef = {
   poi: 'estudio-fotos',
   order: 0,
   profession: 'Fotógrafa',
+  category: 'trabalho', description: 'Enquadre e fotografe modelos no estúdio.',
   component: lazy(() => import('./FotoGame').then((m) => ({ default: m.FotoGame }))),
 }

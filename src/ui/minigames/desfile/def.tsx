@@ -8,5 +8,6 @@ export const def: MinigameDef = {
   poi: 'boutique',
   order: 0,
   profession: 'Modelo',
+  category: 'trabalho', description: 'Monte o look e arrase na passarela.', bestKey: 'jdb.desfile.best',
   component: DesfileGame,
 }

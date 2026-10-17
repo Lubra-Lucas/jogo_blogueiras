@@ -8,6 +8,7 @@ export const def: MinigameDef = {
   poi: 'petshop',
   order: 1,
   profession: 'Tosadora',
+  category: 'pets', needsPet: true, description: 'Deixe o pet limpinho e cheiroso.',
   component: BanhoGame,
   afterExit: () => {
     setTimeout(() => playEmote('thankful', { once: true, silent: true }), 500)

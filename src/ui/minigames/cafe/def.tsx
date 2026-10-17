@@ -8,6 +8,7 @@ export const def: MinigameDef = {
   label: 'Café Rosé',
   poi: 'cafe-rose',
   profession: 'Barista',
+  category: 'trabalho', description: 'Atenda os pedidos do balcão no tempo certo.', bestKey: 'jdb.cafe.best',
   component: CafeGame,
   afterExit: () => {
     // saiu com 2+ estrelas: a personagem no mundo agradece
