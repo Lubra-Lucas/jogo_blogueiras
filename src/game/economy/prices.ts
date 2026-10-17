@@ -172,6 +172,8 @@ export interface PetAccDef {
   tint?: string
   /** sem material tingivel: a UI nao oferece tingimento */
   fixedColor?: boolean
+  /** escondido da loja, vitrine e painel (e nao e desenhado se ja estiver equipado) */
+  hidden?: boolean
 }
 /** O acessorio pode ser usado nesta raca? (a polo so existe para os caes com arquivo) */
 export const petAccFits = (a: PetAccDef, breedId: string | undefined): boolean => !a.files || (!!breedId && !!a.files[breedId])
@@ -190,6 +192,7 @@ export const PET_ACCESSORIES: PetAccDef[] = [
   { id: 'petacc.laco-cetim', label: 'Laço de cetim', slot: 'bow', color: '#c96f86', price: 180, file: 'acc/laco-cetim.glb', tint: 'cetim_tint' },
   {
     id: 'petacc.polo-rosa',
+    hidden: true, // GLB com defeito (gola/manchas): reativar quando o corrigido chegar
     label: 'Camisa polo rosa',
     slot: 'outfit',
     color: '#f29bb5',

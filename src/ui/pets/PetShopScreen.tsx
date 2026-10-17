@@ -272,7 +272,7 @@ export function PetShopScreen() {
                 <>
                   {!activePet && <p className="pet-note">Compre um pet para vestir os acessórios nele.</p>}
                   <div className="sh-grid">
-                    {PET_ACCESSORIES.map((a) => {
+                    {PET_ACCESSORIES.filter((a) => !a.hidden).map((a) => {
                       const have = owns(a.id)
                       const fits = petAccFits(a, activeInfo?.breed.id)
                       return (

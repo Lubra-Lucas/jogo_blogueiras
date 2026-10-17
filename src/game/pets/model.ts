@@ -72,6 +72,7 @@ export function createPetModel(gltf: { scene: Object3D; animations: AnimationCli
   return { scene, mixer, actions, bones }
 }
 
+const BOW_SCALE = 0.9
 const accLoader = new GLTFLoader()
 const accCache = new Map<string, Promise<Object3D>>()
 /** Carrega (uma vez por arquivo) um GLB de acessorio; devolve a cena original, que deve ser clonada. */
@@ -158,7 +159,7 @@ function attachGlbAccessory(model: PetModel, breed: PetBreed, def: PetAccDef, pu
         const up = breed.species === 'cat' ? 0.82 : 0.48 // ajuste por especie: no cao o laco assentava flutuando
         holder.position.set(m.hc[0] + m.hr * (breed.species === 'cat' ? 0.62 : 0.5), m.hc[1] + m.hr * up, m.hc[2] + m.hr * 0.12)
         holder.rotation.z = -0.4
-        holder.scale.setScalar(m.hr * 0.5)
+        holder.scale.setScalar(m.hr * BOW_SCALE)
         put('head', holder)
       }
       own(holder, mats)
@@ -172,7 +173,7 @@ export function attachAccessories(model: PetModel, breed: PetBreed, equip: PetEq
   const mine: Material[] = []
   let dead = false
   const m = breed.meta
-  const defOf = (id?: string) => PET_ACCESSORIES.find((a) => a.id === id)
+  const defOf = (id?: string) => PET_ACCESSORIES.find((a) => a.id === id && !a.hidden)
   const glbDef = (id?: string) => {
     const d = defOf(id)
     return d && (d.file || (d.files && d.files[breed.id])) ? d : undefined
@@ -187,7 +188,7 @@ export function attachAccessories(model: PetModel, breed: PetBreed, equip: PetEq
       o.updateMatrixWorld(true)
       model.bones[bone]?.attach(o)
     }, own, () => !dead)
-  const colorOf = (accId?: string) => PET_ACCESSORIES.find((a) => a.id === accId)?.color
+  const colorOf = (accId?: string) => defOf(accId)?.color
   const mat = (c: string) => new MeshStandardMaterial({ color: c, roughness: 0.4, metalness: 0.1 })
   const put = (boneName: string, obj: Object3D) => {
     model.scene.add(obj)

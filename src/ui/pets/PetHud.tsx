@@ -137,7 +137,7 @@ function PetPanel({ id, breedId, breedLabel, coatLabel }: { id: string; breedId:
   const [, tick] = useState(0)
   const n = usePetStore.getState().needsOf(id)
   const pets = owned.filter((o) => o.startsWith('pet.'))
-  const accs = PET_ACCESSORIES.filter((a) => owned.includes(a.id))
+  const accs = PET_ACCESSORIES.filter((a) => !a.hidden && owned.includes(a.id))
   const close = () => petUi.set(false)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
