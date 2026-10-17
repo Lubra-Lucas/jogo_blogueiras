@@ -139,8 +139,7 @@ export const CARS: CarSpec[] = [
     precoDiamantes: 6500,
     raridade: 'lendario',
     stats: { velocidade: 10, aceleracao: 9, controle: 6 },
-    forroY: 0.58, // GLB atual (cupe). Com o GLB sem teto (conversivel): forroY: null
-    bancoMax: 0.16,
+    forroY: null, // sem teto (GLB conversivel): nao rebaixa; o para-brisa (topo ~1,12 m) fica abaixo da cabeca
     fisica: { mass: 1250, vTop: 43, accel: 6, vReverse: 10, steerLow: 0.5, steerHigh: 0.13, driftYaw: 0.5, gripHigh: 10, gripLow: 1.8 },
   },
   {
