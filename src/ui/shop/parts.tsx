@@ -12,6 +12,7 @@ import { useShopStore } from './shopStore'
 import { useUiStore } from '../../state/uiStore'
 import { openMarket } from '../market/marketUi'
 import { toggleTry, useTryStore } from './tryon'
+import { ItemThumb } from './thumbs/ItemThumb'
 
 /** Relogio que se atualiza a cada `ms` (contagens regressivas). */
 export function useNow(ms = 30000): number {
@@ -80,6 +81,13 @@ export function ItemArt({ s }: { s: Sellable }) {
   return <>{Icon({ style: { color: tint } })}</>
 }
 
+/** Arte do cartao: previa 3D da peca (cabelo, roupa, joia) com o icone como reserva; carros e casas ficam no icone. */
+export function ItemPreview({ s }: { s: Sellable }) {
+  const appearance = useAppearanceStore((a) => a.appearance)
+  if (s.kind === 'car' || s.kind === 'house') return <ItemArt s={s} />
+  return <ItemThumb id={s.id} appearance={appearance} fallback={<ItemArt s={s} />} />
+}
+
 export interface CardCtx {
   /** loja com personagem 3D: mostra "Provar" e "Vestir" */
   stage: boolean
@@ -100,7 +108,7 @@ export function ItemCard({ s, st, ctx }: { s: Sellable; st: ItemStatus; ctx: Car
   return (
     <div className={`sh-card${st.state === 'owned' ? ' is-owned' : ''}${tried ? ' is-tried' : ''}`} style={{ ['--rar' as string]: rar } as CSSProperties}>
       <div className="sh-card__art">
-        <ItemArt s={s} />
+        <ItemPreview s={s} />
         {st.dealPct && <span className="sh-badge sh-badge--deal">-{st.dealPct}%</span>}
         {st.availability === 'exclusivo' && st.state !== 'owned' && <span className="sh-badge sh-badge--exc">Exclusivo</span>}
         {s.novo && st.state === 'buyable' && !st.dealPct && st.availability !== 'exclusivo' && <span className="sh-badge sh-badge--new">Novo</span>}

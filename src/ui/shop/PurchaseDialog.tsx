@@ -11,7 +11,7 @@ import { useCatalogStore } from '../../game/character/catalog'
 import type { Currency, ItemStatus } from '../../game/economy/types'
 import { IconCheck } from '../menu/icons'
 import { IconShield } from './icons'
-import { CurrencyIcon, ItemArt, fmt } from './parts'
+import { CurrencyIcon, ItemPreview, fmt } from './parts'
 import { useShopStore, type ConfirmRequest } from './shopStore'
 import { commitTried } from './tryon'
 
@@ -122,7 +122,7 @@ function Dialog({ req }: { req: ConfirmRequest }) {
             <div className="sh-dlg__head">
               {sellable && (
                 <div className="sh-dlg__art" style={{ ['--rar' as string]: RARITY_COLORS[sellable.rarity] }}>
-                  <ItemArt s={sellable} />
+                  <ItemPreview s={sellable} />
                 </div>
               )}
               <div>
