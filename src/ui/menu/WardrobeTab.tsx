@@ -63,6 +63,10 @@ export function WardrobeTab() {
   useEffect(() => endTryOn, [])
 
   const cat = CATEGORIES.find((c) => c.id === catId)!
+  // ao trocar de categoria a lista volta ao topo
+  useEffect(() => {
+    document.querySelector('.menu__content')?.scrollTo({ top: 0 })
+  }, [catId])
   const slots = (cat.id === 'jewelry' || cat.id === 'acc') && jewelSlot !== 'all' && cat.slots.includes(jewelSlot as ItemSlot) ? [jewelSlot as ItemSlot] : cat.slots
   const list = slots.flatMap((sl) => itemsForSlot(sl, items))
   const hasItems = (c: Category) => c.slots.some((sl) => itemsForSlot(sl, items).length > 0)
@@ -154,7 +158,7 @@ export function WardrobeTab() {
           )}
         </div>
 
-        <EditionsSection />
+        <EditionsSection slots={cat.slots} />
 
         {selected && !ownedSet.has(selected) && sellables.some((x) => x.id === selected) && (
           <div className="panel">
@@ -257,7 +261,7 @@ export function WardrobeTab() {
             </button>
           </div>
         )}
-        <p style={{ margin: '0 0 8px', font: '600 12px var(--corpo)', color: 'var(--tinta-suave)' }}>As peças equipadas aparecem na personagem ao vivo. Use &quot;Salvar&quot; na aba Aparência para guardar o look.</p>
+        <p style={{ margin: '0 0 8px', font: '600 12px var(--corpo)', color: 'var(--tinta-suave)' }}>As peças equipadas aparecem na personagem ao vivo. Use &quot;Salvar look&quot; (aqui embaixo ou na aba Aparência) para guardar o look.</p>
         <SaveLookBar />
       </div>
     </div>
