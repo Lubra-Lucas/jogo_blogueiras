@@ -532,7 +532,9 @@ export class VehicleSim {
     }
     // resistencia: arrasto e freio-motor
     const sgn = Math.sign(vf0)
-    a -= vf0 * 0.045 + sgn * 0.0007 * vf0 * vf0
+    // (com o acelerador o motor compensa o arrasto: assim a velocidade maxima do catalogo continua alcancavel mesmo com
+    // aceleracao baixa; sem isso o carro estabilizava ~25% abaixo da vTop)
+    a -= (vf0 * 0.045 + sgn * 0.0007 * vf0 * vf0) * (1 - (vf0 > 0 ? throttle : 0))
     if (throttle < 0.01 && brake < 0.01) a -= sgn * (vf0 > 2 ? 1.2 : 2.5) * Math.min(1, Math.abs(vf0) / 0.6)
     if (handbrake) a -= sgn * 9 * Math.min(1, Math.abs(vf0) / 1.5)
     let vf1 = vf0 + a * h
@@ -556,7 +558,13 @@ export class VehicleSim {
     const grip = lerp(P.gripHigh, P.gripLow, drift) * this.wetGrip
     const vs1 = vs0 * Math.exp(-grip * h)
     const lost = Math.abs(vs0) - Math.abs(vs1)
-    if (lost > 0 && Math.abs(vf1) > 0.5) vf1 += Math.sign(vf0 || 1) * lost * 0.55 * (1 - drift)
+    if (lost > 0 && Math.abs(vf1) > 0.5) {
+      // parte da lateral perdida vira velocidade para a frente (curva sem perder ritmo), mas SO ate a velocidade maxima:
+      // sem o limite, curvar com nitro a fundo ganhava velocidade sem parar (86 m/s num carro de vTop 43).
+      const sg = Math.sign(vf0 || 1)
+      const room = Math.max(0, (sg > 0 ? top : P.vReverse) - Math.abs(vf1))
+      vf1 += sg * Math.min(lost * 0.55 * (1 - drift), room)
+    }
 
     // ---- freio de estacionamento: parado e sem comando, nao desliza em rampa ----
     const idle = throttle < 0.01 && brake < 0.01 && !handbrake

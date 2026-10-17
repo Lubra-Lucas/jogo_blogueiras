@@ -349,6 +349,9 @@ function scheduleStep(c: Ctx, dest: AudioNode, song: Song, step: number, t: numb
   }
 }
 
+/** Ganho do radio (antes 0.9: pico ~0.07 e RMS ~0.013 no destino, quase inaudivel). Com 5.0 o pico fica ~0.7 (<0.9). */
+const RADIO_GAIN = 5.0
+
 const radio = {
   resume() {
     const st = radioState.station
@@ -379,7 +382,7 @@ const radio = {
     }
     radioState.fx!.frequency.value = song.cutoff
     radioState.gain.gain.cancelScheduledValues(c.currentTime)
-    radioState.gain.gain.setTargetAtTime(0.9, c.currentTime, 0.1)
+    radioState.gain.gain.setTargetAtTime(RADIO_GAIN, c.currentTime, 0.1)
     radioState.step = 0
     radioState.next = c.currentTime + 0.08
     // chiado curto de "troca de estacao"

@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { playSfx } from '../audio'
+import { useProfileStore } from '../../../state/profileStore'
 import { getProfessionXp, grantRewards } from '../rewards'
 import { ingredientName } from './data'
 import {
@@ -62,6 +63,8 @@ function finish(set: (p: Partial<CafeStore>) => void, final: CafeState) {
   const newBest = results.score > prevBest
   if (newBest) writeStr(BEST_KEY, String(results.score))
   grantRewards({ coins: results.coins, xp: results.xp, professionXp: { Barista: results.baristaXp } })
+  // a missão só conclui quando a rodada termina de verdade (não ao abrir/fechar o minijogo)
+  useProfileStore.getState().completeQuest('work-cafe')
   const levelAfter = baristaLevel(getProfessionXp('Barista'))
   const unlockedNow = newUnlocks(prevLevel, levelAfter).map((u) => ingredientName(u.kind, u.id))
   commit(set, final)

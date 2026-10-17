@@ -19,7 +19,7 @@
   left: 50%;
   bottom: calc(96px + env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  z-index: 118;
+  z-index: 22; /* abaixo de telefone (24), menus e lojas (30+) */
   display: flex;
   align-items: center;
   gap: 12px;

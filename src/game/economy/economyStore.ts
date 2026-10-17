@@ -205,7 +205,8 @@ export const useEconomyStore = create<EconomyState>()((set, get) => ({
   checkAchievements: () => {
     const s = get()
     const p = useProfileStore.getState()
-    const owned = p.owned.length
+    // pets (`pet.*`) e acessórios de pet (`petacc.*`) não contam como roupas do guarda-roupa
+    const owned = p.owned.filter((id) => !id.startsWith('pet.') && !id.startsWith('petacc.')).length
     const checks: Record<string, boolean> = {
       'primeira-compra': s.counters.buys > 0 || p.ledger.some((e) => e.amount < 0 && /^Compra:/.test(e.reason)),
       'armario-12': owned >= 12,

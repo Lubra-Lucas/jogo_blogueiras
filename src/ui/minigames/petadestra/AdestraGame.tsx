@@ -334,6 +334,9 @@ export function AdestraGame({ onExit }: { onExit: () => void }) {
   return (
     <Shell
       id="petadestra"
+      professionLabel="Adestradora"
+      unlockIds={['estrela', 'escova', 'biscoito']}
+      unlockText={{ escova: { label: 'Bônus de sequência', note: 'Pontos extras por sequência perfeita de comandos.' } }}
       title="Adestramento"
       tagline="Memorize os comandos e repita no tempo certo."
       accent="#a8760f"

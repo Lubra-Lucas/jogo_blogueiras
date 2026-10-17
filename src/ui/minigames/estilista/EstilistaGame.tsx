@@ -130,11 +130,13 @@ export default function EstilistaGame({ onExit }: { onExit: () => void }) {
     if (styling && pausedLeft === null && endsAt > 0 && endsAt - performance.now() <= 0) useEstilistaStore.getState().submit(true)
   }, [styling, left, pausedLeft, endsAt])
 
+  const helpRef = useRef(false)
+  helpRef.current = help
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.code !== 'Escape') return
       const p = useEstilistaStore.getState().phase
-      if (p === 'intro' || p === 'results') onExit()
+      if (helpRef.current || p === 'intro' || p === 'results') onExit()
       else if (p === 'style') useEstilistaStore.getState().togglePause()
     }
     window.addEventListener('keydown', onKey, true)

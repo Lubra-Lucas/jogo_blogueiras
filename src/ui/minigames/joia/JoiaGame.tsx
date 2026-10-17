@@ -72,7 +72,8 @@ export function JoiaGame({ onExit }: { onExit: () => void }) {
     const onKey = (e: KeyboardEvent) => {
       const st = useJoiaStore.getState()
       if (e.code === 'Escape') {
-        if (st.s.phase === 'playing') st.pause()
+        if (st.tutorial !== null) onExit()
+        else if (st.s.phase === 'playing') st.pause()
         else if (st.s.phase === 'paused' && st.tutorial === null) st.resume()
         return
       }

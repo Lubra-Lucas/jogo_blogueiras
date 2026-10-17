@@ -43,6 +43,8 @@ const SPAWN_Y = 0.03 + C.halfHeight + C.radius + 0.05
  * Sem pulo. O click-to-move anda em linha reta; o desvio de obstaculos (A*) e o fast travel
  * ficam em game/navigation (que so define alvos sequenciais e pede teletransporte via navBridge).
  */
+const _drvOff = new Vector3()
+
 export function PlayerController({ shadows }: { shadows: boolean }) {
   const { world } = useRapier()
 
@@ -144,18 +146,16 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
         rb.setEnabled(false)
       }
       const ci = fitClip(useSitStore.getState().clip, usePlayerStore.getState().fit)
-      const sn = Math.sin(driveBridge.yaw)
-      const cs = Math.cos(driveBridge.yaw)
       const sp = driveBridge.seatPos
-      sim.pos.x = sp.x - (ci.offX * cs + ci.offZ * sn)
-      sim.pos.z = sp.z - (-ci.offX * sn + ci.offZ * cs)
-      sim.pos.y = sp.y + SEAT_HIPS_GAP - ci.endY + C.halfHeight + C.radius
+      // deslocamento do quadril do clipe + altura da raiz, no referencial LOCAL do carro (gira com a inclinacao)
+      _drvOff.set(-ci.offX, SEAT_HIPS_GAP - ci.endY + C.halfHeight + C.radius, -ci.offZ).applyQuaternion(driveBridge.quat)
+      sim.pos.set(sp.x + _drvOff.x, sp.y + _drvOff.y, sp.z + _drvOff.z)
       sim.yaw = driveBridge.yaw
       rb.setTranslation(sim.pos, true)
       const vd = visual.current
       if (vd) {
         vd.position.copy(sim.pos)
-        vd.rotation.y = sim.yaw
+        vd.quaternion.copy(driveBridge.quat)
         vd.visible = useVehicleStore.getState().camMode !== 2
       }
       const sd = usePlayerStore.getState()
@@ -171,6 +171,7 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
       const ex = driveBridge.exitAt
       driveBridge.exitAt = null
       rb.setEnabled(true)
+      visual.current?.rotation.set(0, driveBridge.yaw, 0) // volta a ficar em pe
       if (ex) {
         sim.pos.set(ex.x, SPAWN_Y + 0.05, ex.z)
         sim.yaw = ex.yaw

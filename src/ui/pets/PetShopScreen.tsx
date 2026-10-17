@@ -4,7 +4,7 @@ import { useGLTF } from '@react-three/drei'
 import type { Group } from 'three'
 import { clearMoveTarget, setKeyboardAxis, setKeyboardCameraYaw, setStickAxis } from '../../game/input/intent'
 import { grantOwnedItem, ownsItem } from '../../game/economy/api'
-import { PET_ACCESSORIES, PET_FOOD, type PetAccDef, type PetFoodDef } from '../../game/economy/prices'
+import { PET_ACCESSORIES, PET_FOOD, petAccFits, type PetAccDef, type PetFoodDef } from '../../game/economy/prices'
 import { findPet, loadPetCatalog, PET_BASE, PET_NAME_IDEAS, petItemId, petPrice, usePetCatalog, type PetBreed, type PetCoat } from '../../game/pets/catalog'
 import { attachAccessories, createPetModel } from '../../game/pets/model'
 import { usePetStore } from '../../game/pets/petStore'
@@ -43,8 +43,10 @@ function Preview3D({ breed, coat, rot, equip }: { breed: PetBreed; coat: PetCoat
     model.mixer.update(Math.min(dt, 0.05))
     if (g.current) g.current.rotation.y = 0.55 + rot.current.yaw
   })
+  // racas grandes (ex.: golden) encolhem para caber na vitrine, enquadrada para ~0,5 m de altura
+  const fit = Math.min(1, 0.5 / breed.meta.height)
   return (
-    <group ref={g}>
+    <group ref={g} scale={fit}>
       <primitive object={model.scene} />
     </group>
   )
@@ -83,8 +85,8 @@ function Stage({ breed, coat, equip }: { breed: PetBreed; coat: PetCoat; equip?:
   )
 }
 
-function ask(label: string, currency: 'brilhos' | 'diamantes', price: number, onDone: () => void) {
-  useShopStore.getState().ask({ kind: 'service', label, currency, price, onDone })
+function ask(label: string, currency: 'brilhos' | 'diamantes', price: number, onDone: () => void, doneMessage?: string) {
+  useShopStore.getState().ask({ kind: 'service', label, currency, price, onDone, doneMessage })
 }
 
 /** Loja do Petshop: pets (raça + pelagem, preço fixo, sem sorteio), ração e acessórios. */
@@ -149,18 +151,18 @@ export function PetShopScreen() {
       grantOwnedItem(id)
       usePetStore.getState().setActive(id)
       setTab('meus')
-    })
+    }, `${b.label} ${c.label} é seu!`)
   }
   const buyFood = (f: PetFoodDef, qty: number) => {
     const price = qty === 1 ? f.price : Math.round(f.price * qty * 0.9)
-    ask(`${f.label}${qty > 1 ? ` (pacote com ${qty})` : ''}`, 'brilhos', price, () => usePetStore.getState().addFood(f.id, qty))
+    ask(`${f.label}${qty > 1 ? ` (pacote com ${qty})` : ''}`, 'brilhos', price, () => usePetStore.getState().addFood(f.id, qty), `Compra feita: ${f.label}${qty > 1 ? ` (pacote com ${qty})` : ''}.`)
   }
   const buyAcc = (a: PetAccDef) =>
     ask(a.label, 'brilhos', a.price, () => {
       grantOwnedItem(a.id)
       const act = usePetStore.getState().active
       if (act) usePetStore.getState().setEquip(act, a.slot, a.id)
-    })
+    }, `Compra feita: ${a.label}.`)
 
   const stageBreed = tab === 'pets' || !activeInfo ? breed : activeInfo.breed
   const stageCoat = tab === 'pets' || !activeInfo ? coat : activeInfo.coat
@@ -270,15 +272,19 @@ export function PetShopScreen() {
                 <>
                   {!activePet && <p className="pet-note">Compre um pet para vestir os acessórios nele.</p>}
                   <div className="sh-grid">
-                    {PET_ACCESSORIES.map((a) => {
+                    {PET_ACCESSORIES.filter((a) => !a.hidden).map((a) => {
                       const have = owns(a.id)
+                      const fits = petAccFits(a, activeInfo?.breed.id)
                       return (
                         <div className="sh-card" key={a.id}>
                           <div className="sh-card__art">
                             <span className="pshop-swatch" style={{ background: a.color }} />
                           </div>
                           <div className="sh-card__name">{a.label}</div>
-                          <div className="sh-card__note">{a.slot === 'collar' ? 'Coleira' : a.slot === 'bow' ? 'Laço' : 'Roupinha'}</div>
+                          <div className="sh-card__note">
+                            {a.slot === 'collar' ? 'Coleira' : a.slot === 'bow' ? 'Laço' : 'Roupinha'}
+                            {a.files ? ' · Só para cães' : ''}
+                          </div>
                           <div className="sh-card__prices">
                             <span>
                               <CurrencyIcon currency="brilhos" /> <b>{fmt(a.price)}</b>
@@ -289,17 +295,18 @@ export function PetShopScreen() {
                               <button
                                 type="button"
                                 className="sh-btn"
-                                disabled={!activePet}
+                                disabled={!activePet || !fits}
+                                title={fits ? undefined : 'Só para cães'}
                                 onClick={() => activePet && usePetStore.getState().setEquip(activePet, a.slot, myEquip?.[a.slot] === a.id ? null : a.id)}
                               >
                                 {myEquip?.[a.slot] === a.id ? 'Tirar' : 'Vestir'}
                               </button>
                             ) : (
-                              <button type="button" className="sh-btn sh-btn--buy" onClick={() => buyAcc(a)}>
-                                Comprar
+                              <button type="button" className="sh-btn sh-btn--buy" disabled={!fits} title={fits ? undefined : 'Só para cães'} onClick={() => buyAcc(a)}>
+                                {fits ? 'Comprar' : 'Só para cães'}
                               </button>
                             )}
-                            <button type="button" className="sh-btn" disabled={!activePet} onPointerDown={() => setPreviewAcc(a)} onPointerUp={() => setPreviewAcc(null)} onPointerLeave={() => setPreviewAcc(null)}>
+                            <button type="button" className="sh-btn" disabled={!activePet || !fits} onPointerDown={() => setPreviewAcc(a)} onPointerUp={() => setPreviewAcc(null)} onPointerLeave={() => setPreviewAcc(null)}>
                               Provar
                             </button>
                           </div>

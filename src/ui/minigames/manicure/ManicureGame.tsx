@@ -64,7 +64,8 @@ export function ManicureGame({ onExit }: { onExit: () => void }) {
     const down = (e: KeyboardEvent) => {
       const st = useManicureStore.getState()
       if (e.code === 'Escape') {
-        if (st.phase === 'playing') st.pause()
+        if (st.tutorial !== null) onExit()
+        else if (st.phase === 'playing') st.pause()
         else if (st.phase === 'paused' && st.tutorial === null) st.resume()
         return
       }

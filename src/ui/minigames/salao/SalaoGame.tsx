@@ -81,7 +81,8 @@ export function SalaoGame({ onExit }: { onExit: () => void }) {
     const onKey = (e: KeyboardEvent) => {
       if (e.code !== 'Escape') return
       const st = useSalaoStore.getState()
-      if (st.phase === 'playing') st.pause()
+      if (st.tutorial !== null) onExit() // Esc sempre sai, também durante o tutorial
+      else if (st.phase === 'playing') st.pause()
       else if (st.phase === 'paused' && st.tutorial === null) st.resume()
     }
     window.addEventListener('keydown', onKey, true)
@@ -89,7 +90,7 @@ export function SalaoGame({ onExit }: { onExit: () => void }) {
       document.removeEventListener('visibilitychange', onHide)
       window.removeEventListener('keydown', onKey, true)
     }
-  }, [])
+  }, [onExit])
 
   const look: Look = useMemo(
     () => ({

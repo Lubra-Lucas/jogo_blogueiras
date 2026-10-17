@@ -10,6 +10,7 @@ import { PREMIUM_FINISH_PRICE } from '../../game/economy/prices'
 import { useSellables, useStatuses } from '../../game/economy/sellables'
 import { useProfileStore } from '../../state/profileStore'
 import { Money, iconTint } from '../shop/parts'
+import { ItemThumb } from '../shop/thumbs/ItemThumb'
 import { useShopStore } from '../shop/shopStore'
 import { endTryOn, toggleTry, unownedWorn, useTryStore } from '../shop/tryon'
 import { Swatches } from './controls'
@@ -131,7 +132,7 @@ export function WardrobeTab() {
                 const tint = iconTint(it.item?.mats[0]?.color ?? getWearable(it.id)?.defaultColor ?? '#c9a8d8')
                 return (
                   <button key={it.id} type="button" className={`card${mine ? '' : ' card--locked'}`} style={{ ['--rar' as string]: RARITY_COLORS[tags.rarity] }} aria-pressed={selected === it.id} onClick={() => click(it.id, slot)}>
-                    <span className="card__icon">{SLOT_ICONS[slot]({ style: { color: tint } })}</span>
+                    <span className="card__icon"><ItemThumb id={it.id} appearance={on ? appearance : undefined} fallback={SLOT_ICONS[slot]({ style: { color: tint } })} /></span>
                     {it.label}
                     <span className="card__rar">{RARITY_LABELS[tags.rarity]}</span>
                     {!mine && st && (st.state === 'buyable' ? <span className="card__price"><Money offer={st.offers[0]} /></span> : <span className="card__price card__price--n">{st.state === 'upcoming' ? 'Em breve' : (st.note ?? 'Indisponível')}</span>)}

@@ -4,10 +4,11 @@ import { useInteractionStore } from '../../game/interaction/interactionStore'
 import { useInteriorStore } from '../../game/interiors/interiorStore'
 import { useSitStore } from '../../game/sit/sitStore'
 import { useMinigameStore } from '../../game/minigames/minigameStore'
+import { useVehicleStore } from '../../game/vehicles/driveStore'
 import { useShopStore } from '../shop/shopStore'
 import { useDeviceStore } from '../../game/systems/device'
 import { useUiStore } from '../../state/uiStore'
-import { PET_ACCESSORIES, PET_FOOD, type PetAccSlot } from '../../game/economy/prices'
+import { PET_ACCESSORIES, PET_FOOD, petAccFits, type PetAccSlot } from '../../game/economy/prices'
 import { findPet, loadPetCatalog, PET_NAME_IDEAS, usePetCatalog } from '../../game/pets/catalog'
 import { usePetStore } from '../../game/pets/petStore'
 import { petRuntime } from '../../game/pets/runtime'
@@ -69,6 +70,8 @@ export function PetHud() {
   const nearbyPoi = useInteractionStore((s) => s.nearby !== null)
   const sitBusy = useSitStore((s) => s.nearest !== null || s.seat !== null)
   const roomPrompt = useInteriorStore((s) => s.prompt !== null)
+  // o aviso do carro ("F Dirigir") tem prioridade sobre o carinho
+  const carBusy = useVehicleStore((s) => s.nearbyUid !== null || s.drivingUid !== null)
   useEffect(() => loadPetCatalog(), [])
   useEffect(() => {
     const t = window.setInterval(() => {
@@ -86,6 +89,7 @@ export function PetHud() {
       const p = usePetStore.getState()
       if (!p.active || petRuntime.dist > 2.7 || petUi.get()) return
       if (useInteractionStore.getState().nearby || useSitStore.getState().nearest || useSitStore.getState().seat || useInteriorStore.getState().prompt) return
+      if (useVehicleStore.getState().nearbyUid || useVehicleStore.getState().drivingUid) return
       if (useShopStore.getState().open || useMinigameStore.getState().active) return
       p.caress(p.active)
     }
@@ -109,7 +113,7 @@ export function PetHud() {
           </span>
         </button>
       )}
-      {near && !nearbyPoi && !sitBusy && !roomPrompt && !open && !busy && (
+      {near && !nearbyPoi && !sitBusy && !roomPrompt && !carBusy && !open && !busy && (
         <div className="pet-prompt" role="status">
           <span className="pet-prompt__name">{label}</span>
           <button type="button" className="pet-btn" onClick={() => usePetStore.getState().caress(active)}>
@@ -118,12 +122,12 @@ export function PetHud() {
           </button>
         </div>
       )}
-      {open && <PetPanel id={active} breedLabel={info.breed.label} coatLabel={info.coat.label} />}
+      {open && <PetPanel id={active} breedId={info.breed.id} breedLabel={info.breed.label} coatLabel={info.coat.label} />}
     </>
   )
 }
 
-function PetPanel({ id, breedLabel, coatLabel }: { id: string; breedLabel: string; coatLabel: string }) {
+function PetPanel({ id, breedId, breedLabel, coatLabel }: { id: string; breedId: string; breedLabel: string; coatLabel: string }) {
   const owned = useProfileStore((s) => s.owned)
   const breeds = usePetCatalog((s) => s.breeds)
   const names = usePetStore((s) => s.names)
@@ -133,7 +137,7 @@ function PetPanel({ id, breedLabel, coatLabel }: { id: string; breedLabel: strin
   const [, tick] = useState(0)
   const n = usePetStore.getState().needsOf(id)
   const pets = owned.filter((o) => o.startsWith('pet.'))
-  const accs = PET_ACCESSORIES.filter((a) => owned.includes(a.id))
+  const accs = PET_ACCESSORIES.filter((a) => !a.hidden && owned.includes(a.id))
   const close = () => petUi.set(false)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -239,12 +243,24 @@ function PetPanel({ id, breedLabel, coatLabel }: { id: string; breedLabel: strin
                   <button type="button" className="pet-chipbtn" aria-pressed={!equip[slot]} onClick={() => usePetStore.getState().setEquip(id, slot, null)}>
                     Nenhum
                   </button>
-                  {list.map((a) => (
-                    <button key={a.id} type="button" className="pet-chipbtn" aria-pressed={equip[slot] === a.id} onClick={() => usePetStore.getState().setEquip(id, slot, a.id)}>
-                      <i style={{ background: a.color }} />
-                      {a.label}
-                    </button>
-                  ))}
+                  {list.map((a) => {
+                    const fits = petAccFits(a, breedId)
+                    return (
+                      <button
+                        key={a.id}
+                        type="button"
+                        className="pet-chipbtn"
+                        aria-pressed={equip[slot] === a.id}
+                        disabled={!fits}
+                        title={fits ? undefined : 'Só para cães'}
+                        onClick={() => usePetStore.getState().setEquip(id, slot, a.id)}
+                      >
+                        <i style={{ background: a.color }} />
+                        {a.label}
+                        {fits ? '' : ' (Só para cães)'}
+                      </button>
+                    )
+                  })}
                 </div>
               )
             })}

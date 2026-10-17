@@ -45,13 +45,17 @@ export function MinigameHost() {
   if (!def) return null
   const Game = def.component
   return (
-    <Suspense fallback={null}>
-      <Game
-        onExit={() => {
-          useMinigameStore.getState().close()
-          def.afterExit?.()
-        }}
-      />
-    </Suspense>
+    // `.ui-layer` tem pointer-events:none: sem isto o fundo/cartoes do minijogo deixavam a roda do mouse
+    // (rolagem dos modais) e toques passarem para o canvas do mundo. `display: contents` nao cria caixa.
+    <div className="mg-host" style={{ display: 'contents', pointerEvents: 'auto' }}>
+      <Suspense fallback={null}>
+        <Game
+          onExit={() => {
+            useMinigameStore.getState().close()
+            def.afterExit?.()
+          }}
+        />
+      </Suspense>
+    </div>
   )
 }

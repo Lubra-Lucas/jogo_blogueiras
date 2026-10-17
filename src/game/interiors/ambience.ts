@@ -1,4 +1,5 @@
 import { isMuted } from '../minigames/audio'
+import { isMinigameOpen } from '../minigames/minigameStore'
 import type { AmbientKind } from './types'
 
 /**
@@ -50,15 +51,18 @@ function bandNoise(c: AudioContext, f: number, q: number, gain: number, lfo?: { 
   b.Q.value = q
   const g = c.createGain()
   g.gain.value = gain
-  s.connect(b).connect(g).connect(master!)
+  // modulacao proporcional ao ganho base (mod=1 +- depth/gain): o ganho nunca passa de gain+depth nem inverte a fase
+  const mod = c.createGain()
+  mod.gain.value = 1
+  s.connect(b).connect(mod).connect(g).connect(master!)
   s.start()
-  nodes.push(s, b, g)
+  nodes.push(s, b, mod, g)
   if (lfo) {
     const o = c.createOscillator()
     o.frequency.value = lfo.rate
     const og = c.createGain()
-    og.gain.value = lfo.depth
-    o.connect(og).connect(g.gain)
+    og.gain.value = Math.min(1, lfo.depth / gain)
+    o.connect(og).connect(mod.gain)
     o.start()
     nodes.push(o, og)
   }
@@ -180,7 +184,7 @@ export function startAmbience(k: AmbientKind) {
   }
   // volume + mudo
   const set = () => {
-    if (master && ctx) master.gain.setTargetAtTime(isMuted() ? 0 : GAIN[k] * 0.35, ctx.currentTime, 0.2)
+    if (master && ctx) master.gain.setTargetAtTime(isMuted() || isMinigameOpen() ? 0 : GAIN[k] * 0.35, ctx.currentTime, 0.2)
   }
   set()
   timers.push(window.setInterval(set, 600))

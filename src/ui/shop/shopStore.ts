@@ -6,7 +6,7 @@ export type ShopTab = 'vitrine' | 'catalogo' | 'servicos' | 'diamantes' | 'diari
 /** Pedido de confirmacao de compra (item do catalogo ou servico). */
 export type ConfirmRequest =
   | { kind: 'item'; id: string; /** vestir ao concluir (loja com personagem) */ canWear?: boolean }
-  | { kind: 'service'; label: string; currency: Currency; price: number; onDone?: () => void }
+  | { kind: 'service'; label: string; currency: Currency; price: number; onDone?: () => void; doneMessage?: string }
   | { kind: 'finish'; finish: string; label: string; price: number; onDone?: () => void }
 
 export type PhoneShopTab = 'loja' | 'diamantes' | 'diario' | 'carros' | 'casas'

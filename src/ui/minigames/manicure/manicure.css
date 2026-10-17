@@ -35,7 +35,7 @@
 @keyframes mn-fade { from { opacity: 0; } }
 
 /* barra superior */
-.mn-top { display: flex; align-items: center; gap: 8px; flex: none; }
+.mn-top { position: relative; z-index: 80; display: flex; align-items: center; gap: 8px; flex: none; }
 .mn-title { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.05; }
 .mn-title span { font-family: var(--f-serif, 'Playfair Display', serif); font-style: italic; font-weight: 600; font-size: clamp(1.05rem, 4vw, 1.5rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mn-title small { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass-d); }
@@ -149,7 +149,7 @@
 .mn-hearts { display: flex; gap: 3px; justify-content: center; }
 
 /* overlays */
-.mn-overlay { position: absolute; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 14px; background: rgba(31, 27, 34, 0.5); backdrop-filter: blur(3px); animation: mn-fade 0.3s ease; overflow-y: auto; }
+.mn-overlay { position: absolute; inset: 0; z-index: 50; display: flex; align-items: safe center; justify-content: center; padding: 14px; background: rgba(31, 27, 34, 0.5); backdrop-filter: blur(3px); animation: mn-fade 0.3s ease; overflow-y: auto; }
 .mn-overlay--tut { z-index: 70; background: rgba(31, 27, 34, 0.35); }
 .mn-card { position: relative; width: min(100%, 460px); max-height: 100%; overflow-y: auto; text-align: center; padding: 22px 20px 18px; border-radius: 28px; background: linear-gradient(180deg, #fffdf8, var(--ivory)); border: 1px solid rgba(176, 138, 62, 0.5); box-shadow: 0 6px 0 #cfc5b0, 0 24px 40px rgba(20, 15, 25, 0.4), inset 0 3px 0 #fff; animation: mn-card 0.5s cubic-bezier(.3, 1.4, .5, 1); margin: auto; }
 @keyframes mn-card { from { transform: translateY(30px) scale(0.92); opacity: 0; } }

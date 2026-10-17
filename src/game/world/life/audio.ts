@@ -1,4 +1,5 @@
 import { isMuted } from '../../minigames/audio'
+import { isMinigameOpen } from '../../minigames/minigameStore'
 
 /**
  * Som sintetizado (WebAudio, sem arquivos): passos e paisagem sonora ambiente (zumbido da cidade, vento, chuva,
@@ -155,12 +156,17 @@ function buildAmbient() {
   hb.start()
 
   const wind = mk()
-  noiseLoop(c, 'bandpass', 520, 0.6, wind, 0.7)
+  // modulacao MULTIPLICATIVA: ruido -> windMod (base 1, LFO soma +-0.35) -> wind (mix). Se o LFO fosse ligado
+  // direto em wind.gain, ele somaria ao mix e o vento chiaria sempre (mesmo com mix 0 / mudo).
+  const windMod = c.createGain()
+  windMod.gain.value = 1
+  windMod.connect(wind)
+  noiseLoop(c, 'bandpass', 520, 0.6, windMod, 0.7)
   const lfo = c.createOscillator()
   const lfoG = c.createGain()
   lfo.frequency.value = 0.18
   lfoG.gain.value = 0.35
-  lfo.connect(lfoG).connect(wind.gain)
+  lfo.connect(lfoG).connect(windMod.gain)
   lfo.start()
 
   const rain = mk()
@@ -227,7 +233,7 @@ let nextChirp = 0
 export function updateAmbient(mix: AmbientMix) {
   const c = ctx
   if (!c || !amb || c.state !== 'running') return
-  const mute = isMuted()
+  const mute = isMuted() || isMinigameOpen()
   const t = c.currentTime
   const set = (g: GainNode, v: number) => g.gain.setTargetAtTime(mute ? 0 : v, t, 0.6)
   if (t - lastMix > 0.2) {
