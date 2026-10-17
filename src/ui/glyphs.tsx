@@ -237,3 +237,53 @@ export const GRun = g(
     <path d="M9 21l2.6-5.2-2.6-2.3 1.4-4.2 3.9-1.2 2.4 3.4 3 .8M11.6 15.8l3.6 1.4 1.3 3.8M8.6 9.2L6 11" />
   </>,
 )
+
+// ---- app Jogos e categorias de minijogo ----
+/** app Jogos: controle de videogame */
+export const GGames = g(
+  <>
+    <path d="M7.500 7h9a4.500 4.500 0 0 1 4.400 5.400l-.7 3.600a2.400 2.400 0 0 1-4 1.300L14 15.500h-4l-2.200 1.800a2.400 2.400 0 0 1-4-1.300l-.7-3.600A4.500 4.500 0 0 1 7.500 7z" />
+    <path d="M8 10v3M6.500 11.500h3" />
+    <circle cx="15.500" cy="10.500" r="0.9" fill="currentColor" stroke="none" />
+    <circle cx="17.800" cy="12.700" r="0.9" fill="currentColor" stroke="none" />
+  </>,
+)
+/** categoria Trabalho: maleta */
+export const GWork = g(
+  <>
+    <rect x="3.500" y="7.500" width="17" height="12" rx="2.500" />
+    <path d="M9 7.500V6a1.500 1.500 0 0 1 1.500-1.500h3A1.500 1.500 0 0 1 15 6v1.500M3.500 12.500h17M11 12.500v2h2v-2" />
+  </>,
+)
+/** categoria Diversao: brilho */
+export const GFun = g(
+  <>
+    <path d="m12 3.500 1.800 4.700 4.700 1.800-4.700 1.800L12 16.500l-1.800-4.700L5.500 10l4.700-1.800z" />
+    <path d="M18.500 15.500v4M16.500 17.500h4" />
+  </>,
+)
+/** categoria Pets: pata */
+export const GPaw = g(
+  <>
+    <ellipse cx="12" cy="15.500" rx="4.200" ry="3.500" />
+    <circle cx="6.500" cy="10.500" r="1.700" />
+    <circle cx="10" cy="6.800" r="1.700" />
+    <circle cx="14" cy="6.800" r="1.700" />
+    <circle cx="17.500" cy="10.500" r="1.700" />
+  </>,
+)
+/** categoria Cassino: ficha */
+export const GChip = g(
+  <>
+    <circle cx="12" cy="12" r="8.500" />
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 3.500v4.500M12 16v4.500M3.500 12H8M16 12h4.500" />
+  </>,
+)
+/** categoria Praia: ondas e sol */
+export const GBeach = g(
+  <>
+    <circle cx="16.500" cy="7.500" r="2.800" />
+    <path d="M3 15c1.700 0 1.700-1.500 3.500-1.500S8.200 15 10 15s1.700-1.500 3.500-1.500S15.200 15 17 15s1.700-1.500 4-1.500M3 19.500c1.700 0 1.700-1.500 3.500-1.500s1.700 1.500 3.500 1.500 1.700-1.500 3.500-1.500 1.700 1.500 3.500 1.500" />
+  </>,
+)

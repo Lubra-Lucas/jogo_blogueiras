@@ -9,6 +9,7 @@ export const def: MinigameDef = {
   poi: 'palco-neon',
   order: 0,
   profession: 'DJ',
+  category: 'trabalho', description: 'Siga o ritmo e anime a pista.',
   component: lazy(() => import('./DjGame').then((m) => ({ default: m.DjGame }))),
   afterExit: () => {
     // saiu com 2+ estrelas: a personagem dança no mundo

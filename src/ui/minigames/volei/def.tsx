@@ -7,5 +7,6 @@ export const def: MinigameDef = {
   label: 'Vôlei de Praia',
   poi: 'beach-club',
   order: 0,
+  category: 'praia', city: 'miami', place: 'Sunset Beach Club – Miami Beach', description: 'Manchete, levantada e corte no tempo certo.',
   component: lazy(() => import('./VoleiGame')),
 }

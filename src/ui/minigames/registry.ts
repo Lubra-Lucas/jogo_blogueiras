@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react'
+import type { ComponentType, SVGProps } from 'react'
 
 /**
  * Registro de minijogos. Cada minijogo vive em `src/ui/minigames/<id>/` e se cadastra sozinho
@@ -17,6 +17,8 @@ export interface MinigameProps {
   onExit: () => void
 }
 
+export type MinigameCategory = 'trabalho' | 'diversao' | 'pets' | 'cassino' | 'praia'
+
 export interface MinigameDef {
   /** id único, também usado em `?minigame=<id>` */
   id: string
@@ -30,6 +32,22 @@ export interface MinigameDef {
   profession?: string
   /** componente em tela cheia; deve chamar onExit para fechar */
   component: ComponentType<MinigameProps>
+  /** categoria no app Jogos do celular (padrão: 'trabalho' se tem profissão, senão 'diversao') */
+  category?: MinigameCategory
+  /** ícone de linha (24x24) do app Jogos (padrão: o da categoria) */
+  icon?: ComponentType<SVGProps<SVGSVGElement>>
+  /** frase curta para o app Jogos */
+  description?: string
+  /** cidade onde fica a porta ('main' = cidade principal, 'miami'...); padrão 'main' */
+  city?: string
+  /** nome do local para mostrar (padrão: nome do POI na cidade principal) */
+  place?: string
+  /** precisa de um pet ativo para abrir fora do local */
+  needsPet?: boolean
+  /** só faz sentido no local: o app Jogos mostra só a viagem rápida */
+  onSiteOnly?: boolean
+  /** chave de localStorage com o recorde, se não usar o ranking comum (jdb.rank.<id>.*) */
+  bestKey?: string
   /** chamado depois de fechar (ex.: emote de agradecimento no mundo) */
   afterExit?: () => void
 }

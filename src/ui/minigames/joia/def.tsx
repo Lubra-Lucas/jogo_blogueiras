@@ -9,6 +9,7 @@ export const def: MinigameDef = {
   poi: 'joalheria',
   order: 0,
   profession: 'Joalheira',
+  category: 'trabalho', description: 'Crie a joia sob medida para o cliente.',
   component: lazy(() => import('./JoiaGame').then((m) => ({ default: m.JoiaGame }))),
   afterExit: () => {
     const stars = useJoiaStore.getState().results?.stars ?? 0

@@ -7,10 +7,12 @@ import { useEnvStore } from '../../game/world/environment/envStore'
 import { WEATHER_LABEL } from '../../game/world/environment/config'
 import { fastTravelTo, navigateTo } from '../navBridge'
 import { portraitCanvas, usePortraitStore } from '../PortraitCapture'
-import { GBack, GBlogram, GCamera, GCheck, GCloud, GMap, GMercado, GMessages, GMissions, GMoon, GPin, GProfile, GRain, GSettings, GStar, GSun, GWardrobe, GBolt, GClose, GMinimize, GRestore, GFlipCam, GZoomIn, GZoomOut } from '../glyphs'
+import { GBack, GBlogram, GCamera, GCheck, GCloud, GMap, GMercado, GMessages, GMissions, GMoon, GPin, GProfile, GRain, GSettings, GStar, GSun, GWardrobe, GBolt, GGames, GClose, GMinimize, GRestore, GFlipCam, GZoomIn, GZoomOut } from '../glyphs'
 import { dismissPhone, minimizePhone, restorePhone, usePhoneMin } from './phoneMin'
 import { SELFIE_POSES, useSelfieStore } from '../selfie/selfieStore'
 import { playEmote, stopEmote } from '../../game/character/animation/emoteStore'
+import { JogosApp } from './jogos/JogosApp'
+import { useMinigameStore } from '../../game/minigames/minigameStore'
 import { PhoneShop } from '../shop/PhoneShop'
 import { GCar } from '../vehicles/CarArt'
 import { useVehicleStore } from '../../game/vehicles/driveStore'
@@ -58,6 +60,7 @@ function StatusBar() {
 
 const APPS: Array<{ id: string; label: string; color: string; icon: ReactNode; run: () => void }> = [
   { id: 'missoes', label: 'Missões', color: '#d99a2b', icon: <GMissions />, run: () => useUiStore.getState().setPhoneApp('missoes') },
+  { id: 'jogos', label: 'Jogos', color: '#8a5fc4', icon: <GGames />, run: () => useUiStore.getState().setPhoneApp('jogos') },
   { id: 'blogram', label: 'Blogram', color: '#d9789f', icon: <GBlogram />, run: () => (usePhotoStore.getState().reload(), useUiStore.getState().setPhoneApp('blogram')) },
   { id: 'mensagens', label: 'Mensagens', color: '#3a9f8a', icon: <GMessages />, run: () => useUiStore.getState().setPhoneApp('mensagens') },
   { id: 'loja', label: 'Loja', color: '#2f7f86', icon: <IconTag />, run: () => useUiStore.getState().setPhoneApp('loja') },
@@ -251,6 +254,14 @@ function Messages() {
   )
 }
 
+function Jogos() {
+  return (
+    <AppFrame title="Jogos">
+      <JogosApp />
+    </AppFrame>
+  )
+}
+
 function Shop() {
   return (
     <AppFrame title="Loja">
@@ -284,7 +295,8 @@ export function Phone() {
   const open = useUiStore((s) => s.phoneOpen)
   const app = useUiStore((s) => s.phoneApp)
   const min = usePhoneMin((s) => s.min)
-  const hideTab = useUiStore((s) => s.menuOpen || s.cameraMode)
+  const inGame = useMinigameStore((s) => s.active !== null)
+  const hideTab = useUiStore((s) => s.menuOpen || s.cameraMode) || inGame
   const [mounted, setMounted] = useState(false)
   const [out, setOut] = useState(false)
   const active = open || min
@@ -317,7 +329,7 @@ export function Phone() {
   }, [])
 
   if (!mounted) return null
-  const screens: Record<PhoneApp, ReactNode> = { home: <Home />, missoes: <Missions />, blogram: <Blogram />, mensagens: <Messages />, loja: <Shop /> }
+  const screens: Record<PhoneApp, ReactNode> = { home: <Home />, jogos: <Jogos />, missoes: <Missions />, blogram: <Blogram />, mensagens: <Messages />, loja: <Shop /> }
   return (
     <>
       <div className={`phone-wrap${out ? ' phone-wrap--out' : ''}${min ? ' phone-wrap--min' : ''}`} role="dialog" aria-label="Celular" aria-hidden={min}>

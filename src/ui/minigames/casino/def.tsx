@@ -12,5 +12,6 @@ export const def: MinigameDef = {
   label: 'Lounge de Jogos',
   poi: 'cassino',
   order: 10,
+  category: 'cassino', description: 'Blackjack, roleta, caça-níqueis e pôquer com fichas.',
   component: CasinoGame,
 }

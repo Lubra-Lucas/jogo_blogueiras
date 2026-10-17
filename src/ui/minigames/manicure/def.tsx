@@ -9,6 +9,7 @@ export const def: MinigameDef = {
   poi: 'salao-spa',
   order: 1,
   profession: 'Cabeleireira',
+  category: 'trabalho', description: 'Cuide das unhas e capriche na arte.',
   component: ManicureGame,
   afterExit: () => {
     const stars = useManicureStore.getState().results?.stars ?? 0

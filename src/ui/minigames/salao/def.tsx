@@ -9,5 +9,6 @@ export const def: MinigameDef = {
   poi: 'salao-spa',
   order: 0,
   profession: 'Cabeleireira',
+  category: 'trabalho', description: 'Lave, corte e penteie no Salão Express.',
   component: SalaoGame,
 }

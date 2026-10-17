@@ -142,7 +142,10 @@ html[data-compact='1'] .ew__icon svg { width: 28px; height: 28px; }
   html .pstar svg { width: 22px; height: 22px; }
   html .pmin::after { inset: -12px; }
   html .ptag { font-size: 12px; }
-  html .pq p { font-size: 12.5px; }
+  html .pq p, html .pjg p { font-size: 12.5px; }
+  html .pjg small { font-size: 12px; }
+  html .pjg-f { height: 44px; font-size: 13px; }
+  html .pjg-chip { min-height: 44px; font-size: 12.5px; }
   html .prow small { font-size: 12px; }
   html .phone-tab__txt small { font-size: 12px; }
   html .pstatus { font-size: 12px; }
@@ -150,8 +153,9 @@ html[data-compact='1'] .ew__icon svg { width: 28px; height: 28px; }
 html[data-compact='1'] .phone-wrap { width: min(560px, calc(100vw - 16px)); }
 html[data-compact='1'] .phome { padding: 6px 14px 8px; }
 html[data-compact='1'] .pclock { display: none; }
-html[data-compact='1'] .papps { grid-template-columns: repeat(6, 1fr); gap: 10px 4px; margin-top: 4px; }
+html[data-compact='1'] .papps { grid-template-columns: repeat(7, 1fr); gap: 10px 4px; margin-top: 4px; }
 html[data-compact='1'] .papp__ic { width: 48px; height: 48px; }
+html[data-compact='1'] .pjg-list { grid-template-columns: 1fr 1fr; }
 html[data-compact='1'] .phome__bar { margin-top: 8px; }
 
 /* ---------- menus (Perfil / Aparencia / Guarda-roupa / Ajustes) ---------- */
