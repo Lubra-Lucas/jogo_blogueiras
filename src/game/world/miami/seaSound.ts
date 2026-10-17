@@ -1,4 +1,5 @@
 import { isMuted } from '../../minigames/audio'
+import { isMinigameOpen } from '../../minigames/minigameStore'
 
 /**
  * Som do mar de Miami (WebAudio sintetizado, sem arquivos): ondas (ruido marrom filtrado com swell lento), chiado da
@@ -9,6 +10,7 @@ let master: GainNode | null = null
 let wave: GainNode | null = null
 let hiss: GainNode | null = null
 let running = false
+const mods = new Map<GainNode, GainNode>()
 let gullT = 0
 let armed = false
 
@@ -33,21 +35,25 @@ function build(c: AudioContext) {
     b.type = type
     b.frequency.value = f
     b.Q.value = q
+    // mod (base 1) recebe o LFO: modulacao MULTIPLICATIVA do volume g (LFO ligado direto em g.gain somaria e chiaria longe do mar)
+    const mod = c.createGain()
+    mod.gain.value = 1
     const g = c.createGain()
     g.gain.value = 0.0
-    s.connect(b).connect(g).connect(master!)
+    s.connect(b).connect(mod).connect(g).connect(master!)
     s.start()
+    mods.set(g, mod)
     return g
   }
   wave = mk('lowpass', 520, 0.6)
   hiss = mk('bandpass', 2300, 0.5)
   // swell: duas LFOs lentas modulam o volume das ondas
-  for (const [rate, depth, target] of [[0.14, 0.22, wave], [0.33, 0.1, wave], [0.2, 0.05, hiss]] as const) {
+  for (const [rate, depth, target] of [[0.14, 0.4, wave], [0.33, 0.18, wave], [0.2, 0.3, hiss]] as const) {
     const o = c.createOscillator()
     o.frequency.value = rate
     const og = c.createGain()
     og.gain.value = depth
-    o.connect(og).connect(target.gain)
+    o.connect(og).connect(mods.get(target)!.gain)
     o.start()
   }
 }
@@ -92,7 +98,7 @@ function gull(c: AudioContext, vol: number) {
 export function updateSea(near: number, day: number, dt: number) {
   const c = ctx
   if (!c || !master || !wave || !hiss) return
-  const on = c.state === 'running' && !isMuted()
+  const on = c.state === 'running' && !isMuted() && !isMinigameOpen()
   const t = c.currentTime
   master.gain.setTargetAtTime(on ? 0.9 : 0, t, 0.3)
   wave.gain.setTargetAtTime(0.1 + near * 0.42, t, 0.4)
