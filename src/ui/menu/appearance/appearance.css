@@ -7,6 +7,14 @@
   scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .cc__rail::-webkit-scrollbar { display: none; }
+/* telas largas: as categorias quebram linha (nada fica escondido a direita, ex.: Corpo depois de Pele) */
+@media (min-width: 700px) {
+  .cc__rail { flex-wrap: wrap; overflow-x: visible; }
+}
+/* celular: faixa rolavel com um degrade na borda direita indicando que ha mais categorias */
+@media (max-width: 699px) {
+  .cc__rail { -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+}
 .cc__cat {
   flex: none; display: inline-flex; align-items: center; gap: 6px;
   height: 36px; padding: 0 12px 0 10px; border-radius: 999px; cursor: pointer;
