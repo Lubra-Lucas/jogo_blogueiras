@@ -41,7 +41,7 @@ const FALLBACK_DIMS: Record<string, [number, number, number, number, number]> = 
   compacto: [1.7, 1.55, 3.5, 2.25, 0.3],
   conversivel: [1.85, 1.25, 4.5, 2.75, 0.34],
   suv: [1.9, 1.85, 4.5, 2.8, 0.4],
-  esportivo: [1.95, 1.2, 4.4, 2.6, 0.34],
+  esportivo: [1.95, 1.12, 4.4, 2.6, 0.34],
   van: [2.0, 2.5, 5.2, 3.2, 0.36],
 }
 

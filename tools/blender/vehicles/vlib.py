@@ -7,7 +7,7 @@ import bpy, bmesh, math, os, json, struct
 from math import sin, cos, pi, sqrt
 from mathutils import Vector, Matrix, Quaternion
 
-OUT_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "public", "assets", "vehicles"))
+OUT_DIR = os.environ.get("VEHICLES_OUT") or r"C:\Users\user\Documents\GitHub\jogo_blogueiras\public\assets\vehicles"
 SHOT_DIR = r"C:\Users\user\AppData\Local\Temp\claude\shots\cars\models"
 
 MAT_ORDER = ['body', 'trim', 'glass', 'tire', 'rim', 'headlight', 'taillight', 'interior', 'accent']
