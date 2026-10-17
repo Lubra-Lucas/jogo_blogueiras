@@ -179,21 +179,23 @@ def esportivo():
             nu=K((-2.2, 3.6), (2.2, 3.6)), nl=K((-2.2, 4.0), (2.2, 4.0))),
             -2.2, 2.2, 0.55, 0.85, N=16, step=0.5)
     def cabin():
+        # teto alto (forro >= 1.08 m acima do 'seat'): fastback longo, para-brisa inclinado
         return Shape(dict(
-            hw=K((-1.4, 0.78), (0.5, 0.78)),
-            zb=K((-1.4, 0.64), (0.5, 0.64)),
-            zt=K((-1.4, 0.84), (-1.2, 1.02), (-0.7, 1.18), (-0.2, 1.20), (0.15, 1.14), (0.5, 0.84)),
-            nu=K((-1.4, 2.6), (0.5, 2.6)), nl=K((-1.4, 8), (0.5, 8))),
-            -1.4, 0.5, 0.3, 0.3, tumble=0.25, zshrink=0.15, N=24, step=0.2)
+            hw=K((-1.95, 0.88), (0.95, 0.88)),
+            zb=K((-1.95, 0.78), (0.95, 0.78)),
+            zt=K((-1.95, 0.86), (-1.62, 1.12), (-1.28, 1.50), (-0.95, 1.67), (-0.6, 1.70), (-0.2, 1.68), (0.2, 1.50), (0.6, 1.16), (0.95, 0.84)),
+            nu=K((-1.95, 3.4), (0.95, 3.4)), nl=K((-1.95, 8), (0.95, 8))),
+            -1.95, 0.95, 0.4, 0.4, tumble=0.22, zshrink=0.15, N=24, step=0.2)
     def glass(ctx):
         cab = ctx.cabin
         def fn(c, n, i, j):
             f = c.y
             hw, zc, hh, _, _ = cab.params(f); top = zc + hh
             if c.z < 0.82: return 'body'
-            if j in (23, 0, 1, 2, 9, 10, 11, 12) and c.z < top - 0.07 and -1.15 <= f <= 0.12: return 'glass'
-            if n.y > 0.35 and j in (4, 5, 6, 7) and f > 0.1 and c.z > 0.84: return 'glass'
-            if n.y < -0.35 and j in (4, 5, 6, 7) and f < -1.05 and c.z > 0.88: return 'glass'
+            belt = 1.02
+            if j in (23, 0, 1, 2, 9, 10, 11, 12) and c.z < top - 0.07 and c.z > belt and -1.25 <= f <= 0.12: return 'glass'
+            if n.y > 0.35 and j in (4, 5, 6, 7) and f > 0.0 and c.z > 0.84: return 'glass'
+            if n.y < -0.35 and j in (4, 5, 6, 7) and f < -1.38 and c.z > 0.88: return 'glass'
             return 'body'
         return fn
     t = tub()
@@ -210,7 +212,7 @@ def esportivo():
         plate_lamp(ctx, 0, 0.40, 0.80, 0.10, 'tire', front=True, depth=0.04, bevel=0.03)
         stripe(ctx, ctx.tub, 0.5, 2.12, 0.14, 'accent', n=14)
         stripe(ctx, ctx.tub, -2.0, -0.62, 0.14, 'accent', n=12)
-        stripe(ctx, ctx.cabin, -1.25, 0.38, 0.14, 'accent', n=16)
+        stripe(ctx, ctx.cabin, -1.6, 0.75, 0.14, 'accent', n=20)
         door_line(ctx, 0.28, 0.24, 0.80); door_line(ctx, -0.55, 0.24, 0.80)
         handle(ctx, -0.28, 0.72, 0.11)
         for sd in (1, -1):
@@ -231,7 +233,7 @@ def esportivo():
         a.box((0, -0.40, 0.48), (0.2, 0.8, 0.22), 'interior', bevel=0.04)
         steering(ctx, 0.40, -0.12, 0.84, R=0.15)
     return dict(
-        id='esportivo', name='Relampago', L=L, H=1.20, W=1.95, wb=wb, R=[Rf, Rr], track=track,
+        id='esportivo', name='Relampago', L=L, H=1.72, W=1.95, wb=wb, R=[Rf, Rr], track=track,
         body='#26406b', accent='#e6e2d6', rim='#b0b4bb', interior='#2a2a2e',
         tub=tub, cabin=cabin, glass=glass, decor=decor,
         cockpit=dict(f0=-1.25, f1=0.22, xh=0.58, floor=0.36),
@@ -240,7 +242,7 @@ def esportivo():
         wheel=dict(nspoke=6, spoke_w=0.09), arch_gap=0.04,
         seat=(0.40, -0.62, 0.56),
         lamps=dict(head=[(0.66, fh, 0.50), (-0.66, fh, 0.50)], tail=[(0.56, ft, 0.66), (-0.56, ft, 0.66)]),
-        colliders=[((0, 0, 0.47), (0.95, 2.18, 0.33)), ((0, -0.4, 0.95), (0.7, 0.9, 0.25))],
+        colliders=[((0, 0, 0.47), (0.95, 2.18, 0.33)), ((0, -0.55, 1.25), (0.7, 1.1, 0.47))],
     )
 
 
