@@ -97,7 +97,7 @@
 .nj-unlock { padding: 8px; border-radius: 12px; background: rgba(79, 174, 134, 0.18); border: 1px solid var(--nj-ok); font-size: 0.9rem; display: flex; flex-direction: column; }
 .nj-rank { text-align: left; display: flex; flex-direction: column; gap: 3px; }
 .nj-subtitle { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--nj-brass); text-align: left; }
-.nj-rank > div { display: grid; grid-template-columns: 26px 1fr auto; gap: 6px; padding: 5px 8px; border-radius: 8px; font-size: 0.85rem; background: rgba(255, 255, 255, 0.04); }
+.nj-rank > div:not(.nj-subtitle) { display: grid; grid-template-columns: 26px 1fr auto; gap: 6px; padding: 5px 8px; border-radius: 8px; font-size: 0.85rem; background: rgba(255, 255, 255, 0.04); }
 .nj-rank > div.you { background: rgba(212, 176, 106, 0.28); font-weight: 800; }
 .nj-rank em { font-style: normal; }
 .nj-rank b { font-variant-numeric: tabular-nums; }

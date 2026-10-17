@@ -183,13 +183,13 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
     renderBg()
   }, [contrast, renderBg])
 
-  // ---------------------------------------------------------------- laço de desenho e tempo
+  // ---------------------------------------------------------------- tempo (setInterval: não para com a aba em segundo plano) e desenho (rAF)
   useEffect(() => {
-    let raf = 0
     let last = performance.now()
     let lastSec = -1
-    const loop = (now: number) => {
-      const dt = Math.min(0.1, (now - last) / 1000)
+    const tick = () => {
+      const now = performance.now()
+      const dt = Math.min(0.2, (now - last) / 1000)
       last = now
       const G = gRef.current!
       if (G.phase === 'playing') {
@@ -201,6 +201,11 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
         }
         if (G.time <= 0) finish(false)
       }
+    }
+    const iv = window.setInterval(tick, 100)
+    let raf = 0
+    const loop = (now: number) => {
+      const G = gRef.current!
       const cv = canvasRef.current
       const anim = G.hint || G.flashes.length > 0 || G.found.size > 0
       if (cv && bgRef.current && (dirty.current || anim)) {
@@ -210,7 +215,10 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      window.clearInterval(iv)
+      cancelAnimationFrame(raf)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

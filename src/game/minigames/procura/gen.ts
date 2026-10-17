@@ -103,6 +103,9 @@ export interface SceneTarget {
   ids: number[]
   /** entidade usada no retrato da lista */
   sample: Entity
+  /** alvo-pessoa: o look de referência e os atributos exigidos (para conferir a unicidade) */
+  ref?: Look
+  reqs?: ReqKey[]
 }
 
 export interface Scene {
@@ -374,7 +377,7 @@ export function generateScene(seed: number, round: number, difficulty: Difficult
       if (usedDescriptions.has(text)) continue
       usedDescriptions.add(text)
       const sample = { kind: 'person', id: -1, x: 0, y: 0, s: 1, pose: 'stand', flip: false, look: ref } as Person
-      const t: SceneTarget = { id: tid++, kind, text, count: 1, ids: [], sample }
+      const t: SceneTarget = { id: tid++, kind, text, count: 1, ids: [], sample, ref, reqs: ordered }
       targets.push(t)
       personReqsList.push({ ref, reqs: ordered, id: t.id })
     } else if (kind === 'group') {
@@ -485,4 +488,11 @@ export function themeFor(seed: number, round: number): ThemeId {
   const r = rng(seed ^ 0xabc123)
   const start = Math.floor(r() * THEMES.length)
   return THEMES[(start + round * 2) % THEMES.length]
+}
+
+/** Quantas pessoas da cena combinam com a descrição de um alvo-pessoa (deve ser exatamente 1). */
+export function countMatches(scene: Scene, t: SceneTarget): number {
+  if (!t.ref || !t.reqs) return t.ids.length
+  const { ref, reqs } = t
+  return scene.entities.filter((e) => e.kind === 'person' && matchesAll(e.look, ref, reqs)).length
 }
