@@ -220,3 +220,27 @@ html[data-overlay='1'] :is(.pcard, .minimap, .hud-area, .hud-track, .fs-btn, .do
   html .menu__head { padding-top: 10px; }
 }
 html[data-compact='1'] .menu__body { padding-top: 2px; }
+
+/* ---------- pisos de toque: alvo >= 44 px e texto >= 12 px (so com toque) ---------- */
+@media (pointer: coarse) {
+  html :is(button, select, [role='button'], [role='tab']):not(.joy-zone, .cf-key) { min-height: 44px; }
+  html input:not([type='checkbox'], [type='radio'], [type='range']) { min-height: 44px; font-size: max(16px, 1em); }
+  html :is(.icon-btn, .pmin, .pstar, .pbtn-ic, .sh-x, .bigmap__close, .ps-x, .cc__cat, .cc__tool, .pbtn, .sh-wchip, .sh-pill, .sh-btn, .btn, .pill) { min-width: 44px; }
+  html .pmin { width: 44px; height: 44px; background: none; }
+  html .pmin svg { width: 18px; height: 18px; }
+  html .bigmap__close { width: 44px; height: 44px; }
+  html .cc__cat { min-width: 44px; }
+  html .toggle { position: relative; }
+  html .toggle::before { content: ''; position: absolute; inset: -10px -6px; }
+  html input[type='range'] { min-height: 44px; }
+  html .sh-wchip--d { min-width: 0; }
+  html select { font-size: 16px; }
+
+  /* texto minimo 12 px */
+  html :is(.msg, .pcard__title, .pcard__coins, .stage__tip, .sh-stage__tip, .kbd, kbd, .papp, .ptag, .pbtn, .sh-pill, .sh-badge, .sh-card__rar, .sh-card__note, .card__rar, .sh-fine, .pshop-sub, .ps-label, .cc-block__t, .tv-chip, .cf-tray-info, .dz-theme-eyebrow, .es-eyebrow, .es-sub, .fg-kicker, .jo-ochip, .dj-label, .sh-card__sub) { font-size: 12px !important; }
+  html :is(.msg b) { font-size: inherit !important; }
+  html .ew__icon em, html .ew__center span { font-size: 12px !important; }
+  html .bigmap__legend i, html .bigmap__legend { font-size: 12px; }
+  html .bigmap__legend i { width: 20px; height: 20px; }
+  html .card__rar { padding: 1px 5px; }
+}

@@ -149,7 +149,11 @@ export function Dock() {
   const toast = useEmoteStore((s) => s.toast)
   const [run, setRun] = useState(isRunLatched)
   // telas cheias (menu, loja, mercado, minijogo, mapa): o HUD de baixo some (CSS usa data-overlay)
-  const overlay = useUiStore((s) => s.menuOpen || s.bigMapOpen) || !!useShopStore((s) => s.open) || !!useMarketUi((s) => s.open) || useMinigameStore((s) => s.active !== null)
+  const fullUi = useUiStore((s) => s.menuOpen || s.bigMapOpen)
+  const shopOpen = useShopStore((s) => !!s.open)
+  const marketOpen = useMarketUi((s) => !!s.open)
+  const gameOpen = useMinigameStore((s) => s.active !== null)
+  const overlay = fullUi || shopOpen || marketOpen || gameOpen
   useEffect(() => {
     document.documentElement.dataset.overlay = overlay ? '1' : '0'
   }, [overlay])
