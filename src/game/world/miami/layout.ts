@@ -16,8 +16,8 @@ export const SEA = {
   shoreX: 96,
   waterY: -0.22,
   slope: 0.0625, // m de queda por m
-  /** muro invisivel (limite do banho): profundidade ~0,8 m */
-  wallX: 113,
+  /** muro invisível (limite do banho): profundidade ~0,5 m (o fundo some da câmera mais fundo que isso) */
+  wallX: 108,
   /** fim da area visual do fundo (alem disso e so agua) */
   farX: 700,
 } as const

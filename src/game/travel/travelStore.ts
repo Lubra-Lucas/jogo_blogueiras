@@ -40,7 +40,7 @@ function load(): Saved {
   if (!saved.visited.includes(HOME_ID)) saved.visited.unshift(HOME_ID)
   // ?city=main|miami forca a cidade ao abrir (testes / links)
   const q = params.get('city')
-  if (known(q)) {
+  if (import.meta.env.DEV && known(q)) {
     saved.cityId = q
     if (!saved.visited.includes(q)) saved.visited.push(q)
   }

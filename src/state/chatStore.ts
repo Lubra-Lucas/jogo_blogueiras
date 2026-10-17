@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { CHAT_MIN_INTERVAL_MS, cleanInput, filterProfanity, LocalTransport, newMessageId, type ChatMessage, type ChatTransport } from '../shared/chat'
 import { useProfileStore } from './profileStore'
+import { useTravelStore } from '../game/travel/travelStore'
 import { reactToChatMessage } from '../game/character/animation/emoteStore'
 
 const MAX_KEPT = 120
@@ -90,13 +91,24 @@ const AMBIENT_LINES = [
   'Bom dia, cidade!',
   'Vou dar uma volta no Boulevard',
 ]
+/** conversa de Miami Beach (viagem): so aparece quando a jogadora está lá */
+const MIAMI_LINES = [
+  'Esse mar está turquesa demais!',
+  'Alguém para uma partida de vôlei de praia?',
+  'O sorvete do Gelato Deco é perfeito para o calor',
+  'Vou tirar fotos dos hotéis Art Déco na Ocean Drive',
+  'Já andou até o fim do píer? A vista é linda',
+  'Passei protetor, bora pra areia!',
+  'Que pôr do sol na praia hoje',
+]
 let ambientTimer = 0
 function scheduleAmbient(first: boolean) {
   const delay = first ? 14000 + Math.random() * 8000 : 30000 + Math.random() * 40000
   ambientTimer = window.setTimeout(() => {
     if (transport instanceof LocalTransport) {
       const name = AMBIENT_NAMES[Math.floor(Math.random() * AMBIENT_NAMES.length)]
-      const line = AMBIENT_LINES[Math.floor(Math.random() * AMBIENT_LINES.length)]
+      const lines = useTravelStore.getState().cityId === 'miami' ? MIAMI_LINES : AMBIENT_LINES
+      const line = lines[Math.floor(Math.random() * lines.length)]
       useChatStore.getState().system(line, 'npc', name)
     }
     scheduleAmbient(false)

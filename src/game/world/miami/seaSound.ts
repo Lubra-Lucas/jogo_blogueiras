@@ -66,7 +66,8 @@ export function armSea() {
     if (ctx.state === 'suspended') void ctx.resume()
   }
   for (const ev of ['pointerdown', 'keydown', 'touchstart']) window.addEventListener(ev, go, { passive: true })
-  go()
+  // só cria o AudioContext se a jogadora já interagiu com a página (senão o navegador avisa e bloqueia)
+  if ((navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation?.hasBeenActive) go()
 }
 
 function gull(c: AudioContext, vol: number) {

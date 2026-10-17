@@ -10,6 +10,7 @@ import { invalidateGraph } from '../navigation/pathfinder'
 import { getDestination, HOME_ID } from './destinations'
 import { persistTravel, useTravelStore } from './travelStore'
 import { arrivalOf } from './worlds'
+import { interiorBridge } from '../interiors/interiorBridge'
 
 /**
  * Viagem de aviao. Fluxo: comprar passagem (nivel + Brilhos) -> cena da janela do aviao (3-6 s, pulavel; aqui o kit da cidade nova
@@ -27,9 +28,10 @@ export function checkTravel(destId: string): TravelCheck {
   const d = getDestination(destId)
   if (!d) return { ok: false, reason: 'unknown', msg: 'Destino desconhecido.' }
   if (t.flight) return { ok: false, reason: 'busy', msg: 'Você já está em voo.' }
+  if (interiorBridge.active) return { ok: false, reason: 'busy', msg: 'Saia do interior para viajar.' }
   if (d.id === t.cityId) return { ok: false, reason: 'same', msg: 'Você já está aqui.' }
   const p = useProfileStore.getState()
-  if (p.level < d.minLevel && !devUnlock()) return { ok: false, reason: 'level', msg: `Nível ${d.minLevel} necessário` }
+  if (p.level < d.minLevel && !devUnlock()) return { ok: false, reason: 'level', msg: `Libera no nível ${d.minLevel}` }
   if (d.price > 0 && p.coins < d.price) return { ok: false, reason: 'coins', msg: `Faltam ${d.price - p.coins} ${CURRENCY_NAME} para a passagem.` }
   return { ok: true }
 }
@@ -78,7 +80,7 @@ export async function startTravel(destId: string): Promise<boolean> {
   useTravelStore.setState((s) => ({
     cityId: d.id,
     visited: s.visited.includes(d.id) ? s.visited : [...s.visited, d.id],
-    ready: { ...s.ready, [d.id]: d.id === HOME_ID },
+    ready: { ...s.ready, [d.id]: false },
     flight: s.flight ? { ...s.flight, stage: 'landing' } : s.flight,
   }))
   persistTravel()
@@ -90,7 +92,7 @@ export async function startTravel(destId: string): Promise<boolean> {
 
   // 3) espera a cidade nova montar (todos os modelos) e o jogo estabilizar
   const w0 = performance.now()
-  while (!useTravelStore.getState().ready[d.id] && performance.now() - w0 < 12000) await sleep(100)
+  while (!useTravelStore.getState().ready[d.id] && performance.now() - w0 < 20000) await sleep(100)
   await sleep(500)
   invalidateGraph()
   useTravelStore.setState((s) => ({ flight: s.flight ? { ...s.flight, stage: 'fade' } : s.flight }))
