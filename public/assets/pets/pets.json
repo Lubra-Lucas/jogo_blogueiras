@@ -685,6 +685,228 @@
      }
     }
    ]
+  },
+  {
+   "id": "maltes",
+   "label": "Maltês",
+   "species": "dog",
+   "file": "maltes.glb",
+   "meta": {
+    "hr": 0.096,
+    "L": 0.27,
+    "bh": 0.095,
+    "bw": 0.082,
+    "zc": 0.1477,
+    "n0": [
+     0.0,
+     0.1715,
+     0.125
+    ],
+    "hn": [
+     0.0,
+     0.2395,
+     0.159
+    ],
+    "hc": [
+     0.0,
+     0.2587,
+     0.1955
+    ],
+    "neckR": 0.0749,
+    "height": 0.355
+   },
+   "coats": [
+    {
+     "id": "branco",
+     "label": "Branco",
+     "tier": "comum",
+     "colors": {
+      "nose": "#151214",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#ff6fae",
+      "tongue": "#d9788a",
+      "coat": "#f8f4ec",
+      "coat2": "#f8f4ec",
+      "coat3": "#f8f4ec",
+      "belly": "#f8f4ec"
+     }
+    },
+    {
+     "id": "marfim",
+     "label": "Marfim",
+     "tier": "raro",
+     "colors": {
+      "nose": "#151214",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#ff6fae",
+      "tongue": "#d9788a",
+      "coat": "#f0e4cd",
+      "coat2": "#f0e4cd",
+      "coat3": "#f0e4cd",
+      "belly": "#f0e4cd"
+     }
+    }
+   ]
+  },
+  {
+   "id": "cavalier",
+   "label": "Cavalier King",
+   "species": "dog",
+   "file": "cavalier.glb",
+   "meta": {
+    "hr": 0.103,
+    "L": 0.33,
+    "bh": 0.108,
+    "bw": 0.09,
+    "zc": 0.1886,
+    "n0": [
+     0.0,
+     0.2156,
+     0.155
+    ],
+    "hn": [
+     0.0,
+     0.291,
+     0.1974
+    ],
+    "hc": [
+     0.0,
+     0.3116,
+     0.2366
+    ],
+    "neckR": 0.0762,
+    "height": 0.415
+   },
+   "coats": [
+    {
+     "id": "rubi",
+     "label": "Rubi",
+     "tier": "comum",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#a2391f",
+      "coat2": "#a2391f",
+      "coat3": "#a2391f",
+      "belly": "#a2391f"
+     }
+    },
+    {
+     "id": "rubi-intenso",
+     "label": "Rubi intenso",
+     "tier": "raro",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#7f2715",
+      "coat2": "#7f2715",
+      "coat3": "#7f2715",
+      "belly": "#7f2715"
+     }
+    }
+   ]
+  },
+  {
+   "id": "golden",
+   "label": "Golden Retriever",
+   "species": "dog",
+   "file": "golden.glb",
+   "meta": {
+    "hr": 0.118,
+    "L": 0.46,
+    "bh": 0.14,
+    "bw": 0.11,
+    "zc": 0.313,
+    "n0": [
+     0.0,
+     0.348,
+     0.22
+    ],
+    "hn": [
+     0.0,
+     0.486,
+     0.3005
+    ],
+    "hc": [
+     0.0,
+     0.5096,
+     0.3477
+    ],
+    "neckR": 0.0944,
+    "height": 0.628
+   },
+   "coats": [
+    {
+     "id": "dourado",
+     "label": "Dourado",
+     "tier": "comum",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#d9a04f",
+      "coat2": "#d9a04f",
+      "coat3": "#d9a04f",
+      "belly": "#eccb8f"
+     }
+    },
+    {
+     "id": "creme",
+     "label": "Creme",
+     "tier": "comum",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#ead1a0",
+      "coat2": "#ead1a0",
+      "coat3": "#ead1a0",
+      "belly": "#f6e7c8"
+     }
+    },
+    {
+     "id": "vermelho",
+     "label": "Vermelho",
+     "tier": "raro",
+     "colors": {
+      "nose": "#1b1517",
+      "eye": "#171214",
+      "iris": "#7fa6c9",
+      "pupil": "#0b0b0d",
+      "glint": "#ffffff",
+      "inner": "#d9a6a0",
+      "tongue": "#d9788a",
+      "coat": "#b8682c",
+      "coat2": "#b8682c",
+      "coat3": "#b8682c",
+      "belly": "#d69a5c"
+     }
+    }
+   ]
   }
  ]
 }
