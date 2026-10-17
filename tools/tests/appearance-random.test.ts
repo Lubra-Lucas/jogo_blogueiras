@@ -26,6 +26,8 @@ import {
   BROW_HAIR_MAX_DELTA,
   HAIR_NATURAL_HEX,
   appearanceIssues,
+  boneIssues,
+  randomProportions,
   luminance,
   npcAppearance,
   randomAppearance,
@@ -331,5 +333,32 @@ if (looks) {
     }
   })
 }
+
+await t('proporcoes por osso: migracao zera, sanitize limita, sorteio concentrado no meio com poucos extremos', async () => {
+  const BONE = ['height', 'legs', 'arms', 'torso', 'neck', 'headSize', 'hands', 'feet', 'posture', 'lordosis', 'shouldersSlope'] as const
+  const old = normalizeAppearance({ v: 4, morphs: { bustBig: 0.3 } } as never)
+  for (const k of BONE) assert.equal(old.body[k], 0, k)
+  const s = sanitizeAppearance({ ...DEFAULT_APPEARANCE, body: { ...DEFAULT_APPEARANCE.body, posture: 7, neck: -7, feet: 'x' } } as never)!
+  assert.equal(s.body.posture, 1)
+  assert.equal(s.body.neck, -1)
+  assert.equal(s.body.feet, 0)
+  const rp = randomProportions('abc', DEFAULT_APPEARANCE.body)
+  assert.deepEqual(rp, randomProportions('abc', DEFAULT_APPEARANCE.body))
+  assert.equal(rp.bust, 0)
+  let near = 0
+  let far = 0
+  let tot = 0
+  for (let i = 0; i < 1500; i++) {
+    const b = randomProportions(i * 977 + 3, DEFAULT_APPEARANCE.body)
+    assert.deepEqual(boneIssues(b), [])
+    for (const k of BONE) {
+      tot++
+      if (Math.abs(b[k]) < 0.45) near++
+      if (Math.abs(b[k]) > 0.6) far++
+    }
+  }
+  assert.ok(near / tot > 0.8, `perto do meio ${near / tot}`)
+  assert.ok(far / tot > 0.005 && far / tot < 0.1, `extremos ${far / tot}`)
+})
 
 console.log(`\n${passed} verificacoes passaram (${N} aparencias sorteadas).`)

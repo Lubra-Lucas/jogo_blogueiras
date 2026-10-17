@@ -12,6 +12,8 @@
 import { DEFAULT_APPEARANCE, normalizeAppearance, type Appearance } from './appearance'
 import {
   BODY_CONTROLS,
+  type BodyControl,
+  type BodyKey,
   BROW_STYLES,
   DEFAULT_BODY,
   EYE_SHAPES,
@@ -105,8 +107,21 @@ export function appearanceIssues(a: Appearance): string[] {
   if (b.bust > 0.6 && b.shoulders < -0.5) out.push('busto grande com ombros estreitos')
   if (b.butt > 0.7 && b.hips < -0.2) out.push('bumbum grande com quadril estreito')
   if (b.weight > 0.4 && b.waist < -0.5) out.push('peso alto com cintura minima')
+  out.push(...boneIssues(b))
   // cores: sobrancelha perto do cabelo natural
   if (HAIR_NATURAL_HEX.includes(a.hair.color) && Math.abs(luminance(f.browColor) - luminance(a.hair.color)) > BROW_HAIR_MAX_DELTA) out.push('sobrancelha longe da cor do cabelo')
+  return out
+}
+
+/** Combinacoes de proporcao/postura que ficam estranhas. */
+export function boneIssues(b: BodyParams): string[] {
+  const out: string[] = []
+  if (b.headSize > 0.5 && b.neck < -0.45) out.push('cabeca grande com pescoco curto')
+  if (b.posture > 0.6 && b.neck > 0.5) out.push('corcunda com pescoco longo demais')
+  if (b.posture > 0.7 && b.shouldersSlope > 0.6) out.push('corcunda com ombros muito caidos')
+  if (b.height < -0.6 && b.headSize > 0.5) out.push('baixa com cabeca grande demais')
+  if (b.legs > 0.55 && b.torso > 0.5) out.push('pernas e tronco longos demais')
+  if (b.legs < -0.55 && b.torso < -0.5) out.push('pernas e tronco curtos demais')
   return out
 }
 
@@ -131,10 +146,60 @@ function rollFace(r: Rng, npc: boolean, hairHex: string): FaceParams {
   return face
 }
 
+/**
+ * Controles de proporcao/postura (por osso): distribuicao realista. A maioria fica perto do meio (soma de tres sorteios,
+ * ~gaussiana com desvio `sd`) e uns poucos (6%; 3% nas NPCs) caem num extremo, dentro da faixa segura do catalogo.
+ */
+const BONE_SPREAD: Partial<Record<BodyKey, { sd: number; mean?: number }>> = {
+  height: { sd: 0.36 },
+  legs: { sd: 0.28 },
+  arms: { sd: 0.24 },
+  shoulders: { sd: 0.3 },
+  torso: { sd: 0.24 },
+  neck: { sd: 0.24 },
+  headSize: { sd: 0.2 },
+  hands: { sd: 0.2 },
+  feet: { sd: 0.2 },
+  posture: { sd: 0.26, mean: 0.12 },
+  lordosis: { sd: 0.22, mean: 0.1 },
+  shouldersSlope: { sd: 0.24, mean: 0.08 },
+}
+
+function rollBoneControl(r: Rng, c: BodyControl, sd: number, mean: number, pExtreme: number): number {
+  const [lo, hi] = c.safe
+  if (r() < pExtreme) {
+    const up = r() < 0.5
+    const edge = up ? hi : lo
+    return clamp(edge * (0.7 + 0.3 * r()), lo, hi)
+  }
+  const g = (r() + r() + r() - 1.5) * 2
+  return clamp(mean + g * sd, lo, hi)
+}
+
 function rollBody(r: Rng, npc: boolean): BodyParams {
   const k = npc ? 0.85 : 1
   const out = { ...DEFAULT_BODY }
-  for (const c of BODY_CONTROLS) out[c.id] = round(clamp(centered(r, c.safe[0] * k, c.safe[1] * k), c.safe[0], c.safe[1]))
+  for (const c of BODY_CONTROLS) {
+    const sp = BONE_SPREAD[c.id]
+    out[c.id] = round(sp ? rollBoneControl(r, c, sp.sd * k, (sp.mean ?? 0) * k, npc ? 0.03 : 0.06) : clamp(centered(r, c.safe[0] * k, c.safe[1] * k), c.safe[0], c.safe[1]))
+  }
+  return out
+}
+
+/** Sorteia so as proporcoes e a postura (botao "Aleatorio (corpo)" do editor); o resto do corpo fica como esta. */
+export function randomProportions(seed: number | string, base: BodyParams, profile: 'player' | 'npc' = 'player'): BodyParams {
+  const r = mulberry32(seedToNumber(seed))
+  const npc = profile === 'npc'
+  const out = { ...base }
+  for (const c of BODY_CONTROLS) {
+    const sp = BONE_SPREAD[c.id]
+    if (sp) out[c.id] = round(rollBoneControl(r, c, sp.sd * (npc ? 0.85 : 1), (sp.mean ?? 0) * (npc ? 0.85 : 1), npc ? 0.03 : 0.08))
+  }
+  // mesmas regras de coerencia do gerador completo: puxa para o meio se faltar harmonia
+  for (let s = 1; s >= 0; s -= 0.25) {
+    if (!boneIssues(out).length) break
+    for (const c of BODY_CONTROLS) if (BONE_SPREAD[c.id]) out[c.id] = round(out[c.id] * 0.75)
+  }
   return out
 }
 

@@ -145,6 +145,7 @@ export const FACE_SAFE = {
 
 /** Bloco de corpo (v5): todos bipolares -1..1 (0 = neutro). */
 export interface BodyParams {
+  /** altura total: -1 (~1,45 m) .. 1 (~1,85 m); os ossos mudam de comprimento (ver game/character/proportions.ts) */
   height: number
   shoulders: number
   waist: number
@@ -156,6 +157,18 @@ export interface BodyParams {
   bust: number
   butt: number
   weight: number
+  /** proporcoes por osso (v5.1): comprimento do tronco, do pescoco, tamanho da cabeca, das maos e dos pes */
+  torso: number
+  neck: number
+  headSize: number
+  hands: number
+  feet: number
+  /** postura: -1 muito ereta .. 1 corcunda (cifose) */
+  posture: number
+  /** lordose: -1 quadril reto .. 1 quadril para tras */
+  lordosis: number
+  /** ombros: -1 erguidos .. 1 caidos */
+  shouldersSlope: number
 }
 export type BodyKey = keyof BodyParams
 
@@ -171,20 +184,28 @@ export interface BodyControl {
 
 /** Controles de corpo. Os morphs ja existentes em `src/game/character/morphConfig.ts` estao ligados; os demais aguardam o Blender. */
 export const BODY_CONTROLS: BodyControl[] = [
-  { id: 'height', label: 'Altura', safe: [-0.5, 0.6] },
-  { id: 'shoulders', label: 'Ombros', minus: 'shouldersNarrow', safe: [-0.6, 0.5] },
+  { id: 'height', label: 'Altura', safe: [-0.85, 0.85] },
+  { id: 'shoulders', label: 'Largura dos ombros', minus: 'shouldersNarrow', safe: [-0.7, 0.7] },
   { id: 'waist', label: 'Cintura', minus: 'waistThin', safe: [-0.7, 0.5] },
   { id: 'hips', label: 'Quadril', plus: 'hipsWide', safe: [-0.4, 0.7] },
-  { id: 'legs', label: 'Pernas/coxas', plus: 'thighsThick', safe: [-0.4, 0.6] },
-  { id: 'arms', label: 'Braços', safe: [-0.5, 0.5] },
+  { id: 'legs', label: 'Comprimento das pernas', safe: [-0.7, 0.7] },
+  { id: 'arms', label: 'Comprimento dos braços', safe: [-0.6, 0.6] },
   { id: 'belly', label: 'Barriga', safe: [-0.3, 0.5] },
   { id: 'muscle', label: 'Músculos', safe: [0, 0.6] },
   { id: 'bust', label: 'Busto', minus: 'bustSmall', plus: 'bustBig', safe: [-0.7, 0.8] },
   { id: 'butt', label: 'Bumbum', minus: 'buttSmall', plus: 'buttBig', safe: [-0.6, 0.8] },
   { id: 'weight', label: 'Peso', minus: 'weightDown', plus: 'weightUp', safe: [-0.5, 0.6] },
+  { id: 'torso', label: 'Comprimento do tronco', safe: [-0.6, 0.6] },
+  { id: 'neck', label: 'Comprimento do pescoço', safe: [-0.6, 0.6] },
+  { id: 'headSize', label: 'Tamanho da cabeça', safe: [-0.6, 0.6] },
+  { id: 'hands', label: 'Tamanho das mãos', safe: [-0.6, 0.6] },
+  { id: 'feet', label: 'Tamanho dos pés', safe: [-0.6, 0.6] },
+  { id: 'posture', label: 'Postura (ereta a corcunda)', safe: [-0.5, 0.9] },
+  { id: 'lordosis', label: 'Curvatura da lombar (quadril para trás)', safe: [-0.4, 0.7] },
+  { id: 'shouldersSlope', label: 'Ombros caídos', safe: [-0.5, 0.8] },
 ]
 export const BODY_KEYS: BodyKey[] = BODY_CONTROLS.map((c) => c.id)
-export const DEFAULT_BODY: BodyParams = { height: 0, shoulders: 0, waist: 0, hips: 0, legs: 0, arms: 0, belly: 0, muscle: 0, bust: 0, butt: 0, weight: 0 }
+export const DEFAULT_BODY: BodyParams = { height: 0, shoulders: 0, waist: 0, hips: 0, legs: 0, arms: 0, belly: 0, muscle: 0, bust: 0, butt: 0, weight: 0, torso: 0, neck: 0, headSize: 0, hands: 0, feet: 0, posture: 0, lordosis: 0, shouldersSlope: 0 }
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
 
