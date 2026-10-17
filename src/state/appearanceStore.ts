@@ -43,11 +43,11 @@ interface AppearanceState {
   renameSlot: (i: number, name: string) => void
 }
 
-/** Le a aparencia salva (v3 ou v4), sem confiar no conteudo; v3 migra para v4. */
+/** Le a aparencia salva (v3, v4 ou v5), sem confiar no conteudo; v3 migra para v4. */
 function loadSaved(): Appearance | null {
   const raw = loadJson<{ v?: number; appearance?: Omit<Appearance, 'v'> & { v: number } }>(STORAGE_KEYS.appearance)
   const a = raw?.appearance
-  if (!raw || raw.v !== 1 || !a || (a.v !== 3 && a.v !== 4) || typeof a.morphs !== 'object' || !a.hair || !a.skin || !a.suit) return null
+  if (!raw || raw.v !== 1 || !a || (a.v !== 3 && a.v !== 4 && a.v !== 5) || typeof a.morphs !== 'object' || !a.hair || !a.skin || !a.suit) return null
   return normalizeAppearance(a)
 }
 

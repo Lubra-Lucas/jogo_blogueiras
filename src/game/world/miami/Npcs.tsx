@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import type { Group } from 'three'
 import { Character } from '../../character/Character'
 import { DEFAULT_APPEARANCE, type Appearance } from '../../../shared/appearance'
+import { npcAppearance } from '../../../shared/randomAppearance'
 import { usePlayerStore } from '../../../state/playerStore'
 import { getQuality } from '../../systems/quality'
 import type { ClipName } from '../../character/animation/animator'
@@ -62,7 +63,8 @@ const SPECS: NpcSpec[] = [
 
 const HAIRS = ['hair.meshyUpdo', 'hair.chestnutWaves', 'hair.platinumUndercut', 'hair.caramelCurls']
 function appearanceOf(n: NpcSpec): Appearance {
-  return {
+  // rosto e corpo variados e estaveis por NPC (seed = id); gerado uma vez e guardado em cache
+  return npcAppearance(n.id, {
     ...DEFAULT_APPEARANCE,
     skin: { tone: n.skin, finish: 'natural' },
     suit: { color: n.suit, finish: 'satin', base: 'auto' },
@@ -75,7 +77,7 @@ function appearanceOf(n: NpcSpec): Appearance {
       ...(n.dress ? { dress: { id: n.dress } } : {}),
       ...(n.shoes ? { shoes: { id: n.shoes } } : {}),
     },
-  }
+  })
 }
 
 function pathLen(p: [number, number][]) {

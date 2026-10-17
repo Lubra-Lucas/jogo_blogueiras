@@ -36,7 +36,8 @@ function check(s: string): string {
 }
 
 export function encodeLook(a: Appearance): string {
-  const d = diff(a, DEFAULT_APPEARANCE) ?? {}
+  // `v: 5` sempre vai no codigo: marca que `face`/`body` (quando iguais ao padrao) sao mesmo o padrao, nao "ausentes"
+  const d = { ...((diff(a, DEFAULT_APPEARANCE) as Record<string, unknown> | undefined) ?? {}), v: a.v }
   const body = b64(JSON.stringify(d))
   return `JB4-${body}-${check(body)}`
 }
@@ -61,7 +62,13 @@ export function decodeLook(code: string): DecodeResult {
   if (check(m[1]) !== m[2]) return { ok: false, error: 'Código incompleto ou alterado.' }
   try {
     const raw = JSON.parse(unb64(m[1])) as unknown
-    const merged = mergeOver(DEFAULT_APPEARANCE, raw)
+    // codigo antigo (JB4 sem `v: 5`) nao tem face/body: parte do padrao SEM esses blocos para que sejam derivados
+    // de makeup/morphs na normalizacao (cilios, sobrancelhas, tamanho do olho) em vez de virarem o padrao v5
+    const isV5 = !!raw && typeof raw === 'object' && (raw as { v?: unknown }).v === 5
+    const { face: _f, body: _b, ...legacyBase } = DEFAULT_APPEARANCE
+    void _f
+    void _b
+    const merged = mergeOver(isV5 ? DEFAULT_APPEARANCE : legacyBase, raw)
     const a = sanitizeAppearance(merged)
     if (!a) return { ok: false, error: 'Código sem aparência.' }
     const stripped = stripUnowned(a)
