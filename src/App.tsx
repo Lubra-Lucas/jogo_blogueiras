@@ -18,6 +18,7 @@ import { VehicleUi } from './ui/vehicles/VehicleUi'
 import { useVehicleStore } from './game/vehicles/driveStore'
 import { EnvironmentHud } from './ui/environment/EnvironmentHud'
 import { ShopHost } from './ui/shop/ShopHost'
+import { useMinigameStore } from './game/minigames/minigameStore'
 import { useShopStore } from './ui/shop/shopStore'
 import { MarketHost, useMarketUi } from './ui/market'
 import { FastTravelFade } from './game/navigation/FastTravelFade'
@@ -36,7 +37,9 @@ export default function App() {
   const uiMenu = useUiStore((s) => s.menuOpen)
   const shopOpen = useShopStore((s) => !!s.open)
   const marketOpen = useMarketUi((s) => s.open)
-  const menuOpen = uiMenu || shopOpen || marketOpen
+  // minijogo em tela cheia: os que tem cena 3D usam o proprio <Canvas>; o mundo por tras nao precisa renderizar
+  const minigameOpen = useMinigameStore((s) => s.active !== null)
+  const menuOpen = uiMenu || shopOpen || marketOpen || minigameOpen
   useEffect(() => initDeviceDetection(), [])
   return (
     <div className="app">
@@ -44,7 +47,7 @@ export default function App() {
         <Canvas
           frameloop={menuOpen ? 'never' : 'always'}
           dpr={settings.dpr}
-          shadows={settings.shadows}
+          shadows={settings.shadows ? "percentage" : false}
           camera={{ position: [0, 4.5, 11], fov: 50, near: 0.1, far: 400 }}
           gl={{
             antialias: tier !== 'low',

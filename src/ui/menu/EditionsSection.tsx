@@ -68,11 +68,14 @@ function EditionCard({ inst, worn, onClick }: { inst: EditionInstance; worn?: bo
 }
 
 /** Guarda-roupa: edicoes limitadas que a jogadora possui. */
-export function EditionsSection() {
+export function EditionsSection({ slots }: { slots?: ItemSlot[] } = {}) {
   const instances = useInventory((s) => s.instances)
   const appearance = useAppearanceStore((s) => s.appearance)
   const setAppearance = useAppearanceStore((s) => s.setAppearance)
-  const list = Object.values(instances).sort((a, b) => b.acquiredAt - a.acquiredAt)
+  // com `slots` (guarda-roupa): so as edicoes da categoria aberta (ex.: Laco Gigante e Diadema sao Joias, nao Cabelo)
+  const all = Object.values(instances).sort((a, b) => b.acquiredAt - a.acquiredAt)
+  const list = slots ? all.filter((i) => { const d = getEdition(i.editionId); return !!d && slots.includes(slotOfEdition(d) as ItemSlot) }) : all
+  if (slots && list.length === 0) return null
   return (
     <div className="panel">
       <h3>Edições</h3>

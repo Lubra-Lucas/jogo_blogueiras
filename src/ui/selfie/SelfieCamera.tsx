@@ -53,6 +53,7 @@ function aim(bone: Bone, child: Bone, dir: Vector3, w: number) {
 export function SelfieCamera() {
   const camera = useThree((s) => s.camera) as PerspectiveCamera
   const scene = useThree((s) => s.scene)
+  const gl = useThree((s) => s.gl)
   const { world, rapier } = useRapier()
   const st = useMemo(
     () => ({
@@ -64,6 +65,8 @@ export function SelfieCamera() {
       armW: 0,
       headW: 0,
       clock: 0,
+      frames: 0, // quadros desde que a selfie abriu (o canvas fica oculto ate estabilizar)
+      shown: false,
       shape: new rapier.Ball(0.1),
       rot: { x: 0, y: 0, z: 0, w: 1 },
       flags: rapier.QueryFilterFlags.EXCLUDE_SENSORS | rapier.QueryFilterFlags.EXCLUDE_DYNAMIC | rapier.QueryFilterFlags.EXCLUDE_KINEMATIC,
@@ -98,6 +101,15 @@ export function SelfieCamera() {
         camera.fov = FOV
         camera.updateProjectionMatrix()
         st.inited = false
+        // primeiro quadro correto: a cabeca ja comeca olhando a lente (sem rampa) e o canvas so aparece depois de o enquadramento
+        // (topo do coque/chapeu medido com a cabeca na pose final) estabilizar; fade-in curto
+        st.headW = useEmoteStore.getState().emote !== null ? 0.55 : 0.9
+        st.frames = 0
+        st.clock = 0
+        st.shown = false
+        gl.domElement.style.transition = 'none'
+        gl.domElement.style.opacity = '0'
+        invalidateHeadTop()
         // a personagem so aparece enquanto a camera esta longe (ver PlayerController)
         const cs = useCameraStore.getState()
         cs.distance = Math.max(cs.distance, (C.fadeStart + C.fadeEnd) / 2 + 1)
@@ -105,6 +117,8 @@ export function SelfieCamera() {
         camera.fov = st.fov0
         camera.updateProjectionMatrix()
         st.armW = st.headW = 0
+        gl.domElement.style.transition = ''
+        gl.domElement.style.opacity = ''
       }
     }
     if (!want) return
@@ -115,6 +129,14 @@ export function SelfieCamera() {
     cameraIntent.yawDelta = cameraIntent.pitchDelta = cameraIntent.zoomDelta = 0
 
     const ps = usePlayerStore.getState()
+    st.frames++
+    if (!st.shown && st.clock > 1.5) {
+      // rede de seguranca: nunca deixa o canvas oculto se o osso da cabeca nao for achado
+      st.shown = true
+      gl.domElement.style.transition = 'opacity 0.18s ease-out'
+      gl.domElement.style.opacity = '1'
+    }
+    if (!st.shown && st.frames <= 6) invalidateHeadTop() // remede o topo a cada quadro enquanto oculto
     const info = getHeadInfo(scene, ps.position.x, ps.position.y, ps.position.z, 5)
     if (!info) return
     const { head } = info
@@ -177,6 +199,11 @@ export function SelfieCamera() {
     camera.position.copy(st.pos)
     camera.lookAt(st.look)
     camera.updateMatrixWorld()
+    if (!st.shown && st.frames > 6 && st.clock > 0.3) {
+      st.shown = true
+      gl.domElement.style.transition = 'opacity 0.18s ease-out'
+      gl.domElement.style.opacity = '1'
+    }
 
     // ---- cabeca olha para a lente (apos a animacao do frame) ----
     const emoting = useEmoteStore.getState().emote !== null

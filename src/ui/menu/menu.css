@@ -274,7 +274,7 @@
 .btn--primary { color: #fff; border-color: #fff; background: linear-gradient(135deg, var(--acc), color-mix(in srgb, var(--acc) 65%, #fff)); box-shadow: 0 4px 14px color-mix(in srgb, var(--acc) 50%, transparent); }
 .btn--danger { color: #b8324d; border-color: #e9a3b2; }
 .btn svg { width: 16px; height: 16px; }
-.actions { position: sticky; bottom: 0; display: flex; gap: 8px; flex-wrap: wrap; padding: 10px 0 2px; background: linear-gradient(transparent, rgba(255, 250, 252, 0.95) 35%); }
+.actions { position: sticky; bottom: 0; z-index: 2; display: flex; gap: 8px; flex-wrap: wrap; padding: 10px 4px 8px; margin-top: 8px; background: #fff8fb; border-top: 1px solid rgba(217, 191, 106, 0.55); box-shadow: 0 -6px 10px -6px rgba(120, 80, 130, 0.18); }
 .unsaved { align-self: center; font: 700 12px var(--corpo); color: #c07a1a; }
 
 /* ---- sliders ---- */
@@ -385,7 +385,7 @@
 .modal__box { width: min(380px, 100%); padding: 20px; border-radius: 22px; text-align: center; background: #fffaf8; border: 3px solid #e6cf85; box-shadow: 0 14px 40px rgba(70, 30, 90, 0.4); animation: menu-pop 0.28s ease both; }
 .modal__box h3 { margin: 0 0 6px; font: italic 700 24px var(--fonte-titulo); }
 .modal__box p { margin: 0 0 12px; font: 600 14px var(--corpo); color: var(--tinta-suave); }
-.modal__box .actions { justify-content: center; position: static; background: none; }
+.modal__box .actions { justify-content: center; position: static; background: none; border-top: 0; box-shadow: none; padding: 10px 0 2px; }
 
 /* ===== cartao do jogador (HUD) ===== */
 .pcard {

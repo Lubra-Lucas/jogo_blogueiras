@@ -8,6 +8,7 @@ import { useInteractionStore } from '../interaction/interactionStore'
 import { useMinigameStore } from '../minigames/minigameStore'
 import { CITY } from '../world/city/layout'
 import { BENCHES, EXTRA_SEATS, KINDS, SEATS, type Seat } from './seats'
+import { interiorBridge } from '../interiors/interiorBridge'
 import { useInteriorStore } from '../interiors/interiorStore'
 import { useSitStore } from './sitStore'
 import { driveBridge } from '../vehicles/driveStore'
@@ -55,6 +56,7 @@ if (typeof window !== 'undefined') {
 const _o = new Vector3()
 const _d = new Vector3()
 /** etapa do trajeto ate o assento: 'corner' = contornando o banco por tras (sem pathfinding, a reta bateria no colisor) */
+let gameHold = false
 let stage: 'corner' | 'final' | null = null
 const _c = new Vector3() // destino atual da etapa 'corner'
 
@@ -275,6 +277,22 @@ export function SitController() {
       // (dentro de uma sala, um ponto de uso de verdade -- minijogo, loja, cama -- vence o assento mesmo que ele esteja mais perto:
       //  o aviso e o [E] ficam com o ponto; clicar no assento ainda senta)
       if (best && ip && (ip.d2 < bd || isGameSpot(ip.spot.action))) best = null
+      // decisao estavel: com um ponto de minijogo/loja/menu ao alcance (com histerese), o [E] e o aviso sao dele e o assento so por clique
+      const room = interiorBridge.room
+      let gameNear = false
+      if (room && interiorBridge.active) {
+        const grow = gameHold ? 0.6 : 0
+        for (const s of room.spots) {
+          if (!isGameSpot(s.action)) continue
+          const r = s.radius + grow
+          if ((s.x - p.x) ** 2 + (s.z - p.z) ** 2 < r * r) {
+            gameNear = true
+            break
+          }
+        }
+      }
+      gameHold = gameNear
+      if (gameNear) best = null
       // se uma porta (cafe...) esta mais perto que o assento, o aviso e dela
       const door = useInteractionStore.getState().nearby
       const poi = door && POIS.get(door.id)

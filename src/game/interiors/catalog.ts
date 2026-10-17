@@ -59,6 +59,8 @@ export function pieceUrl(_key: string, info: PieceInfo): string {
   return `${ROOT}${info.file}`
 }
 
+import { makeOccludable } from '../camera/occlusion'
+
 const loader = new GLTFLoader()
 const gltfP = new Map<string, Promise<Group>>()
 const gltfV = new Map<string, Group>()
@@ -123,14 +125,19 @@ function templateFor(url: string, palKey: string, pal: RoomPalette | null): Grou
 
 const SLOT_SET: Record<string, 1> = { base: 1, accent: 1, accent2: 1, soft: 1, deep: 1, white: 1, fabric: 1, trim: 1, glass: 1, glow: 1, glow2: 1, leaf: 1 }
 
+const OCC_PIECE = /pendant|hanging|chandelier|lamp_floor|floor_lamp|palm|tree|ficus/i
+
 /** Instancia sincrona (precisa de `loadPiece` ja resolvido). */
 export function instantiate(url: string, palKey: string, pal: RoomPalette | null): Group | null {
   const t = templateFor(url, palKey, pal)
   if (!t) return null
   const g = t.clone(true)
+  const fade = OCC_PIECE.test(url)
   g.traverse((o) => {
     const m = o as Mesh
     if (m.isMesh) {
+      // luminarias pendentes / vasos suspensos / plantas altas esmaecem quando tampam a camera (camera/occlusion.ts)
+      if (fade) (Array.isArray(m.material) ? m.material : [m.material]).forEach((mm) => makeOccludable(mm))
       m.castShadow = false
       m.receiveShadow = false
     }

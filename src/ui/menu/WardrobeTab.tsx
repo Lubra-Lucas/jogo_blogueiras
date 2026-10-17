@@ -9,7 +9,7 @@ import { useEconomyStore } from '../../game/economy/economyStore'
 import { PREMIUM_FINISH_PRICE } from '../../game/economy/prices'
 import { useSellables, useStatuses } from '../../game/economy/sellables'
 import { useProfileStore } from '../../state/profileStore'
-import { Money } from '../shop/parts'
+import { Money, iconTint } from '../shop/parts'
 import { useShopStore } from '../shop/shopStore'
 import { endTryOn, toggleTry, unownedWorn, useTryStore } from '../shop/tryon'
 import { Swatches } from './controls'
@@ -63,6 +63,10 @@ export function WardrobeTab() {
   useEffect(() => endTryOn, [])
 
   const cat = CATEGORIES.find((c) => c.id === catId)!
+  // ao trocar de categoria a lista volta ao topo
+  useEffect(() => {
+    document.querySelector('.menu__content')?.scrollTo({ top: 0 })
+  }, [catId])
   const slots = (cat.id === 'jewelry' || cat.id === 'acc') && jewelSlot !== 'all' && cat.slots.includes(jewelSlot as ItemSlot) ? [jewelSlot as ItemSlot] : cat.slots
   const list = slots.flatMap((sl) => itemsForSlot(sl, items))
   const hasItems = (c: Category) => c.slots.some((sl) => itemsForSlot(sl, items).length > 0)
@@ -124,7 +128,7 @@ export function WardrobeTab() {
                 const mine = ownedSet.has(it.id)
                 const st = statuses.get(it.id)
                 const slot = (it.item?.slot ?? 'hair') as ItemSlot
-                const tint = it.item?.mats[0]?.color ?? getWearable(it.id)?.defaultColor ?? '#c9a8d8'
+                const tint = iconTint(it.item?.mats[0]?.color ?? getWearable(it.id)?.defaultColor ?? '#c9a8d8')
                 return (
                   <button key={it.id} type="button" className={`card${mine ? '' : ' card--locked'}`} style={{ ['--rar' as string]: RARITY_COLORS[tags.rarity] }} aria-pressed={selected === it.id} onClick={() => click(it.id, slot)}>
                     <span className="card__icon">{SLOT_ICONS[slot]({ style: { color: tint } })}</span>
@@ -154,7 +158,7 @@ export function WardrobeTab() {
           )}
         </div>
 
-        <EditionsSection />
+        <EditionsSection slots={cat.slots} />
 
         {selected && !ownedSet.has(selected) && sellables.some((x) => x.id === selected) && (
           <div className="panel">
@@ -257,7 +261,7 @@ export function WardrobeTab() {
             </button>
           </div>
         )}
-        <p style={{ margin: '0 0 8px', font: '600 12px var(--corpo)', color: 'var(--tinta-suave)' }}>As peças equipadas aparecem na personagem ao vivo. Use &quot;Salvar&quot; na aba Aparência para guardar o look.</p>
+        <p style={{ margin: '0 0 8px', font: '600 12px var(--corpo)', color: 'var(--tinta-suave)' }}>As peças equipadas aparecem na personagem ao vivo. Use &quot;Salvar look&quot; (aqui embaixo ou na aba Aparência) para guardar o look.</p>
         <SaveLookBar />
       </div>
     </div>

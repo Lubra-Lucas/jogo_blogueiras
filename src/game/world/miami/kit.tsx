@@ -7,6 +7,7 @@ import kit from './miamiKit.json'
 import { merge, paint } from '../city/geo'
 import { Cull, LodCull, useCullDist } from '../city/cull'
 import { kitMaterials } from '../city/kit'
+import { makeOccludable } from '../../camera/occlusion'
 
 /**
  * Kit de Miami Beach (public/assets/miami/kit + miamiKit.json, gerado por tools/blender/miami_kit.py).
@@ -48,8 +49,11 @@ export function preloadMiamiKit() {
   Object.keys(PIECES).forEach((n) => useGLTF.preload(BASE + PIECES[n].file))
 }
 
-type Cls = 'por' | 'metal' | 'glass' | 'glow' | 'leaf' | 'cloth'
-const CLASS_OF: Record<Slot, Cls> = {
+type Base = 'por' | 'metal' | 'glass' | 'glow' | 'leaf' | 'cloth'
+/** sufixo F = pecas que esmaecem quando tampam a camera (palmeiras, arbustos, vasos, postes): sem colisor, ver camera/occlusion.ts */
+type Cls = Base | `${Base}F`
+const FADE_PIECES = new Set(['palm_royal', 'palm_coconut', 'palm_small', 'shrub', 'planter_deco', 'lamp_deco', 'umbrella'])
+const CLASS_OF: Record<Slot, Base> = {
   base: 'por', accent: 'por', accent2: 'por', soft: 'por', deep: 'por', white: 'por', wood: 'por',
   trim: 'metal', glass: 'glass', glow: 'glow', glow2: 'glow', leaf: 'leaf', cloth: 'cloth',
 }
@@ -94,6 +98,17 @@ export function MiamiWind() {
     leafTime.value += Math.min(dt, 0.1)
   })
   return null
+}
+
+type KitMats = ReturnType<typeof kitMaterials>
+let FADE_MATS: { por: Material; metal: Material; glass: Material; cloth: Material; leaf: Material } | null = null
+/** variantes dos materiais do kit com o esmaecimento de oclusao (criadas uma vez; o brilho `glow` segue o compartilhado) */
+function fadeMaterials(mats: KitMats, leaf: Material) {
+  if (!FADE_MATS) {
+    const v = (m: Material) => makeOccludable(m.clone())
+    FADE_MATS = { por: v(mats.por), metal: v(mats.metal), glass: v(mats.glass), cloth: v(mats.cloth), leaf: makeOccludable(leaf) }
+  }
+  return FADE_MATS
 }
 
 interface Part {
@@ -147,7 +162,7 @@ function buildCells(items: KitItem[], parts: Record<string, Part[]>, chunk: numb
   }
   const col = new Color()
   return [...groups.values()].map((list) => {
-    const mkBag = (): Record<Cls, BufferGeometry[]> => ({ por: [], metal: [], glass: [], glow: [], leaf: [], cloth: [] })
+    const mkBag = (): Record<Cls, BufferGeometry[]> => ({ por: [], metal: [], glass: [], glow: [], leaf: [], cloth: [], porF: [], metalF: [], glassF: [], glowF: [], leafF: [], clothF: [] })
     const bag = mkBag()
     const bagLo = mkBag()
     let anyLod = false
@@ -163,9 +178,10 @@ function buildCells(items: KitItem[], parts: Record<string, Part[]>, chunk: numb
           const g = p.geo.clone()
           g.applyMatrix4(M)
           paint(g, col.set(slotColor(p.slot, pal, it.over)))
-          const cls = CLASS_OF[p.slot]
+          const base = CLASS_OF[p.slot]
           // versao distante: metal e vidro viram porcelana (menos malhas/chamadas)
-          into[into === bagLo && (cls === 'metal' || cls === 'glass') ? 'por' : cls].push(g)
+          const cls: Base = into === bagLo && (base === 'metal' || base === 'glass') ? 'por' : base
+          into[FADE_PIECES.has(it.piece) ? (`${cls}F` as Cls) : cls].push(g)
         }
       }
       emit(it.piece, bag)
@@ -230,6 +246,7 @@ function MiamiKitMeshes({ items, shadows, cull, max, walkable, chunk, cast, pad,
   const cells = useMemo(() => buildCells(items, parts, chunk, pad, !!lod), [items, parts, chunk, pad, lod])
   const mats = kitMaterials()
   const leaf = leafMaterial()
+  const fm = fadeMaterials(mats, leaf)
   const data = walkable ? WALK_DATA : KIT_DATA
   const meshes = (g: Geo) => (
     <>
@@ -239,6 +256,12 @@ function MiamiKitMeshes({ items, shadows, cull, max, walkable, chunk, cast, pad,
       {g.glow && <mesh userData={data} geometry={g.glow} material={mats.glow} />}
       {g.leaf && <mesh userData={KIT_DATA} geometry={g.leaf} material={leaf} castShadow={shadows && cast} />}
       {g.cloth && <mesh userData={data} geometry={g.cloth} material={mats.cloth} receiveShadow={shadows} />}
+      {g.porF && <mesh userData={data} geometry={g.porF} material={fm.por} castShadow={shadows && cast} receiveShadow={shadows} />}
+      {g.metalF && <mesh userData={data} geometry={g.metalF} material={fm.metal} receiveShadow={shadows} />}
+      {g.glassF && <mesh userData={data} geometry={g.glassF} material={fm.glass} renderOrder={3} />}
+      {g.glowF && <mesh userData={data} geometry={g.glowF} material={mats.glow} />}
+      {g.leafF && <mesh userData={KIT_DATA} geometry={g.leafF} material={fm.leaf} castShadow={shadows && cast} />}
+      {g.clothF && <mesh userData={data} geometry={g.clothF} material={fm.cloth} receiveShadow={shadows} />}
     </>
   )
   return (

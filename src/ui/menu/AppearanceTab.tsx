@@ -57,6 +57,7 @@ export function AppearanceTab({ onFocus }: { onFocus: (f: StageFocus) => void })
   }, [])
 
   const go = (c: (typeof CATS)[number]) => {
+    document.querySelector('.menu__content')?.scrollTo({ top: 0 })
     setCat(c.id)
     onFocus(c.focus)
   }
@@ -98,7 +99,7 @@ export function AppearanceTab({ onFocus }: { onFocus: (f: StageFocus) => void })
 
       <div className="actions cc__foot">
         <button type="button" className="btn btn--primary" disabled={!dirty} onClick={() => (save(), setJustSaved(true), window.setTimeout(() => setJustSaved(false), 1800))}>
-          <IconSave /> {justSaved && !dirty ? 'Salvo!' : 'Salvar'}
+          <IconSave /> {justSaved && !dirty ? 'Salvo!' : 'Salvar look'}
         </button>
         <button type="button" className="btn" disabled={!dirty} onClick={revert}>
           Voltar ao salvo

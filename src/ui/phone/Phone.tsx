@@ -112,6 +112,8 @@ function Missions() {
   const done = useProfileStore((s) => s.done)
   const tracked = useProfileStore((s) => s.tracked)
   const track = useProfileStore((s) => s.track)
+  // os POIs das missoes sao da cidade principal: fora dela (ex.: Miami) a viagem rapida nao faria nada
+  const inMain = useTravelStore((s) => s.cityId === 'main')
   const go = (poi: string) => {
     useUiStore.getState().closePhone()
     void navigateTo(poi)
@@ -147,9 +149,11 @@ function Missions() {
                 <button type="button" className="pbtn pbtn--pri" onClick={() => go(q.poi)}>
                   <GPin /> Ir até lá
                 </button>
-                <button type="button" className="pbtn" onClick={() => travel(q.poi)}>
-                  <GBolt /> Viagem rápida
-                </button>
+                {inMain && (
+                  <button type="button" className="pbtn" onClick={() => travel(q.poi)}>
+                    <GBolt /> Viagem rápida
+                  </button>
+                )}
               </div>
             )}
           </div>
