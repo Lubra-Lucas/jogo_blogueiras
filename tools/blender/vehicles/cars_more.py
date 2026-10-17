@@ -178,24 +178,6 @@ def esportivo():
             zt=K((-2.2, 0.82), (-1.4, 0.86), (-0.5, 0.80), (0.5, 0.78), (1.5, 0.72), (2.2, 0.62)),
             nu=K((-2.2, 3.6), (2.2, 3.6)), nl=K((-2.2, 4.0), (2.2, 4.0))),
             -2.2, 2.2, 0.55, 0.85, N=16, step=0.5)
-    def cabin():
-        return Shape(dict(
-            hw=K((-1.4, 0.78), (0.5, 0.78)),
-            zb=K((-1.4, 0.64), (0.5, 0.64)),
-            zt=K((-1.4, 0.84), (-1.2, 1.02), (-0.7, 1.18), (-0.2, 1.20), (0.15, 1.14), (0.5, 0.84)),
-            nu=K((-1.4, 2.6), (0.5, 2.6)), nl=K((-1.4, 8), (0.5, 8))),
-            -1.4, 0.5, 0.3, 0.3, tumble=0.25, zshrink=0.15, N=24, step=0.2)
-    def glass(ctx):
-        cab = ctx.cabin
-        def fn(c, n, i, j):
-            f = c.y
-            hw, zc, hh, _, _ = cab.params(f); top = zc + hh
-            if c.z < 0.82: return 'body'
-            if j in (23, 0, 1, 2, 9, 10, 11, 12) and c.z < top - 0.07 and -1.15 <= f <= 0.12: return 'glass'
-            if n.y > 0.35 and j in (4, 5, 6, 7) and f > 0.1 and c.z > 0.84: return 'glass'
-            if n.y < -0.35 and j in (4, 5, 6, 7) and f < -1.05 and c.z > 0.88: return 'glass'
-            return 'body'
-        return fn
     t = tub()
     fh = t.find_f(0.66, 0.50, True); ft = t.find_f(0.56, 0.66, False)
     def decor(ctx):
@@ -209,8 +191,7 @@ def esportivo():
         a.tube(p, (0.03, 0.03), 'tire', seg=6)
         plate_lamp(ctx, 0, 0.40, 0.80, 0.10, 'tire', front=True, depth=0.04, bevel=0.03)
         stripe(ctx, ctx.tub, 0.5, 2.12, 0.14, 'accent', n=14)
-        stripe(ctx, ctx.tub, -2.0, -0.62, 0.14, 'accent', n=12)
-        stripe(ctx, ctx.cabin, -1.25, 0.38, 0.14, 'accent', n=16)
+        stripe(ctx, ctx.tub, -2.0, -1.34, 0.14, 'accent', n=8)
         door_line(ctx, 0.28, 0.24, 0.80); door_line(ctx, -0.55, 0.24, 0.80)
         handle(ctx, -0.28, 0.72, 0.11)
         for sd in (1, -1):
@@ -225,22 +206,55 @@ def esportivo():
         for sd in (1, -1):
             a.box((sd * 0.66, -2.02, 1.02), (0.03, 0.32, 0.12), 'accent', bevel=0.01)
             a.cyl((sd * 0.36, -2.17, 0.30), 0.04, 0.12, 'trim', axis='f', seg=8)
+        # ---- para-brisa baixo e inclinado, com moldura
+        bf, bz = 0.27, 0.74; rise = (-0.20, 0.31)
         for sd in (1, -1):
-            seat(ctx, sd * 0.40, -0.52, 0.56, w=0.46, lean=0.35, bh=0.42)
+            xb = sd * 0.80
+            zb0 = top_z(ctx.tub, bf, 0.80) - 0.03
+            a.tube([(xb, bf, zb0), (xb * 0.95, bf + rise[0], zb0 + rise[1] + 0.03)], 0.02, 'trim', seg=6)
+        zt0 = top_z(ctx.tub, bf, 0.0)
+        mid = (0, bf + rise[0] / 2, zt0 + rise[1] / 2 - 0.02)
+        a.box(mid, (1.52, 0.012, 0.37), 'glass', q=Quaternion((1, 0, 0), -0.59))
+        a.tube([(-0.76, bf + rise[0], zt0 + rise[1] - 0.005), (0.76, bf + rise[0], zt0 + rise[1] - 0.005)], 0.017, 'trim', seg=6)
+        a.tube([(-0.78, bf, zt0 - 0.025), (0.78, bf, zt0 - 0.025)], 0.016, 'trim', seg=6)
+        # ---- duas corcovas atras dos bancos (carenagem), com friso
+        for sd in (1, -1):
+            a.sphere((sd * 0.40, -1.42, 0.86), (0.30, 0.42, 0.15), 'body', u=14, v=8)
+            a.tube([(sd * 0.40, f, 0.86 + 0.15 * (1 - ((f + 1.42) / 0.42) ** 2) ** 0.5 + 0.004) for f in [-1.42 + 0.40 * k / 8 for k in range(-8, 9)]], (0.022, 0.006), 'accent', seg=4)
+        # ---- bancos de couro com costura e encosto de cabeca
+        for sd in (1, -1):
+            x = sd * 0.40
+            seat(ctx, x, -0.52, 0.56, w=0.46, lean=0.35, bh=0.42)
+            for dx in (-0.12, 0.12):
+                a.tube([(x + dx, -0.30, 0.567), (x + dx, -0.74, 0.567)], (0.005, 0.004), 'accent', seg=4)
+                a.tube([(x + dx, -0.77 + 0.065 * 0.94 + 0.343 * 0.15, 0.726 + 0.065 * 0.343 - 0.94 * 0.15), (x + dx, -0.77 + 0.065 * 0.94 - 0.343 * 0.15, 0.726 + 0.065 * 0.343 + 0.94 * 0.15)], (0.005, 0.004), 'accent', seg=4)
+            a.tube([(x - 0.21, -0.28, 0.50), (x + 0.21, -0.28, 0.50)], 0.009, 'accent', seg=4)
+            a.box((x, -0.52, 0.365), (0.50, 0.62, 0.012), 'tire', bevel=0.004)
+        # ---- painel, console e instrumentos
         a.box((0, 0.08, 0.66), (1.52, 0.24, 0.16), 'interior', bevel=0.05, seg=2)
+        a.box((0, 0.06, 0.745), (1.50, 0.22, 0.03), 'tire', bevel=0.012)
+        for sd in (1, -1):
+            for dx in (-0.09, 0.09):
+                a.cyl((sd * 0.40 + dx, -0.05, 0.775), 0.065, 0.05, 'trim', axis='f', seg=14)
+                a.cyl((sd * 0.40 + dx, -0.077, 0.775), 0.052, 0.02, 'glass', axis='f', seg=14)
+        a.box((0, -0.04, 0.70), (0.24, 0.05, 0.10), 'trim', bevel=0.012)
         a.box((0, -0.40, 0.48), (0.2, 0.8, 0.22), 'interior', bevel=0.04)
+        a.box((0, -0.40, 0.592), (0.16, 0.70, 0.025), 'tire', bevel=0.01)
+        a.cyl((0, -0.20, 0.66), 0.014, 0.12, 'trim', axis='z', seg=6)
+        a.sphere((0, -0.20, 0.73), (0.03, 0.03, 0.03), 'tire', u=8, v=6)
+        a.box((0, -0.62, 0.365), (0.34, 0.2, 0.012), 'tire')
         steering(ctx, 0.40, -0.12, 0.84, R=0.15)
     return dict(
         id='esportivo', name='Relampago', L=L, H=1.20, W=1.95, wb=wb, R=[Rf, Rr], track=track,
-        body='#26406b', accent='#e6e2d6', rim='#b0b4bb', interior='#2a2a2e',
-        tub=tub, cabin=cabin, glass=glass, decor=decor,
+        body='#26406b', accent='#e6e2d6', rim='#b0b4bb', interior='#b4835a',
+        tub=tub, cabin=None, glass=None, decor=decor,
         cockpit=dict(f0=-1.25, f1=0.22, xh=0.58, floor=0.36),
         hubs=hubs_fix({'FL': (track / 2, wb / 2, Rf, Rf, 0.25), 'FR': (-track / 2, wb / 2, Rf, Rf, 0.25),
                        'RL': (track / 2, -wb / 2, Rr, Rr, 0.31), 'RR': (-track / 2, -wb / 2, Rr, Rr, 0.31)}),
         wheel=dict(nspoke=6, spoke_w=0.09), arch_gap=0.04,
         seat=(0.40, -0.62, 0.56),
         lamps=dict(head=[(0.66, fh, 0.50), (-0.66, fh, 0.50)], tail=[(0.56, ft, 0.66), (-0.56, ft, 0.66)]),
-        colliders=[((0, 0, 0.47), (0.95, 2.18, 0.33)), ((0, -0.4, 0.95), (0.7, 0.9, 0.25))],
+        colliders=[((0, 0, 0.47), (0.95, 2.18, 0.33)), ((0, -0.55, 0.93), (0.75, 0.95, 0.19))],
     )
 
 
