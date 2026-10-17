@@ -14,14 +14,16 @@ export interface ShopDef {
   poi: string
   /** categorias vendidas */
   blurb: string
+  /** outras portas (de outras cidades, ver game/travel) que abrem a mesma loja */
+  extraPois?: string[]
 }
 
 export const SHOPS: ShopDef[] = [
-  { id: 'boutique', title: 'Boutique da Avenida', label: 'Loja de roupas', poi: 'boutique', blurb: 'Roupas, meias, luvas e sapatos.' },
+  { id: 'boutique', title: 'Boutique da Avenida', label: 'Loja de roupas', poi: 'boutique', blurb: 'Roupas, meias, luvas e sapatos.', extraPois: ['loja-praia'] },
   { id: 'joalheria', title: 'Joalheria', label: 'Loja de joias', poi: 'joalheria', blurb: 'Colares, brincos, tiaras, pulseiras e anéis.' },
   { id: 'salao', title: 'Salão & Spa', label: 'Loja do salão', poi: 'salao-spa', blurb: 'Cabelos e serviços de coloração.' },
   { id: 'petshop', title: 'Petshop Patinhas', label: 'Loja de pets', poi: 'petshop', blurb: 'Pets, ração e acessórios.' },
 ]
 
 export const getShop = (id: string | null | undefined) => SHOPS.find((s) => s.id === id) ?? null
-export const shopsAtPoi = (poi: string) => SHOPS.filter((s) => s.poi === poi)
+export const shopsAtPoi = (poi: string) => SHOPS.filter((s) => s.poi === poi || s.extraPois?.includes(poi))

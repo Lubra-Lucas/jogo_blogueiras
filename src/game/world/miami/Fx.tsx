@@ -123,7 +123,7 @@ export function BeachFx() {
     const feetY = p.y - 0.825
     const d = waterDepthAt(p.x)
     const inWater = d > 0.02 && p.x < SEA.wallX + 2
-    const wet = smooth(d, 0.05, 0.8)
+    const wet = smooth(d, 0.05, 0.5)
     worldMods.wet = wet
     // andar na agua: devagar (ate 45%), mas so enquanto a agua sobe; areia fofa um pouco mais lenta
     const sandy = p.x > SAND_X + 3 && !inWater ? 0.93 : 1
