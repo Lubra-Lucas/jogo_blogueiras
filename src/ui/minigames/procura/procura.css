@@ -1,0 +1,51 @@
+/* Cadê a Blogueira?: cena em canvas + lista de alvos (embaixo no retrato, ao lado na paisagem). */
+.pr-main { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; }
+.pr-scene {
+  position: relative; flex: 1; min-height: 0; min-width: 0; overflow: hidden; border-radius: 16px; touch-action: none; cursor: grab;
+  background: #10141c; box-shadow: inset 0 0 0 1px rgba(212, 176, 106, 0.5), 0 6px 22px rgba(0, 0, 0, 0.5);
+}
+.pr-scene:active { cursor: grabbing; }
+.pr-scene canvas { display: block; position: absolute; inset: 0; }
+.pr-scene-tag {
+  position: absolute; left: 8px; top: 8px; z-index: 2; pointer-events: none; display: flex; flex-direction: column; gap: 1px;
+  padding: 5px 10px; border-radius: 10px; background: rgba(10, 16, 28, 0.72); color: var(--nj-ink); font-size: 0.75rem; max-width: 70%;
+}
+.pr-scene-tag b { font-family: var(--f-serif); color: var(--nj-brass-hi); font-size: 0.8rem; }
+.pr-banner {
+  position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); padding: 12px 26px; border-radius: 16px; z-index: 3;
+  background: linear-gradient(180deg, #ecd69b, #b58f45); color: #1a1408; font-family: var(--f-serif); font-size: 1.4rem; font-weight: 800;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); animation: nj-star 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+.pr-targets { flex: none; display: grid; grid-template-columns: 1fr; gap: 6px; }
+.pr-target {
+  display: flex; align-items: center; gap: 8px; padding: 4px 8px 4px 4px; border-radius: 12px; min-height: 52px;
+  background: var(--nj-panel); border: 1px solid rgba(212, 176, 106, 0.35);
+}
+.pr-target img { flex: none; border-radius: 8px; background: #efe7d6; object-fit: cover; }
+.pr-target-txt { flex: 1; min-width: 0; font-size: 0.8rem; line-height: 1.25; display: flex; flex-direction: column; }
+.pr-target-txt em { font-style: normal; font-weight: 800; color: var(--nj-brass-hi); font-size: 0.75rem; }
+.pr-tick { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; border: 2px solid rgba(255, 255, 255, 0.3); color: #0f1a2c; }
+.pr-target.done { opacity: 0.8; border-color: var(--nj-ok); }
+.pr-target.done .pr-target-txt span { text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.5); }
+.pr-target.done .pr-tick { background: var(--nj-ok); border-color: var(--nj-ok); }
+.pr-hint {
+  min-height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 800; font-size: 0.9rem;
+  background: linear-gradient(180deg, #24304a, #131b2d); border: 1px solid rgba(212, 176, 106, 0.5); color: var(--nj-brass-hi);
+}
+.pr-hint:disabled { opacity: 0.4; }
+.pr-hint b { background: var(--nj-brass); color: #1a1408; min-width: 22px; height: 22px; border-radius: 11px; display: inline-grid; place-items: center; font-size: 0.8rem; }
+
+@media (orientation: portrait) and (max-width: 700px) {
+  .pr-target-txt { font-size: 0.8125rem; }
+}
+/* paisagem baixa: lista ao lado da cena */
+@media (orientation: landscape) and (max-height: 520px) {
+  .pr-main { flex-direction: row; }
+  .pr-targets { width: min(280px, 34vw); overflow-y: auto; align-content: start; }
+  .pr-target img { width: 34px; height: 43px; }
+  .pr-target { min-height: 46px; }
+}
+@media (orientation: landscape) and (min-width: 900px) and (min-height: 521px) {
+  .pr-main { flex-direction: row; }
+  .pr-targets { width: 300px; align-content: start; }
+}
