@@ -179,8 +179,9 @@ export const FL_BODY = /* glsl */ `
   {
     vec2 suv = (fp - vec2(${CLASSIC_CANVAS.center[0]}, ${CLASSIC_CANVAS.center[1]})) / ${CLASSIC_CANVAS.size} + 0.5;
     vec2 sib = step(vec2(0.0), suv) * step(suv, vec2(1.0));
-    vec3 shT = texture2D(uFlFaceTex, vec2(suv.x, 1.0 - (${FA.shade.y0}.0 + (1.0 - suv.y) * ${FA.shade.h}.0) / ${FA.h}.0)).rgb;
-    base *= mix(vec3(1.0), shT * 2.0, clamp(uFlBlushAmt, 0.0, 1.0) * flW * uFlBlushMode * sib.x * sib.y);
+    vec4 shT = texture2D(uFlFaceTex, vec2(suv.x, 1.0 - (${FA.shade.y0}.0 + (1.0 - suv.y) * ${FA.shade.h}.0) / ${FA.h}.0));
+    // alfa = 1 so onde o atlas ja carregou (a textura vazia e transparente): sem isso o rosto ficava PRETO enquanto o kit baixava
+    base *= mix(vec3(1.0), shT.rgb * 2.0, clamp(uFlBlushAmt, 0.0, 1.0) * flW * uFlBlushMode * sib.x * sib.y * shT.a);
   }
 #endif
   vec2 ec = vec2(side * uFlEyeP.x, uFlEyeP.y);
