@@ -129,6 +129,11 @@ interface ProfileState extends Saved {
   completeQuest: (id: string) => void
   track: (id: string | null) => void
   reset: () => void
+  /**
+   * MODO TESTE (ver game/testMode.ts): garante minimos sem rebaixar. Uma unica gravacao, sem avisos de nivel,
+   * no maximo uma linha no extrato. Devolve true se algo mudou.
+   */
+  testGrant: (g: { level: number; coins: number; diamonds: number; professionXp: Record<string, number>; owned: string[] }) => boolean
 }
 
 let toastId = 0
@@ -232,6 +237,37 @@ export const useProfileStore = create<ProfileState>()((set, get) => ({
   reset: () => {
     set({ ...DEFAULTS, owned: [...STARTER_ITEMS], ledger: [], toast: null })
     persist(get())
+    void import('../game/testMode').then((m) => m.applyTestMode()).catch(() => undefined)
+  },
+  testGrant: (g) => {
+    const s = get()
+    const patch: Partial<Saved> = {}
+    const levelUp = s.level < g.level
+    if (levelUp) {
+      patch.level = g.level
+      patch.xp = 0
+    }
+    const dCoins = Math.max(0, g.coins - s.coins)
+    const dDiamonds = Math.max(0, g.diamonds - s.diamonds)
+    if (dCoins) patch.coins = g.coins
+    if (dDiamonds) patch.diamonds = g.diamonds
+    if (dCoins || dDiamonds) {
+      const line = dCoins ? entry('brilhos', dCoins, 'Modo teste', g.coins) : entry('diamantes', dDiamonds, 'Modo teste', g.diamonds)
+      patch.ledger = [line, ...s.ledger].slice(0, 50)
+    }
+    const px = { ...s.professionXp }
+    let pxChanged = false
+    for (const [k, v] of Object.entries(g.professionXp)) if ((px[k] ?? 0) < v) ((px[k] = v), (pxChanged = true))
+    if (pxChanged) patch.professionXp = px
+    const have = new Set(s.owned)
+    const add = g.owned.filter((id) => !have.has(id))
+    if (add.length) patch.owned = [...s.owned, ...add]
+    if (!Object.keys(patch).length) return false
+    set(patch)
+    persist(get())
+    if (levelUp) emitEconomy({ type: 'level', level: g.level })
+    else if (add.length) emitEconomy({ type: 'item', itemId: add[0] })
+    return true
   },
 }))
 

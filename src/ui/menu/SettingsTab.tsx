@@ -3,6 +3,7 @@ import { loadJson, removeKey, saveJson, STORAGE_KEYS } from '../../shared/storag
 import { getQuality, type QualityTier } from '../../game/systems/quality'
 import { useDeviceStore } from '../../game/systems/device'
 import { InterfaceSettings } from './InterfaceSettings'
+import { testModeOn } from '../../game/testMode'
 
 type Pref = 'auto' | QualityTier
 const PREFS: Array<{ id: Pref; label: string }> = [
@@ -37,6 +38,18 @@ export function SettingsTab() {
 
   return (
     <>
+      {testModeOn() && (
+        <div className="panel" data-testmode-badge>
+          <h3>
+            Modo teste <small style={{ fontWeight: 400, opacity: 0.7 }}>ativo</small>
+          </h3>
+          <div className="cfg-row">
+            <span>
+              <small>Nível 30, Brilhos, Diamantes, fichas e todos os itens estão liberados para testes. Compras continuam descontando o saldo. Use ?testmode=0 na URL para ver o jogo normal.</small>
+            </span>
+          </div>
+        </div>
+      )}
       <div className="panel">
         <h3>Gráficos</h3>
         <div className="cfg-row">
