@@ -10,7 +10,8 @@
     "typecheck": "tsc -b",
     "test:appearance": "node --import ./tools/casino-tests/register.mjs tools/tests/appearance-random.test.ts",
     "test:save": "node --import ./tools/casino-tests/register.mjs tools/tests/save.test.ts",
-    "test:ranking": "node --import ./tools/casino-tests/register.mjs tools/tests/ranking.test.ts"
+    "test:ranking": "node --import ./tools/casino-tests/register.mjs tools/tests/ranking.test.ts",
+    "test:versus": "node --import ./tools/casino-tests/register.mjs tools/tests/versus.test.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
