@@ -36,6 +36,14 @@ Abra https://lubra-lucas.github.io/jogo_blogueiras/ no navegador do celular (dep
 - O progresso (perfil, aparencia salva, fotos) fica no `localStorage` do navegador; em Ajustes ha "Resetar save".
 - `?editor=1` abre direto a aba Aparencia; `?stats=1` mostra o FPS.
 
+## Multiplayer (teste da equipe)
+
+Login com e-mail e senha, ate 3 personagens por conta e a cidade compartilhada, tudo no Supabase (sem servidor proprio; funciona no GitHub Pages).
+
+- **Configurar uma vez** no painel do Supabase: rode `supabase/schema.sql` no SQL Editor e desligue Authentication > Sign In / Providers > Email > "Confirm email".
+- `?offline=1` joga sem login e sem rede (save so do navegador), como antes.
+- Detalhes em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#multiplayer-supabase).
+
 ## Arquitetura
 
 Veja [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).

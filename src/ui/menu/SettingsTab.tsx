@@ -4,6 +4,8 @@ import { getQuality, type QualityTier } from '../../game/systems/quality'
 import { useDeviceStore } from '../../game/systems/device'
 import { InterfaceSettings } from './InterfaceSettings'
 import { testModeOn } from '../../game/testMode'
+import { saveAndReload } from '../../net/save'
+import { OFFLINE } from '../../net/supabase'
 
 type Pref = 'auto' | QualityTier
 const PREFS: Array<{ id: Pref; label: string }> = [
@@ -30,7 +32,8 @@ export function SettingsTab() {
     if (p === 'auto') removeKey(STORAGE_KEYS.quality)
     else saveJson(STORAGE_KEYS.quality, p)
   }
-  const reload = () => window.location.reload()
+  // online: salva antes (o reset zerado precisa ir para o banco, senao o login traria o save antigo de volta)
+  const reload = () => void saveAndReload()
   const resetAll = () => {
     for (const k of Object.values(STORAGE_KEYS)) removeKey(k)
     reload()
@@ -132,6 +135,21 @@ export function SettingsTab() {
           </div>
         )}
       </div>
+
+      {!OFFLINE && (
+        <div className="panel">
+          <h3>Conta</h3>
+          <div className="cfg-row">
+            <span>
+              Trocar de personagem
+              <small>Salva o progresso e volta para a lista de personagens.</small>
+            </span>
+            <button type="button" className="btn" onClick={reload}>
+              Trocar
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="panel">
         <h3>Dados salvos</h3>

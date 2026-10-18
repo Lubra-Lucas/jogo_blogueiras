@@ -17,6 +17,7 @@ import { ThirdPersonCamera } from './camera/ThirdPersonCamera'
 import { CharacterViewer, getViewMode } from './character/CharacterViewer'
 import { PortraitCapture } from '../ui/PortraitCapture'
 import { ChatBubble } from '../ui/chat/ChatBubble'
+import { RemotePlayers } from './net/RemotePlayers'
 import { PhotoCapture } from '../ui/PhotoCapture'
 import { InteractionTrigger } from './interaction/InteractionTrigger'
 import { SitController } from './sit/SitController'
@@ -123,6 +124,7 @@ export function Game({ tier }: { tier: QualityTier }) {
           <DestinationMarker />
           <PortraitCapture />
           <ChatBubble />
+          <RemotePlayers />
           <PhotoCapture />
           <InteractionTrigger />
           <SitController />
