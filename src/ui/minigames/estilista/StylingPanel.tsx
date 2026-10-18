@@ -8,6 +8,7 @@ import { lookCost, isUnlocked, priceOf, tierOf, TIER_XP } from '../../../game/mi
 import { colorName, GARMENT_SWATCHES, HAIR_SWATCHES, SUIT_SWATCHES } from '../../../game/minigames/estilista/palette'
 import { useEstilistaStore } from '../../../game/minigames/estilista/store'
 import { QUESTIONS, type Client, type QuestionId } from '../../../game/minigames/estilista/types'
+import { ItemThumb } from '../../shop/thumbs/ItemThumb'
 import { IcoAsk, IcoCheck, IcoCoin, IcoGem, IcoHair, IcoLock, IcoPalette, IcoSkirt, IcoStar, IcoTiara, IcoTop, SlotIcon } from './icons'
 
 type Tab = 'pedido' | 'hair' | 'top' | 'bottom' | 'accessory' | 'jewelry' | 'colors'
@@ -90,7 +91,7 @@ function ItemBtn({ item, on, locked, match, showTags, onClick }: { item: Catalog
     )
   return (
     <button className={`es-item${on ? ' on' : ''}${locked ? ' locked' : ''}${match ? ' match' : ''}`} onClick={onClick} disabled={locked} aria-label={`${item.label}, ${priceOf(item)} Brilhos`}>
-      <span className="es-item-ico">{locked ? <IcoLock size={24} /> : <SlotIcon slot={item.slot} size={26} />}</span>
+      <span className="es-item-ico">{locked ? <IcoLock size={24} /> : <ItemThumb id={item.id} fallback={<SlotIcon slot={item.slot} size={26} />} />}</span>
       <span className="es-item-name">{item.label}</span>
       {showTags && <span className="es-item-tags">{item.tags.slice(0, 2).map((t) => TAG_LABEL[t]).join(' · ')}</span>}
       <span className="es-item-price">
