@@ -33,6 +33,8 @@ export function restore(save: Save) {
 }
 
 let charId: string | null = null
+/** id da personagem escolhida (null = sem login/offline) */
+export const currentCharId = () => charId
 let last = ''
 
 /** Envia o save se mudou desde o ultimo envio. Chame antes de recarregar a pagina (trocar personagem, resetar save). */
