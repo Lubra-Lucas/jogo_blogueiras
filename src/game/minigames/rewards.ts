@@ -87,6 +87,14 @@ export function grantRewards(r: { coins?: number; xp?: number; professionXp?: Re
   writeJson(PENDING_KEY, pending)
 }
 
+/** Modo teste: sobe o espelho local do XP de profissao para pelo menos `min` (nunca rebaixa). */
+export function raiseProfessionXpMirror(names: readonly string[], min: number): void {
+  const prof = readJson<Record<string, number>>(PROF_KEY, {})
+  let changed = false
+  for (const k of names) if ((prof[k] ?? 0) < min) ((prof[k] = min), (changed = true))
+  if (changed) writeJson(PROF_KEY, prof)
+}
+
 /** XP atual de uma profissao (perfil, se existir; senao o espelho local). */
 export function getProfessionXp(name: string): number {
   const fromProfile = loadBridge()?.professionXp(name)
