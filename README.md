@@ -40,7 +40,7 @@ Abra https://lubra-lucas.github.io/jogo_blogueiras/ no navegador do celular (dep
 
 Login com e-mail e senha, ate 3 personagens por conta e a cidade compartilhada, tudo no Supabase (sem servidor proprio; funciona no GitHub Pages).
 
-- **Configurar uma vez** no painel do Supabase: rode `supabase/schema.sql` no SQL Editor e desligue Authentication > Sign In / Providers > Email > "Confirm email".
+- **Configurar uma vez** no painel do Supabase: rode `supabase/schema.sql` e depois `supabase/scores.sql` (ranking geral dos minijogos) no SQL Editor e desligue Authentication > Sign In / Providers > Email > "Confirm email".
 - `?offline=1` joga sem login e sem rede (save so do navegador), como antes.
 - Detalhes em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#multiplayer-supabase).
 

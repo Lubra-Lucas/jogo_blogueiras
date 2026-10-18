@@ -29,8 +29,13 @@ async function startGame(char?: { id: string; save: Save; isNew: boolean }) {
     </StrictMode>,
   )
   if (!char) return
-  const [{ startNet }, { useUiStore }] = await Promise.all([import('./game/net/net'), import('./state/uiStore')])
+  const [{ startNet }, { useUiStore }, { startRanking }] = await Promise.all([
+    import('./game/net/net'),
+    import('./state/uiStore'),
+    import('./game/minigames/shared/competition'),
+  ])
   startNet(char.id)
+  startRanking()
   // personagem nova: abre o editor de aparencia (o nome ja veio da tela de criacao)
   if (char.isNew) useUiStore.getState().openMenu('aparencia')
 }
