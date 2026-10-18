@@ -13,7 +13,8 @@ desktop.ini
 *.tsbuildinfo
 
 # Claude Code local config
-.claude/
+.claude/*
+!.claude/settings.json
 
 __pycache__/
 *.pyc
