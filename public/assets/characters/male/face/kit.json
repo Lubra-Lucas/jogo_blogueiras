@@ -73,5 +73,50 @@
       "label": "Boneca glossy"
     }
   ],
-  "files": "eye_<id>_{sclera,iris,hi,line}.png, lash_<lash>_<eye>.png, brow_<id>.png, mouth_<id>_{lips,gloss}.png, blush.png"
+  "files": "eye_<id>_{sclera,iris,hi,line}.png, lash_<lash>_<eye>.png, brow_<id>.png, mouth_<id>_{lips,gloss}.png, blush.png",
+  "beards": [
+    {
+      "id": "none",
+      "label": "Sem barba"
+    },
+    {
+      "id": "stubble",
+      "label": "Por fazer"
+    },
+    {
+      "id": "mustache",
+      "label": "Bigode"
+    },
+    {
+      "id": "goatee",
+      "label": "Cavanhaque"
+    },
+    {
+      "id": "full",
+      "label": "Barba cheia curta"
+    }
+  ],
+  "faceCanvas": {
+    "beard": {
+      "size": [
+        0.2,
+        0.17
+      ],
+      "center": [
+        0.0,
+        1.495
+      ]
+    },
+    "lines": {
+      "size": [
+        0.2,
+        0.2
+      ],
+      "center": [
+        0.0,
+        1.59
+      ]
+    }
+  },
+  "extras": "beard_<stubble|mustache|goatee|full>.png (canvas beard), eye_bags.png (canvas eye), lines.png (canvas lines)"
 }

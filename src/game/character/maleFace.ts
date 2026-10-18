@@ -12,6 +12,7 @@ export type EyeStyle = 'natural' | 'almond' | 'doll'
 export type LashStyle = 'none' | 'natural' | 'doll'
 export type BrowStyle = 'thick' | 'arched' | 'thin'
 export type MouthStyle = 'natural' | 'thin' | 'doll'
+export type BeardStyle = 'none' | 'stubble' | 'mustache' | 'goatee' | 'full'
 
 export const EYE_STYLES: Array<{ id: EyeStyle; label: string }> = [
   { id: 'natural', label: 'Natural' },
@@ -32,6 +33,14 @@ export const MOUTH_STYLES: Array<{ id: MouthStyle; label: string }> = [
   { id: 'natural', label: 'Natural masculina' },
   { id: 'thin', label: 'Fina' },
   { id: 'doll', label: 'Boneca glossy' },
+]
+
+export const BEARD_STYLES: Array<{ id: BeardStyle; label: string }> = [
+  { id: 'none', label: 'Sem barba' },
+  { id: 'stubble', label: 'Por fazer' },
+  { id: 'mustache', label: 'Bigode' },
+  { id: 'goatee', label: 'Cavanhaque' },
+  { id: 'full', label: 'Barba cheia curta' },
 ]
 
 export interface MaleFace {
@@ -56,10 +65,18 @@ export interface MaleFace {
   brow: { style: BrowStyle; color: string; scale: number; gap: number; y: number; tilt: number; opacity: number }
   mouth: { style: MouthStyle; color: string; gloss: number; scale: number; y: number; opacity: number }
   blush: { amount: number; color: string; scale: number; gap: number; y: number }
+  /** barba: cor tingivel + densidade (0..1) */
+  beard: { style: BeardStyle; color: string; amount: number }
+  /** olheira e linhas de expressao leves (0..1) */
+  detail: { bags: number; lines: number }
 }
 
 /** Pontos de referencia do modelo (m, espaco de repouso, y para cima): male_base.json -> face. */
 export const FACE_REF = { eyeX: 0.0485, eyeY: 1.5827, browY: 1.609, browX: 0.0545, mouthY: 1.5019, noseY: 1.5423, chinY: 1.4552 }
+
+/** Camadas de rosto inteiro (coordenadas absolutas do espaco de repouso): tamanho e centro. */
+export const BEARD_CANVAS = { size: [0.2, 0.17], center: [0, 1.495] } as const
+export const LINES_CANVAS = { size: [0.2, 0.2], center: [0, 1.59] } as const
 
 /** Tamanho fisico (m) de cada canvas de camada (igual ao kit.json). */
 export const KIT_CANVAS = { eye: [0.1, 0.09], brow: [0.09, 0.034], mouth: [0.09, 0.052], blush: [0.1, 0.075] } as const
@@ -69,6 +86,8 @@ export const DEFAULT_MALE_FACE: MaleFace = {
   brow: { style: 'thick', color: '#4a3326', scale: 1, gap: 0, y: 0, tilt: 0, opacity: 0.92 },
   mouth: { style: 'natural', color: '#b87068', gloss: 0.2, scale: 1, y: 0, opacity: 0.9 },
   blush: { amount: 0, color: '#e0707c', scale: 1, gap: 0, y: 0 },
+  beard: { style: 'none', color: '#2c211b', amount: 1 },
+  detail: { bags: 0, lines: 0 },
 }
 
 export function mergeFace(base: MaleFace, p: DeepPartial<MaleFace>): MaleFace {
@@ -77,6 +96,8 @@ export function mergeFace(base: MaleFace, p: DeepPartial<MaleFace>): MaleFace {
     brow: { ...base.brow, ...p.brow },
     mouth: { ...base.mouth, ...p.mouth },
     blush: { ...base.blush, ...p.blush },
+    beard: { ...base.beard, ...p.beard },
+    detail: { ...base.detail, ...p.detail },
   }
 }
 type DeepPartial<T> = { [K in keyof T]?: Partial<T[K]> }
@@ -120,6 +141,9 @@ export interface KitTextures {
   lips: Texture
   gloss: Texture
   blush: Texture
+  beard: Texture | null
+  bags: Texture
+  lines: Texture
 }
 
 export function kitFor(f: MaleFace): KitTextures {
@@ -134,6 +158,9 @@ export function kitFor(f: MaleFace): KitTextures {
     lips: kitTexture(`mouth_${f.mouth.style}_lips`),
     gloss: kitTexture(`mouth_${f.mouth.style}_gloss`, true),
     blush: kitTexture('blush'),
+    beard: f.beard.style === 'none' ? null : kitTexture(`beard_${f.beard.style}`),
+    bags: kitTexture('eye_bags'),
+    lines: kitTexture('lines'),
   }
 }
 
@@ -144,7 +171,8 @@ export function preloadKit() {
   }
   for (const b of BROW_STYLES) kitTexture(`brow_${b.id}`)
   for (const m of MOUTH_STYLES) { kitTexture(`mouth_${m.id}_lips`); kitTexture(`mouth_${m.id}_gloss`, true) }
-  kitTexture('blush')
+  kitTexture('blush'); kitTexture('eye_bags'); kitTexture('lines')
+  for (const b of BEARD_STYLES) if (b.id !== 'none') kitTexture(`beard_${b.id}`)
 }
 
 export const colorOf = (hex: string) => new Color(hex)

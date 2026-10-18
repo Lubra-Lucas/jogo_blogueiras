@@ -391,6 +391,8 @@ def stage_morphs():
         rad = np.stack([x - ax_x, y, zero], 1); rad /= np.maximum(np.linalg.norm(rad, axis=1), 1e-9)[:, None]
         D += rad * (bell(np.abs(z - 0.68) / 0.22) * 0.016 * (np.sign(x) == sg))[:, None]
     out["thighsThick"] = sm(D * Wn(W_leg)[:, None], 3)
+    import face_morphs_male as FM
+    out.update(FM.compute(co, nrm, e))
     body.shape_key_add(name="Basis", from_mix=False)
     for nm, db in out.items():
         sk = body.shape_key_add(name=nm, from_mix=False)
@@ -408,6 +410,8 @@ LABELS = {
     "chestBroad": ("Peito largo", "Corpo"), "waistThin": ("Cintura fina", "Corpo"), "hipsWide": ("Quadril largo", "Corpo"),
     "thighsThick": ("Coxas grossas", "Corpo"),
 }
+import face_morphs_male as _FM
+LABELS.update({k: (v, "Rosto") for k, v in _FM.LABELS.items()})
 
 
 def stage_export():
@@ -449,7 +453,8 @@ def stage_export():
         "face": {k: round(LMK[k], 4) for k in ("eye_x", "eye_z", "brow_z", "mouth_z", "nose_z", "chin_z")},
         "faceNote": "y do glTF = z do Blender: eyeY=eye_z etc. Camadas do rosto sao projetadas de frente no espaco de repouso (x,y) da malha.",
         "morphs": [{"name": k, "label": v[0], "group": v[1], "min": 0, "max": 1, "targets": ["body"]} for k, v in LABELS.items()],
-        "morphGroups": ["Corpo"],
+        "morphGroups": ["Corpo", "Rosto"],
+        "defaultMorphs": {"f_maleBase": 1.0},
         "triangles": {"body": len(body.data.polygons)},
         "sizesBytes": {"male_base.glb": os.path.getsize(path)},
         "license": "Meshy-generated asset (check Meshy plan terms); rig/morph/paint tooling: project code",

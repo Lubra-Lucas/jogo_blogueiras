@@ -1,5 +1,5 @@
 import { Color, MeshPhysicalMaterial, Vector2, Vector4, type IUniform, type Texture, type WebGLProgramParametersWithUniforms } from 'three'
-import { BLANK_LAYER, FACE_REF, KIT_CANVAS, kitFor, onKitLoad, type MaleFace } from './maleFace'
+import { BEARD_CANVAS, BLANK_LAYER, FACE_REF, KIT_CANVAS, LINES_CANVAS, kitFor, onKitLoad, type MaleFace } from './maleFace'
 
 /**
  * Material do corpo MASCULINO (male_base.glb): pele limpa + boxer por mascara (mesma convencao do dollMaterial.ts:
@@ -53,6 +53,9 @@ export function createMaleMaterial(map: Texture | null, mask: Texture, initial: 
     uBlushP: u(new Vector4(0.058, FACE_REF.eyeY - 0.03, 1, 0)),
     uBlushSize: u(new Vector2(...KIT_CANVAS.blush)),
     uBlush: u(blank), uBlushCol: u(new Color('#e0707c')), uBlushAmt: u(0),
+    // barba, olheira, linhas
+    uBeard: u(blank), uBeardCol: u(new Color('#2c211b')), uBeardAmt: u(0),
+    uBags: u(blank), uBagsAmt: u(0), uLines: u(blank), uLinesAmt: u(0),
   }
   const material = new MeshPhysicalMaterial({
     map, roughness: 0.5, metalness: 0, clearcoat: 0.25, clearcoatRoughness: 0.4, sheen: 0.6, sheenRoughness: 0.5, sheenColor: new Color('#ffe6dc'),
@@ -74,6 +77,7 @@ uniform vec3 uIrisCol; uniform vec3 uLinerCol; uniform vec3 uLashCol; uniform fl
 uniform vec4 uBrowP; uniform vec2 uBrowSize; uniform sampler2D uBrowTex; uniform vec3 uBrowCol; uniform float uBrowOp;
 uniform vec4 uMouthP; uniform vec2 uMouthSize; uniform sampler2D uLips; uniform sampler2D uGloss; uniform vec3 uLipCol; uniform float uGlossAmt; uniform float uLipOp;
 uniform vec4 uBlushP; uniform vec2 uBlushSize; uniform sampler2D uBlush; uniform vec3 uBlushCol; uniform float uBlushAmt;
+uniform sampler2D uBeard; uniform vec3 uBeardCol; uniform float uBeardAmt; uniform sampler2D uBags; uniform float uBagsAmt; uniform sampler2D uLines; uniform float uLinesAmt;
 float mfEye = 0.0; float mfGloss = 0.0; float mfSuit = 0.0;
 // amostra uma camada do kit: p = posicao no rosto (m), c = centro, rot (rad), sx = lado (+1/-1: espelha x)
 vec4 mfLayer(sampler2D t, vec2 p, vec2 c, vec2 size, float sc, float rot, float sx) {
@@ -108,6 +112,14 @@ void main() {`,
   float bl = mfLayer(uBlush, fp, vec2(side * uBlushP.x, uBlushP.y), uBlushSize, uBlushP.z, 0.0, side).a * uBlushAmt * wFace;
   base = mix(base, uBlushCol, clamp(bl, 0.0, 1.0) * 0.75);
   vec2 ec = vec2(side * uEyeP.x, uEyeP.y);
+  // olheira (multiplica a pele), linhas de expressao e barba (por baixo dos olhos/labios)
+  float bg = mfLayer(uBags, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side).a * uBagsAmt * wFace;
+  base *= mix(vec3(1.0), vec3(0.80, 0.64, 0.70), clamp(bg, 0.0, 1.0));
+  float lgA = mfLayer(uLines, fp, vec2(${LINES_CANVAS.center[0]}, ${LINES_CANVAS.center[1]}), vec2(${LINES_CANVAS.size[0]}, ${LINES_CANVAS.size[1]}), 1.0, 0.0, 1.0).a * uLinesAmt * wFace;
+  base *= mix(vec3(1.0), vec3(0.62, 0.48, 0.44), clamp(lgA, 0.0, 1.0));
+  float wBeard = smoothstep(-0.25, 0.2, vRestN.z) * step(1.425, vRest.y) * step(vRest.y, 1.585) * step(abs(vRest.x), 0.10) * wSkin * uFaceOn;
+  float bdA = mfLayer(uBeard, fp, vec2(${BEARD_CANVAS.center[0]}, ${BEARD_CANVAS.center[1]}), vec2(${BEARD_CANVAS.size[0]}, ${BEARD_CANVAS.size[1]}), 1.0, 0.0, 1.0).a * uBeardAmt * wBeard;
+  base = mix(base, uBeardCol, clamp(bdA, 0.0, 1.0));
   vec4 sc = mfLayer(uSclera, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side);
   base = mix(base, sc.rgb, sc.a * wFace);
   mfEye = sc.a * wFace;
@@ -147,7 +159,7 @@ roughnessFactor = mix(roughnessFactor, 0.12, clamp(mfGloss * 1.4, 0.0, 1.0));`,
 #endif`,
       )
   }
-  material.customProgramCacheKey = () => 'male-body-v1'
+  material.customProgramCacheKey = () => 'male-body-v2'
 
   let current = initial
   const setFace = (f: MaleFace) => {
@@ -170,6 +182,10 @@ roughnessFactor = mix(roughnessFactor, 0.12, clamp(mfGloss * 1.4, 0.0, 1.0));`,
     const bl = f.blush
     ;(uniforms.uBlushP.value as Vector4).set(0.058 + bl.gap, FACE_REF.eyeY - 0.03 + bl.y, bl.scale, 0)
     ;(uniforms.uBlushCol.value as Color).set(bl.color); uniforms.uBlushAmt.value = bl.amount
+    uniforms.uBeard.value = k.beard ?? blank
+    ;(uniforms.uBeardCol.value as Color).set(f.beard.color); uniforms.uBeardAmt.value = k.beard ? f.beard.amount : 0
+    uniforms.uBags.value = k.bags; uniforms.uBagsAmt.value = f.detail.bags
+    uniforms.uLines.value = k.lines; uniforms.uLinesAmt.value = f.detail.lines
   }
   const setLook = (skin: string, suit: string) => {
     ;(uniforms.uSkin.value as Color).set(skin); (uniforms.uSuit.value as Color).set(suit)

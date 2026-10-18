@@ -181,16 +181,290 @@
       "targets": [
         "body"
       ]
+    },
+    {
+      "name": "f_maleBase",
+      "label": "Rosto masculino base",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_jawWide",
+      "label": "Mandibula larga",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_jawAngular",
+      "label": "Mandibula angulosa",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_jawSoft",
+      "label": "Mandibula suave",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_chinWide",
+      "label": "Queixo largo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_chinPointed",
+      "label": "Queixo pontudo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_chinForward",
+      "label": "Queixo para frente",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_chinBack",
+      "label": "Queixo para tras",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_chinCleft",
+      "label": "Covinha no queixo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_browRidge",
+      "label": "Relevo da sobrancelha",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_foreheadHigh",
+      "label": "Testa alta",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_foreheadLow",
+      "label": "Testa baixa",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_cheekboneHigh",
+      "label": "Macas altas",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_cheekFull",
+      "label": "Bochechas cheias",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_cheekHollow",
+      "label": "Bochechas fundas",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_faceLong",
+      "label": "Rosto longo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_faceShort",
+      "label": "Rosto curto",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_faceWide",
+      "label": "Rosto largo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_noseWide",
+      "label": "Nariz largo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_noseLong",
+      "label": "Nariz longo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_noseBridge",
+      "label": "Ponte do nariz",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_lipsFull",
+      "label": "Labios cheios",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_lipsThin",
+      "label": "Labios finos",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_neckThick",
+      "label": "Pescoco grosso",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_adamsApple",
+      "label": "Pomo de adao",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_earsSmall",
+      "label": "Orelhas pequenas",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
+      "name": "f_earsBig",
+      "label": "Orelhas grandes",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
     }
   ],
   "morphGroups": [
-    "Corpo"
+    "Corpo",
+    "Rosto"
   ],
+  "defaultMorphs": {
+    "f_maleBase": 1.0
+  },
   "triangles": {
     "body": 15044
   },
   "sizesBytes": {
-    "male_base.glb": 1466924
+    "male_base.glb": 1659740
   },
   "license": "Meshy-generated asset (check Meshy plan terms); rig/morph/paint tooling: project code"
 }
