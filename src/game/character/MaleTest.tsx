@@ -5,6 +5,8 @@ import { AnimationClip, AnimationMixer, Box3, NoColorSpace, Plane, TextureLoader
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import { DEFAULT_APPEARANCE, type Appearance } from '../../shared/appearance'
 import { randomAppearance } from '../../shared/randomAppearance'
+import { BEARD_STYLES, BROW_STYLES, CONTOUR_STYLES, EYE_STYLES, FRECKLE_STYLES, LASH_STYLES, MOUTH_STYLES, NOSE_STYLES, PAINT_STYLES, forGender, type StyleOpt } from '../../shared/faceLayers'
+import { KIT_CONTOUR, KIT_FRECKLES, KIT_NOSE, KIT_PAINT } from '../../shared/faceKit.generated'
 import { Character } from './Character'
 import { CORE_URL } from './animation/animator'
 import { createMaleMaterial, type MaleBodyMaterial } from './maleMaterial'
@@ -177,6 +179,17 @@ function DollNew({ x, yaw, dy = 0, look = DOLL_REPLICA, outfit }: { x: number; y
   )
 }
 
+function MixRand({ seed, gender, x, yaw }: { seed: string; gender: 'female' | 'male' | 'any'; x: number; yaw: number }) {
+  const app = useMemo(() => randomAppearance(seed, { gender }), [seed, gender])
+  return (
+    <group position={[x, 0, 0]} rotation={[0, yaw, 0]}>
+      <Suspense fallback={null}>
+        <Character appearance={app} anim={REST ? undefined : { clip: 'idle', t: T }} />
+      </Suspense>
+    </group>
+  )
+}
+
 function MixChar({ seed, gender, x }: { seed: string; gender: 'female' | 'male'; x: number }) {
   const app = useMemo(() => randomAppearance(seed, { gender, profile: 'npc' }), [seed, gender])
   return (
@@ -272,6 +285,83 @@ export function MaleTest() {
       <>
         <Cam target={[0, 1.55, 0]} dist={Number(Q.get('cam')) || 3} fov={Number(Q.get('fov')) || 7} />
         <Male look={TWELVE[i]} yaw={yaw34} />
+      </>
+    )
+  } else if (scene === 'cat') {
+    // folha de estilos de uma categoria (cat=eyes|lashes|brows|mouths|beards|nose|freckles|contour|paint, g=male|female, from, count)
+    const cat = Q.get('cat') ?? 'eyes'
+    const fem = Q.get('g') === 'female'
+    const lists: Record<string, StyleOpt[]> = { eyes: EYE_STYLES, lashes: LASH_STYLES, brows: BROW_STYLES, mouths: MOUTH_STYLES, beards: BEARD_STYLES, nose: NOSE_STYLES, freckles: FRECKLE_STYLES, contour: CONTOUR_STYLES, paint: PAINT_STYLES }
+    const all = forGender(lists[cat], fem ? 'female' : 'male').filter((x) => !x.hidden || cat === 'eyes').filter((x) => x.id !== 'none')
+    const from = Number(Q.get('from') ?? 0)
+    const count = Number(Q.get('count') ?? 7)
+    const items = all.slice(from, from + count)
+    const baseFace = fem ? FEM_SIX[1].face : mergeFace(TWELVE[2].face, { beard: { style: 'none' } })
+    const meta: Record<string, { k: string; amt?: number; col?: string }> = {
+      nose: { k: 'nose', amt: 0.9 }, freckles: { k: 'freckles', amt: 0.9 }, contour: { k: 'contour', amt: 0.9 }, paint: { k: 'paint', amt: 1 },
+    }
+    const colorOf2 = (l: Array<{ id: string; color?: string }>, id: string) => l.find((x) => x.id === id)?.color
+    const lookFor = (it: StyleOpt): MaleLook & FemLook => {
+      let face = baseFace
+      if (cat === 'eyes') face = mergeFace(baseFace, { eye: { style: it.id, lash: it.id === 'classic' ? 'classic' : baseFace.eye.lash === 'classic' ? 'natural' : baseFace.eye.lash } })
+      else if (cat === 'lashes') face = mergeFace(baseFace, { eye: { lash: it.id, lashColor: it.group === 'fun' ? '#ffffff' : baseFace.eye.lashColor } })
+      else if (cat === 'brows') face = mergeFace(baseFace, { brow: { style: it.id, color: it.group === 'fun' ? '#ffffff' : baseFace.brow.color, opacity: 1 } })
+      else if (cat === 'mouths') face = mergeFace(baseFace, { mouth: { style: it.id, opacity: 1 } })
+      else if (cat === 'beards') face = mergeFace(baseFace, { beard: { style: it.id, color: '#3a2a20' } })
+      else {
+        const m = meta[cat]; const src = cat === 'nose' ? KIT_NOSE : cat === 'freckles' ? KIT_FRECKLES : cat === 'contour' ? KIT_CONTOUR : KIT_PAINT
+        face = mergeFace(baseFace, { extras: { [m.k]: { style: it.id, amount: m.amt ?? 0.8, color: colorOf2(src, it.id) ?? '#8a5a48' } } as never })
+      }
+      return { name: it.label, skin: fem ? '#f0cdb8' : '#e3b08f', suit: '#2a4fa8', face, shape: {}, hair: null as never }
+    }
+    content = (
+      <>
+        <Cam target={[0, fem ? 1.4 : 1.57, 0]} dist={Number(Q.get('cam')) || 5} fov={Number(Q.get('fov')) || 8} />
+        {items.map((it, i) => {
+          const lk = lookFor(it)
+          return fem ? (
+            <DollNew key={it.id} x={rowX(i, count, 0.34)} yaw={yaw34} look={{ ...lk, hair: { id: null as unknown as string, color: '#000' } }} />
+          ) : (
+            <Male key={it.id} look={lk} x={rowX(i, count, 0.34)} yaw={yaw34} shape={{ f_maleBase: 1 }} cut noHair />
+          )
+        })}
+      </>
+    )
+  } else if (scene === 'fun8') {
+    // 8 rostos extravagantes (4 femininos, 4 masculinos) montados so com camadas
+    const base = (fem: boolean) => (fem ? FEM_SIX[1].face : mergeFace(TWELVE[2].face, { beard: { style: 'none' } }))
+    const mk = (fem: boolean, name: string, skin: string, patch: Parameters<typeof mergeFace>[1], hairColor: string): MaleLook & FemLook => ({ name, skin, suit: '#2a4fa8', face: mergeFace(base(fem), patch), shape: fem ? {} : { f_maleBase: 1 }, hair: { id: fem ? 'hair.meshyUpdo' : 'hair.m.quiff', color: hairColor } as never })
+    const F4 = [
+      mk(true, 'Coracao', '#f3d2c2', { eye: { style: 'heart', lash: 'rainbow', iris: '#ff5f9f', lashColor: '#ffffff', scale: 1.15 }, brow: { style: 'glitter', color: '#ffffff' }, mouth: { style: 'classic', color: '#ff3d8a', gloss: 1 }, extras: { paint: { style: 'hearts', amount: 1, color: '#ff6f9f' }, freckles: { style: 'hearts', amount: 0.9, color: '#e8607f' } }, blush: { amount: 1, shade: true } }, '#f283ad'),
+      mk(true, 'Estrela', '#e6b896', { eye: { style: 'star', lash: 'glitter', iris: '#ffd45a', lashColor: '#ffffff', scale: 1.15 }, brow: { style: 'dots', color: '#6a3fb0' }, mouth: { style: 'twotone', color: '#7a3fd0', color2: '#ff6fb0', gloss: 1 }, extras: { paint: { style: 'eyestars', amount: 1, color: '#c79bff' }, freckles: { style: 'stars', amount: 0.9, color: '#e8b43a' } } }, '#b98bf0'),
+      mk(true, 'Gatinha', '#a86d4a', { eye: { style: 'slit', lash: 'cat', iris: '#6fe0a0', scale: 1.1 }, brow: { style: 'rainbow', color: '#ffffff' }, mouth: { style: 'glitter', color: '#ff8a5a', gloss: 1 }, extras: { paint: { style: 'cat', amount: 1, color: '#4a3a3a' } } }, '#ff8a3d'),
+      mk(true, 'Anime', '#f0cdb8', { eye: { style: 'anime', lash: 'feather', iris: '#4fa3e8', lashColor: '#ffffff', scale: 1.0 }, brow: { style: 'uni', color: '#3a2a22' }, mouth: { style: 'bigsmile', color: '#e8606f', gloss: 0.6 }, extras: { paint: { style: 'glitter', amount: 1, color: '#ffe08a' }, nose: { style: 'blush', amount: 0.9, color: '#ee8a86' } } }, '#4fa3e8'),
+    ]
+    const M4 = [
+      mk(false, 'Palhaco', '#e3b08f', { eye: { style: 'cartoon', lash: 'none', iris: '#3b2517', scale: 0.55 }, brow: { style: 'dots', color: '#c0172f' }, mouth: { style: 'bigsmile', color: '#e8252e', gloss: 0.5 }, extras: { paint: { style: 'clown', amount: 1, color: '#e8252e' } } }, '#ff8a3d'),
+      mk(false, 'Espiral', '#d4a075', { eye: { style: 'spiral', lash: 'none', iris: '#26b9b0', scale: 0.7 }, brow: { style: 'rainbow', color: '#ffffff' }, mouth: { style: 'tongue', color: '#c9707a', gloss: 0.5 }, extras: { paint: { style: 'bolt', amount: 1, color: '#ffdc3a' } } }, '#3fc5c0'),
+      mk(false, 'Brincalhao', '#f1d3c2', { eye: { style: 'heart', lash: 'spider', iris: '#ee7fae', scale: 0.7 }, brow: { style: 'uni', color: '#2a1d16' }, mouth: { style: 'gap', color: '#b06a62', gloss: 0.3 }, extras: { paint: { style: 'stars', amount: 1, color: '#ffd45a' }, freckles: { style: 'hearts', amount: 0.9, color: '#e8607f' } } }, '#f7b5cd'),
+      mk(false, 'Gato', '#855236', { eye: { style: 'slit', lash: 'long', iris: '#e2b53a', scale: 0.7 }, brow: { style: 'glitter', color: '#ffffff' }, mouth: { style: 'glitter', color: '#8a3f3c', gloss: 1 }, extras: { paint: { style: 'cat', amount: 1, color: '#2a2020' }, contour: { style: 'highlight', amount: 0.6, color: '#fff0dc' } }, beard: { style: 'drawn', color: '#2a2020', amount: 1 } }, '#c0172f'),
+    ]
+    const row = Number(Q.get('row') ?? 0)
+    const list = row === 0 ? F4 : M4
+    content = (
+      <>
+        <Cam target={[0, row === 0 ? 1.42 : 1.58, 0]} dist={Number(Q.get('cam')) || 5} fov={Number(Q.get('fov')) || 7} />
+        {list.map((lk, i) =>
+          row === 0 ? <DollNew key={i} x={rowX(i, 4, 0.5)} yaw={yaw34} look={lk as FemLook} /> : <Male key={i} look={lk as MaleLook} x={rowX(i, 4, 0.5)} yaw={yaw34} shape={{ f_maleBase: 1 }} cut />,
+        )}
+      </>
+    )
+  } else if (scene === 'rand') {
+    const g = Q.get('g') === 'male' ? 'male' : Q.get('g') === 'female' ? 'female' : 'any'
+    const start = Number(Q.get('from') ?? 0)
+    content = (
+      <>
+        <Cam target={[0, 1.5, 0]} dist={Number(Q.get('cam')) || 7} fov={Number(Q.get('fov')) || 8} />
+        {Array.from({ length: 6 }, (_, i) => (
+          <MixRand key={i} seed={`rnd${start + i}`} gender={g} x={rowX(i, 6, 0.55)} yaw={yaw34} />
+        ))}
       </>
     )
   } else if (scene === 'reft') {

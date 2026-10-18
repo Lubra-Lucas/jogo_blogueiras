@@ -23,7 +23,7 @@ import {
   type FaceListKey,
 } from '../../src/shared/faceCatalog.ts'
 import { DEFAULT_MALE_APPEARANCE, classicFromLegacy } from '../../src/shared/appearance.ts'
-import { BIG_HEAD_SHAPE, MALE_SHAPE_GROUPS, FEMALE_SHAPE_GROUPS, safeShape, shapeGroups, shapeNames, sanitizeFaceLayers, sanitizeShape, EYE_STYLES, BEARD_STYLES, BROW_STYLES as LAYER_BROWS, MOUTH_STYLES } from '../../src/shared/faceLayers.ts'
+import { BIG_HEAD_SHAPE, MALE_SHAPE_GROUPS, FEMALE_SHAPE_GROUPS, safeShape, shapeGroups, shapeNames, sanitizeFaceLayers, sanitizeShape, EYE_STYLES, BEARD_STYLES, BROW_STYLES as LAYER_BROWS, MOUTH_STYLES, LASH_STYLES as LAYER_LASHES, NOSE_STYLES, FRECKLE_STYLES, CONTOUR_STYLES, PAINT_STYLES } from '../../src/shared/faceLayers.ts'
 import { TWELVE, FEM_SIX } from '../../src/shared/facePresets.ts'
 import { FUN_SHAPE_CHANCE, rollShape } from '../../src/shared/randomFace.ts'
 import { SHAPE_SAFE_MAX } from '../../src/shared/faceShapeRanges.ts'
@@ -369,11 +369,16 @@ await t('proporcoes por osso: migracao zera, sanitize limita, sorteio concentrad
 })
 
 // ---------- genero, camadas do rosto e formato ----------
-await t('catalogo de camadas e formatos: estilos, formatos por genero (v2), presets 16/9', () => {
-  assert.equal(EYE_STYLES.length, 6)
-  assert.equal(LAYER_BROWS.length, 6)
-  assert.equal(MOUTH_STYLES.length, 6)
-  assert.equal(BEARD_STYLES.length, 5)
+await t('catalogo de camadas e formatos: formatos v2, presets 16/9', () => {
+  // lote de estilos: metas (olhos ~14, cilios ~10, sobrancelhas ~12, bocas ~10, barbas ~10, nariz 6) e grupos Natural/Glam/Divertido
+  const cnt = (l: Array<{ hidden?: boolean; id: string }>) => l.filter((s) => !s.hidden && s.id !== 'none').length
+  assert.ok(cnt(EYE_STYLES) >= 14 && cnt(LAYER_LASHES) >= 10 && cnt(LAYER_BROWS) >= 12 && cnt(MOUTH_STYLES) >= 10 && cnt(BEARD_STYLES) >= 10 && cnt(NOSE_STYLES) >= 6)
+  for (const l of [EYE_STYLES, LAYER_LASHES, LAYER_BROWS, MOUTH_STYLES, BEARD_STYLES, FRECKLE_STYLES, CONTOUR_STYLES, PAINT_STYLES]) {
+    assert.equal(new Set(l.map((s) => s.id)).size, l.length, 'ids unicos')
+    for (const s of l) assert.ok(['natural', 'glam', 'fun'].includes(s.group) && s.label)
+  }
+  for (const l of [EYE_STYLES, LAYER_LASHES, LAYER_BROWS, MOUTH_STYLES]) assert.ok(l.some((s) => s.group === 'fun') && l.some((s) => s.group === 'natural'))
+  assert.ok(PAINT_STYLES.length >= 8 && FRECKLE_STYLES.length >= 6)
   assert.ok(shapeNames('male').length >= 60 && shapeNames('female').length >= 55, `${shapeNames('male').length}/${shapeNames('female').length}`)
   assert.equal(MALE_SHAPE_GROUPS.length, 8)
   assert.equal(FEMALE_SHAPE_GROUPS.length, 8)

@@ -36,7 +36,7 @@ export function createMaleMaterial(map: Texture | null, mask: Texture, initial: 
   const material = new MeshPhysicalMaterial({
     map, roughness: 0.5, metalness: 0, clearcoat: 0.25, clearcoatRoughness: 0.4, sheen: 0.6, sheenRoughness: 0.5, sheenColor: new Color('#ffe6dc'),
   })
-  material.defines = { ...(material.defines ?? {}), FL_DETAIL: '' }
+  material.defines = { ...(material.defines ?? {}), FL_BEARD: '' }
   material.onBeforeCompile = (shader: WebGLProgramParametersWithUniforms) => {
     Object.assign(shader.uniforms, uniforms)
     shader.vertexShader = shader.vertexShader
