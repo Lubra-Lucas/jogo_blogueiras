@@ -4,9 +4,11 @@ import { TAG_LABEL } from '../../../game/minigames/desfile/types'
 import { getProfessionXp } from '../../../game/minigames/rewards'
 import { DIFFICULTY_LABEL, type Difficulty } from '../../../game/minigames/shared/competition'
 import { CLIENTS_PER_ROUND } from '../../../game/minigames/estilista/clients'
-import { liveComment, TIER_XP, tierOf, wishSummary } from '../../../game/minigames/estilista/logic'
+import { liveComment, TIER_XP, tierOf, VIP_TIER, wishSummary } from '../../../game/minigames/estilista/logic'
 import { markTutorialSeen, useEstilistaStore } from '../../../game/minigames/estilista/store'
 import { CRITERION_LABEL, type Criterion } from '../../../game/minigames/estilista/types'
+import { joinLobby, leaveLobby, endMatch, startMatch, useVersusStore, versusAvailable } from '../../../game/net/versus'
+import { MatchResults } from './MatchResults'
 import { Face, IcoAsk, IcoClock, IcoCoin, IcoCrown, IcoFlame, IcoHanger, IcoStar, IcoTag } from './icons'
 import { Questions } from './StylingPanel'
 
@@ -60,6 +62,8 @@ export function IntroScreen({ onHelp }: { onHelp: () => void }) {
   const xp = getProfessionXp('Estilista')
   const tier = tierOf(xp)
   const next = TIER_XP[tier + 1]
+  const lobby = useVersusStore((s) => s.lobby)
+  const inLobby = useVersusStore((s) => s.gameId) !== null
   return (
     <div className="es-center">
       <div className="es-card es-intro">
@@ -90,6 +94,30 @@ export function IntroScreen({ onHelp }: { onHelp: () => void }) {
           {CLIENTS_PER_ROUND[difficulty]} clientes · {mode === 'daily' ? 'mesmas clientes para todas e ranking do dia' : 'clientes sorteadas, sem ranking'}
           {tier >= 2 && ' · cliente VIP no final'}
         </p>
+        {versusAvailable() && (
+          <>
+            <div className="es-sub">Competição ao vivo</div>
+            {inLobby ? (
+              <>
+                <p className="es-note">Na sala: {lobby.map((p) => p.name).join(', ')}</p>
+                <div className="es-row">
+                  <button
+                    className="es-btn primary"
+                    disabled={lobby.length < 2}
+                    onClick={() => startMatch({ difficulty, seed: (Math.random() * 4294967296) >>> 0, vip: tier >= VIP_TIER })}
+                  >
+                    Começar competição
+                  </button>
+                  <button className="es-btn ghost" onClick={leaveLobby}>Sair da sala</button>
+                </div>
+              </>
+            ) : (
+              <div className="es-row">
+                <button className="es-btn ghost" onClick={() => joinLobby('estilista')}>Competir</button>
+              </div>
+            )}
+          </>
+        )}
         <div className="es-row">
           <button className="es-btn ghost" onClick={onHelp}>Como jogar</button>
           <button className="es-btn primary" onClick={() => (playSfx('done'), set.start())}>Abrir a boutique</button>
@@ -200,11 +228,12 @@ export function ResultsScreen({ onExit }: { onExit: () => void }) {
   const results = useEstilistaStore((s) => s.results)
   const difficulty = useEstilistaStore((s) => s.difficulty)
   const mode = useEstilistaStore((s) => s.mode)
+  const match = useEstilistaStore((s) => s.match)
   if (!summary) return null
   return (
     <div className="es-center scroll">
       <div className="es-card es-results">
-        <div className="es-eyebrow">{DIFFICULTY_LABEL[difficulty]} · {mode === 'daily' ? 'Desafio do dia' : 'Treino livre'}</div>
+        <div className="es-eyebrow">{DIFFICULTY_LABEL[difficulty]} · {match ? 'Competição ao vivo' : mode === 'daily' ? 'Desafio do dia' : 'Treino livre'}</div>
         <h1 className="es-title">Rodada concluída</h1>
         <div className="es-stars" aria-label={`${summary.stars} de 3 estrelas`}>
           {[1, 2, 3].map((n) => <IcoStar key={n} size={48} filled={n <= summary.stars} className={n <= summary.stars ? 'on' : ''} />)}
@@ -227,6 +256,8 @@ export function ResultsScreen({ onExit }: { onExit: () => void }) {
             {summary.tierUp && tierOf(getProfessionXp('Estilista')) >= 2 && <span>Clientes VIP agora aparecem na boutique.</span>}
           </div>
         )}
+
+        {match && <MatchResults />}
 
         <div className="es-sub">Depoimentos</div>
         <ul className="es-testi">
@@ -256,7 +287,7 @@ export function ResultsScreen({ onExit }: { onExit: () => void }) {
         )}
         <div className="es-row">
           <button className="es-btn ghost" onClick={onExit}>Sair</button>
-          <button className="es-btn primary" onClick={() => (playSfx('click'), useEstilistaStore.getState().reset())}>Jogar de novo</button>
+          <button className="es-btn primary" onClick={() => (playSfx('click'), endMatch(), useEstilistaStore.getState().reset())}>Jogar de novo</button>
         </div>
       </div>
     </div>

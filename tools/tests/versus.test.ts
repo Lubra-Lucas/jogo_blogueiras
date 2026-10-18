@@ -3,6 +3,7 @@
 import { strict as assert } from 'node:assert'
 
 import { standings } from '../../src/game/net/standings.ts'
+import { parseMatchData } from '../../src/game/minigames/estilista/matchData.ts'
 
 const players = [{ id: 'a', name: 'Ana' }, { id: 'b', name: 'Bia' }, { id: 'c', name: 'Cris' }]
 const rows = standings(players, {
@@ -15,4 +16,9 @@ assert.deepEqual(rows[2], { id: 'b', name: 'Bia', score: 0, detail: '', done: fa
 // quem ainda nao pontuou fica depois de quem pontuou 0
 const zero = standings(players, { b: { name: 'Bia', score: 0, detail: '0%', done: false } })
 assert.equal(zero[0].id, 'b')
+// looks de outra jogadora: indice preservado, invalidos viram null
+const parsed = parseMatchData({ looks: [{ hairId: 'x' }, 'lixo', null, { a: 1 }], points: [80, 50, 10, NaN] })
+assert.deepEqual(parsed.map((e) => e?.points ?? null), [80, null, null, null])
+assert.deepEqual(parseMatchData({ looks: 'x', points: [] }), [])
+assert.deepEqual(parseMatchData(null), [])
 console.log('versus ok')

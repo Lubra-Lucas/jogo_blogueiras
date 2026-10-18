@@ -10,6 +10,7 @@ import { evaluate, liveComment } from '../../../game/minigames/estilista/logic'
 import { Stage3D } from '../../../game/minigames/estilista/Stage3D'
 import { tutorialSeen, useEstilistaStore } from '../../../game/minigames/estilista/store'
 import type { Difficulty } from '../../../game/minigames/shared/competition'
+import { endMatch, leaveLobby, reportScore, setPlaying, useVersusStore } from '../../../game/net/versus'
 import { Face, IcoClose, IcoFlame, IcoPause, IcoPlay, IcoSound } from './icons'
 import { BriefScreen, IntroScreen, ReactScreen, ResultsScreen, Tutorial } from './screens'
 import { StylingPanel } from './StylingPanel'
@@ -109,6 +110,8 @@ export default function EstilistaGame({ onExit }: { onExit: () => void }) {
   const combo = useEstilistaStore((s) => s.combo)
   const results = useEstilistaStore((s) => s.results)
   const playerApp = useAppearanceStore((s) => s.appearance)
+  const match = useVersusStore((s) => s.match)
+  const [count, setCount] = useState(0)
   const [muted, setMutedState] = useState(isMuted())
   const [help, setHelp] = useState(false)
   const [openBubble, setOpenBubble] = useState(false)
@@ -125,6 +128,38 @@ export default function EstilistaGame({ onExit }: { onExit: () => void }) {
     devJump()
     if (!tutorialSeen() && !Q.get('esphase')) setHelp(true)
   }, [])
+
+  // competicao: valida a config (vem de outra jogadora), conta ate o inicio combinado e comeca a rodada com a mesma seed
+  useEffect(() => {
+    if (!match) return
+    const c = match.config as { difficulty?: unknown; seed?: unknown; vip?: unknown } | null
+    const diff = (['facil', 'normal', 'dificil', 'estrela'] as const).find((d) => d === c?.difficulty)
+    if (!diff || typeof c?.seed !== 'number' || !Number.isFinite(c.seed) || typeof c.vip !== 'boolean') return endMatch()
+    const { seed, vip } = c
+    const id = window.setInterval(() => {
+      const ms = match.startAt - Date.now()
+      setCount(Math.ceil(ms / 1000))
+      if (ms > 0) return
+      window.clearInterval(id)
+      setHelp(false)
+      useEstilistaStore.getState().start({ difficulty: diff, seed, vip })
+    }, 100)
+    return () => window.clearInterval(id)
+  }, [match?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => setPlaying(phase !== 'intro'), [phase])
+  useEffect(() => leaveLobby, [])
+
+  // competicao: placar parcial a cada cliente avaliada e o final (com os looks) nos resultados
+  const inMatch = match !== null
+  useEffect(() => {
+    if (!inMatch || results.length === 0) return
+    const total = results.reduce((a, r) => a + r.points, 0)
+    if (phase === 'results') {
+      const avg = Math.round(results.reduce((a, r) => a + r.eval.total, 0) / results.length)
+      reportScore(total, `${avg}% média`, true, { looks: results.map((r) => r.look), points: results.map((r) => r.points) })
+    } else if (phase === 'react') reportScore(total, `cliente ${results.length}/${clients.length}`, false)
+  }, [inMatch, phase, results.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (styling && pausedLeft === null && endsAt > 0 && endsAt - performance.now() <= 0) useEstilistaStore.getState().submit(true)
@@ -211,7 +246,14 @@ export default function EstilistaGame({ onExit }: { onExit: () => void }) {
           </button>
         )}
 
-        {phase === 'intro' && <IntroScreen onHelp={() => setHelp(true)} />}
+        {match && phase === 'intro' && (
+          <div className="es-modal">
+            <div className="es-card" style={{ textAlign: 'center' }}>
+              <h2 className="es-title small">Competição em {Math.max(1, count)}…</h2>
+            </div>
+          </div>
+        )}
+        {phase === 'intro' && !match && <IntroScreen onHelp={() => setHelp(true)} />}
         {phase === 'brief' && <BriefScreen />}
         {phase === 'style' && client && <StylingPanel client={client} secondsLeft={left} paused={paused} />}
         {phase === 'react' && <ReactScreen />}
