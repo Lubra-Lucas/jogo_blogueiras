@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { LANE_LABEL } from '../../../game/minigames/dj/chart'
 import { JUDGE_LABEL } from '../../../game/minigames/dj/run'
 import { live, padDown, padUp, scratchInput, session } from '../../../game/minigames/dj/controller'
+import { currentCharId } from '../../../net/save'
+import { standings, useVersusStore } from '../../../game/net/versus'
 import { IcArrow, IcCrowd } from './icons'
 import { LANE_COLORS } from './Highway'
 
@@ -35,6 +37,28 @@ function snap(): Snap {
   }
 }
 
+/** placar da competicao: ao vivo no Hud (compacto) e nos resultados (com detalhe e "jogando…") */
+export function VsBoard({ full }: { full?: boolean }) {
+  const match = useVersusStore((s) => s.match)
+  const scores = useVersusStore((s) => s.scores)
+  if (!match) return null
+  const me = currentCharId()
+  return (
+    <ol className={`dj-board${full ? '' : ' dj-vs'}`}>
+      {standings(match.players, scores).map((r, i) => (
+        <li key={r.id} className={r.id === me ? 'you' : ''}>
+          <span>{i + 1}</span>
+          <em>
+            {r.name}
+            {full && ` · ${r.done ? r.detail : 'jogando…'}`}
+          </em>
+          <b>{Math.round(r.score).toLocaleString('pt-BR')}</b>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
 export function Hud() {
   const [s, setS] = useState<Snap>(snap)
   useEffect(() => {
@@ -51,6 +75,7 @@ export function Hud() {
         <div className="dj-score">{Math.round(s.score).toLocaleString('pt-BR')}</div>
         <div className="dj-acc">{s.accuracy.toFixed(1)}%</div>
       </div>
+      <VsBoard />
       <div className="dj-energy" aria-label="Energia da pista">
         <IcCrowd size={20} />
         <div className="dj-energy-bar">

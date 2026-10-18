@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { DIFFICULTY_LABEL } from '../../../game/minigames/shared/competition'
 import { startSong, quitToMenu, type DjResult } from '../../../game/minigames/dj/controller'
 import { computeLatency, eventAudioTime, getCtx, getLatency, setLatency, startMetronome } from '../../../game/minigames/dj/engine'
+import { endMatch, useVersusStore } from '../../../game/net/versus'
+import { VsBoard } from './Hud'
 import { IcStar } from './icons'
 
 /* ============ Como jogar (3 passos) ============ */
@@ -144,12 +146,19 @@ export function Calibrate({ onClose }: { onClose: () => void }) {
 const JL = { perfect: 'Perfeito', great: 'Ótimo', good: 'Bom', miss: 'Errou' } as const
 
 export function Results({ r }: { r: DjResult }) {
+  const versus = useVersusStore((s) => s.match !== null)
   const idx = r.board.findIndex((e) => e.you)
   const top = r.board.slice(0, 5)
   const extra = idx >= 5 ? r.board[idx] : null
   return (
     <div className="dj-modal scroll">
       <div className="dj-card results">
+        {versus && (
+          <>
+            <div className="dj-label">Resultado da competição</div>
+            <VsBoard full />
+          </>
+        )}
         <div className="dj-res-head">
           <div className={`dj-grade g-${r.grade}`}>{r.grade}</div>
           <div>
@@ -204,8 +213,16 @@ export function Results({ r }: { r: DjResult }) {
           )}
         </ol>
         <div className="dj-row">
-          <button className="dj-btn" onClick={quitToMenu}>Menu</button>
-          <button className="dj-btn primary" onClick={() => startSong()}>Tocar de novo</button>
+          <button
+            className="dj-btn"
+            onClick={() => {
+              endMatch()
+              quitToMenu()
+            }}
+          >
+            Menu
+          </button>
+          {!versus && <button className="dj-btn primary" onClick={() => startSong()}>Tocar de novo</button>}
         </div>
       </div>
     </div>

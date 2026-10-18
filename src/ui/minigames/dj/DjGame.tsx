@@ -8,6 +8,8 @@ import {
 } from '../../../game/minigames/dj/controller'
 import { getCtx } from '../../../game/minigames/dj/engine'
 import { DjScene3D } from '../../../game/minigames/dj/DjScene3D'
+import { endMatch, leaveLobby, reportScore, setPlaying, useVersusStore } from '../../../game/net/versus'
+import { SONGS } from '../../../game/minigames/dj/songs'
 import { getQuality } from '../../../game/systems/quality'
 import { useAppearanceStore } from '../../../state/appearanceStore'
 import { Highway } from './Highway'
@@ -60,8 +62,43 @@ export function DjGame({ onExit }: { onExit: () => void }) {
         })
       }
     }
-    return () => quitToMenu()
+    return () => {
+      quitToMenu()
+      leaveLobby()
+    }
   }, [])
+
+  // competicao: contagem ate o inicio combinado, depois toca a musica escolhida pela anfitria
+  const match = useVersusStore((s) => s.match)
+  const [left, setLeft] = useState(0)
+  useEffect(() => {
+    if (!match) return
+    const cfg = match.config as { songId?: unknown; difficulty?: unknown } | null
+    const songId = SONGS.find((s) => s.id === cfg?.songId)?.id
+    const difficulty = (['facil', 'normal', 'dificil', 'estrela'] as const).find((d) => d === cfg?.difficulty)
+    if (!songId || !difficulty) return endMatch() // dado de outra jogadora: ignora partida invalida
+    const id = window.setInterval(() => {
+      const ms = match.startAt - Date.now()
+      setLeft(Math.ceil(ms / 1000))
+      if (ms > 0) return
+      window.clearInterval(id)
+      startSong({ songId, difficulty, daily: false })
+    }, 100)
+    return () => window.clearInterval(id)
+  }, [match?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => setPlaying(phase !== 'menu'), [phase])
+
+  // competicao: placar parcial a cada 1 s e o final quando a musica acaba
+  const inMatch = match !== null
+  useEffect(() => {
+    if (!inMatch || (phase !== 'playing' && phase !== 'paused')) return
+    const id = window.setInterval(() => reportScore(live.score, `${Math.round(live.accuracy)}%`, false), 1000)
+    return () => window.clearInterval(id)
+  }, [inMatch, phase])
+  useEffect(() => {
+    if (inMatch && result) reportScore(result.score, `${Math.round(result.accuracy)}% · combo ${result.maxCombo}`, true)
+  }, [inMatch, result])
 
   useEffect(() => {
     if (session) setColors(session.song.colors)
@@ -195,7 +232,14 @@ export function DjGame({ onExit }: { onExit: () => void }) {
         </button>
       )}
 
-      {phase === 'menu' && !calibrating && !showHelp && <Menu onPlay={begin} onCalibrate={() => setCalibrating(true)} />}
+      {match && phase === 'menu' && (
+        <div className="dj-modal">
+          <div className="dj-card narrow">
+            <h2>Competição em {Math.max(1, left)}…</h2>
+          </div>
+        </div>
+      )}
+      {phase === 'menu' && !match && !calibrating && !showHelp && <Menu onPlay={begin} onCalibrate={() => setCalibrating(true)} />}
       {phase === 'menu' && calibrating && <Calibrate onClose={() => setCalibrating(false)} />}
       {showHelp && (
         <Tutorial
@@ -206,7 +250,10 @@ export function DjGame({ onExit }: { onExit: () => void }) {
           }}
         />
       )}
-      {phase === 'paused' && <Pause onResume={resume} onRestart={() => startSong()} onQuit={quitToMenu} />}
+      {phase === 'paused' && <Pause onResume={resume} onRestart={() => startSong()} onQuit={() => {
+          endMatch()
+          quitToMenu()
+        }} />}
       {phase === 'results' && result && <Results r={result} />}
     </div>
   )
