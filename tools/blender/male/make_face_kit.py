@@ -14,6 +14,7 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kit_src")
 os.makedirs(OUT, exist_ok=True)
 K = 8000          # px por metro no PNG final
 SS = 3            # supersampling
+SKIP_LASH = False   # make_styles.py gera os cilios a parte (independentes do olho)
 CANVAS = {"eye": (0.100, 0.090), "brow": (0.090, 0.034), "mouth": (0.090, 0.052), "blush": (0.100, 0.075)}
 
 
@@ -74,6 +75,22 @@ EYES = {
     # "Referencia": olho amendoado, levemente encapuzado (palpebra superior baixa e reta), delineado natural fino
     "ref": dict(label="Referencia (encapuzado)", a=0.0205, hu=0.0066, hl=0.0050, kin=0.80, kl=1.1, pu=0.95, pl=1.0, lift=0.0010, ir=0.0082, iy=-0.0006, ix=0.0,
                 liner=0.0016, flick=0.0016, hi=1, shadow=0.75, caruncle=1),
+    # ---- lote de estilos: variedade ----
+    "round": dict(label="Redondo", a=0.0165, hu=0.0120, hl=0.0105, kin=0.95, kl=1.0, pu=0.62, pl=0.64, lift=0.0, ir=0.0108, iy=-0.0010, ix=0.0, liner=0.0016, flick=0.0, hi=1, shadow=0.5, caruncle=1),
+    "cat": dict(label="Puxado / felino", a=0.0205, hu=0.0070, hl=0.0046, kin=0.80, kl=1.1, pu=0.9, pl=1.0, lift=0.0048, ir=0.0072, iy=0.0, ix=0.0, liner=0.0022, flick=0.0040, hi=1, shadow=0.6, caruncle=1),
+    "droopy": dict(label="Caido", a=0.0172, hu=0.0088, hl=0.0058, kin=0.85, kl=1.1, pu=0.85, pl=0.9, lift=-0.0036, ir=0.0078, iy=-0.0004, ix=0.0, liner=0.0014, flick=0.0, hi=1, shadow=0.6, caruncle=1),
+    "hooded": dict(label="Encapuzado", a=0.0185, hu=0.0058, hl=0.0058, kin=0.85, kl=1.1, pu=0.95, pl=1.0, lift=0.0004, ir=0.0086, iy=-0.0006, ix=0.0, liner=0.0014, flick=0.0, hi=1, shadow=1.0, caruncle=1),
+    "monolid": dict(label="Monolid", a=0.0190, hu=0.0050, hl=0.0042, kin=0.7, kl=1.0, pu=1.25, pl=1.2, lift=0.0008, ir=0.0072, iy=-0.0004, ix=0.0, liner=0.0018, flick=0.0010, hi=1, shadow=0.35, caruncle=0),
+    "catliner": dict(label="Gatinho com delineado", a=0.0195, hu=0.0080, hl=0.0050, kin=0.82, kl=1.1, pu=0.88, pl=1.0, lift=0.0040, ir=0.0076, iy=0.0, ix=0.0, liner=0.0044, flick=0.0080, hi=1, shadow=0.5, caruncle=1),
+    "sleepy": dict(label="Sonolento", a=0.0180, hu=0.0042, hl=0.0066, kin=0.9, kl=1.0, pu=0.9, pl=0.8, lift=-0.0006, ir=0.0086, iy=-0.0016, ix=0.0, liner=0.0014, flick=0.0, hi=1, shadow=1.0, caruncle=1),
+    "small": dict(label="Pequeno natural", a=0.0128, hu=0.0058, hl=0.0046, kin=0.85, kl=1.1, pu=0.8, pl=0.9, lift=0.0004, ir=0.0058, iy=0.0, ix=0.0, liner=0.0010, flick=0.0, hi=1, shadow=0.5, caruncle=1),
+    "longalmond": dict(label="Amendoado alongado", a=0.0238, hu=0.0070, hl=0.0048, kin=0.78, kl=1.2, pu=0.9, pl=1.0, lift=0.0026, ir=0.0068, iy=0.0003, ix=0.0, liner=0.0018, flick=0.0020, hi=1, shadow=0.6, caruncle=1),
+    "heart": dict(label="Pupila de coracao", a=0.0185, hu=0.0120, hl=0.0100, kin=0.95, kl=1.0, pu=0.65, pl=0.66, lift=0.0004, ir=0.0112, iy=-0.0008, ix=0.0, liner=0.0030, flick=0.0020, hi=1, shadow=0.35, pupil="heart", pup=0.55, caruncle=1),
+    "star": dict(label="Pupila de estrela", a=0.0185, hu=0.0120, hl=0.0100, kin=0.95, kl=1.0, pu=0.65, pl=0.66, lift=0.0004, ir=0.0112, iy=-0.0008, ix=0.0, liner=0.0030, flick=0.0020, hi=1, shadow=0.35, pupil="star", pup=0.58, caruncle=1),
+    "slit": dict(label="Olho de gato (fenda)", a=0.0195, hu=0.0100, hl=0.0082, kin=0.9, kl=1.0, pu=0.7, pl=0.75, lift=0.0030, ir=0.0100, iy=-0.0004, ix=0.0, liner=0.0030, flick=0.0045, hi=1, shadow=0.35, pupil="slit", pup=0.5, caruncle=1),
+    "anime": dict(label="Anime brilhante", a=0.0205, hu=0.0150, hl=0.0130, kin=0.92, kl=1.0, pu=0.62, pl=0.64, lift=0.0010, ir=0.0135, iy=-0.0006, ix=0.0, liner=0.0042, flick=0.0030, hi=3, shadow=0.3, glow=0.55, pup=0.30, hir=0.22, caruncle=1),
+    "spiral": dict(label="Espiral", a=0.0185, hu=0.0120, hl=0.0100, kin=0.95, kl=1.0, pu=0.65, pl=0.66, lift=0.0004, ir=0.0112, iy=-0.0008, ix=0.0, liner=0.0026, flick=0.0, hi=1, shadow=0.35, pupil="spiral", pup=0.14, caruncle=0),
+    "cartoon": dict(label="Olhao de desenho", a=0.0235, hu=0.0185, hl=0.0170, kin=0.95, kl=1.0, pu=0.6, pl=0.62, lift=0.0, ir=0.0150, iy=-0.0012, ix=0.0, liner=0.0020, flick=0.0, hi=2, shadow=0.2, pup=0.40, hir=0.20, caruncle=0),
     "dolla": dict(label="Boneca pintada", a=0.0285, hu=0.0172, hl=0.0100, kin=0.86, kl=1.0, pu=0.70, pl=0.80, lift=0.0075, ir=0.0150, iy=-0.0078, ix=-0.0015,
                   liner=0.0064, flick=0.0060, hi=1, shadow=0.30, caruncle=1, glow=0.35, pup=0.36, hir=0.15),
 }
@@ -114,7 +131,32 @@ def draw_eye(name, s):
     rays = 0.5 + 0.5 * np.sin(ang * 46 + np.sin(ang * 7) * 2)
     val = 0.95 - 0.55 * np.clip((rr - 0.6) / 0.4, 0, 1) ** 1.6 + 0.15 * rays * np.clip(1 - rr, 0, 1)
     val = val + s.get('glow', 0.0) * np.clip(-(yy - py) / cv.m(r), 0, 1) * np.clip(1 - rr, 0, 1)
-    val = np.where(rr < s.get('pup', 0.40 if s['ir'] < 0.01 else 0.34), 0.04, val)                      # pupila
+    pst = s.get("pupil", "round")
+    pr = s.get('pup', 0.40 if s['ir'] < 0.01 else 0.34)
+    if pst == "round":
+        val = np.where(rr < pr, 0.04, val)                      # pupila
+    elif pst == "spiral":
+        th = ang + rr * 14.0
+        sp = (np.sin(th) > 0.1) & (rr < 0.92)
+        val = np.where(sp, val * 0.35, val); val = np.where(rr < pr, 0.04, val)
+    else:
+        pm_ = Image.new("L", (w, h), 0); dp = ImageDraw.Draw(pm_); R_ = cv.m(r) * pr * 1.25
+        if pst == "heart":
+            pts_ = []
+            for t_ in np.linspace(0, 2 * math.pi, 80):
+                hx = 16 * math.sin(t_) ** 3; hy = 13 * math.cos(t_) - 5 * math.cos(2 * t_) - 2 * math.cos(3 * t_) - math.cos(4 * t_)
+                pts_.append((px + hx / 17.0 * R_, py - hy / 17.0 * R_ + R_ * 0.1))
+            dp.polygon(pts_, fill=255)
+        elif pst == "star":
+            pts_ = []
+            for k_ in range(10):
+                rad = R_ * (1.0 if k_ % 2 == 0 else 0.45); a_ = -math.pi / 2 + k_ * math.pi / 5
+                pts_.append((px + math.cos(a_) * rad, py + math.sin(a_) * rad))
+            dp.polygon(pts_, fill=255)
+        elif pst == "slit":
+            dp.ellipse([px - R_ * 0.22, py - cv.m(r) * 0.95, px + R_ * 0.22, py + cv.m(r) * 0.95], fill=255)
+        pm_ = np.asarray(pm_.filter(ImageFilter.GaussianBlur(cv.m(0.00012)))) > 110
+        val = np.where(pm_, 0.04, val)
     val = np.clip(val, 0, 1)
     g = Image.fromarray((val * 255).astype(np.uint8), "L")
     a_ir = Image.fromarray(((rr <= 1.0) * 255).astype(np.uint8), "L").filter(ImageFilter.GaussianBlur(cv.m(0.00018)))
@@ -159,7 +201,7 @@ def draw_eye(name, s):
     ln = ImageChops.lighter(ln, cv.blur(cr, 0.0003))
     cv.save(f"eye_{name}_line", ln)
     # --- cilios (um PNG por estilo de cilio, alinhado a este olho)
-    for ls in ("natural", "doll", "dolla"):
+    for ls in (() if SKIP_LASH else ("natural", "doll", "dolla")):
         la = cv.new(0); dla = ImageDraw.Draw(la)
         nl = 14 if ls == "natural" else (26 if ls == "doll" else 30)
         t0, t1 = (0.12, 1.0) if ls == "natural" else ((0.05, 1.04) if ls == "doll" else (0.02, 1.06))

@@ -157,3 +157,8 @@
 /* genero (Feminino / Masculino) no topo do criador */
 .cc-gender { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 8px; }
 .cc-gender .cc-opt { min-height: 44px; font-size: 14px; }
+
+/* abas Natural / Glam / Divertido dentro de cada categoria */
+.cc-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0 0 8px; }
+.cc-tabs .cc-opt { min-height: 44px; font-size: 13px; }
+.cc-tabs .cc-opt[aria-selected='true'] { box-shadow: 0 0 0 2px #7d63b0 inset; }

@@ -1,22 +1,27 @@
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { defaultAppearanceFor, switchGender, type FaceLayers } from '../../../shared/appearance'
 import {
   BEARD_STYLES,
   BROW_STYLES,
   CLASSIC_DEFAULTS,
+  CONTOUR_STYLES,
   EYE_STYLES,
+  FRECKLE_STYLES,
+  GROUP_LABELS,
   LASH_STYLES,
   MOUTH_STYLES,
+  NOSE_STYLES,
+  PAINT_STYLES,
+  forGender,
   mergeFace,
   setShapeControl,
   shapeControlValue,
   shapeGroups,
-  type LayerBeardStyle,
-  type LayerBrowStyle,
-  type LayerEyeStyle,
-  type LayerLashStyle,
-  type LayerMouthStyle,
+  type Extras,
+  type KitGroup,
+  type StyleOpt,
 } from '../../../shared/faceLayers'
+import { KIT_CONTOUR, KIT_FRECKLES, KIT_NOSE, KIT_PAINT } from '../../../shared/faceKit.generated'
 import { FEM_SIX, TWELVE, type FemLook, type MaleLook } from '../../../shared/facePresets'
 import { randomAppearance } from '../../../shared/randomAppearance'
 import { BipolarSlider, Slider } from '../controls'
@@ -124,22 +129,50 @@ export function ShapeSection() {
   )
 }
 
-// ------------------------------------------------------------------ olhos / cilios / sobrancelhas / boca
-const eyeOpts = (male: boolean) => EYE_STYLES.filter((s) => !(male && (s.id === 'classic'))).map((s) => ({ id: s.id as LayerEyeStyle, label: s.label }))
+// ------------------------------------------------------------------ seletor de estilos com abas Natural / Glam / Divertido
+const GROUPS: KitGroup[] = ['natural', 'glam', 'fun']
+
+/** Grade de estilos filtrada por aba. A aba inicial e a do estilo escolhido; abas sem opcoes para o genero somem. */
+function StylePicker({ list, value, onChange, gender, showNone }: { list: StyleOpt[]; value: string; onChange: (id: string) => void; gender: 'male' | 'female'; showNone?: boolean }) {
+  const avail = forGender(list, gender).filter((s) => !s.hidden || s.id === value)
+  const groupOf = avail.find((s) => s.id === value)?.group ?? 'natural'
+  const [tab, setTab] = useState<KitGroup>(groupOf)
+  const present = GROUPS.filter((g) => avail.some((s) => s.group === g && s.id !== 'none'))
+  const cur = present.includes(tab) ? tab : (present[0] ?? 'natural')
+  const shown = avail.filter((s) => s.group === cur && s.id !== 'none')
+  const none = avail.find((s) => s.id === 'none')
+  return (
+    <>
+      {present.length > 1 && (
+        <div className="cc-tabs" role="tablist" aria-label="Tipo de estilo">
+          {present.map((g) => (
+            <button key={g} type="button" role="tab" className="cc-opt" aria-selected={cur === g} aria-pressed={cur === g} onClick={() => setTab(g)}>
+              <span>{GROUP_LABELS[g]}</span>
+            </button>
+          ))}
+        </div>
+      )}
+      <Choice options={[...(none || showNone ? [{ id: 'none', label: none?.label ?? 'Nenhum' }] : []), ...shown.map((s) => ({ id: s.id, label: s.label }))]} value={value} onChange={onChange} cols={2} />
+    </>
+  )
+}
+
+const optOf = (list: StyleOpt[], id: string) => list.find((s) => s.id === id)
 
 export function EyeLayerSection() {
-  const { f, setF, male } = useFaceEdit()
+  const { f, setF, a } = useFaceEdit()
   const e = f.eye
   const classic = e.style === 'classic'
+  const pick = (style: string) =>
+    setF(
+      style === 'classic'
+        ? { eye: { style, lash: 'classic' }, brow: { style: 'classic', color: CLASSIC_DEFAULTS.brow }, mouth: { style: 'classic' } }
+        : { eye: { style, lash: e.lash === 'classic' ? 'natural' : e.lash }, ...(f.brow.style === 'classic' ? { brow: { style: 'soft' } } : {}) },
+    )
   return (
     <>
       <Block title="Estilo do olho">
-        <Choice
-          options={eyeOpts(male)}
-          value={e.style}
-          onChange={(style) => setF({ eye: { style, lash: style === 'classic' ? 'classic' : e.lash === 'classic' ? 'natural' : e.lash } })}
-          cols={2}
-        />
+        <StylePicker list={EYE_STYLES} value={e.style} onChange={pick} gender={a.gender} />
       </Block>
       <Block title="Cor da íris">
         <NamedSwatches list={D.EYE_NATURAL} value={e.iris} onChange={(c) => setF({ eye: { iris: c ?? e.iris } }, 'iris')} label="Cores naturais" />
@@ -147,7 +180,7 @@ export function EyeLayerSection() {
         <NamedSwatches list={D.EYE_FANTASY} value={e.iris} onChange={(c) => setF({ eye: { iris: c ?? e.iris } }, 'iris')} label="Cores de fantasia" />
       </Block>
       {classic ? (
-        <p className="cc-hint">O olho Clássico é a pintura original da boneca: o tamanho e a posição são fixos. Escolha outro estilo para ajustar.</p>
+        <p className="cc-hint">O olho Clássico é a pintura original da boneca (com cílios, sobrancelha e sombreado dela): tamanho e posição são fixos. Escolha outro estilo para ajustar.</p>
       ) : (
         <Block title="Tamanho e posição">
           <Slider label="Tamanho" value={e.scale} min={0.5} max={2.4} onChange={(v) => setF({ eye: { scale: v } }, 'eye')} />
@@ -167,22 +200,27 @@ export function EyeLayerSection() {
 }
 
 export function LashLayerSection() {
-  const { f, setF } = useFaceEdit()
+  const { f, setF, a } = useFaceEdit()
   const e = f.eye
   const classic = e.style === 'classic'
-  const opts: Array<{ id: LayerLashStyle; label: string }> = classic
-    ? [
-        { id: 'classic', label: 'Clássicos (tufos)' },
-        { id: 'none', label: 'Sem cílios' },
-      ]
-    : LASH_STYLES.filter((l) => l.id !== 'classic').map((l) => ({ id: l.id as LayerLashStyle, label: l.label }))
+  const fun = optOf(LASH_STYLES, e.lash)?.group === 'fun'
   return (
     <>
       <Block title="Cílios">
-        <Choice options={opts} value={e.lash} onChange={(lash) => setF({ eye: { lash } })} cols={2} />
+        {classic ? (
+          <Choice options={[{ id: 'classic', label: 'Clássicos (tufos)' }, { id: 'none', label: 'Sem cílios' }]} value={e.lash} onChange={(lash) => setF({ eye: { lash } })} cols={2} />
+        ) : (
+          <StylePicker
+            list={LASH_STYLES}
+            value={e.lash}
+            onChange={(lash) => setF({ eye: { lash, lashColor: optOf(LASH_STYLES, lash)?.group === 'fun' ? '#ffffff' : e.lashColor === '#ffffff' ? '#1a1416' : e.lashColor } })}
+            gender={a.gender}
+            showNone
+          />
+        )}
       </Block>
       {!classic && e.lash !== 'none' && (
-        <Block title="Cor dos cílios">
+        <Block title="Cor dos cílios" hint={fun ? 'Os cílios divertidos têm cores próprias: use branco para manter as cores originais.' : undefined}>
           <NamedSwatches list={D.LINER_COLORS} value={e.lashColor} onChange={(c) => setF({ eye: { lashColor: c ?? e.lashColor } }, 'lash')} label="Cor dos cílios" />
         </Block>
       )}
@@ -190,17 +228,27 @@ export function LashLayerSection() {
   )
 }
 
+const RGB_BROWS = ['glitter', 'rainbow']
+
 export function BrowLayerSection() {
-  const { f, setF, male } = useFaceEdit()
+  const { f, setF, a } = useFaceEdit()
   const b = f.brow
-  const opts = BROW_STYLES.filter((s) => !(male && s.id === 'classic')).map((s) => ({ id: s.id as LayerBrowStyle, label: s.label }))
-  const classic = b.style === 'classic'
+  const classic = f.eye.style === 'classic'
   return (
     <>
       <Block title="Estilo">
-        <Choice options={opts} value={b.style} onChange={(style) => setF({ brow: { style, color: style === 'classic' ? CLASSIC_DEFAULTS.brow : b.color } })} cols={2} />
+        {classic ? (
+          <p className="cc-hint">Com o olho Clássico a sobrancelha é a da pintura original. Escolha outro estilo de olho para trocar a sobrancelha.</p>
+        ) : (
+          <StylePicker
+            list={BROW_STYLES}
+            value={b.style}
+            onChange={(style) => setF({ brow: { style, color: RGB_BROWS.includes(style) ? '#ffffff' : b.color === '#ffffff' ? '#5b4332' : b.color } })}
+            gender={a.gender}
+          />
+        )}
       </Block>
-      <Block title="Cor">
+      <Block title="Cor" hint={RGB_BROWS.includes(b.style) ? 'Este estilo tem cores próprias: use branco para mantê-las.' : undefined}>
         <NamedSwatches list={D.BROW_COLORS} value={b.color} onChange={(c) => setF({ brow: { color: c ?? b.color } }, 'bc')} label="Cor da sobrancelha" />
       </Block>
       <Block title="Espessura e posição">
@@ -219,42 +267,44 @@ export function BrowLayerSection() {
 }
 
 export function MouthLayerSection() {
-  const { f, setF, male } = useFaceEdit()
+  const { f, setF, a } = useFaceEdit()
   const m = f.mouth
-  const opts: Array<{ id: LayerMouthStyle; label: string }> = MOUTH_STYLES.filter((s) => s.id !== 'classic').map((s) => ({ id: s.id as LayerMouthStyle, label: s.label }))
+  const female = a.gender === 'female'
   return (
     <>
-      {male ? (
-        <Block title="Estilo da boca">
-          <Choice options={opts} value={m.style} onChange={(style) => setF({ mouth: { style } })} cols={2} />
-        </Block>
-      ) : (
-        <p className="cc-hint">Na boneca os lábios são esculpidos: aqui você escolhe a tinta e o brilho. Para lábios mais finos ou cheios, use Formato do rosto.</p>
-      )}
+      <Block title="Estilo da boca" hint={female ? 'Na boneca os lábios são esculpidos: o formato fino ou cheio vem de Formato do rosto; aqui você escolhe a tinta e estilos divertidos.' : undefined}>
+        <StylePicker list={MOUTH_STYLES} value={m.style} onChange={(style) => setF({ mouth: { style } })} gender={a.gender} />
+      </Block>
       <Block title="Cor">
         <NamedSwatches list={D.LIP_COLORS} value={m.color} onChange={(c) => setF({ mouth: { color: c ?? m.color } }, 'lc')} label="Cor da boca" />
+        {['twotone', 'tongue'].includes(m.style) && (
+          <>
+            <div className="cc-sub">{m.style === 'tongue' ? 'Cor da língua' : 'Segunda cor (lábio de baixo)'}</div>
+            <NamedSwatches list={D.LIP_COLORS} value={m.color2 ?? '#e8607f'} onChange={(c) => setF({ mouth: { color2: c ?? m.color2 } }, 'lc2')} label="Segunda cor" />
+          </>
+        )}
       </Block>
       <Block title="Brilho e intensidade">
         <Slider label="Brilho (gloss)" value={m.gloss} onChange={(v) => setF({ mouth: { gloss: v } }, 'mouth')} />
         <Slider label="Intensidade da cor" value={m.opacity} onChange={(v) => setF({ mouth: { opacity: v } }, 'mouth')} />
-        {male && <BipolarSlider label="Altura" minusLabel="baixa" plusLabel="alta" value={m.y / 0.006} onChange={(v) => setF({ mouth: { y: v * 0.006 } }, 'mouth')} />}
+        {!female && <BipolarSlider label="Altura" minusLabel="baixa" plusLabel="alta" value={m.y / 0.006} onChange={(v) => setF({ mouth: { y: v * 0.006 } }, 'mouth')} />}
       </Block>
     </>
   )
 }
 
 export function BeardLayerSection() {
-  const { f, setF } = useFaceEdit()
+  const { f, setF, a } = useFaceEdit()
   const b = f.beard
-  const opts = BEARD_STYLES.map((s) => ({ id: s.id as LayerBeardStyle, label: s.label }))
   return (
     <>
       <Block title="Estilo">
-        <Choice options={opts} value={b.style} onChange={(style) => setF({ beard: { style } })} cols={2} />
+        <StylePicker list={BEARD_STYLES} value={b.style} onChange={(style) => setF({ beard: { style } })} gender={a.gender} showNone />
       </Block>
       {b.style !== 'none' && (
         <Block title="Cor e densidade">
           <NamedSwatches list={D.HAIR_NATURAL} value={b.color} onChange={(c) => setF({ beard: { color: c ?? b.color } }, 'beardc')} label="Cor da barba" />
+          <NamedSwatches list={D.HAIR_FANTASY} value={b.color} onChange={(c) => setF({ beard: { color: c ?? b.color } }, 'beardc')} label="Cores de fantasia" />
           <Slider label="Densidade" value={b.amount} onChange={(v) => setF({ beard: { amount: v } }, 'beard')} />
         </Block>
       )}
@@ -262,20 +312,61 @@ export function BeardLayerSection() {
   )
 }
 
-/** Blush, sombreado e (masculino) olheiras e linhas de expressao. */
+// ------------------------------------------------------------------ nariz, sardas/pintas, contorno e pinturas de festa
+type ExtraKey = keyof Extras
+function ExtraBlock({ k, title, list, kit, gender }: { k: ExtraKey; title: string; list: StyleOpt[]; kit: Array<{ id: string; color?: string }>; gender: 'male' | 'female' }) {
+  const { f, setF } = useFaceEdit()
+  const x = f.extras[k]
+  const set = (p: Partial<Extras[ExtraKey]>, group?: string) => setF({ extras: { [k]: p } as never }, group ?? `x.${k}`)
+  return (
+    <Block title={title}>
+      <StylePicker
+        list={list}
+        value={x.style}
+        gender={gender}
+        showNone
+        onChange={(style) => set({ style, color: kit.find((i) => i.id === style)?.color ?? x.color, amount: style === 'none' ? x.amount : Math.max(x.amount, 0.5) }, `x.${k}.s`)}
+      />
+      {x.style !== 'none' && (
+        <>
+          <Slider label="Intensidade" value={x.amount} onChange={(v) => set({ amount: v })} />
+          <NamedSwatches list={k === 'paint' ? [...D.BLUSH_COLORS, ...D.EYE_FANTASY] : [...D.BLUSH_COLORS, ...D.BROW_COLORS]} value={x.color} onChange={(c) => set({ color: c ?? x.color }, `x.${k}.c`)} label="Cor" />
+        </>
+      )}
+    </Block>
+  )
+}
+
+export function NoseSection() {
+  const { a } = useFaceEdit()
+  return (
+    <>
+      <p className="cc-hint">Sombreado e contorno do nariz (camada de cor). O formato 3D do nariz fica em Formato do rosto.</p>
+      <ExtraBlock k="nose" title="Nariz" list={NOSE_STYLES} kit={KIT_NOSE} gender={a.gender} />
+    </>
+  )
+}
+
+export function ExtrasSection() {
+  const { a } = useFaceEdit()
+  return (
+    <>
+      <ExtraBlock k="freckles" title="Sardas e pintas" list={FRECKLE_STYLES} kit={KIT_FRECKLES} gender={a.gender} />
+      <ExtraBlock k="contour" title="Contorno, iluminador e idade" list={CONTOUR_STYLES} kit={KIT_CONTOUR} gender={a.gender} />
+      <ExtraBlock k="paint" title="Pintura de festa e adesivos" list={PAINT_STYLES} kit={KIT_PAINT} gender={a.gender} />
+      <SkinExtrasBlock />
+    </>
+  )
+}
+
+/** Rubor / sombreado das bochechas. */
 export function SkinExtrasBlock(): ReactNode {
   const { f, setF, male } = useFaceEdit()
   return (
-    <Block title="Rosto: rubor e detalhes">
-      <Slider label="Rubor / sombreado das bochechas" value={f.blush.amount} onChange={(v) => setF({ blush: { amount: v } }, 'blush')} />
+    <Block title="Rubor nas bochechas">
+      <Slider label="Rubor / sombreado" value={f.blush.amount} onChange={(v) => setF({ blush: { amount: v } }, 'blush')} />
       <NamedSwatches list={D.BLUSH_COLORS} value={f.blush.color} onChange={(c) => setF({ blush: { color: c ?? f.blush.color } }, 'blushc')} label="Cor do rubor" />
       {!male && <Toggle label="Sombreado da pintura original (bochechas, testa, olhos)" on={!!f.blush.shade} onChange={(shade) => setF({ blush: { shade } })} />}
-      {male && (
-        <>
-          <Slider label="Olheiras" value={f.detail.bags} onChange={(v) => setF({ detail: { bags: v } }, 'bags')} />
-          <Slider label="Linhas de expressão" value={f.detail.lines} onChange={(v) => setF({ detail: { lines: v } }, 'lines')} />
-        </>
-      )}
     </Block>
   )
 }

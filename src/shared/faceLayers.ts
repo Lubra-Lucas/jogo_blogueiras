@@ -7,51 +7,31 @@
  * Posicoes sao DESLOCAMENTOS (metros) a partir dos pontos de referencia do modelo (`FACE_REF`).
  */
 
-export type LayerEyeStyle = 'natural' | 'almond' | 'doll' | 'dolla' | 'ref' | 'classic'
-export type LayerLashStyle = 'none' | 'natural' | 'doll' | 'dolla' | 'classic'
-export type LayerBrowStyle = 'thick' | 'arched' | 'thin' | 'soft' | 'ref' | 'classic'
-export type LayerMouthStyle = 'natural' | 'thin' | 'doll' | 'dollg' | 'ref' | 'classic'
-export type LayerBeardStyle = 'none' | 'stubble' | 'mustache' | 'goatee' | 'full'
+import { KIT_BEARDS, KIT_BROWS, KIT_CONTOUR, KIT_EYES, KIT_FRECKLES, KIT_LASHES, KIT_MOUTHS, KIT_NOSE, KIT_PAINT, type KitGroup, type KitStyle } from './faceKit.generated'
 
-export const EYE_STYLES: Array<{ id: LayerEyeStyle; label: string }> = [
-  { id: 'natural', label: 'Natural' },
-  { id: 'almond', label: 'Amendoado' },
-  { id: 'doll', label: 'Boneca (grande)' },
-  { id: 'dolla', label: 'Boneca pintada' },
-  { id: 'ref', label: 'Encapuzado (referência)' },
-  { id: 'classic', label: 'Classico (pintura original)' },
-]
-export const LASH_STYLES: Array<{ id: LayerLashStyle; label: string }> = [
-  { id: 'none', label: 'Sem cilios' },
-  { id: 'natural', label: 'Natural' },
-  { id: 'doll', label: 'Boneca (volumosos)' },
-  { id: 'dolla', label: 'Boneca pintada (pretos)' },
-  { id: 'classic', label: 'Classicos (tufos)' },
-]
-export const BROW_STYLES: Array<{ id: LayerBrowStyle; label: string }> = [
-  { id: 'thick', label: 'Reta grossa' },
-  { id: 'arched', label: 'Arqueada' },
-  { id: 'thin', label: 'Fina natural' },
-  { id: 'soft', label: 'Macia (boneca)' },
-  { id: 'ref', label: 'Reta grossa com fios' },
-  { id: 'classic', label: 'Classica (pintura original)' },
-]
-export const MOUTH_STYLES: Array<{ id: LayerMouthStyle; label: string }> = [
-  { id: 'natural', label: 'Natural masculina' },
-  { id: 'thin', label: 'Fina' },
-  { id: 'doll', label: 'Boneca glossy' },
-  { id: 'dollg', label: 'Boneca cheia glossy' },
-  { id: 'ref', label: 'Cheia natural' },
-  { id: 'classic', label: 'Tinta sobre os labios esculpidos' },
-]
+export type { KitGroup, KitStyle }
+/** ids dos estilos: vem do kit gerado (tools/blender/male/make_styles.py) */
+export type LayerEyeStyle = string
+export type LayerLashStyle = string
+export type LayerBrowStyle = string
+export type LayerMouthStyle = string
+export type LayerBeardStyle = string
 
-export const BEARD_STYLES: Array<{ id: LayerBeardStyle; label: string }> = [
-  { id: 'none', label: 'Sem barba' },
-  { id: 'stubble', label: 'Por fazer' },
-  { id: 'mustache', label: 'Bigode' },
-  { id: 'goatee', label: 'Cavanhaque' },
-  { id: 'full', label: 'Barba cheia curta' },
-]
+export interface StyleOpt { id: string; label: string; group: KitGroup; g: 'm' | 'f' | 'mf'; hidden?: boolean }
+const opt = (l: KitStyle[]): StyleOpt[] => l.map((k) => ({ id: k.id, label: k.label, group: k.group, g: k.g, ...(k.hidden ? { hidden: true } : {}) }))
+export const EYE_STYLES: StyleOpt[] = opt(KIT_EYES)
+export const LASH_STYLES: StyleOpt[] = [{ id: 'none', label: 'Sem cílios', group: 'natural', g: 'mf' }, ...opt(KIT_LASHES)]
+export const BROW_STYLES: StyleOpt[] = opt(KIT_BROWS)
+export const MOUTH_STYLES: StyleOpt[] = opt(KIT_MOUTHS)
+export const BEARD_STYLES: StyleOpt[] = [{ id: 'none', label: 'Sem barba', group: 'natural', g: 'm' }, ...opt(KIT_BEARDS)]
+export const NOSE_STYLES: StyleOpt[] = opt(KIT_NOSE)
+export const FRECKLE_STYLES: StyleOpt[] = opt(KIT_FRECKLES)
+export const CONTOUR_STYLES: StyleOpt[] = opt(KIT_CONTOUR)
+export const PAINT_STYLES: StyleOpt[] = opt(KIT_PAINT)
+/** estilos de um genero (m = so masculino, f = so feminino) */
+export const forGender = (l: StyleOpt[], g: 'male' | 'female'): StyleOpt[] => l.filter((s) => s.g === 'mf' || s.g === (g === 'male' ? 'm' : 'f'))
+export const GROUP_LABELS: Record<KitGroup, string> = { natural: 'Natural', glam: 'Glam', fun: 'Divertido' }
+export const kitStyle = (list: KitStyle[], id: string): KitStyle | undefined => list.find((k) => k.id === id)
 
 export interface FaceLayers {
   eye: {
@@ -73,13 +53,24 @@ export interface FaceLayers {
     linerAmt: number
   }
   brow: { style: LayerBrowStyle; color: string; scale: number; gap: number; y: number; tilt: number; opacity: number }
-  mouth: { style: LayerMouthStyle; color: string; gloss: number; scale: number; y: number; opacity: number }
+  mouth: { style: LayerMouthStyle; color: string; gloss: number; scale: number; y: number; opacity: number; /** 2a cor (lingua, batom de duas cores) */ color2?: string }
   /** shade: usa o "sombreado da pele" extraido da pintura original (blush, bochechas, testa, rosado dos olhos) em vez do blush simples */
   blush: { amount: number; color: string; scale: number; gap: number; y: number; shade?: boolean }
   /** barba: cor tingivel + densidade (0..1) */
   beard: { style: LayerBeardStyle; color: string; amount: number }
   /** olheira e linhas de expressao leves (0..1) */
   detail: { bags: number; lines: number }
+  /** nariz (contorno/sombreado), sardas e pintas, contorno/iluminador e pintura de festa: estilo 'none' = desligado */
+  extras: Extras
+}
+
+export interface ExtraLayer { style: string; amount: number; color: string }
+export interface Extras { nose: ExtraLayer; freckles: ExtraLayer; contour: ExtraLayer; paint: ExtraLayer }
+export const NO_EXTRAS: Extras = {
+  nose: { style: 'none', amount: 0.6, color: '#9a6454' },
+  freckles: { style: 'none', amount: 0.7, color: '#a8704f' },
+  contour: { style: 'none', amount: 0.6, color: '#8a5a48' },
+  paint: { style: 'none', amount: 1, color: '#ffd45a' },
 }
 
 /** Pontos de referencia de um modelo (m, espaco de repouso, y para cima). Cada modelo (masculino, boneca) tem os seus. */
@@ -110,6 +101,7 @@ export const DEFAULT_FACE_LAYERS: FaceLayers = {
   blush: { amount: 0, color: '#e0707c', scale: 1, gap: 0, y: 0 },
   beard: { style: 'none', color: '#2c211b', amount: 1 },
   detail: { bags: 0, lines: 0 },
+  extras: NO_EXTRAS,
 }
 
 export function mergeFace(base: FaceLayers, p: DeepPartial<FaceLayers>): FaceLayers {
@@ -120,9 +112,15 @@ export function mergeFace(base: FaceLayers, p: DeepPartial<FaceLayers>): FaceLay
     blush: { ...base.blush, ...p.blush },
     beard: { ...base.beard, ...p.beard },
     detail: { ...base.detail, ...p.detail },
+    extras: {
+      nose: { ...base.extras.nose, ...p.extras?.nose },
+      freckles: { ...base.extras.freckles, ...p.extras?.freckles },
+      contour: { ...base.extras.contour, ...p.extras?.contour },
+      paint: { ...base.extras.paint, ...p.extras?.paint },
+    },
   }
 }
-type DeepPartial<T> = { [K in keyof T]?: Partial<T[K]> }
+type DeepPartial<T> = { [K in keyof T]?: K extends 'extras' ? { [E in keyof Extras]?: Partial<ExtraLayer> } : Partial<T[K]> }
 
 
 // ------------------------------------------------------------------ genero e formatos (morphs f_*)
@@ -198,11 +196,22 @@ export function sanitizeFaceLayers(raw: unknown, fallback: FaceLayers = DEFAULT_
       tilt: nm(e.tilt, -12, 12, f.eye.tilt), linerAmt: nm(e.linerAmt, 0, 1, f.eye.linerAmt),
     },
     brow: { style: pk(b.style, BROW_STYLES, f.brow.style), color: hx(b.color, f.brow.color), scale: nm(b.scale, 0.6, 1.6, f.brow.scale), gap: nm(b.gap, -0.01, 0.012, f.brow.gap), y: nm(b.y, -0.008, 0.008, f.brow.y), tilt: nm(b.tilt, -12, 12, f.brow.tilt), opacity: nm(b.opacity, 0, 1, f.brow.opacity) },
-    mouth: { style: pk(m.style, MOUTH_STYLES, f.mouth.style), color: hx(m.color, f.mouth.color), gloss: nm(m.gloss, 0, 1, f.mouth.gloss), scale: nm(m.scale, 0.7, 1.5, f.mouth.scale), y: nm(m.y, -0.006, 0.006, f.mouth.y), opacity: nm(m.opacity, 0, 1, f.mouth.opacity) },
+    mouth: { style: pk(m.style, MOUTH_STYLES, f.mouth.style), color: hx(m.color, f.mouth.color), gloss: nm(m.gloss, 0, 1, f.mouth.gloss), scale: nm(m.scale, 0.7, 1.5, f.mouth.scale), y: nm(m.y, -0.006, 0.006, f.mouth.y), opacity: nm(m.opacity, 0, 1, f.mouth.opacity), ...(typeof m.color2 === 'string' && HEXRE.test(m.color2) ? { color2: m.color2.toLowerCase() } : {}) },
     blush: { amount: nm(bl.amount, 0, 1, f.blush.amount), color: hx(bl.color, f.blush.color), scale: nm(bl.scale, 0.6, 2.4, f.blush.scale), gap: nm(bl.gap, -0.02, 0.02, f.blush.gap), y: nm(bl.y, -0.02, 0.02, f.blush.y), ...(bl.shade === true ? { shade: true } : {}) },
     beard: { style: pk(bd.style, BEARD_STYLES, f.beard.style), color: hx(bd.color, f.beard.color), amount: nm(bd.amount, 0, 1, f.beard.amount) },
     detail: { bags: nm(dt.bags, 0, 1, f.detail.bags), lines: nm(dt.lines, 0, 1, f.detail.lines) },
+    extras: sanitizeExtras(r.extras, f.extras),
   }
+}
+
+function sanitizeExtras(raw: unknown, f: Extras): Extras {
+  const r = (raw && typeof raw === 'object' ? raw : {}) as Record<string, Record<string, unknown> | undefined>
+  const one = (k: keyof Extras, list: StyleOpt[]): ExtraLayer => {
+    const x = r[k] ?? {}
+    const st = typeof x.style === 'string' && (x.style === 'none' || list.some((s) => s.id === x.style)) ? (x.style as string) : f[k].style
+    return { style: st, amount: nm(x.amount, 0, 1, f[k].amount), color: hx(x.color, f[k].color) }
+  }
+  return { nose: one('nose', NOSE_STYLES), freckles: one('freckles', FRECKLE_STYLES), contour: one('contour', CONTOUR_STYLES), paint: one('paint', PAINT_STYLES) }
 }
 
 export function sanitizeShape(raw: unknown, g: Gender): Record<string, number> {

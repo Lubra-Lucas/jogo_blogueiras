@@ -3,12 +3,12 @@ import { useAppearanceStore } from '../../state/appearanceStore'
 import { IconSave } from './icons'
 import type { StageFocus } from './CharacterPreview'
 import { BodySection, HairSection, LooksSection, MakeupSection, NailsSection, SkinSection } from './appearance/sections'
-import { BeardLayerSection, BrowLayerSection, EyeLayerSection, FacesSection, GenderBar, LashLayerSection, MouthLayerSection, ShapeSection } from './appearance/layersSections'
+import { BeardLayerSection, BrowLayerSection, EyeLayerSection, ExtrasSection, FacesSection, GenderBar, LashLayerSection, MouthLayerSection, NoseSection, ShapeSection } from './appearance/layersSections'
 import { CIconBody, CIconBrow, CIconCompare, CIconDice, CIconEye, CIconFace, CIconHair, CIconLips, CIconLooks, CIconMakeup, CIconNail, CIconRedo, CIconSkin, CIconUndo } from './appearance/icons'
 import { randomLook } from './appearance/random'
 import './appearance/appearance.css'
 
-type Cat = 'looks' | 'rostos' | 'formato' | 'olhos' | 'cilios' | 'sobrancelhas' | 'boca' | 'barba' | 'maquiagem' | 'pele' | 'corpo' | 'cabelo' | 'unhas'
+type Cat = 'looks' | 'rostos' | 'formato' | 'olhos' | 'cilios' | 'sobrancelhas' | 'boca' | 'nariz' | 'barba' | 'extras' | 'maquiagem' | 'pele' | 'corpo' | 'cabelo' | 'unhas'
 
 /** Categorias do criador: o enquadramento da camera acompanha (close no rosto ao editar rosto/maquiagem). */
 const CATS: Array<{ id: Cat; label: string; focus: StageFocus; icon: ReactNode; view: () => ReactNode; only?: 'female' | 'male' }> = [
@@ -19,7 +19,9 @@ const CATS: Array<{ id: Cat; label: string; focus: StageFocus; icon: ReactNode; 
   { id: 'cilios', label: 'Cílios', focus: 'eyes', icon: <CIconEye />, view: () => <LashLayerSection /> },
   { id: 'sobrancelhas', label: 'Sobrancelhas', focus: 'eyes', icon: <CIconBrow />, view: () => <BrowLayerSection /> },
   { id: 'boca', label: 'Boca', focus: 'mouth', icon: <CIconLips />, view: () => <MouthLayerSection /> },
+  { id: 'nariz', label: 'Nariz', focus: 'face', icon: <CIconFace />, view: () => <NoseSection /> },
   { id: 'barba', label: 'Barba', focus: 'mouth', icon: <CIconFace />, view: () => <BeardLayerSection />, only: 'male' },
+  { id: 'extras', label: 'Extras', focus: 'face', icon: <CIconMakeup />, view: () => <ExtrasSection /> },
   { id: 'maquiagem', label: 'Maquiagem', focus: 'face', icon: <CIconMakeup />, view: () => <MakeupSection />, only: 'female' },
   { id: 'pele', label: 'Pele e extras', focus: 'torso', icon: <CIconSkin />, view: () => <SkinSection /> },
   { id: 'corpo', label: 'Corpo', focus: 'body', icon: <CIconBody />, view: () => <BodySection /> },
