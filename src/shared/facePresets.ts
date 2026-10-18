@@ -56,6 +56,16 @@ export const TWELVE: MaleLook[] = [
   L('Referencia', '#e6b498', { f_jawV: 1, f_jawAngular: 0.45, f_chinPointed: 0.3, f_cheekboneHigh: 0.8, f_foreheadHigh: 0.6, f_browRidge: 0.55, f_noseBridge: 0.3, f_earsBig: 0.45, f_neckThick: 0.25, f_cheekHollow: 0.35, f_lipsFull: 0.35, f_faceLong: 0.25 },
     { eye: { style: 'ref', lash: 'natural', iris: '#7f9cb8', liner: '#3a2a26', lashColor: '#4a3428', scale: 1.2, gap: 0.0006, tilt: 1, linerAmt: 0.6 }, brow: { style: 'ref', color: '#6a4a36', opacity: 0.9, scale: 1.0, tilt: -1, y: 0.0035 }, mouth: { style: 'ref', color: '#c88c88', gloss: 0.35, opacity: 0.9 }, blush: { amount: 0.22, color: '#e8907e', scale: 1.1 } },
     null),
+  // 14-16: rostos novos com os formatos da v2 (nariz/boca/olhos/cranio); o 16 e o DIVERTIDO (queixao de super-heroi)
+  L('Galã (mandíbula em V)', '#d9a58a', { f_jawV: 0.8, f_jawAngular: 0.6, f_chinForward: 0.6, f_cheekboneHigh: 0.6, f_browRidge: 0.5, f_noseBridge: 0.4, f_eyesClose: 0.4, f_mouthCornersUp: 0.3, f_eyeTiltUp: 0.3, f_noseTipThin: 0.4 },
+    { eye: { style: 'almond', lash: 'natural', iris: '#4e7a9a', scale: 1.15, tilt: 2, linerAmt: 0.6 }, brow: { style: 'thick', color: '#2a1f18', tilt: -2 }, mouth: { style: 'natural', color: '#b06a64', gloss: 0.15 }, beard: { style: 'stubble', color: '#2a1f18', amount: 0.7 } },
+    { id: 'hair.m.quiff', color: '#2a1d14' }),
+  L('Bonachão (cabeça redonda)', '#e3b08f', { f_headRound: 0.8, f_cheekFull: 0.8, f_noseTipRound: 0.8, f_noseDown: 0.3, f_lipsWide: 0.5, f_mouthCornersUp: 0.6, f_earsBig: 0.4, f_eyesApart: 0.3, f_jawSoft: 0.6, f_neckThick: 0.3, f_faceShort: 0.3 },
+    { eye: { style: 'natural', lash: 'natural', iris: '#6b4527', scale: 1.25 }, brow: { style: 'thin', color: '#5a3a28' }, mouth: { style: 'natural', color: '#c0766c', gloss: 0.3, scale: 1.05 }, blush: { amount: 0.25, scale: 1.1 } },
+    { id: 'hair.m.sidepart', color: '#6a4a2a' }),
+  L('Super-herói (divertido)', '#c58f6e', { f_fun_widejaw: 1, f_chinCleft: 1, f_browRidge: 0.6, f_neckThick: 0.6, f_cheekboneHigh: 0.5, f_eyesClose: 0.3, f_noseLong: 0.3, f_mouthCornersUp: 0.3 },
+    { eye: { style: 'natural', lash: 'none', iris: '#3f7fb5', scale: 1.1, linerAmt: 0.7 }, brow: { style: 'thick', color: '#17110d' }, mouth: { style: 'natural', color: '#a8645c', gloss: 0.2 } },
+    { id: 'hair.m.quiff', color: '#17110d', gloss: 0.3 }, '#b8412a'),
 ]
 
 /** Seis rostos da etapa anterior (grade) e o "visual de boneca" (agora com formato). */
@@ -105,4 +115,11 @@ export const FEM_SIX: FemLook[] = [
     face: F({ eye: { style: 'almond', lash: 'dolla', iris: '#4a4038', liner: '#0c0a0a', scale: 1.95, tilt: 5, gap: 0.002 }, brow: { style: 'arched', color: '#140e0a', scale: 1.35, tilt: 5, y: 0.002 }, mouth: { style: 'classic', color: '#7a2535', gloss: 0.5 }, blush: { amount: 0.4, shade: true } }) },
   { name: 'Redonda suave', skin: '#f0c8b0', shape: { f_cheekFull: 1, f_jawSoft: 1, f_faceShort: 1, f_noseWide: 0.6, f_chinWide: 0.5, f_lipsThin: 0.4 }, hair: { id: 'hair.chestnutWaves', color: '#8a5a30' },
     face: F({ eye: { style: 'classic', lash: 'natural', iris: '#4a8ac0' }, brow: { style: 'soft', color: '#8a6a50', opacity: 0.8 }, mouth: { style: 'classic', color: '#d8788a', gloss: 0.5 }, blush: { amount: 0.9, shade: true } }) },
+  // v2: rostos com os formatos novos (olhos puxados, nariz arrebitado, queixo em V...); o 3o e o DIVERTIDO (bochechas de esquilo + beicinho + orbitas grandes)
+  { name: 'Gatinha', skin: '#e6b896', shape: { f_eyeTiltUp: 1, f_cheekboneHigh: 0.8, f_chinPointed: 0.6, f_jawV: 0.6, f_lipsFull: 0.5, f_noseTipThin: 0.5, f_eyesApart: 0.4, f_mouthCornersUp: 0.6, f_noseUp: 0.3 }, hair: { id: 'hair.chestnutWaves', color: '#2a1a14' },
+    face: F({ eye: { style: 'almond', lash: 'natural', iris: '#5f9a6a', scale: 1.8, tilt: 4, gap: 0.002 }, brow: { style: 'arched', color: '#2a1a14', scale: 1.2, tilt: 4 }, mouth: { style: 'classic', color: '#c9707a', gloss: 0.45 }, blush: { amount: 0.5, shade: true } }) },
+  { name: 'Élfica', skin: '#f2d4c4', shape: { f_earsPointed: 1, f_cheekboneHigh: 0.7, f_jawV: 0.5, f_chinPointed: 0.5, f_noseUp: 0.4, f_eyeTiltUp: 0.6, f_faceLong: 0.4, f_foreheadHigh: 0.4, f_noseNarrow: 0.5 }, hair: { id: 'hair.meshyUpdo', color: '#e8dcc8' },
+    face: F({ eye: { style: 'almond', lash: 'natural', iris: '#8a5bd6', scale: 1.75, tilt: 3, gap: 0.003 }, brow: { style: 'thin', color: '#a88a62', scale: 1.15, opacity: 0.8 }, mouth: { style: 'classic', color: '#e89aa0', gloss: 0.5 }, blush: { amount: 0.4, shade: true } }) },
+  { name: 'Esquilinho (divertido)', skin: '#f0c8b0', shape: { f_fun_chubbyCheeks: 1, f_fun_pout: 0.8, f_fun_bigEyesArea: 0.6, f_noseUp: 0.6, f_faceShort: 0.4, f_eyesApart: 0.3 }, hair: { id: 'hair.chestnutWaves', color: '#c4813f' },
+    face: F({ eye: { style: 'doll', lash: 'doll', iris: '#7a5a3a', scale: 1.25, gap: 0.004 }, brow: { style: 'classic', color: '#8a6a50' }, mouth: { style: 'classic', color: '#e89aa0', gloss: 0.8 }, blush: { amount: 1, shade: true } }) },
 ]

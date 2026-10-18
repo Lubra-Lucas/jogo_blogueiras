@@ -200,7 +200,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_jawAngular",
@@ -210,7 +211,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_jawV",
@@ -220,7 +222,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_jawSoft",
@@ -230,7 +233,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_chinWide",
@@ -240,7 +244,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_chinPointed",
@@ -250,7 +255,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_chinForward",
@@ -260,7 +266,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_chinBack",
@@ -270,7 +277,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_chinCleft",
@@ -280,7 +288,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_browRidge",
@@ -290,7 +299,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_foreheadHigh",
@@ -300,7 +310,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_foreheadLow",
@@ -310,7 +321,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_cheekboneHigh",
@@ -320,7 +332,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_cheekFull",
@@ -330,7 +343,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_cheekHollow",
@@ -340,7 +354,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_faceLong",
@@ -350,7 +365,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_faceShort",
@@ -360,7 +376,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_faceWide",
@@ -370,7 +387,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_noseWide",
@@ -380,7 +398,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_noseLong",
@@ -390,7 +409,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_noseBridge",
@@ -400,7 +420,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_lipsFull",
@@ -410,7 +431,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_lipsThin",
@@ -420,7 +442,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_neckThick",
@@ -430,7 +453,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_adamsApple",
@@ -440,7 +464,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_earsSmall",
@@ -450,7 +475,8 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
     },
     {
       "name": "f_earsBig",
@@ -460,7 +486,393 @@
       "max": 1,
       "targets": [
         "body"
-      ]
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_noseShort",
+      "label": "Nariz curto",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_noseUp",
+      "label": "Nariz arrebitado",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_noseDown",
+      "label": "Ponta do nariz baixa",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_noseTipRound",
+      "label": "Ponta do nariz redonda",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_noseTipThin",
+      "label": "Ponta do nariz fina",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_nostrilWide",
+      "label": "Narinas largas",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_noseNarrow",
+      "label": "Nariz fino",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_lipsWide",
+      "label": "Boca larga",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_lipsNarrow",
+      "label": "Boca estreita",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_lipUpperFull",
+      "label": "Labio superior cheio",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_lipLowerFull",
+      "label": "Labio inferior cheio",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_mouthCornersUp",
+      "label": "Cantos da boca para cima",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_mouthCornersDown",
+      "label": "Cantos da boca para baixo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_mouthHigh",
+      "label": "Boca alta",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_mouthLow",
+      "label": "Boca baixa",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_eyesApart",
+      "label": "Olhos afastados",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_eyesClose",
+      "label": "Olhos proximos",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_eyesHigh",
+      "label": "Olhos altos",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_eyesLow",
+      "label": "Olhos baixos",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_eyeTiltUp",
+      "label": "Olhos puxados para cima",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_eyeTiltDown",
+      "label": "Olhos caidos",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_earsPointed",
+      "label": "Orelhas pontudas",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_neckThin",
+      "label": "Pescoco fino",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_headRound",
+      "label": "Cabeca redonda",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_headLong",
+      "label": "Cabeca alongada",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_fun_chubbyCheeks",
+      "label": "Bochechas de esquilo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_fun_longChin",
+      "label": "Queixao de desenho",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_fun_tinyFace",
+      "label": "Rostinho miudo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_fun_bigEyesArea",
+      "label": "Orbitas enormes",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_fun_elfEars",
+      "label": "Orelhas de elfo",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 0.85
+    },
+    {
+      "name": "f_fun_roundNose",
+      "label": "Nariz de batatinha",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_fun_pout",
+      "label": "Beicinho",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_fun_widejaw",
+      "label": "Queixao de super-heroi",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_fun_heartFace",
+      "label": "Rosto de coracao",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
+    },
+    {
+      "name": "f_fun_alienSoft",
+      "label": "Testa alta e queixo fino",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ],
+      "safeMax": 1.0
     }
   ],
   "morphGroups": [
@@ -474,7 +886,7 @@
     "body": 15044
   },
   "sizesBytes": {
-    "male_base.glb": 2039496
+    "male_base.glb": 2280168
   },
   "license": "Meshy-generated asset (check Meshy plan terms); rig/morph/paint tooling: project code"
 }

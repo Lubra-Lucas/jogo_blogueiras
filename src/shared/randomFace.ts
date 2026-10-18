@@ -58,15 +58,34 @@ export function rollFaceLayers(r: Rng, gender: Gender, skinHex: string, hairHex:
   })
 }
 
-/** Formato do rosto: 2 a 4 controles do genero (par bipolar = para um lado ou para o outro). */
+/** Chance de um sorteio incluir UM formato divertido (grupo `fun`): raro de proposito. */
+export const FUN_SHAPE_CHANCE = 0.05
+/** Controles que aparecem com mais frequencia no sorteio (formatos naturais comuns); os demais entram com peso 1. */
+const COMMON_SHAPE = new Set(['jaw', 'chinW', 'chinD', 'cheek', 'bone', 'noseW', 'noseL', 'noseU', 'lips', 'mouthW', 'corners', 'faceL', 'fore', 'brow', 'eyeGap', 'eyeTilt', 'head'])
+
+/**
+ * Formato do rosto: 2 a 5 controles NATURAIS do genero (par bipolar = para um lado ou para o outro), os mais comuns com mais frequencia;
+ * em ~5% dos sorteios entra tambem UM controle do grupo "Divertidos" (nunca em dobro). Os pesos (0..1) ja sao limitados pela faixa segura no Character.
+ */
 export function rollShape(r: Rng, gender: Gender, npc = false): Record<string, number> {
-  const pool = shapeGroups(gender).flatMap((g) => g.controls)
+  const groups = shapeGroups(gender)
+  const pool = groups.filter((g) => g.id !== 'fun').flatMap((g) => g.controls)
   const n = (npc ? 2 : 3) + Math.floor(r() * 2.99)
   let shape: Record<string, number> = {}
   for (let i = 0; i < n && pool.length; i++) {
-    const c = pool.splice(Math.floor(r() * pool.length), 1)[0]
+    let x = r() * pool.reduce((t, c) => t + (COMMON_SHAPE.has(c.id) ? 2 : 1), 0)
+    let k = 0
+    for (; k < pool.length - 1; k++) {
+      x -= COMMON_SHAPE.has(pool[k].id) ? 2 : 1
+      if (x <= 0) break
+    }
+    const c = pool.splice(k, 1)[0]
     const mag = round(0.35 + r() * 0.65)
     shape = setShapeControl(shape, c, c.minus ? (r() < 0.5 ? -mag : mag) : mag)
+  }
+  if (r() < FUN_SHAPE_CHANCE) {
+    const fun = groups.find((g) => g.id === 'fun')?.controls ?? []
+    if (fun.length) shape = setShapeControl(shape, fun[Math.floor(r() * fun.length) % fun.length], round(0.45 + r() * 0.55))
   }
   return shape
 }

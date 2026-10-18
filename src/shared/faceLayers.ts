@@ -7,6 +7,8 @@
  * Posicoes sao DESLOCAMENTOS (metros) a partir dos pontos de referencia do modelo (`FACE_REF`).
  */
 
+import { SHAPE_SAFE_MAX } from './faceShapeRanges'
+
 export type LayerEyeStyle = 'natural' | 'almond' | 'doll' | 'dolla' | 'ref' | 'classic'
 export type LayerLashStyle = 'none' | 'natural' | 'doll' | 'dolla' | 'classic'
 export type LayerBrowStyle = 'thick' | 'arched' | 'thin' | 'soft' | 'ref' | 'classic'
@@ -141,22 +143,77 @@ export interface ShapeGroup {
   controls: ShapeControl[]
 }
 
+/** Divertido "cabeca de bobblehead": nao e morph, escala o osso da cabeca (sem mexer no corpo); BIG_HEAD_GAIN soma-se ao headSize do corpo (cada 1 = +20% de escala). */
+export const BIG_HEAD_SHAPE = 'f_fun_bigHead'
+export const BIG_HEAD_GAIN = 2
+
 const SC = (id: string, label: string, plus: string, minus?: string): ShapeControl => ({ id, label, plus, minus })
 
+/** Divertidos (opcionais, no fim do editor): formatos exagerados e fofos; nada grotesco. `f_fun_bigHead` nao e morph: escala o osso da cabeca (ver Character.tsx). */
+const FUN_GROUP: ShapeGroup = {
+  id: 'fun',
+  label: 'Divertidos',
+  controls: [
+    SC('funBig', 'Cabeça de bobblehead', BIG_HEAD_SHAPE),
+    SC('funCheek', 'Bochechas de esquilo', 'f_fun_chubbyCheeks'),
+    SC('funChin', 'Queixão de desenho', 'f_fun_longChin'),
+    SC('funTiny', 'Rostinho miúdo', 'f_fun_tinyFace'),
+    SC('funEyes', 'Órbitas enormes', 'f_fun_bigEyesArea'),
+    SC('funEars', 'Orelhas de elfo', 'f_fun_elfEars'),
+    SC('funNose', 'Nariz de batatinha', 'f_fun_roundNose'),
+    SC('funPout', 'Beicinho', 'f_fun_pout'),
+    SC('funJaw', 'Queixão de super-herói', 'f_fun_widejaw'),
+    SC('funHeart', 'Rosto de coração', 'f_fun_heartFace'),
+    SC('funAlien', 'Testa alta e queixo fino', 'f_fun_alienSoft'),
+  ],
+}
+const NOSE_CONTROLS: ShapeControl[] = [
+  SC('noseW', 'Largura (fino ↔ largo)', 'f_noseWide', 'f_noseNarrow'),
+  SC('noseL', 'Comprimento (curto ↔ longo)', 'f_noseLong', 'f_noseShort'),
+  SC('noseB', 'Ponte', 'f_noseBridge'),
+  SC('noseU', 'Ponta (baixa ↔ arrebitada)', 'f_noseUp', 'f_noseDown'),
+  SC('noseT', 'Ponta (fina ↔ redonda)', 'f_noseTipRound', 'f_noseTipThin'),
+  SC('nostril', 'Narinas largas', 'f_nostrilWide'),
+]
+const LIPS_CONTROLS: ShapeControl[] = [
+  SC('lips', 'Lábios (finos ↔ cheios)', 'f_lipsFull', 'f_lipsThin'),
+  SC('lipUp', 'Lábio superior cheio', 'f_lipUpperFull'),
+  SC('lipLo', 'Lábio inferior cheio', 'f_lipLowerFull'),
+  SC('mouthW', 'Boca (estreita ↔ larga)', 'f_lipsWide', 'f_lipsNarrow'),
+  SC('corners', 'Cantos da boca (caídos ↔ levantados)', 'f_mouthCornersUp', 'f_mouthCornersDown'),
+  SC('mouthY', 'Altura da boca (baixa ↔ alta)', 'f_mouthHigh', 'f_mouthLow'),
+]
+const EYES_GROUP: ShapeGroup = {
+  id: 'eyes',
+  label: 'Olhos (posição)',
+  controls: [
+    SC('eyeGap', 'Distância (próximos ↔ afastados)', 'f_eyesApart', 'f_eyesClose'),
+    SC('eyeH', 'Altura (baixos ↔ altos)', 'f_eyesHigh', 'f_eyesLow'),
+    SC('eyeTilt', 'Inclinação (caídos ↔ puxados)', 'f_eyeTiltUp', 'f_eyeTiltDown'),
+  ],
+}
+const JAW_CONTROLS: ShapeControl[] = [SC('jaw', 'Mandíbula (suave ↔ larga)', 'f_jawWide', 'f_jawSoft'), SC('jawAng', 'Mandíbula marcada', 'f_jawAngular'), SC('jawV', 'Mandíbula em V', 'f_jawV'), SC('chinW', 'Queixo (fino ↔ largo)', 'f_chinWide', 'f_chinPointed'), SC('chinD', 'Queixo (atrás ↔ frente)', 'f_chinForward', 'f_chinBack'), SC('cleft', 'Covinha no queixo', 'f_chinCleft')]
+const CHEEK_CONTROLS: ShapeControl[] = [SC('bone', 'Maçãs altas', 'f_cheekboneHigh'), SC('cheek', 'Bochechas (fundas ↔ cheias)', 'f_cheekFull', 'f_cheekHollow')]
+const FACE_CONTROLS: ShapeControl[] = [SC('brow', 'Relevo da sobrancelha', 'f_browRidge'), SC('fore', 'Testa (baixa ↔ alta)', 'f_foreheadHigh', 'f_foreheadLow'), SC('faceL', 'Rosto (curto ↔ longo)', 'f_faceLong', 'f_faceShort'), SC('faceW', 'Rosto largo', 'f_faceWide'), SC('head', 'Cabeça (redonda ↔ alongada)', 'f_headLong', 'f_headRound')]
 export const MALE_SHAPE_GROUPS: ShapeGroup[] = [
-  { id: 'jaw', label: 'Mandíbula e queixo', controls: [SC('jaw', 'Mandíbula (suave ↔ larga)', 'f_jawWide', 'f_jawSoft'), SC('jawAng', 'Mandíbula marcada', 'f_jawAngular'), SC('jawV', 'Mandíbula em V', 'f_jawV'), SC('chinW', 'Queixo (fino ↔ largo)', 'f_chinWide', 'f_chinPointed'), SC('chinD', 'Queixo (atrás ↔ frente)', 'f_chinForward', 'f_chinBack'), SC('cleft', 'Covinha no queixo', 'f_chinCleft')] },
-  { id: 'cheek', label: 'Maçãs e bochechas', controls: [SC('bone', 'Maçãs altas', 'f_cheekboneHigh'), SC('cheek', 'Bochechas (fundas ↔ cheias)', 'f_cheekFull', 'f_cheekHollow')] },
-  { id: 'nose', label: 'Nariz', controls: [SC('noseW', 'Largura', 'f_noseWide'), SC('noseL', 'Comprimento', 'f_noseLong'), SC('noseB', 'Ponte', 'f_noseBridge')] },
-  { id: 'lips', label: 'Lábios', controls: [SC('lips', 'Lábios (finos ↔ cheios)', 'f_lipsFull', 'f_lipsThin')] },
-  { id: 'face', label: 'Testa e rosto', controls: [SC('brow', 'Relevo da sobrancelha', 'f_browRidge'), SC('fore', 'Testa (baixa ↔ alta)', 'f_foreheadHigh', 'f_foreheadLow'), SC('faceL', 'Rosto (curto ↔ longo)', 'f_faceLong', 'f_faceShort'), SC('faceW', 'Rosto largo', 'f_faceWide')] },
-  { id: 'neck', label: 'Pescoço e orelhas', controls: [SC('neck', 'Pescoço grosso', 'f_neckThick'), SC('adam', 'Pomo de adão', 'f_adamsApple'), SC('ears', 'Orelhas (pequenas ↔ grandes)', 'f_earsBig', 'f_earsSmall')] },
+  { id: 'jaw', label: 'Mandíbula e queixo', controls: JAW_CONTROLS },
+  { id: 'cheek', label: 'Maçãs e bochechas', controls: CHEEK_CONTROLS },
+  { id: 'nose', label: 'Nariz', controls: NOSE_CONTROLS },
+  { id: 'lips', label: 'Lábios', controls: LIPS_CONTROLS },
+  { id: 'face', label: 'Testa e rosto', controls: FACE_CONTROLS },
+  EYES_GROUP,
+  { id: 'neck', label: 'Pescoço e orelhas', controls: [SC('neck', 'Pescoço (fino ↔ grosso)', 'f_neckThick', 'f_neckThin'), SC('adam', 'Pomo de adão', 'f_adamsApple'), SC('ears', 'Orelhas (pequenas ↔ grandes)', 'f_earsBig', 'f_earsSmall'), SC('earsP', 'Orelhas pontudas', 'f_earsPointed')] },
+  FUN_GROUP,
 ]
 export const FEMALE_SHAPE_GROUPS: ShapeGroup[] = [
-  { id: 'jaw', label: 'Mandíbula e queixo', controls: [SC('jaw', 'Mandíbula (suave ↔ larga)', 'f_jawWide', 'f_jawSoft'), SC('chinW', 'Queixo (fino ↔ largo)', 'f_chinWide', 'f_chinPointed')] },
-  { id: 'cheek', label: 'Maçãs e bochechas', controls: [SC('cheek', 'Bochechas (fundas ↔ cheias)', 'f_cheekFull', 'f_cheekHollow')] },
-  { id: 'nose', label: 'Nariz', controls: [SC('nose', 'Nariz (fino ↔ largo)', 'f_noseWide', 'f_noseNarrow')] },
-  { id: 'lips', label: 'Lábios', controls: [SC('lips', 'Lábios (finos ↔ cheios)', 'f_lipsFull', 'f_lipsThin')] },
-  { id: 'face', label: 'Rosto', controls: [SC('faceL', 'Rosto (curto ↔ longo)', 'f_faceLong', 'f_faceShort')] },
+  { id: 'jaw', label: 'Mandíbula e queixo', controls: JAW_CONTROLS },
+  { id: 'cheek', label: 'Maçãs e bochechas', controls: CHEEK_CONTROLS },
+  { id: 'nose', label: 'Nariz', controls: NOSE_CONTROLS },
+  { id: 'lips', label: 'Lábios', controls: LIPS_CONTROLS },
+  { id: 'face', label: 'Testa e rosto', controls: FACE_CONTROLS },
+  EYES_GROUP,
+  { id: 'neck', label: 'Pescoço e orelhas', controls: [SC('neck', 'Pescoço (fino ↔ grosso)', 'f_neckThick', 'f_neckThin'), SC('ears', 'Orelhas (pequenas ↔ grandes)', 'f_earsBig', 'f_earsSmall'), SC('earsP', 'Orelhas pontudas', 'f_earsPointed')] },
+  FUN_GROUP,
 ]
 export const shapeGroups = (g: Gender): ShapeGroup[] => (g === 'male' ? MALE_SHAPE_GROUPS : FEMALE_SHAPE_GROUPS)
 export const shapeNames = (g: Gender): string[] => {
@@ -166,6 +223,14 @@ export const shapeNames = (g: Gender): string[] => {
 }
 /** Morph aplicado sempre ao masculino (rosto masculino base), a menos que o perfil o sobrescreva. */
 export const MALE_BASE_SHAPE = 'f_maleBase'
+
+/** Pesos do slider (0..1 = ate o maximo SEGURO do morph) -> influencia real do morph (0..safeMax). Nomes sem faixa propria passam direto. */
+export function safeShape(shape: Record<string, number>, g: Gender): Record<string, number> {
+  const safe = SHAPE_SAFE_MAX[g]
+  const out: Record<string, number> = {}
+  for (const k in shape) out[k] = safe[k] !== undefined ? shape[k] * safe[k] : shape[k]
+  return out
+}
 
 /** Valor do controle (-1..1 para pares, 0..1 para simples) a partir dos pesos. */
 export function shapeControlValue(shape: Record<string, number>, c: ShapeControl): number {

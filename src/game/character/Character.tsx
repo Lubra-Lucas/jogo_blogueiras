@@ -9,7 +9,7 @@ import { BASES, bodyAssets, loadBaseMeta } from './assets'
 import { applyBodyLook, createBodyMaterial, createHairMaterial, setMakeupTextures } from './dollMaterial'
 import { createMaleMaterial } from './maleMaterial'
 import { createMaleHairMaterial } from './maleHair'
-import { DEFAULT_FACE_LAYERS, MALE_BASE_SHAPE, type FaceLayers } from '../../shared/faceLayers'
+import { BIG_HEAD_GAIN, BIG_HEAD_SHAPE, DEFAULT_FACE_LAYERS, MALE_BASE_SHAPE, safeShape, type FaceLayers } from '../../shared/faceLayers'
 import { BLANK_TEXTURE, getMakeupTextures } from './makeup/textures'
 import { DEFAULT_MAKEUP, makeupIsEmpty, normalizeMakeup } from '../../shared/appearance'
 import { getWearable, MALE_WEARABLES, WEARABLES, type WearableDef } from './items'
@@ -289,15 +289,18 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
   // ---- esqueleto + malha do corpo (clone por instancia) ----
   const rig = useMemo(() => buildRig(gltfs[0].scene, gender), [gltfs[0]]) // eslint-disable-line react-hooks/exhaustive-deps
   useImperativeHandle(handle, () => rig, [rig])
+  // f_fun_bigHead (divertido) nao e morph: escala o osso da cabeca (cabelo e chapeus acompanham), somando-se ao `headSize` do corpo
+  const bigHead = appearance.shape?.[BIG_HEAD_SHAPE] ?? 0
+  const bodyEff = useMemo(() => (bigHead > 0.001 ? { ...appearance.body, headSize: appearance.body.headSize + BIG_HEAD_GAIN * bigHead } : appearance.body), [appearance.body, bigHead])
   useLayoutEffect(() => {
     applyRestPose(rig.bones, rig.root)
-    rig.proportions.set(appearance.body)
+    rig.proportions.set(bodyEff)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rig])
   // proporcoes: comprimentos de osso (altura, pernas, bracos...) e postura; a pose animada e somada em CharacterAnimation
-  const bodyKey = JSON.stringify(appearance.body)
+  const bodyKey = JSON.stringify(bodyEff)
   useLayoutEffect(() => {
-    rig.proportions.set(appearance.body)
+    rig.proportions.set(bodyEff)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rig, bodyKey])
   // sem animacao propria (poses de minijogo, retratos): so comprimentos/escalas, sem postura aditiva
@@ -476,7 +479,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
   const morphKey = JSON.stringify(appearance.morphs) + JSON.stringify(appearance.shape ?? null) + gender
   useLayoutEffect(() => {
     // formato do rosto (f_*): o masculino ganha o rosto masculino base em 1, a menos que o perfil diga outra coisa
-    const shape = appearance.shape ?? {}
+    const shape = safeShape(appearance.shape ?? {}, gender) // 1 no slider = maximo SEGURO do morph (sem triangulos invertidos)
     const mm: Record<string, number> = { ...appearance.morphs, ...shape }
     if (gender === 'male' && mm[MALE_BASE_SHAPE] === undefined) mm[MALE_BASE_SHAPE] = 1
     applyMorphs(rig.body, mm)

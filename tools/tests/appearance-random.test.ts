@@ -23,8 +23,12 @@ import {
   type FaceListKey,
 } from '../../src/shared/faceCatalog.ts'
 import { DEFAULT_MALE_APPEARANCE, classicFromLegacy } from '../../src/shared/appearance.ts'
-import { MALE_SHAPE_GROUPS, FEMALE_SHAPE_GROUPS, shapeNames, sanitizeFaceLayers, sanitizeShape, EYE_STYLES, BEARD_STYLES, BROW_STYLES as LAYER_BROWS, MOUTH_STYLES } from '../../src/shared/faceLayers.ts'
+import { BIG_HEAD_SHAPE, MALE_SHAPE_GROUPS, FEMALE_SHAPE_GROUPS, safeShape, shapeGroups, shapeNames, sanitizeFaceLayers, sanitizeShape, EYE_STYLES, BEARD_STYLES, BROW_STYLES as LAYER_BROWS, MOUTH_STYLES } from '../../src/shared/faceLayers.ts'
 import { TWELVE, FEM_SIX } from '../../src/shared/facePresets.ts'
+import { FUN_SHAPE_CHANCE, rollShape } from '../../src/shared/randomFace.ts'
+import { SHAPE_SAFE_MAX } from '../../src/shared/faceShapeRanges.ts'
+import { mulberry32 } from '../../src/game/market/rng.ts'
+import { readFileSync } from 'node:fs'
 import {
   BROW_HAIR_MAX_DELTA,
   HAIR_NATURAL_HEX,
@@ -365,16 +369,26 @@ await t('proporcoes por osso: migracao zera, sanitize limita, sorteio concentrad
 })
 
 // ---------- genero, camadas do rosto e formato ----------
-await t('catalogo de camadas e formatos: 5 olhos, 5 sobrancelhas, 5 bocas, 5 barbas, 27 formatos masculinos, 12 femininos, presets 13/6', () => {
+await t('catalogo de camadas e formatos: estilos, formatos por genero (v2), presets 16/9', () => {
   assert.equal(EYE_STYLES.length, 6)
   assert.equal(LAYER_BROWS.length, 6)
   assert.equal(MOUTH_STYLES.length, 6)
   assert.equal(BEARD_STYLES.length, 5)
-  assert.equal(shapeNames('male').length, 27)
-  assert.equal(shapeNames('female').length, 12)
-  assert.ok(MALE_SHAPE_GROUPS.length === 6 && FEMALE_SHAPE_GROUPS.length === 5)
-  assert.equal(TWELVE.length, 13)
-  assert.equal(FEM_SIX.length, 6)
+  assert.ok(shapeNames('male').length >= 60 && shapeNames('female').length >= 55, `${shapeNames('male').length}/${shapeNames('female').length}`)
+  assert.equal(MALE_SHAPE_GROUPS.length, 8)
+  assert.equal(FEMALE_SHAPE_GROUPS.length, 8)
+  for (const g of ['male', 'female'] as const) {
+    const ids = shapeGroups(g).map((x) => x.label)
+    assert.ok(ids.includes('Olhos (posição)'), 'grupo Olhos (posição)')
+    assert.equal(ids[ids.length - 1], 'Divertidos', 'Divertidos por ultimo')
+    assert.equal(new Set(shapeNames(g)).size, shapeNames(g).length, 'nomes de formato repetidos')
+  }
+  assert.equal(TWELVE.length, 16)
+  assert.equal(FEM_SIX.length, 9)
+  for (const g of ['male', 'female'] as const) {
+    const fun = (g === 'male' ? TWELVE : FEM_SIX).filter((p) => Object.keys(p.shape).some((k) => k.startsWith('f_fun_')))
+    assert.ok(fun.length >= 1, `${g}: preset divertido`)
+  }
   for (const p of [...TWELVE, ...FEM_SIX]) {
     const g = (TWELVE as unknown[]).includes(p) ? 'male' : 'female'
     assert.deepEqual(sanitizeFaceLayers(p.face), p.face, p.name)
@@ -403,8 +417,8 @@ await t('sanitize: genero, camadas e formato validos; lixo e limitado', () => {
   assert.equal(bad.faceLayers.beard.amount, 1)
   assert.deepEqual(Object.keys(bad.shape).sort(), ['f_chinPointed', 'f_jawWide', 'f_noseWide'])
   assert.equal(bad.shape.f_jawWide, 1)
-  const fem = sanitizeAppearance({ ...DEFAULT_APPEARANCE, shape: { f_jawWide: 0.5, f_browRidge: 1 } } as never)!
-  assert.deepEqual(Object.keys(fem.shape), ['f_jawWide'])
+  const fem = sanitizeAppearance({ ...DEFAULT_APPEARANCE, shape: { f_jawWide: 0.5, f_browRidge: 1, f_adamsApple: 1, f_maleBase: 1 } } as never)!
+  assert.deepEqual(Object.keys(fem.shape).sort(), ['f_browRidge', 'f_jawWide'])        // f_adamsApple e f_maleBase so existem no masculino
   assert.deepEqual(sanitizeShape('x', 'male'), {})
 })
 
@@ -450,6 +464,62 @@ await t('sanitize(JSON) preserva genero, camadas e formato (codigo de compartilh
     assert.equal(r.gender, a.gender)
     assert.deepEqual(r.faceLayers, a.faceLayers)
     assert.deepEqual(r.shape, a.shape)
+  }
+})
+
+// ---------- formatos v2: faixas seguras, GLB x catalogo, frequencia dos divertidos ----------
+await t('formatos: todo morph do catalogo existe no GLB/JSON do genero e a faixa segura bate com o JSON', () => {
+  const files = { female: 'public/assets/characters/doll_layers.json', male: 'public/assets/characters/male/male_base.json' } as const
+  for (const g of ['female', 'male'] as const) {
+    const meta = JSON.parse(readFileSync(files[g], 'utf-8')) as { morphs: Array<{ name: string; safeMax?: number }> }
+    const byName = new Map(meta.morphs.map((m) => [m.name, m]))
+    for (const k of shapeNames(g)) {
+      if (k === BIG_HEAD_SHAPE) continue // virtual: escala o osso da cabeca
+      const m = byName.get(k)
+      assert.ok(m, `${g}: ${k} nao existe no JSON do modelo`)
+      assert.equal(m!.safeMax ?? 1, SHAPE_SAFE_MAX[g][k] ?? 1, `${g}: faixa segura de ${k}`)
+    }
+    for (const [k, v] of Object.entries(SHAPE_SAFE_MAX[g])) {
+      assert.ok(v >= 0.25 && v <= 1, `${g}: ${k} safe ${v}`)
+      assert.ok(shapeNames(g).includes(k), `${g}: faixa de morph desconhecido ${k}`)
+    }
+  }
+})
+
+await t('formatos: safeShape aplica a faixa segura (1 no slider = maximo seguro) e rolls ficam no catalogo', () => {
+  const sh = safeShape({ f_earsBig: 1, f_jawWide: 0.5, f_x: 0.3 }, 'female')
+  assert.equal(sh.f_earsBig, SHAPE_SAFE_MAX.female.f_earsBig ?? 1)
+  assert.equal(sh.f_jawWide, 0.5)
+  assert.equal(sh.f_x, 0.3)
+  for (const g of ['female', 'male'] as const) {
+    const names = new Set(shapeNames(g))
+    for (let i = 0; i < 500; i++) {
+      const sp = rollShape(mulberry32(i * 7919 + 3), g, i % 2 === 0)
+      for (const [k, v] of Object.entries(sp)) assert.ok(names.has(k) && v > 0 && v <= 1, `${g}: ${k}=${v}`)
+    }
+  }
+})
+
+await t('formatos divertidos aparecem raramente (~5%, no maximo 1 por rosto) e os naturais sempre', () => {
+  for (const g of ['female', 'male'] as const) {
+    const funNames = new Set(shapeGroups(g).find((x) => x.id === 'fun')!.controls.flatMap((c) => [c.plus, c.minus ?? '']))
+    let withFun = 0
+    const N2 = 6000
+    const seen = new Set<string>()
+    for (let i = 0; i < N2; i++) {
+      const sp = rollShape(mulberry32(i * 2654435761 + 11), g, i % 3 === 0)
+      const fun = Object.keys(sp).filter((k) => funNames.has(k))
+      assert.ok(fun.length <= 1, 'mais de um divertido')
+      if (fun.length) withFun++
+      assert.ok(Object.keys(sp).length - fun.length >= 2, 'poucos formatos naturais')
+      for (const k of Object.keys(sp)) seen.add(k)
+    }
+    const rate = withFun / N2
+    assert.ok(Math.abs(rate - FUN_SHAPE_CHANCE) < 0.012, `${g}: divertidos ${(rate * 100).toFixed(1)}%`)
+    // o sorteio alcanca (quase) todos os formatos naturais
+    const natural = shapeNames(g).filter((k) => !funNames.has(k))
+    const miss = natural.filter((k) => !seen.has(k))
+    assert.equal(miss.length, 0, `${g}: nunca sorteados ${miss.join(',')}`)
   }
 })
 
