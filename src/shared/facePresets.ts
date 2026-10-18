@@ -52,6 +52,10 @@ export const TWELVE: MaleLook[] = [
   L('Livre', '#3d2418', { f_faceLong: 0.5, f_jawWide: 1, f_chinCleft: 1, f_chinForward: 0.8, f_earsBig: 0.9, f_noseWide: 0.9, f_noseBridge: 0.8, f_browRidge: 1, f_cheekFull: 0.5, f_lipsFull: 1 },
     { eye: { style: 'doll', lash: 'natural', iris: '#c58a1e', scale: 0.75, gap: -0.002, tilt: 6 }, brow: { style: 'thick', color: '#d8d8d6', tilt: 8, scale: 1.15 }, mouth: { style: 'natural', color: '#5a2e2a', gloss: 0.35, scale: 1.15 }, beard: { style: 'full', color: '#e6e6e4', amount: 0.95 }, detail: { bags: 0.5, lines: 0.6 } },
     { id: 'hair.m.buzz', color: '#dcdcda', gloss: 0.2 }, '#b8412a'),
+  // 13: "Referencia" (rapaz jovem careca de pele glossy): so camadas + morphs + cores; editavel como os outros
+  L('Referencia', '#e6b498', { f_jawV: 1, f_jawAngular: 0.45, f_chinPointed: 0.3, f_cheekboneHigh: 0.8, f_foreheadHigh: 0.6, f_browRidge: 0.55, f_noseBridge: 0.3, f_earsBig: 0.45, f_neckThick: 0.25, f_cheekHollow: 0.35, f_lipsFull: 0.35, f_faceLong: 0.25 },
+    { eye: { style: 'ref', lash: 'natural', iris: '#7f9cb8', liner: '#3a2a26', lashColor: '#4a3428', scale: 1.2, gap: 0.0006, tilt: 1, linerAmt: 0.6 }, brow: { style: 'ref', color: '#6a4a36', opacity: 0.9, scale: 1.0, tilt: -1, y: 0.0035 }, mouth: { style: 'ref', color: '#c88c88', gloss: 0.35, opacity: 0.9 }, blush: { amount: 0.22, color: '#e8907e', scale: 1.1 } },
+    null),
 ]
 
 /** Seis rostos da etapa anterior (grade) e o "visual de boneca" (agora com formato). */

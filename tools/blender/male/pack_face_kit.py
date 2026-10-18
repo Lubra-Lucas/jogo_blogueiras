@@ -17,9 +17,9 @@ OUT = os.path.join(HERE, "..", "..", "..", "public", "assets", "characters", "ma
 os.makedirs(OUT, exist_ok=True)
 for f in os.listdir(OUT): os.remove(os.path.join(OUT, f))
 
-EYES = ["natural", "almond", "doll", "dolla"]
+EYES = ["natural", "almond", "doll", "dolla", "ref"]
 LASHES = ["none", "natural", "doll", "dolla"]
-MOUTHS = ["natural", "thin", "doll", "dollg"]
+MOUTHS = ["natural", "thin", "doll", "dollg", "ref"]
 BEARDS = ["none", "stubble", "mustache", "goatee", "full"]
 DETAIL = {"size": (0.20, 0.28), "center": (0.0, 1.55), "k": 6000}
 
@@ -32,7 +32,7 @@ def save(name, arr): Image.fromarray(arr.astype(np.uint8), "RGBA").save(os.path.
 def main():
     for e in EYES + ["classic"]:
         shutil.copy(os.path.join(SRC, f"eye_{e}_sclera.png"), OUT); shutil.copy(os.path.join(SRC, f"eye_{e}_iris.png"), OUT)
-    for b in ["thick", "arched", "thin", "soft", "classic"]: shutil.copy(os.path.join(SRC, f"brow_{b}.png"), OUT)
+    for b in ["thick", "arched", "thin", "soft", "ref", "classic"]: shutil.copy(os.path.join(SRC, f"brow_{b}.png"), OUT)
     shutil.copy(os.path.join(SRC, "blush.png"), OUT); shutil.copy(os.path.join(SRC, "classic_shade.png"), OUT)
     # olho: hi/linha/cilios
     for e in EYES:

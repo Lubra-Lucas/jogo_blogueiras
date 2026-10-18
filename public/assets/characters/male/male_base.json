@@ -213,6 +213,16 @@
       ]
     },
     {
+      "name": "f_jawV",
+      "label": "Mandibula em V",
+      "group": "Rosto",
+      "min": 0,
+      "max": 1,
+      "targets": [
+        "body"
+      ]
+    },
+    {
       "name": "f_jawSoft",
       "label": "Mandibula suave",
       "group": "Rosto",
@@ -464,7 +474,7 @@
     "body": 15044
   },
   "sizesBytes": {
-    "male_base.glb": 2009600
+    "male_base.glb": 2039496
   },
   "license": "Meshy-generated asset (check Meshy plan terms); rig/morph/paint tooling: project code"
 }

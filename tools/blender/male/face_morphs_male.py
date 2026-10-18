@@ -8,7 +8,7 @@ import numpy as np
 from mcommon import sstep, bell, laplace
 
 LABELS = {
-    "f_maleBase": "Rosto masculino base", "f_jawWide": "Mandibula larga", "f_jawAngular": "Mandibula angulosa", "f_jawSoft": "Mandibula suave",
+    "f_maleBase": "Rosto masculino base", "f_jawWide": "Mandibula larga", "f_jawAngular": "Mandibula angulosa", "f_jawV": "Mandibula em V", "f_jawSoft": "Mandibula suave",
     "f_chinWide": "Queixo largo", "f_chinPointed": "Queixo pontudo", "f_chinForward": "Queixo para frente", "f_chinBack": "Queixo para tras",
     "f_chinCleft": "Covinha no queixo", "f_browRidge": "Relevo da sobrancelha", "f_foreheadHigh": "Testa alta", "f_foreheadLow": "Testa baixa",
     "f_cheekboneHigh": "Macas altas", "f_cheekFull": "Bochechas cheias", "f_cheekHollow": "Bochechas fundas", "f_faceLong": "Rosto longo",
@@ -19,7 +19,7 @@ LABELS = {
 
 
 TARGET_MM = {
-    "f_jawWide": 11, "f_jawAngular": 9, "f_jawSoft": 7, "f_chinWide": 8, "f_chinPointed": 8, "f_chinForward": 12, "f_chinBack": 10, "f_chinCleft": 3.5,
+    "f_jawWide": 11, "f_jawAngular": 9, "f_jawSoft": 7, "f_jawV": 10, "f_chinWide": 8, "f_chinPointed": 8, "f_chinForward": 12, "f_chinBack": 10, "f_chinCleft": 3.5,
     "f_browRidge": 8, "f_foreheadHigh": 10, "f_foreheadLow": 10, "f_cheekboneHigh": 7, "f_cheekFull": 9, "f_cheekHollow": 7, "f_faceLong": 12,
     "f_faceShort": 11, "f_faceWide": 8, "f_noseWide": 6, "f_noseLong": 8, "f_noseBridge": 6, "f_lipsFull": 5, "f_lipsThin": 3, "f_neckThick": 12,
     "f_adamsApple": 4, "f_earsSmall": 10, "f_earsBig": 13,
@@ -46,6 +46,9 @@ def compute(co, nrm, e):
     gon = b3(0.070, 0.00, 1.497, 0.060, 0.09, 0.056)
     ch2 = b3(0.030, -0.075, 1.462, 0.045, 0.055, 0.04)
     out["f_jawAngular"] = V(dx=sg * (0.0085 * gon + 0.006 * ch2), dy=0.004 * gon, dz=-0.007 * gon - 0.005 * ch2)
+    # V: o queixo afunila de forma continua do angulo da mandibula (|x|~0,07) ate o centro; o angulo fica definido e o queixo estreito mas arredondado
+    vt = sstep((1.52 - z) / 0.075) * sstep((z - 1.43) / 0.03) * front
+    out["f_jawV"] = V(dx=-x * 0.16 * vt, dy=-0.004 * vt * (1 - sstep(ax / 0.06)), dz=0.0 * vt) + V(dx=sg * 0.004 * b3(0.072, 0.0, 1.50, 0.04, 0.09, 0.03))
     out["f_jawSoft"] = V(dx=-sg * 0.0075 * gon, dy=-0.002 * gon, dz=0.006 * gon)
     # ---- queixo
     chin = b3(0.0, -0.078, 1.466, 0.065, 0.065, 0.046)

@@ -71,6 +71,9 @@ EYES = {
     "doll": dict(label="Boneca (grande)", a=0.0178, hu=0.0150, hl=0.0110, kin=0.95, kl=1.0, pu=0.62, pl=0.65, lift=0.0005, ir=0.0132, iy=-0.0016, ix=0.0,
                  liner=0.0030, flick=0.0045, hi=2, shadow=0.35, caruncle=1),
     # "boneca pintada": olho muito grande da boneca feminina (iris azul grande, delineado preto grosso com rabinho, canto externo elevado)
+    # "Referencia": olho amendoado, levemente encapuzado (palpebra superior baixa e reta), delineado natural fino
+    "ref": dict(label="Referencia (encapuzado)", a=0.0205, hu=0.0066, hl=0.0050, kin=0.80, kl=1.1, pu=0.95, pl=1.0, lift=0.0010, ir=0.0082, iy=-0.0006, ix=0.0,
+                liner=0.0016, flick=0.0016, hi=1, shadow=0.75, caruncle=1),
     "dolla": dict(label="Boneca pintada", a=0.0285, hu=0.0172, hl=0.0100, kin=0.86, kl=1.0, pu=0.70, pl=0.80, lift=0.0075, ir=0.0150, iy=-0.0078, ix=-0.0015,
                   liner=0.0064, flick=0.0060, hi=1, shadow=0.30, caruncle=1, glow=0.35, pup=0.36, hir=0.15),
 }
@@ -283,13 +286,15 @@ def main():
     draw_mouth("doll", 0.040, 0.0078, 0.0112, 0.55, -0.0004, 1.0)
     draw_mouth("dollg", 0.060, 0.0098, 0.0150, 0.50, -0.0010, 0.5)
     draw_brow("soft", 0.0120, 0.0030, 0.62, 0.0010, 0.064, 238)
+    draw_brow("ref", 0.0085, 0.0010, 0.40, 0.0006, 0.070, 225)
+    draw_mouth("ref", 0.056, 0.0058, 0.0082, 0.30, 0.0004, 0.30)
     draw_blush()
     kit = {
         "canvas": {k: list(v) for k, v in CANVAS.items()},
         "eyes": [{"id": k, "label": v["label"]} for k, v in EYES.items()],
         "lashes": [{"id": "none", "label": "Sem cilios"}, {"id": "natural", "label": "Natural"}, {"id": "doll", "label": "Boneca (volumosos)"}, {"id": "dolla", "label": "Boneca pintada (pretos)"}],
-        "brows": [{"id": "thick", "label": "Reta grossa"}, {"id": "arched", "label": "Arqueada"}, {"id": "thin", "label": "Fina natural"}, {"id": "soft", "label": "Macia (boneca)"}],
-        "mouths": [{"id": "natural", "label": "Natural masculina"}, {"id": "thin", "label": "Fina"}, {"id": "doll", "label": "Boneca glossy"}, {"id": "dollg", "label": "Boneca cheia glossy"}],
+        "brows": [{"id": "thick", "label": "Reta grossa"}, {"id": "arched", "label": "Arqueada"}, {"id": "thin", "label": "Fina natural"}, {"id": "soft", "label": "Macia (boneca)"}, {"id": "ref", "label": "Reta grossa com fios (referencia)"}],
+        "mouths": [{"id": "natural", "label": "Natural masculina"}, {"id": "thin", "label": "Fina"}, {"id": "doll", "label": "Boneca glossy"}, {"id": "dollg", "label": "Boneca cheia glossy"}, {"id": "ref", "label": "Cheia natural (referencia)"}],
         "files": "eye_<id>_{sclera,iris,hi,line}.png, lash_<lash>_<eye>.png, brow_<id>.png, mouth_<id>_{lips,gloss}.png, blush.png",
     }
     json.dump(kit, open(os.path.join(OUT, "kit.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)

@@ -66,7 +66,7 @@ export function FacesSection() {
   const { a, edit, male } = useFaceEdit()
   const list: Array<MaleLook | FemLook> = male ? TWELVE : FEM_SIX
   const apply = (p: MaleLook | FemLook) =>
-    edit((x) => ({ ...x, skin: { ...x.skin, tone: p.skin }, faceLayers: p.face, shape: { ...p.shape }, ...(male ? { hair: { ...x.hair, id: p.hair?.id ?? x.hair.id, color: p.hair?.color ?? x.hair.color, mode: 'solid' as const, color2: undefined } } : {}) }))
+    edit((x) => ({ ...x, skin: { ...x.skin, tone: p.skin }, faceLayers: p.face, shape: { ...p.shape }, ...(male ? { hair: { ...x.hair, id: p.hair ? p.hair.id : null, color: p.hair?.color ?? x.hair.color, mode: 'solid' as const, color2: undefined } } : {}) }))
   const rnd = () => {
     const out = randomAppearance(Math.floor(Math.random() * 4294967296), { base: a, skin: false, hair: false, body: false, eyes: true })
     edit((x) => ({ ...x, faceLayers: out.faceLayers, shape: out.shape }))

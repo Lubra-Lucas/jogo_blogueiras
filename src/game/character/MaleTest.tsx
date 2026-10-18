@@ -274,6 +274,18 @@ export function MaleTest() {
         <Male look={TWELVE[i]} yaw={yaw34} />
       </>
     )
+  } else if (scene === 'reft') {
+    // preset Referencia editado: olho e sobrancelha trocados (prova que e editavel)
+    const r = TWELVE[12]
+    const variants: MaleLook[] = [r, { ...r, face: mergeFace(r.face, { eye: { style: 'almond', iris: '#5f9a6a' }, brow: { style: 'arched', color: '#2a1d16' } }) }, { ...r, face: mergeFace(r.face, { eye: { style: 'natural', iris: '#6b4527', lash: 'none' }, brow: { style: 'thin', color: '#8a6a4a' }, mouth: { style: 'natural' } }) }]
+    content = (
+      <>
+        <Cam target={[0, 1.55, 0]} dist={Number(Q.get('cam')) || 3} fov={Number(Q.get('fov')) || 9} />
+        {variants.map((v, i) => (
+          <Male key={i} look={v} x={rowX(i, 3, 0.4)} yaw={yaw34} />
+        ))}
+      </>
+    )
   } else if (scene === 'morphs') {
     const name = Q.get('morph') ?? 'f_jawWide'
     const base = (w: number): Record<string, number> => ({ [name]: w })

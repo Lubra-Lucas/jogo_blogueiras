@@ -365,15 +365,15 @@ await t('proporcoes por osso: migracao zera, sanitize limita, sorteio concentrad
 })
 
 // ---------- genero, camadas do rosto e formato ----------
-await t('catalogo de camadas e formatos: 5 olhos, 5 sobrancelhas, 5 bocas, 5 barbas, 26 formatos masculinos, 12 femininos, presets 12/6', () => {
-  assert.equal(EYE_STYLES.length, 5)
-  assert.equal(LAYER_BROWS.length, 5)
-  assert.equal(MOUTH_STYLES.length, 5)
+await t('catalogo de camadas e formatos: 5 olhos, 5 sobrancelhas, 5 bocas, 5 barbas, 27 formatos masculinos, 12 femininos, presets 13/6', () => {
+  assert.equal(EYE_STYLES.length, 6)
+  assert.equal(LAYER_BROWS.length, 6)
+  assert.equal(MOUTH_STYLES.length, 6)
   assert.equal(BEARD_STYLES.length, 5)
-  assert.equal(shapeNames('male').length, 26)
+  assert.equal(shapeNames('male').length, 27)
   assert.equal(shapeNames('female').length, 12)
   assert.ok(MALE_SHAPE_GROUPS.length === 6 && FEMALE_SHAPE_GROUPS.length === 5)
-  assert.equal(TWELVE.length, 12)
+  assert.equal(TWELVE.length, 13)
   assert.equal(FEM_SIX.length, 6)
   for (const p of [...TWELVE, ...FEM_SIX]) {
     const g = (TWELVE as unknown[]).includes(p) ? 'male' : 'female'

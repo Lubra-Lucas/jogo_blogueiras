@@ -31,6 +31,10 @@
       "label": "Boneca (grande)"
     },
     {
+      "id": "ref",
+      "label": "Referencia (encapuzado)"
+    },
+    {
       "id": "dolla",
       "label": "Boneca pintada"
     }
@@ -69,6 +73,10 @@
     {
       "id": "soft",
       "label": "Macia (boneca)"
+    },
+    {
+      "id": "ref",
+      "label": "Reta grossa com fios (referencia)"
     }
   ],
   "mouths": [
@@ -87,6 +95,10 @@
     {
       "id": "dollg",
       "label": "Boneca cheia glossy"
+    },
+    {
+      "id": "ref",
+      "label": "Cheia natural (referencia)"
     }
   ],
   "files": "eye_<id>_{sclera,iris,hi,line}.png, lash_<lash>_<eye>.png, brow_<id>.png, mouth_<id>_{lips,gloss}.png, blush.png",

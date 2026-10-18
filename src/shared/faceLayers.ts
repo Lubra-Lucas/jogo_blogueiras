@@ -7,10 +7,10 @@
  * Posicoes sao DESLOCAMENTOS (metros) a partir dos pontos de referencia do modelo (`FACE_REF`).
  */
 
-export type LayerEyeStyle = 'natural' | 'almond' | 'doll' | 'dolla' | 'classic'
+export type LayerEyeStyle = 'natural' | 'almond' | 'doll' | 'dolla' | 'ref' | 'classic'
 export type LayerLashStyle = 'none' | 'natural' | 'doll' | 'dolla' | 'classic'
-export type LayerBrowStyle = 'thick' | 'arched' | 'thin' | 'soft' | 'classic'
-export type LayerMouthStyle = 'natural' | 'thin' | 'doll' | 'dollg' | 'classic'
+export type LayerBrowStyle = 'thick' | 'arched' | 'thin' | 'soft' | 'ref' | 'classic'
+export type LayerMouthStyle = 'natural' | 'thin' | 'doll' | 'dollg' | 'ref' | 'classic'
 export type LayerBeardStyle = 'none' | 'stubble' | 'mustache' | 'goatee' | 'full'
 
 export const EYE_STYLES: Array<{ id: LayerEyeStyle; label: string }> = [
@@ -18,6 +18,7 @@ export const EYE_STYLES: Array<{ id: LayerEyeStyle; label: string }> = [
   { id: 'almond', label: 'Amendoado' },
   { id: 'doll', label: 'Boneca (grande)' },
   { id: 'dolla', label: 'Boneca pintada' },
+  { id: 'ref', label: 'Encapuzado (referência)' },
   { id: 'classic', label: 'Classico (pintura original)' },
 ]
 export const LASH_STYLES: Array<{ id: LayerLashStyle; label: string }> = [
@@ -32,6 +33,7 @@ export const BROW_STYLES: Array<{ id: LayerBrowStyle; label: string }> = [
   { id: 'arched', label: 'Arqueada' },
   { id: 'thin', label: 'Fina natural' },
   { id: 'soft', label: 'Macia (boneca)' },
+  { id: 'ref', label: 'Reta grossa com fios' },
   { id: 'classic', label: 'Classica (pintura original)' },
 ]
 export const MOUTH_STYLES: Array<{ id: LayerMouthStyle; label: string }> = [
@@ -39,6 +41,7 @@ export const MOUTH_STYLES: Array<{ id: LayerMouthStyle; label: string }> = [
   { id: 'thin', label: 'Fina' },
   { id: 'doll', label: 'Boneca glossy' },
   { id: 'dollg', label: 'Boneca cheia glossy' },
+  { id: 'ref', label: 'Cheia natural' },
   { id: 'classic', label: 'Tinta sobre os labios esculpidos' },
 ]
 
@@ -141,7 +144,7 @@ export interface ShapeGroup {
 const SC = (id: string, label: string, plus: string, minus?: string): ShapeControl => ({ id, label, plus, minus })
 
 export const MALE_SHAPE_GROUPS: ShapeGroup[] = [
-  { id: 'jaw', label: 'Mandíbula e queixo', controls: [SC('jaw', 'Mandíbula (suave ↔ larga)', 'f_jawWide', 'f_jawSoft'), SC('jawAng', 'Mandíbula marcada', 'f_jawAngular'), SC('chinW', 'Queixo (fino ↔ largo)', 'f_chinWide', 'f_chinPointed'), SC('chinD', 'Queixo (atrás ↔ frente)', 'f_chinForward', 'f_chinBack'), SC('cleft', 'Covinha no queixo', 'f_chinCleft')] },
+  { id: 'jaw', label: 'Mandíbula e queixo', controls: [SC('jaw', 'Mandíbula (suave ↔ larga)', 'f_jawWide', 'f_jawSoft'), SC('jawAng', 'Mandíbula marcada', 'f_jawAngular'), SC('jawV', 'Mandíbula em V', 'f_jawV'), SC('chinW', 'Queixo (fino ↔ largo)', 'f_chinWide', 'f_chinPointed'), SC('chinD', 'Queixo (atrás ↔ frente)', 'f_chinForward', 'f_chinBack'), SC('cleft', 'Covinha no queixo', 'f_chinCleft')] },
   { id: 'cheek', label: 'Maçãs e bochechas', controls: [SC('bone', 'Maçãs altas', 'f_cheekboneHigh'), SC('cheek', 'Bochechas (fundas ↔ cheias)', 'f_cheekFull', 'f_cheekHollow')] },
   { id: 'nose', label: 'Nariz', controls: [SC('noseW', 'Largura', 'f_noseWide'), SC('noseL', 'Comprimento', 'f_noseLong'), SC('noseB', 'Ponte', 'f_noseBridge')] },
   { id: 'lips', label: 'Lábios', controls: [SC('lips', 'Lábios (finos ↔ cheios)', 'f_lipsFull', 'f_lipsThin')] },
