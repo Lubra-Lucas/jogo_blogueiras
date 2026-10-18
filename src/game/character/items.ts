@@ -43,6 +43,8 @@ export const WEARABLES: Record<string, WearableDef> = {
   },
   // GLBs sem textura (malha lisa): a cor do cabelo vem so do uniforme uHair
   'hair.platinumUndercut': { id: 'hair.platinumUndercut', slot: 'hair', glb: `${A}hair_platinumUndercut.glb`, kind: 'hair', defaultColor: '#e8dcc8', label: 'Undercut platinado', texture: 'own' },
+  // bob ruivo com franja (Meshy -> tools/blender/hair/prepare_bob.py): textura de luminancia propria, tinge como os demais
+  'hair.bobAuburn': { id: 'hair.bobAuburn', slot: 'hair', glb: `${A}hair_bobAuburn.glb`, kind: 'hair', defaultColor: '#854730', label: 'Chanel ruivo com franja', texture: 'own', refLum: 0.0968 },
   'hair.caramelCurls': { id: 'hair.caramelCurls', slot: 'hair', glb: `${A}hair_caramelCurls.glb`, kind: 'hair', defaultColor: '#c08a4e', label: 'Cachos caramelo', texture: 'own' },
 }
 

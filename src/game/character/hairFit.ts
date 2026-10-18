@@ -27,6 +27,7 @@ export const HAIR_CALIB: Record<string, HairCalib> = {
   hair_meshy_updo: { ...IDENTITY },
   hair_chestnutWaves: { ...IDENTITY },
   hair_caramelCurls: { ...IDENTITY },
+  hair_bobAuburn: { ...IDENTITY },
   hair_platinumUndercut: { ...IDENTITY },
 }
 

@@ -6941,6 +6941,34 @@
     "fascinator": 0.0056,
     "big_flower_crown": 0.0044,
     "cat_ears": 0.0023
+   },
+   "hair_bobAuburn": {
+    "tiara": 0.0328,
+    "hair_bow": 0.0192,
+    "star_pins": 0.0205,
+    "pearl_tiara": 0.0328,
+    "queen_crown": 0.0342,
+    "flower_crown": 0.0236,
+    "padded_headband": 0.0223,
+    "pearl_headband": 0.0223,
+    "butterfly_clips": 0.0169,
+    "claw_clip": 0.008,
+    "giant_bow": 0.016,
+    "pearl_veil": 0.0178,
+    "star_diadem": 0.0328,
+    "pearl_hairpins": 0.0194,
+    "head_chain": 0.0223,
+    "sun_hat": 0.0018,
+    "beret": 0.0018,
+    "baseball_cap": 0.0018,
+    "bucket_hat": 0.0018,
+    "fedora": 0.0018,
+    "cowboy_hat": 0.0018,
+    "beanie": 0.0018,
+    "feather_tiara": 0.0236,
+    "fascinator": 0.0236,
+    "big_flower_crown": 0.0236,
+    "cat_ears": 0.0151
    }
   }
  }

@@ -71,6 +71,7 @@ export const OVERRIDES: Record<string, EconomyOverride> = {
   // loja (ajustes finos)
   'hair.platinumUndercut': { brilhos: 780, novo: true },
   'hair.caramelCurls': { brilhos: 640, novo: true },
+  'hair.bobAuburn': { brilhos: 520, novo: true },
   corset: { brilhos: 740 },
   tutu: { brilhos: 620 },
   gloves: { brilhos: 1800 },

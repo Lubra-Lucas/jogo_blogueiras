@@ -34,6 +34,7 @@ MORPH_MAX = {"lipsFull": 1.9, "lipsWide": 3.2, "noseSmall": 4.5, "noseNarrow": 4
              "eyesBig": 2, "browLift": 3.8, "bustBig": 2.2, "bustSmall": 2, "buttBig": 2.2, "buttSmall": 2, "hipsWide": 2.2, "thighsThick": 1.8, "waistThin": 2.2,
              "weightUp": 1.9, "weightDown": 2, "shouldersNarrow": 2.2}
 DRY = OPT.get("dry") == "1"
+MMIN = float(OPT.get("mmin", 0))   # m: zera deltas de morph menores que isso no slider maximo (morphs esparsos = GLB menor)
 SKIP_FACE_DETAIL = ("eyesBig", "noseSmall", "noseNarrow", "lipsFull", "lipsWide", "browLift")
 FACE = ("faceThin", "jawNarrow", "chinPointed", "cheekbonesHigh") + SKIP_FACE_DETAIL
 
@@ -299,6 +300,8 @@ def process(hid):
                 pushed += 1
         Dh = (Tm - P1) / Mx
         Dh = smooth_field(Dh, edges, n, 1)
+        if MMIN > 0:
+            Dh[np.linalg.norm(Dh, axis=1) * Mx < MMIN] = 0.0
         sk = hair.shape_key_add(name=kn, from_mix=False)
         sk.data.foreach_set('co', (loc + Dh @ Minv.T).astype(np.float32).ravel())
         sk.slider_min, sk.slider_max, sk.value = 0.0, 1.0, 0.0

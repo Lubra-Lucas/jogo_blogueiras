@@ -37,6 +37,7 @@ export const ITEM_TAGS: Record<string, ItemTags> = {
   'hair.chestnutWaves': { styles: ['romantico', 'casual'], colors: ['castanho'], formality: 0.5, rarity: 'comum' },
   'hair.platinumUndercut': { styles: ['y2k', 'goth', 'esportivo'], colors: ['platinado'], formality: 0.3, rarity: 'raro' },
   'hair.caramelCurls': { styles: ['romantico', 'praia', 'casual'], colors: ['caramelo'], formality: 0.35, rarity: 'raro' },
+  'hair.bobAuburn': { styles: ['casual', 'romantico', 'y2k'], colors: ['ruivo'], formality: 0.4, rarity: 'raro' },
   // roupas
   corset: { styles: ['romantico', 'y2k', 'goth'], colors: ['rosa', 'dourado'], formality: 0.6, rarity: 'raro' },
   aline: { styles: ['romantico', 'casual'], colors: ['lilas', 'rosa'], formality: 0.45, rarity: 'comum' },

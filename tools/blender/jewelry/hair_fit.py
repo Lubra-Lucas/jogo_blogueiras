@@ -12,7 +12,7 @@ _j = json.load(open(os.path.join(OUT, "jewelry.json"), encoding="utf-8"))
 for _p in _j["pieces"]:      # collection-2 head pieces declare hairMount (Blender-space dir)
     if _p.get("hairMount"): MOUNT[_p["id"]] = tuple(_p["hairMount"])
 fit = {}
-for hair in ("hair_chestnutWaves", "hair_caramelCurls", "hair_platinumUndercut", "hair_meshy_updo"):
+for hair in ("hair_chestnutWaves", "hair_caramelCurls", "hair_platinumUndercut", "hair_meshy_updo", "hair_bobAuburn"):
     pre = set(bpy.data.objects.keys())
     bpy.ops.import_scene.gltf(filepath=os.path.join(REPO, "public", "assets", "characters", hair + ".glb"))
     new = [bpy.data.objects[n] for n in set(bpy.data.objects.keys()) - pre]
