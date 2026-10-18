@@ -1,5 +1,5 @@
 import { Color, MeshPhysicalMaterial, Vector2, Vector4, type IUniform, type Texture, type WebGLProgramParametersWithUniforms } from 'three'
-import { BEARD_CANVAS, BLANK_LAYER, KIT_CANVAS, LINES_CANVAS, MALE_REF, DOLL_REF, kitFor, onKitLoad, type FaceRef, type MaleFace } from './maleFace'
+import { BEARD_CANVAS, BLANK_LAYER, CLASSIC_CANVAS, KIT_CANVAS, LINES_CANVAS, MALE_REF, DOLL_REF, kitFor, onKitLoad, type FaceRef, type MaleFace } from './maleFace'
 
 /**
  * Material do corpo MASCULINO (male_base.glb): pele limpa + boxer por mascara (mesma convencao do dollMaterial.ts:
@@ -46,6 +46,7 @@ export function createMaleMaterial(map: Texture | null, mask: Texture, initial: 
     uSuit: u(new Color('#2a4fa8')),
     uFaceOn: u(1),
     uFaceY: u(new Vector2(faceY[0], faceY[1])),
+    uEyeFull: u(0), uLashFull: u(0), uBrowFull: u(0), uLipFull: u(0), uBlushMode: u(0),
     uRoughSkin: u(0.5),
     uRoughSuit: u(0.55),
     // olho
@@ -84,7 +85,7 @@ export function createMaleMaterial(map: Texture | null, mask: Texture, initial: 
         /* glsl */ `
 varying vec3 vRest; varying vec3 vRestN;
 uniform sampler2D uMask;
-uniform float uFaceOn; uniform vec2 uFaceY; uniform vec3 uHairBody; uniform vec3 uSkin; uniform vec3 uSuit; uniform float uRoughSkin; uniform float uRoughSuit;
+uniform float uFaceOn; uniform vec2 uFaceY; uniform float uEyeFull; uniform float uLashFull; uniform float uBrowFull; uniform float uLipFull; uniform float uBlushMode; uniform vec3 uHairBody; uniform vec3 uSkin; uniform vec3 uSuit; uniform float uRoughSkin; uniform float uRoughSuit;
 uniform vec4 uEyeP; uniform vec2 uEyeSize; uniform sampler2D uSclera; uniform sampler2D uIrisTex; uniform sampler2D uHi; uniform sampler2D uLine; uniform sampler2D uLashTex;
 uniform vec3 uIrisCol; uniform vec3 uLinerCol; uniform vec3 uLashCol; uniform float uLinerAmt; uniform float uLashOn;
 uniform vec4 uBrowP; uniform vec2 uBrowSize; uniform sampler2D uBrowTex; uniform vec3 uBrowCol; uniform float uBrowOp;
@@ -98,6 +99,11 @@ vec4 mfLayer(sampler2D t, vec2 p, vec2 c, vec2 size, float sc, float rot, float 
   float cs = cos(rot); float sn = sin(rot);
   d = vec2(cs * d.x + sn * d.y, -sn * d.x + cs * d.y);
   vec2 uv = d / (size * sc) + 0.5;
+  vec2 inb = step(vec2(0.0), uv) * step(uv, vec2(1.0));
+  return texture2D(t, uv) * (inb.x * inb.y);
+}
+vec4 mfFull(sampler2D t, vec2 p) {
+  vec2 uv = (p - vec2(${CLASSIC_CANVAS.center[0]}, ${CLASSIC_CANVAS.center[1]})) / ${CLASSIC_CANVAS.size} + 0.5;
   vec2 inb = step(vec2(0.0), uv) * step(uv, vec2(1.0));
   return texture2D(t, uv) * (inb.x * inb.y);
 }
@@ -123,8 +129,10 @@ void main() {`,
   float side = vRest.x >= 0.0 ? 1.0 : -1.0;
   float wFace = smoothstep(0.08, 0.35, vRestN.z) * step(uFaceY.x, vRest.y) * step(vRest.y, uFaceY.y) * step(abs(vRest.x), 0.13) * wSkin * uFaceOn;
   // blush (sob tudo)
-  float bl = mfLayer(uBlush, fp, vec2(side * uBlushP.x, uBlushP.y), uBlushSize, uBlushP.z, 0.0, side).a * uBlushAmt * wFace;
+  float bl = mfLayer(uBlush, fp, vec2(side * uBlushP.x, uBlushP.y), uBlushSize, uBlushP.z, 0.0, side).a * uBlushAmt * wFace * (1.0 - uBlushMode);
   base = mix(base, uBlushCol, clamp(bl, 0.0, 1.0) * 0.75);
+  vec4 shT = mfFull(uBlush, fp);
+  base *= mix(vec3(1.0), shT.rgb * 2.0, clamp(uBlushAmt, 0.0, 1.0) * wFace * uBlushMode * shT.a);
   vec2 ec = vec2(side * uEyeP.x, uEyeP.y);
   // olheira (multiplica a pele), linhas de expressao e barba (por baixo dos olhos/labios)
   float bg = mfLayer(uBags, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side).a * uBagsAmt * wFace;
@@ -134,24 +142,24 @@ void main() {`,
   float wBeard = smoothstep(-0.25, 0.2, vRestN.z) * step(1.425, vRest.y) * step(vRest.y, 1.585) * step(abs(vRest.x), 0.10) * wSkin * uFaceOn;
   float bdA = mfLayer(uBeard, fp, vec2(${BEARD_CANVAS.center[0]}, ${BEARD_CANVAS.center[1]}), vec2(${BEARD_CANVAS.size[0]}, ${BEARD_CANVAS.size[1]}), 1.0, 0.0, 1.0).a * uBeardAmt * wBeard;
   base = mix(base, uBeardCol, clamp(bdA, 0.0, 1.0));
-  vec4 sc = mfLayer(uSclera, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side);
+  vec4 sc = mix(mfLayer(uSclera, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side), mfFull(uSclera, fp), uEyeFull);
   base = mix(base, sc.rgb, sc.a * wFace);
   mfEye = sc.a * wFace;
-  vec4 ir = mfLayer(uIrisTex, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side);
+  vec4 ir = mix(mfLayer(uIrisTex, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side), mfFull(uIrisTex, fp), uEyeFull);
   base = mix(base, uIrisCol * ir.rgb * 1.35, ir.a * wFace);
   vec4 hi = mfLayer(uHi, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side);
   base = mix(base, hi.rgb, hi.a * wFace);
   vec4 ln = mfLayer(uLine, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side);
   base = mix(base, uLinerCol, ln.a * uLinerAmt * wFace);
-  vec4 ls = mfLayer(uLashTex, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side);
-  base = mix(base, uLashCol, ls.a * uLashOn * uLinerAmt * wFace);
-  vec4 br = mfLayer(uBrowTex, fp, vec2(side * uBrowP.x, uBrowP.y), uBrowSize, uBrowP.z, uBrowP.w, side);
-  base = mix(base, uBrowCol * (0.55 + 0.45 * br.r), br.a * uBrowOp * wFace);
-  vec4 lp = mfLayer(uLipsTex, fp, vec2(uMouthP.x, uMouthP.y), uMouthSize, uMouthP.z, 0.0, 1.0);
-  base = mix(base, uLipCol * lp.rgb * 1.25, lp.a * uLipOp * wFace);
+  vec4 ls = mix(mfLayer(uLashTex, fp, ec, uEyeSize, uEyeP.z, uEyeP.w, side), mfFull(uLashTex, fp), uLashFull);
+  base = mix(base, mix(uLashCol, ls.rgb, uLashFull), ls.a * uLashOn * mix(uLinerAmt, 1.0, uLashFull) * wFace);
+  vec4 br = mix(mfLayer(uBrowTex, fp, vec2(side * uBrowP.x, uBrowP.y), uBrowSize, uBrowP.z, uBrowP.w, side), mfFull(uBrowTex, fp), uBrowFull);
+  base = mix(base, mix(uBrowCol * (0.55 + 0.45 * br.r), uBrowCol * br.rgb * 1.35, uBrowFull), br.a * uBrowOp * wFace);
+  vec4 lp = mix(mfLayer(uLipsTex, fp, vec2(uMouthP.x, uMouthP.y), uMouthSize, uMouthP.z, 0.0, 1.0), mfFull(uLipsTex, fp), uLipFull);
+  base = mix(base, uLipCol * lp.rgb * mix(1.25, 1.35, uLipFull), lp.a * uLipOp * wFace);
   vec4 gl = mfLayer(uGloss, fp, vec2(uMouthP.x, uMouthP.y), uMouthSize, uMouthP.z, 0.0, 1.0);
   base = mix(base, vec3(1.0), clamp(gl.a * uGlossAmt * wFace, 0.0, 1.0) * 0.85);
-  mfGloss = gl.a * uGlossAmt * wFace;
+  mfGloss = max(gl.a * uGlossAmt * wFace, lp.a * uLipFull * uGlossAmt * wFace);
   diffuseColor.rgb *= base;
 #endif`,
       )
@@ -173,7 +181,7 @@ roughnessFactor = mix(roughnessFactor, 0.12, clamp(mfGloss * 1.4, 0.0, 1.0));`,
 #endif`,
       )
   }
-  material.customProgramCacheKey = () => opts.doll ? 'doll-layers-v1' : 'male-body-v2'
+  material.customProgramCacheKey = () => opts.doll ? 'doll-layers-v2' : 'male-body-v3'
 
   let current = initial
   const setFace = (f: MaleFace) => {
@@ -183,6 +191,11 @@ roughnessFactor = mix(roughnessFactor, 0.12, clamp(mfGloss * 1.4, 0.0, 1.0));`,
     uniforms.uLashTex.value = k.lash ?? k.line
     uniforms.uLashOn.value = k.lash ? 1 : 0
     uniforms.uBrowTex.value = k.brow; uniforms.uLipsTex.value = k.lips; uniforms.uGloss.value = k.gloss; uniforms.uBlush.value = k.blush
+    uniforms.uEyeFull.value = f.eye.style === 'classic' ? 1 : 0
+    uniforms.uLashFull.value = f.eye.lash === 'classic' ? 1 : 0
+    uniforms.uBrowFull.value = f.brow.style === 'classic' ? 1 : 0
+    uniforms.uLipFull.value = f.mouth.style === 'classic' ? 1 : 0
+    uniforms.uBlushMode.value = f.blush.shade ? 1 : 0
     const e = f.eye
     ;(uniforms.uEyeP.value as Vector4).set(ref.eyeX + e.gap, ref.eyeY + e.y, e.scale, (e.tilt * Math.PI) / 180)
     ;(uniforms.uIrisCol.value as Color).set(e.iris); (uniforms.uLinerCol.value as Color).set(e.liner); (uniforms.uLashCol.value as Color).set(e.lashColor)
@@ -212,7 +225,11 @@ roughnessFactor = mix(roughnessFactor, 0.12, clamp(mfGloss * 1.4, 0.0, 1.0));`,
 /** Corpo da boneca com o rosto por camadas, no formato de `DollBodyMaterial` (dollMaterial.ts): `uniforms` e um Proxy que aceita as chaves da
  *  boneca original (applyBodyLook/setMakeupTextures escrevem nelas e nada acontece) e usa as reais (uSkin) quando existem. */
 export function createDollLayersMaterial(map: Texture | null, normalMap: Texture | null, mask: Texture, face: MaleFace) {
-  const m = createMaleMaterial(map, mask, face, { ref: DOLL_REF, faceY: [1.2, 1.56], normalMap, doll: true })
+  // a boca da boneca e ESCULPIDA: a camada de boca e sempre so a tinta sobre os labios (estilo 'classic'); fina/cheia vem dos morphs f_lips*
+  const forceLips = (f: MaleFace): MaleFace => ({ ...f, mouth: { ...f.mouth, style: 'classic' } })
+  const m = createMaleMaterial(map, mask, forceLips(face), { ref: DOLL_REF, faceY: [1.2, 1.56], normalMap, doll: true })
+  const setFace0 = m.setFace
+  m.setFace = (f: MaleFace) => setFace0(forceLips(f))
   const dummy: Record<string, IUniform> = {}
   const uniforms = new Proxy(m.uniforms, {
     get(t, k: string) {

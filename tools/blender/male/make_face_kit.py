@@ -68,10 +68,10 @@ EYES = {
                     liner=0.0013, flick=0.0, hi=1, shadow=0.55, caruncle=1),
     "almond": dict(label="Amendoado", a=0.0172, hu=0.0074, hl=0.0046, kin=0.78, kl=1.2, pu=0.85, pl=1.0, lift=0.0022, ir=0.0066, iy=0.0003, ix=0.0,
                    liner=0.0016, flick=0.0028, hi=1, shadow=0.6, caruncle=1),
-    "doll": dict(label="Boneca (grande)", a=0.0178, hu=0.0178, hl=0.0138, kin=0.95, kl=1.0, pu=0.62, pl=0.65, lift=0.0005, ir=0.0145, iy=-0.0004, ix=0.0,
+    "doll": dict(label="Boneca (grande)", a=0.0178, hu=0.0150, hl=0.0110, kin=0.95, kl=1.0, pu=0.62, pl=0.65, lift=0.0005, ir=0.0132, iy=-0.0016, ix=0.0,
                  liner=0.0030, flick=0.0045, hi=2, shadow=0.35, caruncle=1),
     # "boneca pintada": olho muito grande da boneca feminina (iris azul grande, delineado preto grosso com rabinho, canto externo elevado)
-    "dolla": dict(label="Boneca pintada", a=0.0285, hu=0.0185, hl=0.0122, kin=0.86, kl=1.0, pu=0.70, pl=0.80, lift=0.0075, ir=0.0158, iy=-0.0052, ix=-0.0015,
+    "dolla": dict(label="Boneca pintada", a=0.0285, hu=0.0172, hl=0.0100, kin=0.86, kl=1.0, pu=0.70, pl=0.80, lift=0.0075, ir=0.0150, iy=-0.0078, ix=-0.0015,
                   liner=0.0064, flick=0.0060, hi=1, shadow=0.30, caruncle=1, glow=0.35, pup=0.36, hir=0.15),
 }
 

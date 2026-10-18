@@ -8,10 +8,10 @@ import { Color, DataTexture, LinearMipmapLinearFilter, NoColorSpace, SRGBColorSp
  * Posicoes sao DESLOCAMENTOS (metros) a partir dos pontos de referencia do modelo (`FACE_REF`).
  */
 
-export type EyeStyle = 'natural' | 'almond' | 'doll' | 'dolla'
-export type LashStyle = 'none' | 'natural' | 'doll' | 'dolla'
-export type BrowStyle = 'thick' | 'arched' | 'thin' | 'soft'
-export type MouthStyle = 'natural' | 'thin' | 'doll' | 'dollg'
+export type EyeStyle = 'natural' | 'almond' | 'doll' | 'dolla' | 'classic'
+export type LashStyle = 'none' | 'natural' | 'doll' | 'dolla' | 'classic'
+export type BrowStyle = 'thick' | 'arched' | 'thin' | 'soft' | 'classic'
+export type MouthStyle = 'natural' | 'thin' | 'doll' | 'dollg' | 'classic'
 export type BeardStyle = 'none' | 'stubble' | 'mustache' | 'goatee' | 'full'
 
 export const EYE_STYLES: Array<{ id: EyeStyle; label: string }> = [
@@ -19,24 +19,28 @@ export const EYE_STYLES: Array<{ id: EyeStyle; label: string }> = [
   { id: 'almond', label: 'Amendoado' },
   { id: 'doll', label: 'Boneca (grande)' },
   { id: 'dolla', label: 'Boneca pintada' },
+  { id: 'classic', label: 'Classico (pintura original)' },
 ]
 export const LASH_STYLES: Array<{ id: LashStyle; label: string }> = [
   { id: 'none', label: 'Sem cilios' },
   { id: 'natural', label: 'Natural' },
   { id: 'doll', label: 'Boneca (volumosos)' },
   { id: 'dolla', label: 'Boneca pintada (pretos)' },
+  { id: 'classic', label: 'Classicos (tufos)' },
 ]
 export const BROW_STYLES: Array<{ id: BrowStyle; label: string }> = [
   { id: 'thick', label: 'Reta grossa' },
   { id: 'arched', label: 'Arqueada' },
   { id: 'thin', label: 'Fina natural' },
   { id: 'soft', label: 'Macia (boneca)' },
+  { id: 'classic', label: 'Classica (pintura original)' },
 ]
 export const MOUTH_STYLES: Array<{ id: MouthStyle; label: string }> = [
   { id: 'natural', label: 'Natural masculina' },
   { id: 'thin', label: 'Fina' },
   { id: 'doll', label: 'Boneca glossy' },
   { id: 'dollg', label: 'Boneca cheia glossy' },
+  { id: 'classic', label: 'Tinta sobre os labios esculpidos' },
 ]
 
 export const BEARD_STYLES: Array<{ id: BeardStyle; label: string }> = [
@@ -68,7 +72,8 @@ export interface MaleFace {
   }
   brow: { style: BrowStyle; color: string; scale: number; gap: number; y: number; tilt: number; opacity: number }
   mouth: { style: MouthStyle; color: string; gloss: number; scale: number; y: number; opacity: number }
-  blush: { amount: number; color: string; scale: number; gap: number; y: number }
+  /** shade: usa o "sombreado da pele" extraido da pintura original (blush, bochechas, testa, rosado dos olhos) em vez do blush simples */
+  blush: { amount: number; color: string; scale: number; gap: number; y: number; shade?: boolean }
   /** barba: cor tingivel + densidade (0..1) */
   beard: { style: BeardStyle; color: string; amount: number }
   /** olheira e linhas de expressao leves (0..1) */
@@ -79,6 +84,9 @@ export interface MaleFace {
 export interface FaceRef { eyeX: number; eyeY: number; browY: number; browX: number; mouthY: number; noseY: number; chinY: number; blushX: number; blushY: number }
 export const MALE_REF: FaceRef = { eyeX: 0.0485, eyeY: 1.5827, browY: 1.609, browX: 0.0545, mouthY: 1.5019, noseY: 1.5423, chinY: 1.4552, blushX: 0.058, blushY: 1.5527 }
 /** Boneca feminina (doll_layers.glb): medidas da pintura original (projecao frontal do atlas). */
+/** Camada "classica": projecao frontal inteira (1024 px = 0,22 m) centrada neste ponto; cores medias da pintura original (classic_defaults.json). */
+export const CLASSIC_CANVAS = { center: [0, 1.39], size: 0.22 } as const
+export const CLASSIC_DEFAULTS = { iris: '#799aad', brow: '#a68672', lips: '#e68288' } as const
 export const DOLL_REF: FaceRef = { eyeX: 0.0585, eyeY: 1.390, browY: 1.434, browX: 0.0560, mouthY: 1.318, noseY: 1.352, chinY: 1.272, blushX: 0.0702, blushY: 1.352 }
 export const FACE_REF = MALE_REF
 
@@ -113,6 +121,8 @@ type DeepPartial<T> = { [K in keyof T]?: Partial<T[K]> }
 // ------------------------------------------------------------------ texturas do kit
 const BASE = import.meta.env.BASE_URL
 export const FACE_KIT_URL = `${BASE}assets/characters/male/face/`
+/** `?kv=<n>` forca recarregar o kit (usado nas capturas: o navegador headless guarda cache das PNGs) */
+const KV = new URLSearchParams(window.location.search).get('kv') ?? ''
 const loader = new TextureLoader()
 const cache = new Map<string, Texture>()
 /** textura transparente usada enquanto a imagem do kit nao chegou (senao o shader veria preto opaco) */
@@ -129,7 +139,7 @@ export function onKitLoad(fn: () => void) {
 export function kitTexture(file: string, color = false): Texture {
   let t = cache.get(file)
   if (!t) {
-    t = loader.load(`${FACE_KIT_URL}${file}.png`, () => listeners.forEach((f) => f()))
+    t = loader.load(`${FACE_KIT_URL}${file}.png${KV ? `?v=${KV}` : ''}`, () => listeners.forEach((f) => f()))
     t.colorSpace = color ? SRGBColorSpace : NoColorSpace
     t.anisotropy = 8
     t.minFilter = LinearMipmapLinearFilter
@@ -156,16 +166,17 @@ export interface KitTextures {
 
 export function kitFor(f: MaleFace): KitTextures {
   const e = f.eye.style
+  const l = f.eye.lash
   return {
     sclera: kitTexture(`eye_${e}_sclera`, true),
     iris: kitTexture(`eye_${e}_iris`),
     hi: kitTexture(`eye_${e}_hi`, true),
     line: kitTexture(`eye_${e}_line`),
-    lash: f.eye.lash === 'none' ? null : kitTexture(`lash_${f.eye.lash}_${e}`),
+    lash: l === 'none' ? null : l === 'classic' ? kitTexture('lash_classic', true) : kitTexture(`lash_${l}_${e === 'classic' ? 'natural' : e}`),
     brow: kitTexture(`brow_${f.brow.style}`),
     lips: kitTexture(`mouth_${f.mouth.style}_lips`),
     gloss: kitTexture(`mouth_${f.mouth.style}_gloss`, true),
-    blush: kitTexture('blush'),
+    blush: f.blush.shade ? kitTexture('classic_shade') : kitTexture('blush'),
     beard: f.beard.style === 'none' ? null : kitTexture(`beard_${f.beard.style}`),
     bags: kitTexture('eye_bags'),
     lines: kitTexture('lines'),

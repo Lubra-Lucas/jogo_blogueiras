@@ -306,12 +306,12 @@ export function MaleTest() {
       </>
     )
   } else if (scene === 'dswap') {
-    const eyes = [['natural', 1.9], ['almond', 1.75], ['doll', 1.35], ['dolla', 1.0]] as const
+    const eyes = [['classic', 1], ['natural', 1.9], ['almond', 1.75], ['doll', 1.35]] as const
     content = (
       <>
         <Cam target={[0, 1.43, 0]} dist={Number(Q.get('cam')) || 5} fov={Number(Q.get('fov')) || 10} />
         {eyes.map(([st, sc], i) => (
-          <DollNew key={st} x={(i - 1.5) * 0.4} yaw={yaw34} look={{ ...DOLL_REPLICA, name: st, face: mergeFace(DOLL_REPLICA.face, { eye: { style: st, scale: sc, lash: st === 'natural' || st === 'almond' ? 'natural' : st === 'doll' ? 'doll' : 'dolla' } }) }} />
+          <DollNew key={st} x={(i - 1.5) * 0.4} yaw={yaw34} look={{ ...DOLL_REPLICA, name: st, face: mergeFace(DOLL_REPLICA.face, { eye: { style: st, scale: sc, lash: st === 'classic' ? 'classic' : st === 'doll' ? 'doll' : 'natural' } }) }} />
         ))}
       </>
     )

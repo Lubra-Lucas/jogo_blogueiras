@@ -2,7 +2,7 @@
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-S = r"C:\Users\user\AppData\Local\Temp\claude\shots\boneca_camadas"
+S = r"C:\Users\user\AppData\Local\Temp\claude\shots\boneca_camadas2"
 SIX = ["Classica (reproduz a pintura)", "Natural", "Amendoada", "Doce", "Marcante", "Redonda suave"]
 
 
@@ -49,10 +49,8 @@ def grid(ims, cols, labels, out, tile=620):
 
 
 if __name__ == "__main__":
-    t = "(1) boneca ANTIGA (pintada)   |   (2) boneca NOVA (camadas)   |   (3) masculino novo (Quadrado, raspado)"
-    stack([crop("c_cmp_front"), crop("c_cmp_q34")], "01_comparativo_3.png", [t + "  - frente", "3/4"])
-    c = crop("c_body"); c.save(os.path.join(S, "02_comparativo_corpo.png")); print("02_comparativo_corpo.png", c.size)
-    stack([crop("c_swap_front"), crop("c_swap_q34")], "03_troca_olhos_boneca.png", ["Boneca nova, o mesmo rosto, 4 olhos: natural | amendoado | boneca | boneca pintada (frente)", "3/4"])
-    grid([crop(f"c_six_{i}_front") for i in range(6)], 3, [f"{n} (frente)" for n in SIX], "04_seis_femininos.png")
-    grid([crop(f"c_six_{i}_q34") for i in range(6)], 3, [f"{n} (3/4)" for n in SIX], "04b_seis_femininos_34.png")
-    stack([crop("c_eyes_a"), crop("c_eyes_b"), crop("c_eyes_c")], "05_regiao_olhos.png", ["Olhos da boneca nova: 3/4 esquerda", "3/4 direita", "quase de perfil (relevo antigo nao aparece)"])
+    t = "(1) ANTIGA   |   (2) NOVA Classica (camadas extraidas da pintura)   |   (3) masculino"
+    stack([crop("c_cmp_front"), crop("c_cmp_q34")], "01_comparativo_3.png", [t + " - frente", "3/4"])
+    stack([crop("c_zoomf")], "01b_antiga_x_classica_zoom.png", ["Zoom: antiga (esq.) x Classica nova (centro)"])
+    stack([crop("c_swap_front")], "03_troca_olhos.png", ["Classica com 4 olhos: classico | natural | amendoado | boneca"])
+    grid([crop(f"c_six_{i}") for i in range(6)], 3, SIX, "04_seis_femininos.png")

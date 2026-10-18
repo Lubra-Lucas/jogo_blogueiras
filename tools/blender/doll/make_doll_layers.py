@@ -85,6 +85,7 @@ def to_img(a): return Image.fromarray((np.clip(a, 0, 1) * 255 + .5).astype(np.ui
 
 
 # ------------------------------------------------------------------ morphs femininos de formato do rosto
+MORPH_GAIN = 1.75      # amplitude dos morphs femininos (primeira versao: 1.0 = pouco visivel)
 TARGET_MM = {"f_jawWide": 9, "f_jawSoft": 7, "f_chinWide": 8, "f_chinPointed": 8, "f_cheekFull": 8, "f_cheekHollow": 6,
              "f_noseWide": 5, "f_noseNarrow": 4, "f_lipsFull": 5, "f_lipsThin": 3, "f_faceLong": 10, "f_faceShort": 9}
 LABELS = {"f_jawWide": "Mandibula larga", "f_jawSoft": "Mandibula suave", "f_chinWide": "Queixo largo", "f_chinPointed": "Queixo pontudo",
@@ -131,7 +132,7 @@ def face_morphs(P, N, IDX):
     for k in list(out):
         out[k] = sm(out[k], 2)
         pk = np.linalg.norm(out[k], axis=1).max()
-        if pk > 1e-9: out[k] = out[k] * (TARGET_MM[k] / 1000.0 / pk)
+        if pk > 1e-9: out[k] = out[k] * (TARGET_MM[k] * MORPH_GAIN / 1000.0 / pk)
     return {k: v[inv] for k, v in out.items()}
 
 
