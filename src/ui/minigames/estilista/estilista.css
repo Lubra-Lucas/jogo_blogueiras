@@ -322,3 +322,12 @@
 @media (prefers-reduced-motion: reduce) {
   .es-root *, .es-root *::before, .es-root *::after { animation-duration: 0.01ms !important; }
 }
+
+/* competicao ao vivo: looks de cada participante por cliente */
+.es-tabs { flex-wrap: wrap; border-radius: 18px; }
+.es-tabs button { min-height: 34px; padding: 0 10px; font-size: 0.78rem; }
+.es-vs-stage { height: 260px; border-radius: 14px; overflow: hidden; background: var(--paper-2); }
+.es-vs-names { margin: 6px 0 0; padding: 0; list-style: none; display: flex; justify-content: center; gap: 8px; }
+.es-vs-names li { flex: 1; max-width: 120px; text-align: center; font-size: 0.8rem; padding: 4px 6px; border-radius: 10px; }
+.es-vs-names li.you { background: var(--ink); color: #fff; }
+.es-vs-names b, .es-vs-names em { display: block; font-style: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

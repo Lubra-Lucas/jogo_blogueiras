@@ -42,10 +42,12 @@ interface State {
   summary: RoundSummary | null
   /** XP da profissão no início da rodada (define estoque e VIP) */
   xp0: number
+  /** rodada de competicao ao vivo: mesmas clientes para todas, sem ranking do dia */
+  match: boolean
 
   setDifficulty: (d: Difficulty) => void
   setMode: (m: Mode) => void
-  start: () => void
+  start: (m?: { difficulty: Difficulty; seed: number; vip: boolean }) => void
   beginStyling: () => void
   ask: (q: QuestionId) => void
   patchLook: (p: Partial<Look>) => void
@@ -90,15 +92,17 @@ export const useEstilistaStore = create<State>()((set, get) => ({
   results: [],
   summary: null,
   xp0: 0,
+  match: false,
 
   setDifficulty: (difficulty) => set({ difficulty }),
   setMode: (mode) => set({ mode }),
-  start: () => {
-    const { difficulty, mode } = get()
+  start: (m) => {
+    const { mode } = get()
+    const difficulty = m?.difficulty ?? get().difficulty
     const xp0 = getProfessionXp('Estilista')
-    const seed = mode === 'daily' ? dailySeed(`estilista:${difficulty}`) : (Math.random() * 4294967296) >>> 0
-    const clients = makeClients(seed, difficulty, tierOf(xp0) >= VIP_TIER)
-    set({ phase: 'brief', clients, idx: 0, look: clients[0].look0, asked: null, combo: 0, results: [], summary: null, xp0, pausedLeft: null })
+    const seed = m ? m.seed : mode === 'daily' ? dailySeed(`estilista:${difficulty}`) : (Math.random() * 4294967296) >>> 0
+    const clients = makeClients(seed, difficulty, m ? m.vip : tierOf(xp0) >= VIP_TIER)
+    set({ phase: 'brief', difficulty, match: !!m, clients, idx: 0, look: clients[0].look0, asked: null, combo: 0, results: [], summary: null, xp0, pausedLeft: null })
   },
   beginStyling: () => {
     const c = get().clients[get().idx]
@@ -144,7 +148,7 @@ export const useEstilistaStore = create<State>()((set, get) => ({
     let board: Entry[] | null = null
     let rank = 0
     let newBest = false
-    if (s.mode === 'daily') {
+    if (s.mode === 'daily' && !s.match) {
       const name = useProfileStore.getState().name
       const r = submitScore('estilista', s.difficulty, st.points, TYPICAL_POINTS[s.difficulty], name)
       board = r.board
@@ -156,5 +160,5 @@ export const useEstilistaStore = create<State>()((set, get) => ({
       summary: { ...st, rewards, board, rank, newBest, unlocked, tierUp: tierOf(s.xp0 + rewards.professionXp) > tierOf(s.xp0) },
     })
   },
-  reset: () => set({ phase: 'intro', summary: null, results: [], clients: [], idx: 0, asked: null, combo: 0, pausedLeft: null }),
+  reset: () => set({ phase: 'intro', match: false, summary: null, results: [], clients: [], idx: 0, asked: null, combo: 0, pausedLeft: null }),
 }))

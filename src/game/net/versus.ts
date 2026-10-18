@@ -29,6 +29,15 @@ export const useVersusStore = create<{
   scores: Record<string, VersusScore>
 }>()(() => ({ gameId: null, lobby: [], match: null, scores: {} }))
 
+/** carga extra do placar final: so se couber em 16000 caracteres de JSON */
+const validData = (d: unknown) => {
+  try {
+    return d !== undefined && JSON.stringify(d).length <= 16000
+  } catch {
+    return false
+  }
+}
+
 export const versusAvailable = () => !OFFLINE && currentCharId() !== null
 
 let ch: RealtimeChannel | null = null
@@ -74,12 +83,12 @@ export function joinLobby(gameId: string) {
   })
 
   c.on('broadcast', { event: 'score' }, ({ payload }) => {
-    const { s: sender, matchId, score, detail, done } = payload ?? {}
+    const { s: sender, matchId, score, detail, done, data } = payload ?? {}
     const match = useVersusStore.getState().match
     const player = match?.players.find((p) => p.id === sender)
     if (!match || !player || matchId !== match.id || typeof score !== 'number' || !Number.isFinite(score) || score < 0 || typeof detail !== 'string') return
     useVersusStore.setState((st) => ({
-      scores: { ...st.scores, [player.id]: { name: player.name, score, detail: detail.slice(0, 40), done: done === true } },
+      scores: { ...st.scores, [player.id]: { name: player.name, score, detail: detail.slice(0, 40), done: done === true, ...(done === true && validData(data) ? { data } : {}) } },
     }))
   })
 
@@ -101,9 +110,9 @@ export function startMatch(config: unknown) {
   })
 }
 
-export function reportScore(score: number, detail: string, done: boolean) {
+export function reportScore(score: number, detail: string, done: boolean, data?: unknown) {
   const match = useVersusStore.getState().match
-  if (match) void ch?.send({ type: 'broadcast', event: 'score', payload: { s: me, matchId: match.id, score, detail, done } })
+  if (match) void ch?.send({ type: 'broadcast', event: 'score', payload: { s: me, matchId: match.id, score, detail, done, ...(validData(data) ? { data } : {}) } })
 }
 
 export function endMatch() {
