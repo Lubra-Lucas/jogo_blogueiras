@@ -29,6 +29,10 @@
     {
       "id": "doll",
       "label": "Boneca (grande)"
+    },
+    {
+      "id": "dolla",
+      "label": "Boneca pintada"
     }
   ],
   "lashes": [
@@ -43,6 +47,10 @@
     {
       "id": "doll",
       "label": "Boneca (volumosos)"
+    },
+    {
+      "id": "dolla",
+      "label": "Boneca pintada (pretos)"
     }
   ],
   "brows": [
@@ -57,6 +65,10 @@
     {
       "id": "thin",
       "label": "Fina natural"
+    },
+    {
+      "id": "soft",
+      "label": "Macia (boneca)"
     }
   ],
   "mouths": [
@@ -71,6 +83,10 @@
     {
       "id": "doll",
       "label": "Boneca glossy"
+    },
+    {
+      "id": "dollg",
+      "label": "Boneca cheia glossy"
     }
   ],
   "files": "eye_<id>_{sclera,iris,hi,line}.png, lash_<lash>_<eye>.png, brow_<id>.png, mouth_<id>_{lips,gloss}.png, blush.png",

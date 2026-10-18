@@ -8,31 +8,35 @@ import { Color, DataTexture, LinearMipmapLinearFilter, NoColorSpace, SRGBColorSp
  * Posicoes sao DESLOCAMENTOS (metros) a partir dos pontos de referencia do modelo (`FACE_REF`).
  */
 
-export type EyeStyle = 'natural' | 'almond' | 'doll'
-export type LashStyle = 'none' | 'natural' | 'doll'
-export type BrowStyle = 'thick' | 'arched' | 'thin'
-export type MouthStyle = 'natural' | 'thin' | 'doll'
+export type EyeStyle = 'natural' | 'almond' | 'doll' | 'dolla'
+export type LashStyle = 'none' | 'natural' | 'doll' | 'dolla'
+export type BrowStyle = 'thick' | 'arched' | 'thin' | 'soft'
+export type MouthStyle = 'natural' | 'thin' | 'doll' | 'dollg'
 export type BeardStyle = 'none' | 'stubble' | 'mustache' | 'goatee' | 'full'
 
 export const EYE_STYLES: Array<{ id: EyeStyle; label: string }> = [
   { id: 'natural', label: 'Natural' },
   { id: 'almond', label: 'Amendoado' },
   { id: 'doll', label: 'Boneca (grande)' },
+  { id: 'dolla', label: 'Boneca pintada' },
 ]
 export const LASH_STYLES: Array<{ id: LashStyle; label: string }> = [
   { id: 'none', label: 'Sem cilios' },
   { id: 'natural', label: 'Natural' },
   { id: 'doll', label: 'Boneca (volumosos)' },
+  { id: 'dolla', label: 'Boneca pintada (pretos)' },
 ]
 export const BROW_STYLES: Array<{ id: BrowStyle; label: string }> = [
   { id: 'thick', label: 'Reta grossa' },
   { id: 'arched', label: 'Arqueada' },
   { id: 'thin', label: 'Fina natural' },
+  { id: 'soft', label: 'Macia (boneca)' },
 ]
 export const MOUTH_STYLES: Array<{ id: MouthStyle; label: string }> = [
   { id: 'natural', label: 'Natural masculina' },
   { id: 'thin', label: 'Fina' },
   { id: 'doll', label: 'Boneca glossy' },
+  { id: 'dollg', label: 'Boneca cheia glossy' },
 ]
 
 export const BEARD_STYLES: Array<{ id: BeardStyle; label: string }> = [
@@ -71,8 +75,12 @@ export interface MaleFace {
   detail: { bags: number; lines: number }
 }
 
-/** Pontos de referencia do modelo (m, espaco de repouso, y para cima): male_base.json -> face. */
-export const FACE_REF = { eyeX: 0.0485, eyeY: 1.5827, browY: 1.609, browX: 0.0545, mouthY: 1.5019, noseY: 1.5423, chinY: 1.4552 }
+/** Pontos de referencia de um modelo (m, espaco de repouso, y para cima). Cada modelo (masculino, boneca) tem os seus. */
+export interface FaceRef { eyeX: number; eyeY: number; browY: number; browX: number; mouthY: number; noseY: number; chinY: number; blushX: number; blushY: number }
+export const MALE_REF: FaceRef = { eyeX: 0.0485, eyeY: 1.5827, browY: 1.609, browX: 0.0545, mouthY: 1.5019, noseY: 1.5423, chinY: 1.4552, blushX: 0.058, blushY: 1.5527 }
+/** Boneca feminina (doll_layers.glb): medidas da pintura original (projecao frontal do atlas). */
+export const DOLL_REF: FaceRef = { eyeX: 0.0585, eyeY: 1.390, browY: 1.434, browX: 0.0560, mouthY: 1.318, noseY: 1.352, chinY: 1.272, blushX: 0.0702, blushY: 1.352 }
+export const FACE_REF = MALE_REF
 
 /** Camadas de rosto inteiro (coordenadas absolutas do espaco de repouso): tamanho e centro. */
 export const BEARD_CANVAS = { size: [0.2, 0.17], center: [0, 1.495] } as const

@@ -70,6 +70,9 @@ EYES = {
                    liner=0.0016, flick=0.0028, hi=1, shadow=0.6, caruncle=1),
     "doll": dict(label="Boneca (grande)", a=0.0178, hu=0.0178, hl=0.0138, kin=0.95, kl=1.0, pu=0.62, pl=0.65, lift=0.0005, ir=0.0145, iy=-0.0004, ix=0.0,
                  liner=0.0030, flick=0.0045, hi=2, shadow=0.35, caruncle=1),
+    # "boneca pintada": olho muito grande da boneca feminina (iris azul grande, delineado preto grosso com rabinho, canto externo elevado)
+    "dolla": dict(label="Boneca pintada", a=0.0285, hu=0.0185, hl=0.0122, kin=0.86, kl=1.0, pu=0.70, pl=0.80, lift=0.0075, ir=0.0158, iy=-0.0052, ix=-0.0015,
+                  liner=0.0064, flick=0.0060, hi=1, shadow=0.30, caruncle=1, glow=0.35, pup=0.36, hir=0.15),
 }
 
 
@@ -107,7 +110,8 @@ def draw_eye(name, s):
     ang = np.arctan2(yy - py, xx - px)
     rays = 0.5 + 0.5 * np.sin(ang * 46 + np.sin(ang * 7) * 2)
     val = 0.95 - 0.55 * np.clip((rr - 0.6) / 0.4, 0, 1) ** 1.6 + 0.15 * rays * np.clip(1 - rr, 0, 1)
-    val = np.where(rr < (0.40 if s['ir'] < 0.01 else 0.34), 0.04, val)                      # pupila
+    val = val + s.get('glow', 0.0) * np.clip(-(yy - py) / cv.m(r), 0, 1) * np.clip(1 - rr, 0, 1)
+    val = np.where(rr < s.get('pup', 0.40 if s['ir'] < 0.01 else 0.34), 0.04, val)                      # pupila
     val = np.clip(val, 0, 1)
     g = Image.fromarray((val * 255).astype(np.uint8), "L")
     a_ir = Image.fromarray(((rr <= 1.0) * 255).astype(np.uint8), "L").filter(ImageFilter.GaussianBlur(cv.m(0.00018)))
@@ -120,7 +124,7 @@ def draw_eye(name, s):
     # --- brilho (fixo, branco): 1 ou 2 reflexos
     hi = cv.new(0); dh = ImageDraw.Draw(hi)
     hx, hy = cx + r * 0.38, cy + r * 0.40
-    hr = r * (0.20 if s["hi"] == 1 else 0.26)
+    hr = r * s.get('hir', 0.20 if s["hi"] == 1 else 0.26)
     px, py = cv.p(hx, hy); dh.ellipse([px - cv.m(hr), py - cv.m(hr), px + cv.m(hr), py + cv.m(hr)], fill=255)
     if s["hi"] >= 2:
         hx2, hy2, hr2 = cx - r * 0.42, cy - r * 0.42, r * 0.11
@@ -152,10 +156,10 @@ def draw_eye(name, s):
     ln = ImageChops.lighter(ln, cv.blur(cr, 0.0003))
     cv.save(f"eye_{name}_line", ln)
     # --- cilios (um PNG por estilo de cilio, alinhado a este olho)
-    for ls in ("natural", "doll"):
+    for ls in ("natural", "doll", "dolla"):
         la = cv.new(0); dla = ImageDraw.Draw(la)
-        nl = 14 if ls == "natural" else 26
-        t0, t1 = (0.12, 1.0) if ls == "natural" else (0.05, 1.04)
+        nl = 14 if ls == "natural" else (26 if ls == "doll" else 52)
+        t0, t1 = (0.12, 1.0) if ls == "natural" else ((0.05, 1.04) if ls == "doll" else (0.02, 1.06))
         rng = np.random.RandomState(7 if ls == "natural" else 11)
         for i in range(nl):
             t = t0 + (t1 - t0) * i / (nl - 1)
@@ -169,17 +173,24 @@ def draw_eye(name, s):
             out = 0.35 + 0.9 * t                                  # inclina para fora
             ang = math.atan2(ny, nx) - out * 0.55 * (1 if True else -1)
             if ls == "natural": ln_ = (0.0030 + 0.0035 * math.sin(math.pi * min(t, 1) * 0.85)) * (0.85 + 0.3 * rng.rand()); th = 0.00042
-            else: ln_ = (0.0042 + 0.0060 * math.sin(math.pi * min(t, 1) * 0.8) ** 0.9 + 0.002 * t) * (0.85 + 0.3 * rng.rand()); th = 0.00075
+            elif ls == "doll": ln_ = (0.0042 + 0.0060 * math.sin(math.pi * min(t, 1) * 0.8) ** 0.9 + 0.002 * t) * (0.85 + 0.3 * rng.rand()); th = 0.00075
+            else: ln_ = (0.0060 + 0.0090 * math.sin(math.pi * min(t, 1) * 0.75) ** 0.9 + 0.0065 * t ** 2) * (0.8 + 0.4 * rng.rand()); th = 0.0024
             pts_ = []
             for k in range(7):                                    # curva com curvatura para cima
                 u = k / 6
-                a_ = ang + u * (0.55 if ls == "doll" else 0.35)
+                a_ = ang + u * (0.55 if ls in ("doll", "dolla") else 0.35)
                 px_ = bx + math.cos(ang) * ln_ * u + (math.cos(a_ + 1.2) * 0.12 * ln_ * u * u)
                 py_ = by + math.sin(ang) * ln_ * u + (math.sin(a_ + 1.2) * 0.12 * ln_ * u * u)
                 pts_.append(cv.p(px_, py_))
             for k in range(6):
                 wk = max(1, int(cv.m(th * (1 - 0.8 * k / 6))))
                 dla.line([pts_[k], pts_[k + 1]], fill=255, width=wk)
+        if ls == "dolla":                                         # cilios inferiores finos (castanho-escuros), so no 70% externo
+            for i in range(22):
+                t = 0.18 + 0.82 * i / 21; idx = int(t * (len(x) - 1))
+                bx, by = x[idx], lo[idx]
+                L_ = 0.0042 + 0.0028 * math.sin(math.pi * t)
+                dla.line([cv.p(bx, by), cv.p(bx + 0.0014 + 0.0016 * t, by - L_)], fill=150, width=max(1, int(cv.m(0.00055))))
         if ls == "doll":                                          # cilios inferiores curtos
             for i in range(9):
                 t = 0.2 + 0.7 * i / 8; idx = int(t * (len(x) - 1))
@@ -189,7 +200,7 @@ def draw_eye(name, s):
         cv.save(f"lash_{ls}_{name}", la)
 
 
-def draw_brow(name, thick, arch, taper, tilt, length):
+def draw_brow(name, thick, arch, taper, tilt, length, solid=170):
     cv = Cv("brow")
     n = 80; t = np.linspace(0, 1, n)
     x = -length / 2 + length * t
@@ -209,7 +220,7 @@ def draw_brow(name, thick, arch, taper, tilt, length):
         dh.line([cv.p(px, py), cv.p(px + math.cos(ang) * ln, py + math.sin(ang) * ln)], fill=int(90 + rng.rand() * 110), width=max(1, int(cv.m(0.00028))))
     hairs = cv.blur(hairs, 0.00008)
     alpha = ImageChops.multiply(shape, ImageChops.lighter(hairs.point(lambda v: 150 + v // 3), shape.point(lambda v: 0)))
-    alpha = ImageChops.lighter(ImageChops.multiply(alpha, Image.new("L", alpha.size, 255)), ImageChops.multiply(shape, Image.new("L", shape.size, 170)))
+    alpha = ImageChops.lighter(ImageChops.multiply(alpha, Image.new("L", alpha.size, 255)), ImageChops.multiply(shape, Image.new("L", shape.size, solid)))
     cv.save(f"brow_{name}", alpha)
 
 
@@ -270,13 +281,15 @@ def main():
     draw_mouth("natural", 0.046, 0.0050, 0.0068, 0.30, 0.0009, 0.35)
     draw_mouth("thin", 0.043, 0.0032, 0.0046, 0.18, 0.0012, 0.2)
     draw_mouth("doll", 0.040, 0.0078, 0.0112, 0.55, -0.0004, 1.0)
+    draw_mouth("dollg", 0.060, 0.0098, 0.0150, 0.50, -0.0010, 0.5)
+    draw_brow("soft", 0.0120, 0.0030, 0.62, 0.0010, 0.064, 238)
     draw_blush()
     kit = {
         "canvas": {k: list(v) for k, v in CANVAS.items()},
         "eyes": [{"id": k, "label": v["label"]} for k, v in EYES.items()],
-        "lashes": [{"id": "none", "label": "Sem cilios"}, {"id": "natural", "label": "Natural"}, {"id": "doll", "label": "Boneca (volumosos)"}],
-        "brows": [{"id": "thick", "label": "Reta grossa"}, {"id": "arched", "label": "Arqueada"}, {"id": "thin", "label": "Fina natural"}],
-        "mouths": [{"id": "natural", "label": "Natural masculina"}, {"id": "thin", "label": "Fina"}, {"id": "doll", "label": "Boneca glossy"}],
+        "lashes": [{"id": "none", "label": "Sem cilios"}, {"id": "natural", "label": "Natural"}, {"id": "doll", "label": "Boneca (volumosos)"}, {"id": "dolla", "label": "Boneca pintada (pretos)"}],
+        "brows": [{"id": "thick", "label": "Reta grossa"}, {"id": "arched", "label": "Arqueada"}, {"id": "thin", "label": "Fina natural"}, {"id": "soft", "label": "Macia (boneca)"}],
+        "mouths": [{"id": "natural", "label": "Natural masculina"}, {"id": "thin", "label": "Fina"}, {"id": "doll", "label": "Boneca glossy"}, {"id": "dollg", "label": "Boneca cheia glossy"}],
         "files": "eye_<id>_{sclera,iris,hi,line}.png, lash_<lash>_<eye>.png, brow_<id>.png, mouth_<id>_{lips,gloss}.png, blush.png",
     }
     json.dump(kit, open(os.path.join(OUT, "kit.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)

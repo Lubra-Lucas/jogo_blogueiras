@@ -3,13 +3,13 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { Environment, Lightformer, useGLTF } from '@react-three/drei'
 import { AnimationClip, AnimationMixer, Box3, NoColorSpace, Plane, TextureLoader, Vector3, type Bone, type Group, type MeshStandardMaterial, type PerspectiveCamera, type SkinnedMesh } from 'three'
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
-import { DEFAULT_APPEARANCE } from '../../shared/appearance'
-import { Character } from './Character'
+import { DEFAULT_APPEARANCE, type Appearance } from '../../shared/appearance'
+import { Character, type BodyLayers } from './Character'
 import { CORE_URL } from './animation/animator'
 import { createMaleMaterial, type MaleBodyMaterial } from './maleMaterial'
 import { DEFAULT_MALE_FACE, mergeFace, preloadKit, type MaleFace } from './maleFace'
 import { attachMaleHair, maleHairUrl, MALE_HAIRS, type MaleHairId } from './maleHair'
-import { DOLLISH, SHAPE_MORPHS, SIX, TWELVE, type MaleLook } from './maleLooks'
+import { DOLL_REPLICA, DOLLISH, FEM_SIX, SHAPE_MORPHS, SIX, TWELVE, type FemLook, type MaleLook } from './maleLooks'
 
 /**
  * Tela de teste do masculino (`?maletest=1`): rosto por camadas + formato (morphs f_*) + cabelo curto. Parametros:
@@ -160,6 +160,25 @@ function Doll({ x, yaw, dy = 0 }: { x: number; yaw: number; dy?: number }) {
   )
 }
 
+const DOLL_LAYERS_GLB = `${BASE}assets/characters/doll_layers.glb`
+const DOLL_LAYERS_MASK = `${BASE}assets/characters/doll_layers_mask.png`
+
+/** Boneca NOVA: doll_layers.glb (rosto limpo) + camadas; e o mesmo Character (cabelo, roupas, morphs), so com o corpo trocado. */
+function DollNew({ x, yaw, dy = 0, look = DOLL_REPLICA, outfit }: { x: number; yaw: number; dy?: number; look?: FemLook; outfit?: Appearance['outfit'] }) {
+  const app = useMemo<Appearance>(
+    () => ({ ...DEFAULT_APPEARANCE, skin: { ...DEFAULT_APPEARANCE.skin, tone: look.skin }, hair: { ...DEFAULT_APPEARANCE.hair, id: look.hair.id, color: look.hair.color }, ...(outfit ? { outfit } : {}) }),
+    [look, outfit],
+  )
+  const layers = useMemo<BodyLayers>(() => ({ glb: DOLL_LAYERS_GLB, mask: DOLL_LAYERS_MASK, face: look.face, shape: look.shape }), [look])
+  return (
+    <group position={[x, dy, 0]} rotation={[0, yaw, 0]}>
+      <Suspense fallback={null}>
+        <Character appearance={app} layers={layers} anim={REST ? undefined : { clip: 'idle', t: T }} />
+      </Suspense>
+    </group>
+  )
+}
+
 /** Modelo texturizado ORIGINAL do Meshy (so para a comparacao "antes x depois" da pele; arquivo copiado para public/ so durante a captura). */
 function OriginalMeshy({ x, yaw }: { x: number; yaw: number }) {
   const gltf = useGLTF(ORIG_GLB)
@@ -270,6 +289,45 @@ export function MaleTest() {
         {cols.map((c, r) =>
           hairs.map((h, k) => <Male key={`${r}${k}`} look={{ ...base, hair: { id: h.id, color: c } }} x={rowX(k, 3, 0.42)} dy={-r * 0.46} yaw={yaw34} cut />),
         )}
+      </>
+    )
+  } else if (scene === 'dcmp' || scene === 'dbody') {
+    // (1) boneca antiga, (2) boneca nova com camadas, (3) masculino (Quadrado + raspado); olhos alinhados na altura
+    const body = scene === 'dbody'
+    const mdy = body ? 0 : 1.39 - 1.5827
+    const gap = body ? 0.9 : 0.4
+    content = (
+      <>
+        <Cam target={body ? [0, 0.88, 0] : [0, 1.43, 0]} dist={Number(Q.get('cam')) || (body ? 7 : 5)} fov={Number(Q.get('fov')) || (body ? 20 : 10)} />
+        <Doll x={-gap} yaw={body ? 0 : yaw34} />
+        <DollNew x={0} yaw={body ? 0 : yaw34} />
+        <Male look={TWELVE[0]} x={gap} dy={mdy} yaw={body ? 0 : yaw34} report={body} />
+        {body && floor}
+      </>
+    )
+  } else if (scene === 'dswap') {
+    const eyes = [['natural', 1.9], ['almond', 1.75], ['doll', 1.35], ['dolla', 1.0]] as const
+    content = (
+      <>
+        <Cam target={[0, 1.43, 0]} dist={Number(Q.get('cam')) || 5} fov={Number(Q.get('fov')) || 10} />
+        {eyes.map(([st, sc], i) => (
+          <DollNew key={st} x={(i - 1.5) * 0.4} yaw={yaw34} look={{ ...DOLL_REPLICA, name: st, face: mergeFace(DOLL_REPLICA.face, { eye: { style: st, scale: sc, lash: st === 'natural' || st === 'almond' ? 'natural' : st === 'doll' ? 'doll' : 'dolla' } }) }} />
+        ))}
+      </>
+    )
+  } else if (scene === 'dsix') {
+    const i = Math.max(0, ONLY)
+    content = (
+      <>
+        <Cam target={[0, 1.43, 0]} dist={Number(Q.get('cam')) || 4} fov={Number(Q.get('fov')) || 7} />
+        <DollNew x={0} yaw={yaw34} look={FEM_SIX[i]} />
+      </>
+    )
+  } else if (scene === 'deyes') {
+    content = (
+      <>
+        <Cam target={[0.02, 1.39, 0]} dist={Number(Q.get('cam')) || 4} fov={Number(Q.get('fov')) || 5} />
+        <DollNew x={0} yaw={Number(Q.get('yaw')) || 0.8} />
       </>
     )
   } else if (scene === 'six') {

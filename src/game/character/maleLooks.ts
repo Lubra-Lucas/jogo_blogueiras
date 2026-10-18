@@ -64,3 +64,41 @@ export const SHAPE_MORPHS = [
   'f_foreheadHigh', 'f_foreheadLow', 'f_cheekboneHigh', 'f_cheekFull', 'f_cheekHollow', 'f_faceLong', 'f_faceShort', 'f_faceWide',
   'f_noseWide', 'f_noseLong', 'f_noseBridge', 'f_lipsFull', 'f_lipsThin', 'f_neckThick', 'f_adamsApple', 'f_earsSmall', 'f_earsBig',
 ] as const
+
+// ---------------------------------------------------------------- boneca feminina com camadas (doll_layers.glb)
+export interface FemLook {
+  name: string
+  skin: string
+  face: MaleFace
+  /** pesos dos morphs f_* da boneca (jawWide/Soft, chinWide/Pointed, cheekFull/Hollow, noseWide/Narrow, lipsFull/Thin, faceLong/Short) */
+  shape: Record<string, number>
+  hair: { id: string; color: string }
+}
+
+/** Montagem que reproduz a pintura original da boneca (olho grande azul, cilios pretos volumosos, boca rosada glossy, blush, sobrancelha macia). */
+export const DOLL_REPLICA: FemLook = {
+  name: 'Boneca (camadas)',
+  skin: '#efcdbd',
+  face: F({
+    eye: { style: 'dolla', lash: 'dolla', iris: '#6aa9d6', liner: '#0e0a0b', lashColor: '#0e0a0b', scale: 1.22, gap: 0, y: 0, tilt: 0, linerAmt: 1 },
+    brow: { style: 'soft', color: '#8a6a4c', opacity: 1, scale: 1.2, gap: 0, y: 0, tilt: 0 },
+    mouth: { style: 'dollg', color: '#e2606f', gloss: 0.85, opacity: 1, scale: 1.12, y: 0 },
+    blush: { amount: 0.95, color: '#f0808e', scale: 2.0, gap: 0, y: 0 },
+  }),
+  shape: {},
+  hair: { id: 'hair.meshyUpdo', color: '#d8b46e' },
+}
+
+export const FEM_SIX: FemLook[] = [
+  { ...DOLL_REPLICA, name: 'Classica' },
+  { name: 'Natural', skin: '#e6b896', shape: { f_jawSoft: 0.6, f_noseNarrow: 0.5 }, hair: { id: 'hair.chestnutWaves', color: '#5a3820' },
+    face: F({ eye: { style: 'natural', lash: 'natural', iris: '#6b4a32', scale: 1.9, gap: 0.004 }, brow: { style: 'thin', color: '#5a3f2e', scale: 1.15, opacity: 0.85 }, mouth: { style: 'natural', color: '#c9707a', gloss: 0.3, scale: 1.25 }, blush: { amount: 0.25, scale: 1.5 } }) },
+  { name: 'Amendoada', skin: '#a86d4a', shape: { f_cheekHollow: 0.8, f_chinPointed: 0.8, f_faceLong: 0.4 }, hair: { id: 'hair.meshyUpdo', color: '#7a4a2a' },
+    face: F({ eye: { style: 'almond', lash: 'natural', iris: '#3f6b45', scale: 1.75, tilt: 3, gap: 0.003 }, brow: { style: 'arched', color: '#2c2018', scale: 1.25, tilt: 3 }, mouth: { style: 'doll', color: '#b8505a', gloss: 0.6, scale: 1.35 }, blush: { amount: 0.2, color: '#d06a6a', scale: 1.5 } }) },
+  { name: 'Doce', skin: '#f2d4c4', shape: { f_cheekFull: 0.9, f_chinPointed: 0.2, f_faceShort: 0.5, f_lipsFull: 0.6 }, hair: { id: 'hair.meshyUpdo', color: '#c4813f' },
+    face: F({ eye: { style: 'doll', lash: 'doll', iris: '#7a5a3a', scale: 1.35, gap: 0.006 }, brow: { style: 'soft', color: '#6b4a30', opacity: 0.85 }, mouth: { style: 'dollg', color: '#e89aa0', gloss: 0.8, scale: 0.95 }, blush: { amount: 0.75, color: '#f4909c', scale: 1.8 } }) },
+  { name: 'Marcante', skin: '#6a4028', shape: { f_jawWide: 0.6, f_cheekHollow: 0.9, f_lipsFull: 0.6, f_faceLong: 0.7 }, hair: { id: 'hair.meshyUpdo', color: '#16141a' },
+    face: F({ eye: { style: 'almond', lash: 'dolla', iris: '#4a4038', liner: '#0c0a0a', scale: 1.95, tilt: 5, gap: 0.002 }, brow: { style: 'arched', color: '#140e0a', scale: 1.35, tilt: 5, y: 0.002 }, mouth: { style: 'natural', color: '#7a2535', gloss: 0.4, scale: 1.3 } }) },
+  { name: 'Redonda suave', skin: '#f0c8b0', shape: { f_cheekFull: 0.9, f_jawSoft: 0.8, f_faceShort: 0.5, f_noseWide: 0.3 }, hair: { id: 'hair.chestnutWaves', color: '#8a5a30' },
+    face: F({ eye: { style: 'natural', lash: 'dolla', iris: '#5a8fb8', scale: 1.8, gap: 0.005 }, brow: { style: 'soft', color: '#8a6a50', opacity: 0.8 }, mouth: { style: 'natural', color: '#d8788a', gloss: 0.5, scale: 1.2 }, blush: { amount: 0.5, scale: 1.7 } }) },
+]

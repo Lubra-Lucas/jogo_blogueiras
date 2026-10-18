@@ -6,7 +6,9 @@ import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js
 import type { GLTF } from 'three-stdlib'
 import type { Appearance, ItemRef } from '../../shared/appearance'
 import { BASES, loadBaseMeta } from './assets'
-import { applyBodyLook, createBodyMaterial, createHairMaterial, setMakeupTextures } from './dollMaterial'
+import { applyBodyLook, createBodyMaterial, createHairMaterial, setMakeupTextures, type DollBodyMaterial } from './dollMaterial'
+import { createDollLayersMaterial } from './maleMaterial'
+import type { MaleFace } from './maleFace'
 import { BLANK_TEXTURE, getMakeupTextures } from './makeup/textures'
 import { DEFAULT_MAKEUP, makeupIsEmpty, normalizeMakeup } from '../../shared/appearance'
 import { getWearable, WEARABLES, type WearableDef } from './items'
@@ -31,8 +33,20 @@ export interface CharacterHandle {
   proportions: BodyRig
 }
 
+/**
+ * Variante EXPERIMENTAL da boneca com o rosto por camadas (doll_layers.glb: mesmo corpo/esqueleto/morphs, rosto limpo). Quando presente, o corpo usa o
+ * material de camadas (maleMaterial.ts) no lugar do rosto pintado; cabelo, roupas, joias e morphs funcionam como sempre. `shape` = pesos dos morphs f_*.
+ */
+export interface BodyLayers {
+  glb: string
+  mask: string
+  face: MaleFace
+  shape?: Record<string, number>
+}
+
 export interface CharacterProps {
   appearance: Appearance
+  layers?: BodyLayers
   /** projeta sombra (qualidade medium/high) */
   shadows?: boolean
   /** animacao: 'player' (estados do jogo) ou { clip, t } (visualizador); omitido = so a pose de repouso */
@@ -221,7 +235,7 @@ function applyMorphs(mesh: SkinnedMesh, morphs: Record<string, number>) {
 
 // Efeitos em layout: o look (pele/macacao/cabelo/joias/morphs) e aplicado ANTES do primeiro quadro desenhado.
 // Com useEffect havia 1+ quadros com os uniforms padrao (corpo todo rosa, cabelo sem cor, joias sem material).
-function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterProps & { handle: React.Ref<CharacterHandle> }) {
+function CharacterImpl({ appearance, layers, shadows = false, anim, handle }: CharacterProps & { handle: React.Ref<CharacterHandle> }) {
   use(loadBaseMeta(appearance.base))
   const base = BASES[appearance.base]
   // useDeferredValue: ao trocar o cabelo (GLB carregado sob demanda) o anterior fica ate o novo estar pronto, sem suspender o personagem
@@ -253,8 +267,8 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
     if (item.slot === 'neck' && ((hasScarf && /choker/.test(item.id)) || (hasBackBag && /^(opera_pearls|layered_gold|chunky_chain)$/.test(item.id)))) continue
     jewels.push({ item, ref: r })
   }
-  const gltfs = useGLTF([base.glb, ...parts.map((d) => d.glb), ...jewels.map((j) => j.item.glb)]) as GLTF[]
-  const masks = useTexture([base.mask, base.mask2, base.mask3, base.mask4])
+  const gltfs = useGLTF([layers?.glb ?? base.glb, ...parts.map((d) => d.glb), ...jewels.map((j) => j.item.glb)]) as GLTF[]
+  const masks = useTexture([layers?.mask ?? base.mask, base.mask2, base.mask3, base.mask4])
 
   // ---- esqueleto + malha do corpo (clone por instancia) ----
   const rig = useMemo(() => buildRig(gltfs[0].scene), [gltfs[0]]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -290,7 +304,16 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
   }, [masks])
 
   // ---- material do corpo (um por instancia) ----
-  const bodyMat = useMemo(() => createBodyMaterial(rig.map, rig.normalMap, { mask: masks[0], mask2: masks[1], mask3: masks[2], mask4: masks[3] }, BLANK_TEXTURE), [rig, masks])
+  const layersGlb = layers?.glb
+  const bodyMat = useMemo(
+    () => (layersGlb ? (createDollLayersMaterial(rig.map, rig.normalMap, masks[0], layers!.face) as unknown as DollBodyMaterial) : createBodyMaterial(rig.map, rig.normalMap, { mask: masks[0], mask2: masks[1], mask3: masks[2], mask4: masks[3] }, BLANK_TEXTURE)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [rig, masks, layersGlb],
+  )
+  useLayoutEffect(() => {
+    if (layers) (bodyMat as unknown as { setFace?: (f: MaleFace) => void }).setFace?.(layers.face)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bodyMat, layers?.face])
   useLayoutEffect(() => {
     rig.body.material = bodyMat.material
     rig.body.frustumCulled = false
@@ -414,9 +437,10 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
   }, [attachments, clipKey])
 
   // ---- morphs (corpo e cabelo compartilham os nomes) ----
-  const morphKey = JSON.stringify(appearance.morphs)
+  const morphKey = JSON.stringify(appearance.morphs) + JSON.stringify(layers?.shape ?? null)
   useLayoutEffect(() => {
-    applyMorphs(rig.body, appearance.morphs)
+    const mm = { ...appearance.morphs, ...(layers?.shape ?? {}) }
+    applyMorphs(rig.body, mm)
     for (const a of attachments) for (const m of a.meshes) applyMorphs(m, appearance.morphs)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rig, attachments, morphKey])
