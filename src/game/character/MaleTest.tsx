@@ -230,7 +230,7 @@ const CLAY: MaleLook = { name: 'clay', skin: '#d9baa6', suit: '#2a4fa8', face: D
 export function MaleTest() {
   const scene = Q.get('scene') ?? 'grid'
   const view = Q.get('view') ?? 'front'
-  const yaw34 = view === 'q34' ? 0.5 : 0
+  const yaw34 = view === 'q34' ? 0.5 : view === 'side' ? 1.45 : 0
   const fov = Number(Q.get('fov')) || 8
   useEffect(() => preloadKit(), [])
   useEffect(() => {
@@ -294,14 +294,15 @@ export function MaleTest() {
   } else if (scene === 'dcmp' || scene === 'dbody') {
     // (1) boneca antiga, (2) boneca nova com camadas, (3) masculino (Quadrado + raspado); olhos alinhados na altura
     const body = scene === 'dbody'
+    const hide = (Q.get('hide') ?? '').split(',').map(Number)
     const mdy = body ? 0 : 1.39 - 1.5827
     const gap = body ? 0.9 : 0.4
     content = (
       <>
         <Cam target={body ? [0, 0.88, 0] : [0, 1.43, 0]} dist={Number(Q.get('cam')) || (body ? 7 : 5)} fov={Number(Q.get('fov')) || (body ? 20 : 10)} />
-        <Doll x={-gap} yaw={body ? 0 : yaw34} />
-        <DollNew x={0} yaw={body ? 0 : yaw34} />
-        <Male look={TWELVE[0]} x={gap} dy={mdy} yaw={body ? 0 : yaw34} report={body} />
+        {!hide.includes(0) && <Doll x={-gap} yaw={body ? 0 : yaw34} />}
+        {!hide.includes(1) && <DollNew x={0} yaw={body ? 0 : yaw34} />}
+        {!hide.includes(2) && <Male look={TWELVE[0]} x={gap} dy={mdy} yaw={body ? 0 : yaw34} report={body} />}
         {body && floor}
       </>
     )
@@ -328,6 +329,35 @@ export function MaleTest() {
       <>
         <Cam target={[0.02, 1.39, 0]} dist={Number(Q.get('cam')) || 4} fov={Number(Q.get('fov')) || 5} />
         <DollNew x={0} yaw={Number(Q.get('yaw')) || 0.8} />
+      </>
+    )
+  } else if (scene === 'ext') {
+    // extremos de formato em perfil: kind=doll|male; cada cabeca = um conjunto de morphs no maximo
+    const kind = Q.get('kind') ?? 'doll'
+    const sets: Array<Record<string, number>> =
+      kind === 'doll'
+        ? [{}, { f_chinPointed: 1 }, { f_chinWide: 1 }, { f_jawWide: 1 }, { f_jawSoft: 1 }, { f_chinPointed: 1, f_faceLong: 1 }, { f_jawWide: 1, f_chinWide: 1 }, { f_cheekHollow: 1, f_chinPointed: 1 }]
+        : [{ f_maleBase: 1 }, { f_maleBase: 1, f_chinPointed: 1 }, { f_maleBase: 1, f_chinWide: 1 }, { f_maleBase: 1, f_jawWide: 1 }, { f_maleBase: 1, f_jawAngular: 1 }, { f_maleBase: 1, f_chinPointed: 1, f_faceLong: 1 }, { f_maleBase: 1, f_jawWide: 1, f_jawAngular: 1 }, { f_maleBase: 1, f_chinForward: 1, f_chinWide: 1 }]
+    content = (
+      <>
+        <Cam target={[0, kind === 'doll' ? 1.38 : 1.55, 0]} dist={Number(Q.get('cam')) || 5} fov={Number(Q.get('fov')) || 8} />
+        {sets.map((sh, i) =>
+          kind === 'doll' ? (
+            <DollNew key={i} x={rowX(i, sets.length, 0.3)} yaw={yaw34} look={{ ...DOLL_REPLICA, hair: { id: null as unknown as string, color: '#000' }, shape: sh }} />
+          ) : (
+            <Male key={i} look={{ ...CLAY, face: TWELVE[2].face }} x={rowX(i, sets.length, 0.3)} yaw={yaw34} shape={sh} cut noHair />
+          ),
+        )}
+      </>
+    )
+  } else if (scene === 'mside') {
+    const idx = [0, 7, 11, 6]
+    content = (
+      <>
+        <Cam target={[0, 1.55, 0]} dist={Number(Q.get('cam')) || 5} fov={Number(Q.get('fov')) || 9} />
+        {idx.map((k, i) => (
+          <Male key={k} look={TWELVE[k]} x={rowX(i, idx.length, 0.36)} yaw={yaw34} />
+        ))}
       </>
     )
   } else if (scene === 'six') {

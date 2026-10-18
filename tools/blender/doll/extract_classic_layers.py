@@ -141,6 +141,12 @@ def main():
         lab2, n2 = ndi.label(em)
         if n2 > 1:
             sz = ndi.sum(em, lab2, range(1, n2 + 1)); em = lab2 == (1 + int(np.argmax(sz)))
+        from scipy.spatial import ConvexHull
+        from PIL import ImageDraw
+        yy_, xx_ = np.nonzero(em); pts_ = np.stack([xx_, yy_], 1)
+        hv = ConvexHull(pts_); hm = Image.new('L', (N, N), 0)
+        ImageDraw.Draw(hm).polygon([tuple(pts_[i]) for i in hv.vertices], fill=255)
+        em = np.asarray(hm) > 127          # olho = casco convexo (fecha o recorte irregular da esclera)
         a = ndi.gaussian_filter(em.astype(np.float32), 1.3)
         eye_a = np.maximum(eye_a, a)
         ex[side] = (cx, cy, r_i, em)
@@ -149,20 +155,64 @@ def main():
         iris_a = np.maximum(iris_a, ia)
         avg_iris += F[core].sum(0); n_i += core.sum()
     avg_iris = avg_iris / max(n_i, 1)
-    save_rgba("eye_classic_sclera", F, eye_a, True)
-    iris_ratio = np.clip(F / np.maximum(avg_iris, 1e-3) / 1.35, 0, 1)
+    Fs = np.clip(F + 0.9 * (F - ndi.gaussian_filter(F, (1.6, 1.6, 0))), 0, 1)       # unsharp mask
+    Fs = np.clip((Fs - 0.5) * 1.12 + 0.5, 0, 1) * 0 + np.clip(Fs * 1.0, 0, 1)
+    save_rgba("eye_classic_sclera", Fs, eye_a, True)
+    iris_ratio = np.clip(Fs / np.maximum(avg_iris, 1e-3) / 1.35, 0, 1)
     save_rgba("eye_classic_iris", iris_ratio, iris_a, False)
-    # ---- cilios/delineado: tudo que difere da pele local perto do olho (janela eliptica suave), menos o proprio olho
     em_all = np.zeros((N, N), bool)
     for k, v in ex.items(): em_all |= v[3]
     em_soft = ndi.gaussian_filter(ndi.binary_dilation(em_all, iterations=2).astype(np.float32), 1.5)
-    win = np.zeros((N, N), np.float32)
-    for k, (cx, cy, r_i, em) in ex.items():
-        rr = np.sqrt(((xx - cx) / (r_i * 4.2)) ** 2 + ((yy - (cy - r_i * 0.55)) / (r_i * 2.6)) ** 2)
-        win = np.maximum(win, 1 - np.clip((rr - 0.78) / 0.22, 0, 1))
-    la = np.clip((dist - 0.030) / 0.09, 0, 1) * win * (1 - eye_a)
-    la = ndi.gaussian_filter(la, 0.6)
-    save_rgba("lash_classic", F, np.clip(la, 0, 1), True)
+    # ---- cilios/delineado REDESENHADOS (alta resolucao) sobre o olho extraido; posicao/forma guiadas pela pintura original:
+    # delineado grosso afinando para dentro, cilios superiores volumosos que varrem para fora/cima (mais longos no canto externo, ponta clara),
+    # cilios inferiores finos e visiveis.
+    import math, random
+    from PIL import ImageDraw, ImageFilter
+    K = 2
+    lay = Image.new("RGBA", (N * K, N * K), (0, 0, 0, 0)); dr = ImageDraw.Draw(lay)
+    rnd = random.Random(5)
+    for side, (cx, cy, r_i, em) in ex.items():
+        os_ = -1.0 if cx < N / 2 else 1.0                       # lado externo no eixo x da imagem
+        cols = np.nonzero(em.any(0))[0]
+        top = np.array([np.nonzero(em[:, c])[0].min() for c in cols], float); bot = np.array([np.nonzero(em[:, c])[0].max() for c in cols], float)
+        top = ndi.gaussian_filter1d(top, 3); bot = ndi.gaussian_filter1d(bot, 3)
+        order = np.argsort(cols * os_)                         # t=0 canto interno -> t=1 canto externo
+        cx_arr = cols[order].astype(float); top_a = top[order]; bot_a = bot[order]
+        nlen = len(cx_arr)
+        for i in range(nlen - 1):                                # delineado: espessura cresce para fora
+            t = i / (nlen - 1)
+            w = (4.0 + 14.0 * math.sin(math.pi * min(1, t * 0.95 + 0.04)) ** 0.7 * (0.55 + 0.6 * t)) * K
+            dr.line([(cx_arr[i] * K, top_a[i] * K - w * 0.25), (cx_arr[i + 1] * K, top_a[i + 1] * K - w * 0.25)], fill=(14, 10, 11, 255), width=max(1, int(w)))
+        # rabinho externo
+        ex_x, ex_y = cx_arr[-1], top_a[-1]
+        dr.line([(ex_x * K, ex_y * K), ((ex_x + os_ * 20) * K, (ex_y - 10) * K)], fill=(14, 10, 11, 255), width=int(5 * K))
+        nl = 36
+        for k in range(nl):
+            t = 0.04 + 0.97 * k / (nl - 1); idx = min(int(t * (nlen - 1)), nlen - 1)
+            bx, by = cx_arr[idx], top_a[idx] - 1
+            ang = math.radians(78 - 62 * t + rnd.uniform(-6, 6))     # 90 = reto para cima; reduz para o lado externo
+            L = r_i * (0.45 + 0.95 * t ** 1.2) * rnd.uniform(0.85, 1.15)
+            wb = (8.5 + 6.0 * t) * K
+            px, py = bx, by; segs = 9
+            for sgm in range(segs):
+                u0 = sgm / segs; u1 = (sgm + 1) / segs
+                a0 = ang - 0.35 * u0 ** 1.5 * 1.0; a1 = ang - 0.35 * u1 ** 1.5
+                x0 = bx + os_ * math.cos(a0) * L * u0 + 0; y0 = by - math.sin(a0) * L * u0
+                x1 = bx + os_ * math.cos(a1) * L * u1; y1 = by - math.sin(a1) * L * u1
+                tip = max(0, (u0 - 0.55) / 0.45)
+                col = (int(14 + 150 * tip), int(10 + 120 * tip), int(11 + 100 * tip), 255)
+                dr.line([(x0 * K, y0 * K), (x1 * K, y1 * K)], fill=col, width=max(1, int(wb * (1 - u0) ** 0.85)))
+        nl2 = 20
+        for k in range(nl2):
+            t = 0.1 + 0.9 * k / (nl2 - 1); idx = min(int(t * (nlen - 1)), nlen - 1)
+            bx, by = cx_arr[idx], bot_a[idx] + 1
+            ang = math.radians(-80 + 40 * t + rnd.uniform(-8, 8))
+            L = r_i * (0.16 + 0.2 * math.sin(math.pi * t)) * rnd.uniform(0.85, 1.15)
+            dr.line([(bx * K, by * K), ((bx + os_ * math.cos(ang) * L * 0.55) * K, (by - math.sin(ang) * L) * K)], fill=(48, 30, 30, 235), width=int(1.8 * K))
+    lay = lay.filter(ImageFilter.GaussianBlur(0.5 * K)).resize((N, N), Image.LANCZOS)
+    arr_ = np.asarray(lay, np.float32) / 255.0
+    la = arr_[..., 3]
+    save_rgba("lash_classic", s2l(arr_[..., :3]), la, True)
     # ---- sobrancelhas: janela suave acima de cada olho; cobertura por unmix contra a cor media
     bwin = np.zeros((N, N), np.float32)
     for k, (cx, cy, r_i, em) in ex.items():

@@ -43,14 +43,14 @@ def compute(co, nrm, e):
     # ---- mandibula
     lower = sstep((1.535 - z) / 0.07) * sstep((z - 1.40) / 0.03) * front
     out["f_jawWide"] = V(dx=sg * 0.0125 * sstep(ax / 0.045) * lower)
-    gon = b3(0.070, 0.00, 1.497, 0.045, 0.07, 0.04)
-    ch2 = b3(0.030, -0.075, 1.462, 0.03, 0.04, 0.025)
+    gon = b3(0.070, 0.00, 1.497, 0.060, 0.09, 0.056)
+    ch2 = b3(0.030, -0.075, 1.462, 0.045, 0.055, 0.04)
     out["f_jawAngular"] = V(dx=sg * (0.0085 * gon + 0.006 * ch2), dy=0.004 * gon, dz=-0.007 * gon - 0.005 * ch2)
     out["f_jawSoft"] = V(dx=-sg * 0.0075 * gon, dy=-0.002 * gon, dz=0.006 * gon)
     # ---- queixo
-    chin = b3(0.0, -0.078, 1.466, 0.05, 0.05, 0.032)
+    chin = b3(0.0, -0.078, 1.466, 0.065, 0.065, 0.046)
     out["f_chinWide"] = V(dx=x * 0.24 * chin)
-    out["f_chinPointed"] = V(dx=-x * 0.28 * chin, dy=-0.005 * chin, dz=-0.009 * chin)
+    out["f_chinPointed"] = V(dx=-x * 0.20 * chin, dy=-0.003 * chin, dz=-0.002 * chin)      # queixo mais fino e delicado (arredondado), nunca um bico
     out["f_chinForward"] = V(dy=-0.013 * chin, dz=-0.002 * chin)
     out["f_chinBack"] = V(dy=0.011 * chin)
     cl = b3(0.0, -0.082, 1.468, 0.0075, 0.03, 0.012)
@@ -100,8 +100,8 @@ def compute(co, nrm, e):
     out["f_earsSmall"] = -rel * 0.22 * ear[:, None]
     # suaviza (a malha tem poucos poligonos) e depois NORMALIZA o pico de cada morph (mm) para o alvo abaixo
     for k in list(out):
-        if k not in ("f_faceLong", "f_faceShort", "f_faceWide", "f_neckThick"):
-            out[k] = sm(out[k], 2)
+        if k not in ("f_neckThick",):
+            out[k] = sm(out[k], 14)
     for k, mm in TARGET_MM.items():
         mm = mm * (1.0 if k in ('f_chinCleft', 'f_adamsApple', 'f_lipsThin', 'f_lipsFull') else 1.35)
         pk = np.linalg.norm(out[k], axis=1).max()

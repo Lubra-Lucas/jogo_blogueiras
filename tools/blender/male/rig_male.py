@@ -266,7 +266,11 @@ def stage_repose():
         for b in rig.data.edit_bones: b.head.z -= minz; b.tail.z -= minz
         bpy.ops.object.mode_set(mode='OBJECT')
     # normais suaves (angulo)
-    select_only(body); bpy.ops.object.shade_smooth_by_angle(angle=math.radians(40))
+    # cabeca/mandibula facetadas (malha de poucos poligonos): alisa de novo a metade de baixo do rosto + normais suaves
+    c = getco(body); e_ = edges_of(body.data)
+    w_ = sstep((c[:, 2] - 1.40) / 0.03) * (1 - sstep((c[:, 2] - 1.60) / 0.05)) * (c[:, 1] < 0.04) * (np.abs(c[:, 0]) < 0.13)
+    setco(body, taubin(c, e_, w_ * 0.8, it=10))
+    select_only(body); bpy.ops.object.shade_smooth_by_angle(angle=math.radians(75))
     bpy.ops.wm.save_as_mainfile(filepath=blend("male_3"))
     log(f"repose ok {time.time()-t0:.0f}s")
 

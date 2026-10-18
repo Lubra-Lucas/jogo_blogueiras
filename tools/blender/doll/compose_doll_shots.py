@@ -2,7 +2,7 @@
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-S = r"C:\Users\user\AppData\Local\Temp\claude\shots\boneca_camadas2"
+S = r"C:\Users\user\AppData\Local\Temp\claude\shots\boneca_camadas3"
 SIX = ["Classica (reproduz a pintura)", "Natural", "Amendoada", "Doce", "Marcante", "Redonda suave"]
 
 
@@ -48,9 +48,26 @@ def grid(ims, cols, labels, out, tile=620):
     sh.save(os.path.join(S, out)); print(out, sh.size)
 
 
+def third(old, new, male, cut=(500, 1000)):
+    """as 3 capturas (um personagem por vez, mesma camera) viram uma imagem: coluna esquerda da antiga, do meio da nova, direita do masculino"""
+    a, b, c = (Image.open(os.path.join(S, n + ".png")).convert("RGB") for n in (old, new, male))
+    w, h = a.size; im = a.copy()
+    im.paste(b.crop((cut[0], 0, cut[1], h)), (cut[0], 0)); im.paste(c.crop((cut[1], 0, w, h)), (cut[1], 0))
+    im.save(os.path.join(S, "_tmp_" + old + ".png")); return crop("_tmp_" + old)
+
+
+def ext_sheet(name, out, label):
+    stack([crop(name)], out, [label])
+
+
 if __name__ == "__main__":
-    t = "(1) ANTIGA   |   (2) NOVA Classica (camadas extraidas da pintura)   |   (3) masculino"
-    stack([crop("c_cmp_front"), crop("c_cmp_q34")], "01_comparativo_3.png", [t + " - frente", "3/4"])
-    stack([crop("c_zoomf")], "01b_antiga_x_classica_zoom.png", ["Zoom: antiga (esq.) x Classica nova (centro)"])
-    stack([crop("c_swap_front")], "03_troca_olhos.png", ["Classica com 4 olhos: classico | natural | amendoado | boneca"])
+    t = "(1) ANTIGA   |   (2) NOVA Classica   |   (3) masculino"
+    f = third("h_front_12", "h_front_02", "h_front_01"); q = third("h_q34_12", "h_q34_02", "h_q34_01")
+    stack([f, q], "01_comparativo_3.png", [t + " - frente", "3/4"])
+    z = third("hz_12", "hz_02", "hz_02", (500, 1500))
+    stack([z], "01b_zoom_olhos.png", ["Zoom nos olhos: antiga (esq., recorte) x Classica nova (centro/direita)"])
     grid([crop(f"c_six_{i}") for i in range(6)], 3, SIX, "04_seis_femininos.png")
+    grid([crop(f"c_sixp_{i}") for i in range(6)], 3, [n + " (perfil)" for n in SIX], "04b_seis_femininos_perfil.png")
+    stack([crop("c_ms_side"), crop("c_ms_q34")], "05_masculinos_perfil.png", ["Masculinos: Quadrado | Atleta | Livre | Maduro - perfil", "3/4"])
+    stack([crop("c_extd"), crop("c_extm")], "06_extremos_queixo.png", ["Femininos (perfil): base | chinPointed | chinWide | jawWide | jawSoft | chinPointed+faceLong | jawWide+chinWide | cheekHollow+chinPointed",
+                                                                        "Masculinos (perfil): base | chinPointed | chinWide | jawWide | jawAngular | chinPointed+faceLong | jawWide+jawAngular | chinForward+chinWide"])

@@ -158,7 +158,7 @@ def draw_eye(name, s):
     # --- cilios (um PNG por estilo de cilio, alinhado a este olho)
     for ls in ("natural", "doll", "dolla"):
         la = cv.new(0); dla = ImageDraw.Draw(la)
-        nl = 14 if ls == "natural" else (26 if ls == "doll" else 52)
+        nl = 14 if ls == "natural" else (26 if ls == "doll" else 30)
         t0, t1 = (0.12, 1.0) if ls == "natural" else ((0.05, 1.04) if ls == "doll" else (0.02, 1.06))
         rng = np.random.RandomState(7 if ls == "natural" else 11)
         for i in range(nl):
@@ -174,7 +174,7 @@ def draw_eye(name, s):
             ang = math.atan2(ny, nx) - out * 0.55 * (1 if True else -1)
             if ls == "natural": ln_ = (0.0030 + 0.0035 * math.sin(math.pi * min(t, 1) * 0.85)) * (0.85 + 0.3 * rng.rand()); th = 0.00042
             elif ls == "doll": ln_ = (0.0042 + 0.0060 * math.sin(math.pi * min(t, 1) * 0.8) ** 0.9 + 0.002 * t) * (0.85 + 0.3 * rng.rand()); th = 0.00075
-            else: ln_ = (0.0060 + 0.0090 * math.sin(math.pi * min(t, 1) * 0.75) ** 0.9 + 0.0065 * t ** 2) * (0.8 + 0.4 * rng.rand()); th = 0.0024
+            else: ln_ = (0.0060 + 0.0090 * math.sin(math.pi * min(t, 1) * 0.75) ** 0.9 + 0.0065 * t ** 2) * (0.8 + 0.4 * rng.rand()); th = 0.00115
             pts_ = []
             for k in range(7):                                    # curva com curvatura para cima
                 u = k / 6

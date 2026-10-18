@@ -85,7 +85,7 @@ def to_img(a): return Image.fromarray((np.clip(a, 0, 1) * 255 + .5).astype(np.ui
 
 
 # ------------------------------------------------------------------ morphs femininos de formato do rosto
-MORPH_GAIN = 1.75      # amplitude dos morphs femininos (primeira versao: 1.0 = pouco visivel)
+MORPH_GAIN = 1.6      # amplitude dos morphs femininos (primeira versao: 1.0 = pouco visivel)
 TARGET_MM = {"f_jawWide": 9, "f_jawSoft": 7, "f_chinWide": 8, "f_chinPointed": 8, "f_cheekFull": 8, "f_cheekHollow": 6,
              "f_noseWide": 5, "f_noseNarrow": 4, "f_lipsFull": 5, "f_lipsThin": 3, "f_faceLong": 10, "f_faceShort": 9}
 LABELS = {"f_jawWide": "Mandibula larga", "f_jawSoft": "Mandibula suave", "f_chinWide": "Queixo largo", "f_chinPointed": "Queixo pontudo",
@@ -113,9 +113,9 @@ def face_morphs(P, N, IDX):
     lower = sstep((1.375 - y) / 0.06) * sstep((y - 1.235) / 0.03) * front
     out["f_jawWide"] = V(dx=sg * sstep(ax / 0.04) * lower)
     out["f_jawSoft"] = -V(dx=sg * sstep(ax / 0.04) * lower) * 0.8
-    chin = b3(0.0, 1.282, 0.100, 0.05, 0.04, 0.055)
+    chin = b3(0.0, 1.282, 0.100, 0.07, 0.055, 0.07)
     out["f_chinWide"] = V(dx=x * 0.3 * chin)
-    out["f_chinPointed"] = V(dx=-x * 0.3 * chin, dy=-0.006 * chin, dz=0.004 * chin)
+    out["f_chinPointed"] = V(dx=-x * 0.22 * chin, dy=-0.002 * chin, dz=0.001 * chin)      # mais fino e delicado, arredondado (sem bico)
     ck = b3(0.078, 1.348, 0.095, 0.045, 0.05, 0.05) * front
     out["f_cheekFull"] = NU * (0.012 * ck)[:, None]
     hl = b3(0.07, 1.335, 0.085, 0.04, 0.045, 0.05) * front
@@ -130,7 +130,7 @@ def face_morphs(P, N, IDX):
     out["f_faceLong"] = V(dy=(y - 1.40) * 0.14 * wf)
     out["f_faceShort"] = V(dy=-(y - 1.40) * 0.12 * wf)
     for k in list(out):
-        out[k] = sm(out[k], 2)
+        out[k] = sm(out[k], 14)
         pk = np.linalg.norm(out[k], axis=1).max()
         if pk > 1e-9: out[k] = out[k] * (TARGET_MM[k] * MORPH_GAIN / 1000.0 / pk)
     return {k: v[inv] for k, v in out.items()}
