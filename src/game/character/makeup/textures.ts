@@ -1,12 +1,12 @@
-import { CanvasTexture, DataTexture, LinearFilter, LinearMipmapLinearFilter, NoColorSpace, RGBAFormat, SRGBColorSpace, UnsignedByteType, type Texture } from 'three'
+import { CanvasTexture, DataTexture, LinearFilter, LinearMipmapLinearFilter, NoColorSpace, RGBAFormat, UnsignedByteType, type Texture } from 'three'
 import { normalizeMakeup, type Makeup } from '../../../shared/appearance'
 import { composeMakeup, loadFaceMasks, SIZE, type FaceMasks } from './compose'
 
 const FACE_MASK_URL = `${import.meta.env.BASE_URL}assets/characters/doll_face_front.png`
 
 export interface MakeupTextures {
-  color: Texture
-  fx: Texture
+  /** UMA textura (1024x2048): cor sRGB em cima e efeitos (rugosidade, metal, brilho) embaixo -- economiza um sampler no shader */
+  tex: Texture
   /** ja desenhado com as mascaras do rosto */
   ready: boolean
 }
@@ -30,6 +30,7 @@ interface Entry {
   tex: MakeupTextures
   color: HTMLCanvasElement
   fx: HTMLCanvasElement
+  stack: HTMLCanvasElement
   use: number
 }
 const cache = new Map<string, Entry>()
@@ -38,8 +39,11 @@ const MAX = 10
 function draw(e: Entry, m: Makeup, tone: string) {
   if (!masks) return
   composeMakeup(m, tone, masks, e.color.getContext('2d')!, e.fx.getContext('2d')!)
-  e.tex.color.needsUpdate = true
-  e.tex.fx.needsUpdate = true
+  const sc = e.stack.getContext('2d')!
+  sc.clearRect(0, 0, SIZE, SIZE * 2)
+  sc.drawImage(e.color, 0, 0)
+  sc.drawImage(e.fx, 0, SIZE)
+  e.tex.tex.needsUpdate = true
   e.tex.ready = true
 }
 
@@ -64,16 +68,19 @@ export function getMakeupTextures(m: Makeup, tone: string): MakeupTextures {
   }
   const color = mkCanvas()
   const fx = mkCanvas()
-  const mkTex = (c: HTMLCanvasElement, srgb: boolean) => {
+  const stack = document.createElement('canvas')
+  stack.width = SIZE
+  stack.height = SIZE * 2
+  const mkTex = (c: HTMLCanvasElement) => {
     const t = new CanvasTexture(c)
-    t.colorSpace = srgb ? SRGBColorSpace : NoColorSpace
+    t.colorSpace = NoColorSpace
     t.generateMipmaps = true
     t.minFilter = LinearMipmapLinearFilter
     t.magFilter = LinearFilter
     t.anisotropy = 4
     return t
   }
-  e = { key, color, fx, use: 0, tex: { color: mkTex(color, true), fx: mkTex(fx, false), ready: false } }
+  e = { key, color, fx, stack, use: 0, tex: { tex: mkTex(stack), ready: false } }
   cache.set(key, e)
   const entry = e
   if (masks) draw(entry, m, tone)
@@ -82,8 +89,7 @@ export function getMakeupTextures(m: Makeup, tone: string): MakeupTextures {
     const old = cache.keys().next().value as string
     const o = cache.get(old)
     if (o && o !== entry) {
-      o.tex.color.dispose()
-      o.tex.fx.dispose()
+      o.tex.tex.dispose()
       cache.delete(old)
     }
   }

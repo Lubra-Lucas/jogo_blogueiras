@@ -1,4 +1,4 @@
-import { forwardRef, Suspense, use, useImperativeHandle, useDeferredValue, useLayoutEffect, useMemo } from 'react'
+import { forwardRef, Suspense, use, useImperativeHandle, useDeferredValue, useLayoutEffect, useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useGLTF, useTexture } from '@react-three/drei'
 import { Color, MeshPhysicalMaterial, Vector3, type Material, NoColorSpace, Skeleton, type Bone, type Group, type MeshStandardMaterial, type Object3D, type SkinnedMesh, type Texture } from 'three'
@@ -8,6 +8,8 @@ import type { Appearance, ItemRef } from '../../shared/appearance'
 import { BASES, bodyAssets, loadBaseMeta } from './assets'
 import { applyBodyLook, createBodyMaterial, createHairMaterial, setMakeupTextures } from './dollMaterial'
 import { createMaleMaterial } from './maleMaterial'
+import { AUDIT, auditSamplers } from './samplerAudit'
+import { configureFaceLayers } from './faceLayerShader'
 import { createMaleHairMaterial } from './maleHair'
 import { BIG_HEAD_GAIN, BIG_HEAD_SHAPE, DEFAULT_FACE_LAYERS, MALE_BASE_SHAPE, safeShape, type FaceLayers } from '../../shared/faceLayers'
 import { BLANK_TEXTURE, getMakeupTextures } from './makeup/textures'
@@ -284,7 +286,9 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
     jewels.push({ item, ref: r })
   }
   const gltfs = useGLTF([base.glb, ...parts.map((d) => d.glb), ...jewels.map((j) => j.item.glb)]) as GLTF[]
-  const masks = useTexture(gender === 'male' ? [base.mask] : base.layers ? [base.mask, base.mask2] : [base.mask, base.mask2, base.mask3!, base.mask4!])
+  const glCfg = useThree((st) => st.gl)
+  configureFaceLayers(glCfg.capabilities.maxTextures) // GPU com poucas unidades de textura: modo economico do rosto
+  const masks = useTexture(gender === 'male' || base.layers ? [base.mask] : [base.mask, base.mask2, base.mask3!, base.mask4!])
 
   // ---- esqueleto + malha do corpo (clone por instancia) ----
   const rig = useMemo(() => buildRig(gltfs[0].scene, gender), [gltfs[0]]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -338,7 +342,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
   }, [faceKey])
   const maleMat = useMemo(() => (gender === 'male' ? createMaleMaterial(rig.map, masks[0], faceLayers) : null), [rig, masks, gender]) // eslint-disable-line react-hooks/exhaustive-deps
   const bodyMat = useMemo(
-    () => (gender === 'male' ? null : createBodyMaterial(rig.map, rig.normalMap, { mask: masks[0], mask2: masks[1], mask3: masks[2], mask4: masks[3] }, BLANK_TEXTURE, base.layers ? faceLayers : null)),
+    () => (gender === 'male' ? null : createBodyMaterial(rig.map, rig.normalMap, { mask: masks[0], mask2: masks[1] ?? masks[0], mask3: masks[2], mask4: masks[3] }, BLANK_TEXTURE, base.layers ? faceLayers : null)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [rig, masks, gender],
   )
@@ -381,10 +385,10 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
       lash: { color: mkp.lashes.style !== 'natural' || mkp.lashes.color.toLowerCase() !== DEFAULT_MAKEUP.lashes.color ? mkp.lashes.color : null },
       nails: { style: { none: 0, solid: 1, french: 2, ombre: 3, glitter: 4 }[nails.style], c1: nails.color, c2: nails.color2, fin: { gloss: 0, matte: 1, chrome: 2 }[nails.finish] },
     })
-    if (makeupIsEmpty(mkp)) setMakeupTextures(bodyMat!, null, null, BLANK_TEXTURE)
+    if (makeupIsEmpty(mkp)) setMakeupTextures(bodyMat!, null, BLANK_TEXTURE)
     else {
       const t = getMakeupTextures(mkp, appearance.skin.tone)
-      setMakeupTextures(bodyMat!, t.color, t.fx, BLANK_TEXTURE)
+      setMakeupTextures(bodyMat!, t.tex, BLANK_TEXTURE)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bodyMat, maleMat, lookKey])
@@ -493,6 +497,14 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
     for (const a of attachments) for (const m of a.meshes) m.castShadow = shadows
   }, [rig, attachments, shadows])
 
+  const glAudit = useThree((st) => st.gl)
+  const auditLast = useRef(0)
+  useFrame(({ clock }) => {
+    if (AUDIT && clock.elapsedTime - auditLast.current > 2) {
+      auditLast.current = clock.elapsedTime
+      auditSamplers(glAudit)
+    }
+  })
   useLayoutEffect(
     () => () => {
       rig.skeleton.dispose()
@@ -528,7 +540,7 @@ export const Character = forwardRef<CharacterHandle, CharacterProps>(function Ch
 const DEFAULT_HAIR_ID = 'hair.meshyUpdo'
 const FB = bodyAssets('female')
 useGLTF.preload([FB.glb, ...Object.values(WEARABLES).filter((w) => w.id === DEFAULT_HAIR_ID).map((w) => w.glb)])
-useTexture.preload(FB.layers ? [FB.mask, FB.mask2] : [FB.mask, FB.mask2, FB.mask3!, FB.mask4!])
+useTexture.preload(FB.layers ? [FB.mask] : [FB.mask, FB.mask2, FB.mask3!, FB.mask4!])
 void loadBaseMeta('doll')
 void BASES
 void MALE_WEARABLES

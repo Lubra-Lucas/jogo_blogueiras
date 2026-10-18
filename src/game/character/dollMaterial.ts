@@ -2,7 +2,7 @@ import { Color, MeshPhysicalMaterial, Vector2, Vector3, type IUniform, type Text
 import { NUDE_UNDER, type LipFinish, type SkinFinish, type SuitFinish } from '../../shared/appearance'
 import { FACE_BOX } from './makeup/landmarks'
 import { DOLL_REF, onKitLoad, type FaceLayers } from './maleFace'
-import { FL_BODY, FL_COAT, FL_DECL, FL_ROUGH, applyFaceLayers, createFaceLayerUniforms } from './faceLayerShader'
+import { FL_BODY, FL_COAT, FL_DECL, FL_ROUGH, applyFaceLayers, createFaceLayerUniforms, faceLayerDefines } from './faceLayerShader'
 
 /**
  * Materiais da boneca (MeshPhysicalMaterial + `onBeforeCompile`, sem node materials).
@@ -73,7 +73,6 @@ export function createBodyMaterial(map: Texture | null, normalMap: Texture | nul
     uMask3: u(masks.mask3),
     uMask4: u(masks.mask4),
     uMk: u(blank),
-    uMkFx: u(blank),
     uUseMk: u(0),
     uFaceBox: u([x0, y0, 1 / (x1 - x0), 1 / (y1 - y0)]),
     uSkin: u(new Color('#efcdbd')),
@@ -122,6 +121,7 @@ export function createBodyMaterial(map: Texture | null, normalMap: Texture | nul
     sheenRoughness: 0.5,
     sheenColor: new Color('#ffffff'),
   })
+  if (layers) material.defines = { ...(material.defines ?? {}), ...faceLayerDefines() }
   material.onBeforeCompile = (shader: WebGLProgramParametersWithUniforms) => {
     Object.assign(shader.uniforms, uniforms)
     shader.vertexShader = shader.vertexShader
@@ -132,9 +132,9 @@ export function createBodyMaterial(map: Texture | null, normalMap: Texture | nul
         'void main() {',
         /* glsl */ `
 varying vec3 vRest; varying vec3 vRestN;
-${layers ? 'uniform sampler2D uMask; uniform sampler2D uMask2;' : 'uniform sampler2D uMask; uniform sampler2D uMask2; uniform sampler2D uMask3; uniform sampler2D uMask4;'}
+${layers ? 'uniform sampler2D uMask;' : 'uniform sampler2D uMask; uniform sampler2D uMask2; uniform sampler2D uMask3; uniform sampler2D uMask4;'}
 ${layers ? FL_DECL : ''}
-uniform sampler2D uMk; uniform sampler2D uMkFx; uniform float uUseMk; uniform vec4 uFaceBox;
+uniform sampler2D uMk; uniform float uUseMk; uniform vec4 uFaceBox;
 uniform vec3 uHairBody; uniform vec3 uSkin; uniform vec3 uSuit; uniform float uSuitSkin; uniform vec3 uUnder; uniform float uUnderOn; uniform float uCovUp; uniform float uCovLow; uniform vec3 uLips; uniform float uUseLips;
 uniform float uRoughSkin; uniform float uRoughSuit; uniform float uCcSkin; uniform float uCcrSkin;
 uniform float uCcSuit; uniform float uCcrSuit; uniform vec3 uShSkin; uniform vec3 uShSuit;
@@ -142,6 +142,7 @@ uniform float uLipRough; uniform float uLipMetal; uniform float uLipMatte;
 uniform vec3 uIrisL; uniform vec3 uIrisR; uniform float uIrisOn; uniform float uIrisRing;
 uniform vec3 uBrow; uniform float uBrowMode; uniform vec3 uLash; uniform float uLashOn;
 uniform float uNailStyle; uniform vec3 uNail1; uniform vec3 uNail2; uniform float uNailFin; uniform float uBodyFreck;
+vec3 dSrgb(vec3 c) { return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), c)); }
 float dLum(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }
 float dHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 void main() {
@@ -153,9 +154,11 @@ void main() {
         /* glsl */ `
 #ifdef USE_MAP
   vec4 sampledDiffuseColor = texture2D( map, vMapUv );
-  vec3 mk = texture2D( uMask, vMapUv ).rgb;
-${layers ? `  vec3 mk2 = texture2D( uMask2, vMapUv ).rgb;
-  vec3 mk4 = vec3(mk2.r, mk2.b, 0.0); vec3 mk3 = vec3(0.0); mk2 = vec3(0.0, mk2.g, 0.0);` : `  vec3 mk2 = texture2D( uMask2, vMapUv ).rgb;
+${layers ? `  // mascara unica empacotada (RGBA): R = peso da pele (macacao = 1 - R), G = linha do cabelo, B = unha, A = 128 + 127 * posicao da unha
+  vec4 mkP = texture2D( uMask, vMapUv );
+  vec3 mk = vec3(mkP.r, 1.0 - mkP.r, 0.0);
+  vec3 mk4 = vec3(mkP.b, clamp((mkP.a * 255.0 - 128.0) / 127.0, 0.0, 1.0), 0.0); vec3 mk3 = vec3(0.0); vec3 mk2 = vec3(0.0, mkP.g, 0.0);` : `  vec3 mk = texture2D( uMask, vMapUv ).rgb;
+  vec3 mk2 = texture2D( uMask2, vMapUv ).rgb;
   vec3 mk3 = texture2D( uMask3, vMapUv ).rgb;
   vec3 mk4 = texture2D( uMask4, vMapUv ).rgb;`}
   wLips = mk2.r * uUseLips; wHl = mk2.g * (1.0 - uLashOn * clamp(mk3.b * 1.5, 0.0, 1.0)); wNail = mk4.r * step(0.5, uNailStyle);
@@ -226,8 +229,11 @@ ${layers ? `  vec3 mk2 = texture2D( uMask2, vMapUv ).rgb;
   fuv = (vRest.xy - uFaceBox.xy) * uFaceBox.zw;
   float inBox = step(0.0, fuv.x) * step(fuv.x, 1.0) * step(0.0, fuv.y) * step(fuv.y, 1.0);
   wFaceMk = uUseMk * inBox * smoothstep(0.15, 0.5, vRestN.z) * smoothstep(0.07, 0.092, vRest.z) * (1.0 - wSuit) * (1.0 - wHl);
-  vec4 mkc = texture2D( uMk, fuv );
-  mkFx = texture2D( uMkFx, fuv );
+  // uma textura so: cor (sRGB, em cima) + efeitos (embaixo)
+  vec2 muv = clamp(fuv, 0.002, 0.998) * 0.5;
+  vec4 mkc = texture2D( uMk, vec2(muv.x * 2.0, muv.y + 0.5) );
+  mkc.rgb = dSrgb(mkc.rgb);
+  mkFx = texture2D( uMk, vec2(muv.x * 2.0, muv.y) );
   base = mix(base, mkc.rgb, mkc.a * wFaceMk);
   // unhas
   if (wNail > 0.001) {
@@ -396,10 +402,9 @@ export function applyBodyLook(m: DollBodyMaterial, look: BodyLook) {
 }
 
 /** Liga/desliga as texturas de maquiagem (null = sem maquiagem). */
-export function setMakeupTextures(m: DollBodyMaterial, color: Texture | null, fx: Texture | null, blank: Texture) {
-  m.uniforms.uMk.value = color ?? blank
-  m.uniforms.uMkFx.value = fx ?? blank
-  m.uniforms.uUseMk.value = color ? 1 : 0
+export function setMakeupTextures(m: DollBodyMaterial, tex: Texture | null, blank: Texture) {
+  m.uniforms.uMk.value = tex ?? blank
+  m.uniforms.uUseMk.value = tex ? 1 : 0
 }
 
 /** Cabelo: recolore mantendo o detalhe de luminancia (mechas/brilho); ombre/mechas/bicolor; brilho ajustavel. */

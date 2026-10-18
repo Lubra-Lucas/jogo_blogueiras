@@ -25,7 +25,7 @@ const M = `${A}male/`
 export function bodyAssets(g: 'female' | 'male'): BodyAssets {
   if (g === 'male') return { glb: `${M}male_base.glb`, meta: `${M}male_base.json`, mask: `${M}male_mask.png`, mask2: `${M}male_mask.png`, layers: true }
   if (OLD_FACE) return { ...BASES.doll, layers: false }
-  return { glb: `${A}doll_layers.glb`, meta: `${A}doll_layers.json`, mask: `${A}doll_layers_mask.png`, mask2: `${A}doll_layers_mask2.png`, layers: true }
+  return { glb: `${A}doll_layers.glb`, meta: `${A}doll_layers.json`, mask: `${A}doll_layers_masks.png`, mask2: `${A}doll_layers_masks.png`, layers: true }
 }
 
 export interface MorphMeta {

@@ -52,15 +52,22 @@ export function kitTexture(file: string, color = false): Texture {
 
 const styleIdx = (list: KitStyle[], id: string) => list.find((k) => k.id === id)
 
+/** Atlas unico do rosto (face_atlas.png, 1024 de largura): extras RGB | pintura (R) | blush (R, 800x600) | sombreado classico (RGB, 1024x512). Gerado por tools/blender/male/pack_samplers.py */
+export const FACE_ATLAS = {
+  w: 1024, h: 3976,
+  extras: { y0: 0, h: 1432 },
+  paint: { y0: 1432, h: 1432 },
+  blush: { y0: 2864, w: 800, h: 600 },
+  shade: { y0: 3464, h: 512 },
+} as const
+
 export interface KitState {
-  sclera: Texture
-  /** olho: R brilho, G delineado, B iris (0,1 + 0,9 cinza); classico: RGBA (razao) */
-  iris: Texture
+  /** esclera (sRGB codificado, metade de cima) + olho (R brilho, G delineado, B iris; classico: RGBA, metade de baixo) numa textura so */
+  eye: Texture
   /** atlas de partes (sobrancelha, boca, cilios) ou, na Classica, classic_parts */
   parts: Texture
-  blush: Texture
-  extras: Texture
-  paint: Texture
+  /** atlas do rosto (extras, pintura, blush, sombreado classico) */
+  face: Texture
   beard: Texture
   /** celulas no atlas (-1 = nada) */
   browCell: number
@@ -104,12 +111,9 @@ export function kitFor(f: MaleFace): KitState {
     ct = { idx: ks.cell ?? -1, amt: Math.max(f.detail.lines, f.detail.bags), col: ks.color ?? '#7a5a4a' }
   }
   return {
-    sclera: kitTexture(`eye_${eye.id}_sclera`, true),
-    iris: classic ? kitTexture('eye_classic_iris') : kitTexture(`eyepk_${eye.id}`),
+    eye: kitTexture(`eyep_${eye.id}`),
     parts: classic ? kitTexture('classic_parts') : kitTexture('parts'),
-    blush: f.blush.shade ? kitTexture('classic_shade') : kitTexture('blush'),
-    extras: kitTexture('extras'),
-    paint: kitTexture('paint'),
+    face: kitTexture('face_atlas'),
     beard: f.beard.style === 'none' ? BLANK_LAYER : kitTexture(`beard_${f.beard.style}`),
     browCell: classic ? 0 : (brow.cell ?? -1),
     mouthCell: mouth.cell ?? 0,
@@ -126,10 +130,9 @@ export function kitFor(f: MaleFace): KitState {
 
 export function preloadKit() {
   for (const e of EYE_STYLES) {
-    kitTexture(`eye_${e.id}_sclera`, true)
-    kitTexture(e.id === 'classic' ? 'eye_classic_iris' : `eyepk_${e.id}`)
+    kitTexture(`eyep_${e.id}`)
   }
-  for (const f of ['parts', 'extras', 'paint', 'blush', 'classic_shade', 'classic_parts']) kitTexture(f)
+  for (const f of ['parts', 'face_atlas', 'classic_parts']) kitTexture(f)
 }
 
 export const colorOf = (hex: string) => new Color(hex)

@@ -1,6 +1,6 @@
 import { Color, MeshPhysicalMaterial, type IUniform, type Texture, type WebGLProgramParametersWithUniforms } from 'three'
 import { MALE_REF, onKitLoad, type FaceLayers } from './maleFace'
-import { FL_COAT, FL_DECL, FL_BODY, FL_ROUGH, applyFaceLayers, createFaceLayerUniforms } from './faceLayerShader'
+import { FL_COAT, FL_DECL, FL_BODY, FL_ROUGH, applyFaceLayers, createFaceLayerUniforms, faceLayerDefines } from './faceLayerShader'
 
 /**
  * Material do corpo MASCULINO (male_base.glb): pele limpa + boxer por mascara (mesma convencao do dollMaterial.ts:
@@ -36,7 +36,7 @@ export function createMaleMaterial(map: Texture | null, mask: Texture, initial: 
   const material = new MeshPhysicalMaterial({
     map, roughness: 0.5, metalness: 0, clearcoat: 0.25, clearcoatRoughness: 0.4, sheen: 0.6, sheenRoughness: 0.5, sheenColor: new Color('#ffe6dc'),
   })
-  material.defines = { ...(material.defines ?? {}), FL_BEARD: '' }
+  material.defines = { ...(material.defines ?? {}), FL_BEARD: '', ...faceLayerDefines() }
   material.onBeforeCompile = (shader: WebGLProgramParametersWithUniforms) => {
     Object.assign(shader.uniforms, uniforms)
     shader.vertexShader = shader.vertexShader

@@ -4,6 +4,7 @@ import './index.css'
 import './ui/tokens.css'
 import App from './App.tsx'
 import { applyTestMode } from './game/testMode'
+import './game/character/samplerAudit'
 
 // MODO TESTE (desligar antes do lancamento: TEST_MODE em src/game/testMode.ts)
 applyTestMode()
