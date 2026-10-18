@@ -1,6 +1,8 @@
 import { Color, MeshPhysicalMaterial, Vector2, Vector3, type IUniform, type Texture, type WebGLProgramParametersWithUniforms } from 'three'
 import { NUDE_UNDER, type LipFinish, type SkinFinish, type SuitFinish } from '../../shared/appearance'
 import { FACE_BOX } from './makeup/landmarks'
+import { DOLL_REF, onKitLoad, type FaceLayers } from './maleFace'
+import { FL_BODY, FL_COAT, FL_DECL, FL_ROUGH, applyFaceLayers, createFaceLayerUniforms } from './faceLayerShader'
 
 /**
  * Materiais da boneca (MeshPhysicalMaterial + `onBeforeCompile`, sem node materials).
@@ -48,6 +50,10 @@ function u<T>(value: T): IUniform<T> {
 export interface DollBodyMaterial {
   material: MeshPhysicalMaterial
   uniforms: U
+  /** rosto por camadas (so quando criado com `layers`): troca o estado do rosto */
+  setFace?: (f: FaceLayers) => void
+  /** solta o listener do kit (e o material) */
+  dispose?: () => void
 }
 
 export interface BodyMasks {
@@ -58,9 +64,10 @@ export interface BodyMasks {
 }
 
 /** Corpo da boneca. `map`/`normalMap` vem do GLB; as mascaras sao texturas lineares (flipY=false). */
-export function createBodyMaterial(map: Texture | null, normalMap: Texture | null, masks: BodyMasks, blank: Texture): DollBodyMaterial {
+export function createBodyMaterial(map: Texture | null, normalMap: Texture | null, masks: BodyMasks, blank: Texture, layers: FaceLayers | null = null): DollBodyMaterial {
   const { x0, x1, y0, y1 } = FACE_BOX
   const uniforms: U = {
+    ...(layers ? createFaceLayerUniforms(DOLL_REF, [1.2, 1.56]) : {}),
     uMask: u(masks.mask),
     uMask2: u(masks.mask2),
     uMask3: u(masks.mask3),
@@ -125,7 +132,8 @@ export function createBodyMaterial(map: Texture | null, normalMap: Texture | nul
         'void main() {',
         /* glsl */ `
 varying vec3 vRest; varying vec3 vRestN;
-uniform sampler2D uMask; uniform sampler2D uMask2; uniform sampler2D uMask3; uniform sampler2D uMask4;
+${layers ? 'uniform sampler2D uMask; uniform sampler2D uMask2;' : 'uniform sampler2D uMask; uniform sampler2D uMask2; uniform sampler2D uMask3; uniform sampler2D uMask4;'}
+${layers ? FL_DECL : ''}
 uniform sampler2D uMk; uniform sampler2D uMkFx; uniform float uUseMk; uniform vec4 uFaceBox;
 uniform vec3 uHairBody; uniform vec3 uSkin; uniform vec3 uSuit; uniform float uSuitSkin; uniform vec3 uUnder; uniform float uUnderOn; uniform float uCovUp; uniform float uCovLow; uniform vec3 uLips; uniform float uUseLips;
 uniform float uRoughSkin; uniform float uRoughSuit; uniform float uCcSkin; uniform float uCcrSkin;
@@ -146,9 +154,10 @@ void main() {
 #ifdef USE_MAP
   vec4 sampledDiffuseColor = texture2D( map, vMapUv );
   vec3 mk = texture2D( uMask, vMapUv ).rgb;
-  vec3 mk2 = texture2D( uMask2, vMapUv ).rgb;
+${layers ? `  vec3 mk2 = texture2D( uMask2, vMapUv ).rgb;
+  vec3 mk4 = vec3(mk2.r, mk2.b, 0.0); vec3 mk3 = vec3(0.0); mk2 = vec3(0.0, mk2.g, 0.0);` : `  vec3 mk2 = texture2D( uMask2, vMapUv ).rgb;
   vec3 mk3 = texture2D( uMask3, vMapUv ).rgb;
-  vec3 mk4 = texture2D( uMask4, vMapUv ).rgb;
+  vec3 mk4 = texture2D( uMask4, vMapUv ).rgb;`}
   wLips = mk2.r * uUseLips; wHl = mk2.g * (1.0 - uLashOn * clamp(mk3.b * 1.5, 0.0, 1.0)); wNail = mk4.r * step(0.5, uNailStyle);
   float msum = max(mk.r + mk.g + mk.b, 1e-3);
   wSkin = mk.r / msum; wSuit = mk.g / msum; wFeat = mk.b / msum;
@@ -212,6 +221,7 @@ void main() {
   vec3 browCol = mix(uBrow * clamp(tl / ${REF_BROW_LUM}, 0.5, 1.5), uSkin * 0.98, step(1.5, uBrowMode));
   base = mix(base, browCol, clamp(mk3.g * 1.1, 0.0, 1.0) * step(0.5, uBrowMode));
   base = mix(base, uHairBody * clamp(tl / ${REF_HAIR_LUM}, 0.4, 1.0), wHl);
+  ${layers ? FL_BODY : ''}
   // maquiagem projetada de frente (so rosto: normal para frente, na faixa da cabeca)
   fuv = (vRest.xy - uFaceBox.xy) * uFaceBox.zw;
   float inBox = step(0.0, fuv.x) * step(fuv.x, 1.0) * step(0.0, fuv.y) * step(fuv.y, 1.0);
@@ -239,7 +249,7 @@ roughnessFactor = mix(uRoughSkin, uRoughSuit, wSuitFx);
 roughnessFactor = mix(roughnessFactor, 0.18, wFeat * 0.8);
 roughnessFactor = mix(roughnessFactor, uLipRough, wLips);
 roughnessFactor = mix(roughnessFactor, uNailFin > 0.5 ? (uNailFin > 1.5 ? 0.08 : 0.55) : 0.1, clamp(wNail * 1.4, 0.0, 1.0));
-roughnessFactor = mix(roughnessFactor, roughnessFactor * 0.45, clamp(mkFx.g * wFaceMk, 0.0, 1.0));`,
+roughnessFactor = mix(roughnessFactor, roughnessFactor * 0.45, clamp(mkFx.g * wFaceMk, 0.0, 1.0));${layers ? FL_ROUGH : ''}`,
       )
       .replace(
         '#include <metalnessmap_fragment>',
@@ -262,7 +272,7 @@ metalnessFactor = max(metalnessFactor, step(1.5, uNailFin) * clamp(wNail * 1.4, 
 #endif
 #ifdef USE_SHEEN
   material.sheenColor = mix(uShSkin, uShSuit, wSuitFx) * (1.0 - wFeat);
-#endif`,
+#endif${layers ? FL_COAT : ''}`,
       )
       .replace(
         '#include <emissivemap_fragment>',
@@ -279,8 +289,17 @@ metalnessFactor = max(metalnessFactor, step(1.5, uNailFin) * clamp(wNail * 1.4, 
 }`,
       )
   }
-  material.customProgramCacheKey = () => 'doll-body-v3'
-  return { material, uniforms }
+  material.customProgramCacheKey = () => (layers ? 'doll-body-v4-layers' : 'doll-body-v3')
+  if (!layers) return { material, uniforms }
+  let current = layers
+  const setFace = (f: FaceLayers) => {
+    current = f
+    applyFaceLayers(uniforms, f, DOLL_REF)
+  }
+  setFace(layers)
+  // quando uma textura do kit termina de carregar, reaplica o rosto DESTE material (estado atual)
+  const off = onKitLoad(() => setFace(current))
+  return { material, uniforms, setFace, dispose: () => { off(); material.dispose() } }
 }
 
 export interface BodyLook {

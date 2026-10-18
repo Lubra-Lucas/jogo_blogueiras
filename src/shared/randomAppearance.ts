@@ -9,7 +9,9 @@
  *   fica um tom acima/abaixo); cabelo de fantasia usa sobrancelha escura natural; olhos escuros para peles profundas.
  * Nao mexe em roupas, no id do cabelo nem na maquiagem (custo de textura das NPCs).
  */
-import { DEFAULT_APPEARANCE, normalizeAppearance, type Appearance } from './appearance'
+import { DEFAULT_APPEARANCE, DEFAULT_MALE_APPEARANCE, normalizeAppearance, type Appearance } from './appearance'
+import type { Gender } from './faceLayers'
+import { rollFaceLayers, rollShape } from './randomFace'
 import {
   BODY_CONTROLS,
   type BodyControl,
@@ -64,6 +66,8 @@ export interface RandomOptions {
   hair?: boolean
   face?: boolean
   body?: boolean
+  /** 'female' | 'male' | 'any' (sorteia ~35% masculino); omitido = mantem o genero do `base` */
+  gender?: Gender | 'any'
 }
 
 // ---------- utilidades ----------
@@ -261,9 +265,16 @@ function rollEyeColor(r: Rng, skinIdx: number, npc: boolean): string {
  * Sempre devolve uma aparencia v5 normalizada; `morphs` recebe os morphs antigos correspondentes (corpo, olho, sobrancelha).
  */
 export function randomAppearance(seed: number | string, opts: RandomOptions = {}): Appearance {
-  const base = normalizeAppearance(opts.base ?? DEFAULT_APPEARANCE)
+  let base = normalizeAppearance(opts.base ?? DEFAULT_APPEARANCE)
   const npc = opts.profile === 'npc'
   const r = mulberry32(seedToNumber(seed))
+  // genero/camadas/formato usam um gerador proprio (nao altera a ordem dos sorteios antigos)
+  const rg = mulberry32(hash('g:' + String(seed)))
+  const wantG: Gender = opts.gender === 'any' ? (rg() < 0.35 ? 'male' : 'female') : (opts.gender ?? base.gender)
+  if (wantG !== base.gender) {
+    const d = wantG === 'male' ? DEFAULT_MALE_APPEARANCE : DEFAULT_APPEARANCE
+    base = { ...d, skin: base.skin, hair: wantG === 'male' ? { ...d.hair, color: base.hair.color } : d.hair, body: base.body, suit: wantG === 'male' ? d.suit : base.suit }
+  }
   // ordem fixa dos sorteios: a mesma seed gera sempre o mesmo resultado, independente das opcoes ligadas
   const rolledSkin = rollSkin(r)
   // sem sortear a pele, cabelo/olhos acompanham o tom de pele real do `base`
@@ -290,7 +301,7 @@ export function randomAppearance(seed: number | string, opts: RandomOptions = {}
     face = opts.face !== false ? rollFace(rf, npc, hairNow) : opts.hair !== false ? { ...out.face, browColor: browColorFor(rf, hairNow) } : out.face
     body = opts.body !== false ? rollBody(rb, npc) : out.body
     const cand = withFaceBody(out, face, body)
-    if (appearanceIssues(cand).length === 0) return cand
+    if (appearanceIssues(cand).length === 0) return withLayers(cand, rg, opts, npc)
   }
   // plano B (raro): puxa corpo e rosto para o neutro ate nao haver problema
   let cand = withFaceBody(out, face, body)
@@ -300,7 +311,20 @@ export function randomAppearance(seed: number | string, opts: RandomOptions = {}
     const nf = { ...face, eyeShape: 'eye_1', faceShape: 'face_1', eyeSize: clamp(face.eyeSize, 0.5, 0.9), browThickness: clamp(face.browThickness, 0.3, 0.7) }
     cand = withFaceBody(out, nf, nb)
   }
-  return cand
+  return withLayers(cand, rg, opts, npc)
+}
+
+const MALE_HAIRS = ['hair.m.buzz', 'hair.m.quiff', 'hair.m.sidepart']
+/** Camadas do rosto + formato + cabelo masculino (gerador `rg` proprio; nao mexe nas roupas). */
+function withLayers(a: Appearance, rg: Rng, opts: RandomOptions, npc: boolean): Appearance {
+  let out = a
+  const needMaleHair = out.gender === 'male' && !(out.hair.id ?? '').startsWith('hair.m.')
+  if (needMaleHair && opts.hair !== false) out = { ...out, hair: { ...out.hair, id: pickOf(rg, MALE_HAIRS), mode: 'solid', color2: undefined } }
+  else if (needMaleHair) out = { ...out, hair: { ...out.hair, id: 'hair.m.quiff' } }
+  if (opts.face !== false) {
+    out = { ...out, faceLayers: rollFaceLayers(rg, out.gender, out.skin.tone, out.hair.color, out.eyes?.color ?? pickOf(rg, EYE_NATURAL_HEX), out.face.browColor, npc), shape: rollShape(rg, out.gender, npc) }
+  }
+  return out
 }
 
 /** Monta a aparencia com face/body e sincroniza os morphs antigos (corpo, eyesBig, browLift). */
@@ -318,11 +342,14 @@ const npcCache = new Map<string, Appearance>()
  * Mantem roupas, cabelo (estilo e cor), tom de pele, cor dos olhos e macacao do `base`; sorteia rosto e corpo.
  * Nao cria malhas/materiais: so muda numeros e morphs que a boneca ja tem.
  */
-export function npcAppearance(key: string, base: Appearance): Appearance {
-  const ck = `${key}|${base.skin.tone}|${base.hair.id}|${base.hair.color}|${base.suit.color}|${Object.values(base.outfit).map((o) => o?.id).join(',')}`
+export function npcAppearance(key: string, base: Appearance, maleChance = 0): Appearance {
+  const male = maleChance > 0 && base.gender === 'female' && (hash('npcg:' + key) % 1000) / 1000 < maleChance
+  const ck = `${male ? 'M' : 'F'}${key}|${base.skin.tone}|${base.hair.id}|${base.hair.color}|${base.suit.color}|${Object.values(base.outfit).map((o) => o?.id).join(',')}`
   const hit = npcCache.get(ck)
   if (hit) return hit
-  const out = randomAppearance(`npc:${key}`, { base, profile: 'npc', skin: false, hair: false, eyes: false })
+  // masculino: sem roupas femininas (so a boxer), cabelo masculino
+  const b0: Appearance = male ? { ...base, gender: 'male', outfit: {}, accessories: [], hair: { ...base.hair, id: 'hair.m.quiff', mode: 'solid' } } : base
+  const out = randomAppearance(`npc:${key}`, { base: b0, profile: 'npc', skin: false, hair: male ? undefined : false, eyes: false, gender: male ? 'male' : 'female' })
   npcCache.set(ck, out)
   return out
 }

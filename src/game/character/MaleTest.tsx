@@ -4,7 +4,8 @@ import { Environment, Lightformer, useGLTF } from '@react-three/drei'
 import { AnimationClip, AnimationMixer, Box3, NoColorSpace, Plane, TextureLoader, Vector3, type Bone, type Group, type MeshStandardMaterial, type PerspectiveCamera, type SkinnedMesh } from 'three'
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import { DEFAULT_APPEARANCE, type Appearance } from '../../shared/appearance'
-import { Character, type BodyLayers } from './Character'
+import { randomAppearance } from '../../shared/randomAppearance'
+import { Character } from './Character'
 import { CORE_URL } from './animation/animator'
 import { createMaleMaterial, type MaleBodyMaterial } from './maleMaterial'
 import { DEFAULT_MALE_FACE, mergeFace, preloadKit, type MaleFace } from './maleFace'
@@ -59,7 +60,7 @@ function useRig(face: MaleFace, skin: string, suit: string, bare: boolean) {
   useLayoutEffect(() => {
     rig.mat.setFace(face)
     rig.mat.setLook(skin, suit)
-    rig.mat.uniforms.uFaceOn.value = bare ? 0 : 1
+    rig.mat.uniforms.uFlFaceOn.value = bare ? 0 : 1
   }, [rig, face, skin, suit, bare])
   const mixer = useMemo(() => {
     const m = new AnimationMixer(rig.root)
@@ -143,7 +144,7 @@ function Male({ look, x = 0, dy = 0, yaw = 0, bare = false, report = false, cut 
       <primitive object={rig.root} />
       {look.hair && !noHair && (
         <Suspense fallback={null}>
-          <HairAttach rig={rig} id={look.hair.id} color={look.hair.color} gloss={look.hair.gloss} />
+          <HairAttach rig={rig} id={look.hair.id.replace('hair.m.', '') as MaleHairId} color={look.hair.color} gloss={look.hair.gloss} />
         </Suspense>
       )}
     </group>
@@ -160,20 +161,28 @@ function Doll({ x, yaw, dy = 0 }: { x: number; yaw: number; dy?: number }) {
   )
 }
 
-const DOLL_LAYERS_GLB = `${BASE}assets/characters/doll_layers.glb`
-const DOLL_LAYERS_MASK = `${BASE}assets/characters/doll_layers_mask.png`
 
 /** Boneca NOVA: doll_layers.glb (rosto limpo) + camadas; e o mesmo Character (cabelo, roupas, morphs), so com o corpo trocado. */
 function DollNew({ x, yaw, dy = 0, look = DOLL_REPLICA, outfit }: { x: number; yaw: number; dy?: number; look?: FemLook; outfit?: Appearance['outfit'] }) {
   const app = useMemo<Appearance>(
-    () => ({ ...DEFAULT_APPEARANCE, skin: { ...DEFAULT_APPEARANCE.skin, tone: look.skin }, hair: { ...DEFAULT_APPEARANCE.hair, id: look.hair.id, color: look.hair.color }, ...(outfit ? { outfit } : {}) }),
+    () => ({ ...DEFAULT_APPEARANCE, skin: { ...DEFAULT_APPEARANCE.skin, tone: look.skin }, hair: { ...DEFAULT_APPEARANCE.hair, id: look.hair.id, color: look.hair.color }, faceLayers: look.face, shape: look.shape, ...(outfit ? { outfit } : {}) }),
     [look, outfit],
   )
-  const layers = useMemo<BodyLayers>(() => ({ glb: DOLL_LAYERS_GLB, mask: DOLL_LAYERS_MASK, face: look.face, shape: look.shape }), [look])
   return (
     <group position={[x, dy, 0]} rotation={[0, yaw, 0]}>
       <Suspense fallback={null}>
-        <Character appearance={app} layers={layers} anim={REST ? undefined : { clip: 'idle', t: T }} />
+        <Character appearance={app} anim={REST ? undefined : { clip: 'idle', t: T }} />
+      </Suspense>
+    </group>
+  )
+}
+
+function MixChar({ seed, gender, x }: { seed: string; gender: 'female' | 'male'; x: number }) {
+  const app = useMemo(() => randomAppearance(seed, { gender, profile: 'npc' }), [seed, gender])
+  return (
+    <group position={[x, 0, 0]}>
+      <Suspense fallback={null}>
+        <Character appearance={app} anim={REST ? undefined : { clip: 'idle', t: T }} />
       </Suspense>
     </group>
   )
@@ -289,6 +298,20 @@ export function MaleTest() {
         {cols.map((c, r) =>
           hairs.map((h, k) => <Male key={`${r}${k}`} look={{ ...base, hair: { id: h.id, color: c } }} x={rowX(k, 3, 0.42)} dy={-r * 0.46} yaw={yaw34} cut />),
         )}
+      </>
+    )
+  } else if (scene === 'mix') {
+    // 6 personagens de generos misturados pelo mesmo caminho do jogo (Character + Appearance aleatoria), na mesma cena
+    const seeds = ['a1', 'b2', 'c3', 'd4', 'e5', 'f6']
+    const genders: Array<'female' | 'male'> = ['female', 'male', 'female', 'male', 'male', 'female']
+    const close = Q.get('close') === '1'
+    content = (
+      <>
+        <Cam target={close ? [0, 1.5, 0] : [0, 0.88, 0]} dist={Number(Q.get('cam')) || (close ? 5 : 11)} fov={Number(Q.get('fov')) || (close ? 14 : 22)} />
+        {seeds.map((sd, i) => (
+          <MixChar key={sd} seed={sd} gender={genders[i]} x={rowX(i, 6, close ? 0.62 : 1.25)} />
+        ))}
+        {!close && floor}
       </>
     )
   } else if (scene === 'dcmp' || scene === 'dbody') {

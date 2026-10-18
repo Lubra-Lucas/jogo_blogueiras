@@ -10,7 +10,7 @@ import os, json, math
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageChops
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "public", "assets", "characters", "male", "face")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kit_src")
 os.makedirs(OUT, exist_ok=True)
 K = 8000          # px por metro no PNG final
 SS = 3            # supersampling

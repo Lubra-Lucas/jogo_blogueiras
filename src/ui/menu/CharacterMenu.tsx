@@ -6,6 +6,8 @@ import { unownedWorn } from '../shop/tryon'
 import { CharacterPreview, type StageFocus } from './CharacterPreview'
 import { ProfileTab } from './ProfileTab'
 import { AppearanceTab } from './AppearanceTab'
+import { switchGender } from './appearance/layersSections'
+import './appearance/appearance.css'
 import { WardrobeTab } from './WardrobeTab'
 import { SettingsTab } from './SettingsTab'
 import { IconBrush, IconClose, IconGear, IconHanger, IconUser } from './icons'
@@ -191,18 +193,33 @@ export function CharacterMenu() {
 function NameModal() {
   const setName = useProfileStore((s) => s.setName)
   const [v, setV] = useState('')
-  const ok = () => setName(v.trim() || 'Blogueira')
+  const [g, setG] = useState<'female' | 'male'>(useAppearanceStore.getState().appearance.gender)
+  const pickGender = (x: 'female' | 'male') => {
+    setG(x)
+    const st = useAppearanceStore.getState()
+    st.setAppearance(switchGender(st.appearance, x))
+  }
+  // o genero escolhido aqui vira o look salvo (o editor continua permitindo trocar depois)
+  const done = () => useAppearanceStore.getState().save()
+  const ok = () => (done(), setName(v.trim() || 'Blogueira'))
   return (
     <div className="modal">
       <div className="modal__box">
         <h3>Bem-vinda!</h3>
         <p>Qual é o seu nome de blogueira?</p>
+        <div className="cc-gender" role="group" aria-label="Modelo do personagem" style={{ marginBottom: 10 }}>
+          {(['female', 'male'] as const).map((x) => (
+            <button key={x} type="button" className="cc-opt" aria-pressed={g === x} onClick={() => pickGender(x)}>
+              <span>{x === 'female' ? 'Feminino' : 'Masculino'}</span>
+            </button>
+          ))}
+        </div>
         <input className="text-input" autoFocus maxLength={20} value={v} placeholder="Blogueira" aria-label="Seu nome" onChange={(e) => setV(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && ok()} />
         <div className="actions">
           <button type="button" className="btn btn--primary" onClick={ok}>
             Começar
           </button>
-          <button type="button" className="btn" onClick={() => setName('Blogueira')}>
+          <button type="button" className="btn" onClick={() => (done(), setName('Blogueira'))}>
             Pular
           </button>
         </div>

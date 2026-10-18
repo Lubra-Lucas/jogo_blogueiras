@@ -1,123 +1,24 @@
 import { Color, DataTexture, LinearMipmapLinearFilter, NoColorSpace, SRGBColorSpace, Texture, TextureLoader } from 'three'
+import {
+  BROW_STYLES,
+  DEFAULT_FACE_LAYERS,
+  EYE_STYLES,
+  type FaceLayers,
+  type LayerBeardStyle,
+  type LayerBrowStyle,
+  type LayerEyeStyle,
+  type LayerLashStyle,
+  type LayerMouthStyle,
+} from '../../shared/faceLayers'
 
-/**
- * Rosto masculino MONTADO POR CAMADAS, em tempo real (nada e assado na textura da pele).
- * Cada grupo (olho, cilios, sobrancelha, boca, blush) e um PNG com alfa gerado por `tools/blender/male/make_face_kit.py`
- * (public/assets/characters/male/face/). O shader (maleMaterial.ts) projeta de frente no espaco de repouso da malha (x, y),
- * entao a camada acompanha morphs e skinning. Olho e sobrancelha sao espelhados: um unico conjunto de parametros vale para os dois lados.
- * Posicoes sao DESLOCAMENTOS (metros) a partir dos pontos de referencia do modelo (`FACE_REF`).
- */
-
-export type EyeStyle = 'natural' | 'almond' | 'doll' | 'dolla' | 'classic'
-export type LashStyle = 'none' | 'natural' | 'doll' | 'dolla' | 'classic'
-export type BrowStyle = 'thick' | 'arched' | 'thin' | 'soft' | 'classic'
-export type MouthStyle = 'natural' | 'thin' | 'doll' | 'dollg' | 'classic'
-export type BeardStyle = 'none' | 'stubble' | 'mustache' | 'goatee' | 'full'
-
-export const EYE_STYLES: Array<{ id: EyeStyle; label: string }> = [
-  { id: 'natural', label: 'Natural' },
-  { id: 'almond', label: 'Amendoado' },
-  { id: 'doll', label: 'Boneca (grande)' },
-  { id: 'dolla', label: 'Boneca pintada' },
-  { id: 'classic', label: 'Classico (pintura original)' },
-]
-export const LASH_STYLES: Array<{ id: LashStyle; label: string }> = [
-  { id: 'none', label: 'Sem cilios' },
-  { id: 'natural', label: 'Natural' },
-  { id: 'doll', label: 'Boneca (volumosos)' },
-  { id: 'dolla', label: 'Boneca pintada (pretos)' },
-  { id: 'classic', label: 'Classicos (tufos)' },
-]
-export const BROW_STYLES: Array<{ id: BrowStyle; label: string }> = [
-  { id: 'thick', label: 'Reta grossa' },
-  { id: 'arched', label: 'Arqueada' },
-  { id: 'thin', label: 'Fina natural' },
-  { id: 'soft', label: 'Macia (boneca)' },
-  { id: 'classic', label: 'Classica (pintura original)' },
-]
-export const MOUTH_STYLES: Array<{ id: MouthStyle; label: string }> = [
-  { id: 'natural', label: 'Natural masculina' },
-  { id: 'thin', label: 'Fina' },
-  { id: 'doll', label: 'Boneca glossy' },
-  { id: 'dollg', label: 'Boneca cheia glossy' },
-  { id: 'classic', label: 'Tinta sobre os labios esculpidos' },
-]
-
-export const BEARD_STYLES: Array<{ id: BeardStyle; label: string }> = [
-  { id: 'none', label: 'Sem barba' },
-  { id: 'stubble', label: 'Por fazer' },
-  { id: 'mustache', label: 'Bigode' },
-  { id: 'goatee', label: 'Cavanhaque' },
-  { id: 'full', label: 'Barba cheia curta' },
-]
-
-export interface MaleFace {
-  eye: {
-    style: EyeStyle
-    lash: LashStyle
-    /** cor da iris, do delineado e dos cilios */
-    iris: string
-    liner: string
-    lashColor: string
-    /** 1 = tamanho do estilo */
-    scale: number
-    /** deslocamento da metade da distancia entre os olhos (m; + afasta) */
-    gap: number
-    /** deslocamento vertical (m) */
-    y: number
-    /** inclinacao em graus (+ = canto externo para cima) */
-    tilt: number
-    /** intensidade do delineado e dos cilios (0..1) */
-    linerAmt: number
-  }
-  brow: { style: BrowStyle; color: string; scale: number; gap: number; y: number; tilt: number; opacity: number }
-  mouth: { style: MouthStyle; color: string; gloss: number; scale: number; y: number; opacity: number }
-  /** shade: usa o "sombreado da pele" extraido da pintura original (blush, bochechas, testa, rosado dos olhos) em vez do blush simples */
-  blush: { amount: number; color: string; scale: number; gap: number; y: number; shade?: boolean }
-  /** barba: cor tingivel + densidade (0..1) */
-  beard: { style: BeardStyle; color: string; amount: number }
-  /** olheira e linhas de expressao leves (0..1) */
-  detail: { bags: number; lines: number }
-}
-
-/** Pontos de referencia de um modelo (m, espaco de repouso, y para cima). Cada modelo (masculino, boneca) tem os seus. */
-export interface FaceRef { eyeX: number; eyeY: number; browY: number; browX: number; mouthY: number; noseY: number; chinY: number; blushX: number; blushY: number }
-export const MALE_REF: FaceRef = { eyeX: 0.0485, eyeY: 1.5827, browY: 1.609, browX: 0.0545, mouthY: 1.5019, noseY: 1.5423, chinY: 1.4552, blushX: 0.058, blushY: 1.5527 }
-/** Boneca feminina (doll_layers.glb): medidas da pintura original (projecao frontal do atlas). */
-/** Camada "classica": projecao frontal inteira (1024 px = 0,22 m) centrada neste ponto; cores medias da pintura original (classic_defaults.json). */
-export const CLASSIC_CANVAS = { center: [0, 1.39], size: 0.22 } as const
-export const CLASSIC_DEFAULTS = { iris: '#799aad', brow: '#a68672', lips: '#e68288' } as const
-export const DOLL_REF: FaceRef = { eyeX: 0.0585, eyeY: 1.390, browY: 1.434, browX: 0.0560, mouthY: 1.318, noseY: 1.352, chinY: 1.272, blushX: 0.0702, blushY: 1.352 }
-export const FACE_REF = MALE_REF
-
-/** Camadas de rosto inteiro (coordenadas absolutas do espaco de repouso): tamanho e centro. */
-export const BEARD_CANVAS = { size: [0.2, 0.17], center: [0, 1.495] } as const
-export const LINES_CANVAS = { size: [0.2, 0.2], center: [0, 1.59] } as const
-
-/** Tamanho fisico (m) de cada canvas de camada (igual ao kit.json). */
-export const KIT_CANVAS = { eye: [0.1, 0.09], brow: [0.09, 0.034], mouth: [0.09, 0.052], blush: [0.1, 0.075] } as const
-
-export const DEFAULT_MALE_FACE: MaleFace = {
-  eye: { style: 'natural', lash: 'natural', iris: '#6b4a32', liner: '#2a201e', lashColor: '#1c1514', scale: 1, gap: 0, y: 0, tilt: 0, linerAmt: 1 },
-  brow: { style: 'thick', color: '#4a3326', scale: 1, gap: 0, y: 0, tilt: 0, opacity: 0.92 },
-  mouth: { style: 'natural', color: '#b87068', gloss: 0.2, scale: 1, y: 0, opacity: 0.9 },
-  blush: { amount: 0, color: '#e0707c', scale: 1, gap: 0, y: 0 },
-  beard: { style: 'none', color: '#2c211b', amount: 1 },
-  detail: { bags: 0, lines: 0 },
-}
-
-export function mergeFace(base: MaleFace, p: DeepPartial<MaleFace>): MaleFace {
-  return {
-    eye: { ...base.eye, ...p.eye },
-    brow: { ...base.brow, ...p.brow },
-    mouth: { ...base.mouth, ...p.mouth },
-    blush: { ...base.blush, ...p.blush },
-    beard: { ...base.beard, ...p.beard },
-    detail: { ...base.detail, ...p.detail },
-  }
-}
-type DeepPartial<T> = { [K in keyof T]?: Partial<T[K]> }
-
+export * from '../../shared/faceLayers'
+export type MaleFace = FaceLayers
+export const DEFAULT_MALE_FACE = DEFAULT_FACE_LAYERS
+export type EyeStyle = LayerEyeStyle
+export type LashStyle = LayerLashStyle
+export type BrowStyle = LayerBrowStyle
+export type MouthStyle = LayerMouthStyle
+export type BeardStyle = LayerBeardStyle
 // ------------------------------------------------------------------ texturas do kit
 const BASE = import.meta.env.BASE_URL
 export const FACE_KIT_URL = `${BASE}assets/characters/male/face/`
@@ -152,46 +53,40 @@ export function kitTexture(file: string, color = false): Texture {
 export interface KitTextures {
   sclera: Texture
   iris: Texture
-  hi: Texture
-  line: Texture
-  lash: Texture | null
+  /** R = brilho, G = delineado, B = cilios (alfa de cada); classico: RGBA dos cilios */
+  fx: Texture
   brow: Texture
-  lips: Texture
-  gloss: Texture
+  /** R = labios (cinza), G = alfa, B = brilho; classico: RGBA (cor por razao) */
+  mouth: Texture
   blush: Texture
-  beard: Texture | null
-  bags: Texture
-  lines: Texture
+  /** R = barba, G = linhas, B = olheiras (so masculino) */
+  detail: Texture
 }
 
+/** Texturas do kit para este rosto (poucas e empacotadas: o shader tem no maximo ~7 samplers de rosto). */
 export function kitFor(f: MaleFace): KitTextures {
   const e = f.eye.style
-  const l = f.eye.lash
+  const classic = e === 'classic'
+  const l = classic ? (f.eye.lash === 'classic' ? 'classic' : 'none') : f.eye.lash === 'classic' ? 'natural' : f.eye.lash
   return {
     sclera: kitTexture(`eye_${e}_sclera`, true),
     iris: kitTexture(`eye_${e}_iris`),
-    hi: kitTexture(`eye_${e}_hi`, true),
-    line: kitTexture(`eye_${e}_line`),
-    lash: l === 'none' ? null : l === 'classic' ? kitTexture('lash_classic', true) : kitTexture(`lash_${l}_${e === 'classic' ? 'natural' : e}`),
+    fx: kitTexture(`eyefx_${e}_${l}`, classic),
     brow: kitTexture(`brow_${f.brow.style}`),
-    lips: kitTexture(`mouth_${f.mouth.style}_lips`),
-    gloss: kitTexture(`mouth_${f.mouth.style}_gloss`, true),
+    mouth: kitTexture(`mouth_${f.mouth.style}_pk`, f.mouth.style === 'classic'),
     blush: f.blush.shade ? kitTexture('classic_shade') : kitTexture('blush'),
-    beard: f.beard.style === 'none' ? null : kitTexture(`beard_${f.beard.style}`),
-    bags: kitTexture('eye_bags'),
-    lines: kitTexture('lines'),
+    detail: kitTexture(`detail_${f.beard.style}`),
   }
 }
 
 export function preloadKit() {
   for (const e of EYE_STYLES) {
-    kitTexture(`eye_${e.id}_sclera`, true); kitTexture(`eye_${e.id}_iris`); kitTexture(`eye_${e.id}_hi`, true); kitTexture(`eye_${e.id}_line`)
-    for (const l of LASH_STYLES) if (l.id !== 'none') kitTexture(`lash_${l.id}_${e.id}`)
+    kitTexture(`eye_${e.id}_sclera`, true)
+    kitTexture(`eye_${e.id}_iris`)
   }
   for (const b of BROW_STYLES) kitTexture(`brow_${b.id}`)
-  for (const m of MOUTH_STYLES) { kitTexture(`mouth_${m.id}_lips`); kitTexture(`mouth_${m.id}_gloss`, true) }
-  kitTexture('blush'); kitTexture('eye_bags'); kitTexture('lines')
-  for (const b of BEARD_STYLES) if (b.id !== 'none') kitTexture(`beard_${b.id}`)
+  kitTexture('blush')
+  kitTexture('classic_shade')
 }
 
 export const colorOf = (hex: string) => new Color(hex)

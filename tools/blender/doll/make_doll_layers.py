@@ -149,19 +149,21 @@ def main():
     a2, n2, r2, w = clean_textures(g, P, UV, IDX)
     g.set_image(1, to_img(a2), 93); g.set_image(0, to_img(n2), 93); g.set_image(2, to_img(r2), 93)
     g.J["materials"][0]["doubleSided"] = False        # fitas viram faces coplanares; as invertidas ficam culladas
-    # 3) mascaras (R pele, G macacao, B = linha do cabelo (mask2.G original)) alinhadas a doll_mask*.png
-    m1 = np.asarray(Image.open(os.path.join(CH, "doll_mask.png")).convert("RGB").resize((S, S), Image.NEAREST), np.float32) / 255.0
-    wm = (w > 0.5)[..., None]
+    # 3) mascaras para o shader da boneca (dollMaterial.ts, modo camadas: so 2 samplers)
+    #    mask  = R pele (+ antigas feicoes: agora pele limpa), G macacao, B vazio
+    #    mask2 = R unhas (mask4.R), G linha do cabelo pintada (mask2.G), B posicao ao longo da unha (mask4.G)
+    ld = lambda n: np.asarray(Image.open(os.path.join(CH, n)).convert("RGB").resize((S, S), Image.NEAREST), np.float32) / 255.0
+    m1, m2o, m4 = ld("doll_mask.png"), ld("doll_mask2.png"), ld("doll_mask4.png")
+    wm = w > 0.5
     m = m1.copy()
-    m[..., 0] = np.where(wm[..., 0], np.clip(m1[..., 0] + m1[..., 2], 0, 1), m1[..., 0]); m[..., 2] = np.where(wm[..., 0], 0, m1[..., 2])
-    m[..., 1] = np.where(wm[..., 0], 0, m1[..., 1])
-    m2 = np.asarray(Image.open(os.path.join(CH, "doll_mask2.png")).convert("RGB").resize((S, S), Image.NEAREST), np.float32) / 255.0
-    m[..., 2] = m2[..., 1]                              # B = linha do cabelo pintada (base do couro cabeludo na cor do cabelo)
+    m[..., 0] = np.clip(m1[..., 0] + m1[..., 2], 0, 1); m[..., 2] = 0
+    m[..., 1] = np.where(wm, 0, m1[..., 1])
     to_img(m).save(os.path.join(CH, "doll_layers_mask.png"), optimize=True)
-    for k in ("2", "3"):
-        z = np.zeros((S, S, 3), np.uint8); Image.fromarray(z).save(os.path.join(CH, f"doll_layers_mask{k}.png"), optimize=True)
-    # mask4 (unhas) segue a original
-    Image.open(os.path.join(CH, "doll_mask4.png")).save(os.path.join(CH, "doll_layers_mask4.png"))
+    pk = np.stack([m4[..., 0], m2o[..., 1], m4[..., 1]], -1)
+    to_img(pk).save(os.path.join(CH, "doll_layers_mask2.png"), optimize=True)
+    for k in ("3", "4"):
+        f = os.path.join(CH, f"doll_layers_mask{k}.png")
+        if os.path.exists(f): os.remove(f)
     # 4) morphs de formato (alvos esparsos)
     morphs = face_morphs(Pn, Nn, IDX)
     mesh = g.J["meshes"][0]
@@ -178,7 +180,7 @@ def main():
     # metadados no formato do doll_base.json (+ morphs novos)
     meta = json.load(open(os.path.join(CH, "doll_base.json"), encoding="utf-8"))
     meta["source"] = "doll_base.glb + olhos assentados + rosto limpo (tools/blender/doll/make_doll_layers.py)"
-    meta["files"] = {"body": "doll_layers.glb", "hair": meta["files"].get("hair"), "mask": "doll_layers_mask.png", "mask2": "doll_layers_mask2.png", "mask3": "doll_layers_mask3.png", "mask4": "doll_layers_mask4.png"}
+    meta["files"] = {"body": "doll_layers.glb", "hair": meta["files"].get("hair"), "mask": "doll_layers_mask.png", "mask2": "doll_layers_mask2.png"}
     for k in LABELS:
         meta["morphs"].append({"name": k, "label": LABELS[k], "group": "Rosto", "min": 0, "max": 1, "targets": ["body"]})
     meta["sizesBytes"] = {"doll_layers.glb": os.path.getsize(out)}

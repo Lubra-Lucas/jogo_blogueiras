@@ -1,5 +1,6 @@
 import { Quaternion, Vector3, type Bone, type Object3D } from 'three'
 import { DEFAULT_BODY, type BodyParams } from '../../shared/faceCatalog'
+import type { Gender } from '../../shared/faceLayers'
 
 /**
  * Proporcoes corporais por OSSOS, em tempo de execucao (sem Blender).
@@ -32,8 +33,17 @@ export const DIMS = {
   ankleY: 0.213,
 }
 
+/** Medidas do corpo MASCULINO (male_base.glb, 1,75 m); o BodyRig tambem as remede do esqueleto. */
+export const DIMS_MALE: typeof DIMS = { height: 1.75, hipsY: 0.925, legChain: 0.808, spine: 0.32, neck: 0.1857, headAbove: 0.319, eyeAboveHead: 0.153, ankleY: 0.095 }
+/** Altura do Hips na trilha das animacoes (a boneca, em metros): o masculino escala a trilha por hipsY / este valor. */
+export const ANIM_HIPS_Y = 0.8436
+/** altura de referencia (boneca) para `heightScale` (capsula, camera) */
+const REF_HEIGHT = 1.6
+export const dimsOf = (g: Gender = 'female') => (g === 'male' ? DIMS_MALE : DIMS)
+
 /** Remede o esqueleto em repouso (nenhuma suposicao de malha): comprimentos dos ossos e altura do tornozelo. */
-function measure(root: Object3D, bones: Record<string, Bone>) {
+function measure(root: Object3D, bones: Record<string, Bone>, gender: Gender = 'female') {
+  const DIMS = dimsOf(gender)
   const g = (n: string) => bones['mixamorig' + n]
   const hips = g('Hips')
   const foot = g('LeftFoot')
@@ -49,6 +59,10 @@ function measure(root: Object3D, bones: Record<string, Bone>) {
   DIMS.spine = Math.abs(g('Spine').position.y) + Math.abs(g('Spine1').position.y) + Math.abs(g('Spine2').position.y)
   DIMS.neck = Math.abs(g('Neck').position.y) + Math.abs(g('Head').position.y)
   // so para capsula/camera/enquadramento (estimativa por proporcao da boneca; a renderizacao nao usa)
+  if (gender === 'male') {
+    DIMS.height = headY + DIMS.headAbove
+    return
+  }
   DIMS.headAbove = 0.276 * headY
   DIMS.eyeAboveHead = 0.072 * headY
   DIMS.height = headY + DIMS.headAbove
@@ -77,9 +91,12 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
 
 /** fator de comprimento (1 = boneca original) para o slider de altura -1..1 */
-export function heightFactor(h: number): number {
+export function heightFactor(h: number, g: Gender = 'female'): number {
   const v = clamp(h, -1, 1)
-  return v >= 0 ? lerp(1, F_HI, v) : lerp(1, F_LO, -v)
+  // masculino: faixa mais curta (1,58 a 1,93 m) para nao passar de 2 m
+  const lo = g === 'male' ? 0.9 : F_LO
+  const hi = g === 'male' ? 1.1 : F_HI
+  return v >= 0 ? lerp(1, hi, v) : lerp(1, lo, -v)
 }
 
 /** fatores derivados (tudo em torno de 1 = boneca original) */
@@ -96,8 +113,10 @@ export interface Proportions {
   foot: number
   /** elevacao do osso Hips (m) para a sola continuar no chao */
   hipsDelta: number
-  /** razao entre a altura do quadril e a original (escala do passo) */
+  /** razao entre a altura do quadril e a da trilha das animacoes (escala do passo) */
   stride: number
+  /** escala da trilha de altura do Hips (masculino = hipsY / 0,8436; boneca = 1) */
+  hipsScale: number
   /** altura do corpo sem cabelo (m) */
   height: number
   /** altura do osso Head acima dos pes (m) */
@@ -110,8 +129,9 @@ export interface Proportions {
   slope: number
 }
 
-export function proportionsOf(b: BodyParams): Proportions {
-  const f = heightFactor(b.height)
+export function proportionsOf(b: BodyParams, gender: Gender = 'female'): Proportions {
+  const DIMS = dimsOf(gender)
+  const f = heightFactor(b.height, gender)
   const leg = Math.pow(f, E_LEG) * (1 + 0.28 * b.legs)
   const torso = Math.pow(f, E_TORSO) * (1 + 0.22 * b.torso)
   const neck = Math.pow(f, E_NECK) * (1 + 0.55 * b.neck)
@@ -135,7 +155,8 @@ export function proportionsOf(b: BodyParams): Proportions {
     hand,
     foot,
     hipsDelta,
-    stride: hipsY / DIMS.hipsY,
+    stride: (hipsY / DIMS.hipsY) * (Math.abs(DIMS.hipsY / ANIM_HIPS_Y - 1) < 0.002 ? 1 : DIMS.hipsY / ANIM_HIPS_Y),
+    hipsScale: Math.abs(DIMS.hipsY / ANIM_HIPS_Y - 1) < 0.002 ? 1 : DIMS.hipsY / ANIM_HIPS_Y,
     height: headY + DIMS.headAbove * head,
     headY,
     eyeY: headY + DIMS.eyeAboveHead * head,
@@ -149,8 +170,10 @@ export function proportionsOf(b: BodyParams): Proportions {
 export interface BodyFit {
   /** altura do corpo / 1,60 m */
   heightScale: number
-  /** razao hips/original (passo e deslocamentos do assento) */
+  /** razao hips/trilha da animacao (passo e deslocamentos do assento) */
   stride: number
+  /** escala da altura do Hips na animacao (masculino 1,097; boneca 1) */
+  hipsScale: number
   /** elevacao do quadril (m) */
   hipsDelta: number
   /** altura do olhar acima dos pes (m) */
@@ -158,11 +181,11 @@ export interface BodyFit {
   height: number
 }
 
-export const DEFAULT_FIT: BodyFit = { heightScale: 1, stride: 1, hipsDelta: 0, eyeY: 1.43, height: 1.6 }
+export const DEFAULT_FIT: BodyFit = { heightScale: 1, stride: 1, hipsScale: 1, hipsDelta: 0, eyeY: 1.43, height: 1.6 }
 
-export function fitOf(b: BodyParams): BodyFit {
-  const p = proportionsOf(b)
-  return { heightScale: p.height / DIMS.height, stride: p.stride, hipsDelta: p.hipsDelta, eyeY: p.eyeY, height: p.height }
+export function fitOf(b: BodyParams, gender: Gender = 'female'): BodyFit {
+  const p = proportionsOf(b, gender)
+  return { heightScale: p.height / REF_HEIGHT, stride: p.stride, hipsScale: p.hipsScale, hipsDelta: p.hipsDelta, eyeY: p.eyeY, height: p.height }
 }
 
 /** Corpo e todo zero (nada a fazer)? */
@@ -233,17 +256,20 @@ export class BodyRig {
    */
   headLift = 0
 
-  constructor(root: Object3D, bones: Record<string, Bone>) {
+  readonly gender: Gender
+
+  constructor(root: Object3D, bones: Record<string, Bone>, gender: Gender = 'female') {
     this.root = root
     this.bones = bones
+    this.gender = gender
     for (const n in bones) this.rest.set(n, bones[n].position.clone())
-    measure(root, bones)
-    this.p = proportionsOf(DEFAULT_BODY)
+    measure(root, bones, gender)
+    this.p = proportionsOf(DEFAULT_BODY, gender)
     this.set(DEFAULT_BODY)
   }
 
   set(b: BodyParams) {
-    Object.assign(this.p, proportionsOf(b))
+    Object.assign(this.p, proportionsOf(b, this.gender))
     this.neutral = isNeutralBody(b)
     this.writeStatic()
   }
@@ -302,9 +328,9 @@ export class BodyRig {
   apply() {
     const p = this.p
     const hips = this.bone('Hips')
-    if (hips && (p.hipsDelta !== 0 || p.stride !== 1)) {
+    if (hips && (p.hipsDelta !== 0 || p.stride !== 1 || p.hipsScale !== 1)) {
       this.hipsBase.copy(hips.position)
-      hips.position.set(this.hipsBase.x * p.stride, this.hipsBase.y + p.hipsDelta, this.hipsBase.z * p.stride)
+      hips.position.set(this.hipsBase.x * p.stride, this.hipsBase.y * p.hipsScale + p.hipsDelta, this.hipsBase.z * p.stride)
       this.hipsOut.copy(hips.position)
       this.hipsActive = true
     }

@@ -32,7 +32,7 @@ function Stage({ focus, rot }: { focus: StageFocus; rot: MutableRefObject<Rot> }
   const cur = useRef({ y: FRAMES[focus].y, d: FRAMES[focus].d, x: FRAMES[focus].x ?? 0 })
   useFrame(({ camera }, dt) => {
     // o enquadramento acompanha a altura do corpo (baixa/alta); mao e perto do quadril (altura menos sensivel)
-    const hs = fitOf(appearance.body).heightScale
+    const hs = fitOf(appearance.body, appearance.gender).heightScale
     const f0 = FRAMES[focus]
     const f = { y: f0.y * hs, d: f0.d * Math.max(hs, 0.95) * (focus === 'body' ? 1.06 : 1), x: f0.x }
     const k = 1 - Math.exp(-7 * Math.min(dt, 0.05))

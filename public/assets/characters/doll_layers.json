@@ -5,9 +5,7 @@
     "body": "doll_layers.glb",
     "hair": "hair_meshy_updo.glb",
     "mask": "doll_layers_mask.png",
-    "mask2": "doll_layers_mask2.png",
-    "mask3": "doll_layers_mask3.png",
-    "mask4": "doll_layers_mask4.png"
+    "mask2": "doll_layers_mask2.png"
   },
   "heightMeters": 1.694,
   "heightBodyMeters": 1.6,

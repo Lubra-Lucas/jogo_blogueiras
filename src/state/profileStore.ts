@@ -69,7 +69,7 @@ interface Saved {
 const DEFAULTS: Saved = {
   v: 1,
   name: 'Blogueira',
-  named: false,
+  named: typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('named'), // ?named=1 (QA): pula a tela de boas-vindas
   level: 1,
   xp: 0,
   coins: 50,

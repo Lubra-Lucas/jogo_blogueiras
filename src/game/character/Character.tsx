@@ -5,13 +5,14 @@ import { Color, MeshPhysicalMaterial, Vector3, type Material, NoColorSpace, Skel
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import type { GLTF } from 'three-stdlib'
 import type { Appearance, ItemRef } from '../../shared/appearance'
-import { BASES, loadBaseMeta } from './assets'
-import { applyBodyLook, createBodyMaterial, createHairMaterial, setMakeupTextures, type DollBodyMaterial } from './dollMaterial'
-import { createDollLayersMaterial } from './maleMaterial'
-import type { MaleFace } from './maleFace'
+import { BASES, bodyAssets, loadBaseMeta } from './assets'
+import { applyBodyLook, createBodyMaterial, createHairMaterial, setMakeupTextures } from './dollMaterial'
+import { createMaleMaterial } from './maleMaterial'
+import { createMaleHairMaterial } from './maleHair'
+import { DEFAULT_FACE_LAYERS, MALE_BASE_SHAPE, type FaceLayers } from '../../shared/faceLayers'
 import { BLANK_TEXTURE, getMakeupTextures } from './makeup/textures'
 import { DEFAULT_MAKEUP, makeupIsEmpty, normalizeMakeup } from '../../shared/appearance'
-import { getWearable, WEARABLES, type WearableDef } from './items'
+import { getWearable, MALE_WEARABLES, WEARABLES, type WearableDef } from './items'
 import { getCatalogItem, hairFit, loadCatalog, type CatalogItem } from './catalog'
 import { syncJewelEnv } from './jewelShine'
 import { applyHairCalib, hairCalibFor } from './hairFit'
@@ -33,20 +34,8 @@ export interface CharacterHandle {
   proportions: BodyRig
 }
 
-/**
- * Variante EXPERIMENTAL da boneca com o rosto por camadas (doll_layers.glb: mesmo corpo/esqueleto/morphs, rosto limpo). Quando presente, o corpo usa o
- * material de camadas (maleMaterial.ts) no lugar do rosto pintado; cabelo, roupas, joias e morphs funcionam como sempre. `shape` = pesos dos morphs f_*.
- */
-export interface BodyLayers {
-  glb: string
-  mask: string
-  face: MaleFace
-  shape?: Record<string, number>
-}
-
 export interface CharacterProps {
   appearance: Appearance
-  layers?: BodyLayers
   /** projeta sombra (qualidade medium/high) */
   shadows?: boolean
   /** animacao: 'player' (estados do jogo) ou { clip, t } (visualizador); omitido = so a pose de repouso */
@@ -61,7 +50,7 @@ interface Rig extends CharacterHandle {
   normalMap: Texture | null
 }
 
-function buildRig(scene: Group): Rig {
+function buildRig(scene: Group, gender: 'female' | 'male'): Rig {
   const root = cloneSkinned(scene) as Group
   const bones: Record<string, Bone> = {}
   let body: SkinnedMesh | null = null
@@ -73,7 +62,7 @@ function buildRig(scene: Group): Rig {
   if (!b) throw new Error('doll_base.glb sem SkinnedMesh')
   ensureTangents(b.geometry) // geometria e compartilhada entre clones; faz uma vez
   const m = b.material as MeshPhysicalMaterial
-  return { root, bones, proportions: new BodyRig(root, bones), skeleton: b.skeleton, armature: b.parent!, body: b, map: m.map, normalMap: m.normalMap }
+  return { root, bones, proportions: new BodyRig(root, bones, gender), skeleton: b.skeleton, armature: b.parent!, body: b, map: m.map, normalMap: m.normalMap }
 }
 
 /** Peca a montar: cabelo (registro estatico) ou roupa (catalogo de manifesto). */
@@ -117,6 +106,29 @@ function buildAttachment(rig: Rig, part: Part, gltf: GLTF): Attachment {
   const skeletons: Skeleton[] = []
   const meshes: SkinnedMesh[] = []
   const def = part.hair
+  if (def?.male) {
+    // cabelo masculino: casca com cor de vertice, presa ao osso Head; sem textura (a cor e o tint do material)
+    const material = createMaleHairMaterial(part.color, part.hairLook?.gloss ?? 0.7)
+    for (const m of found) {
+      const bones = m.skeleton.bones.map((b) => rig.bones[b.name])
+      if (bones.some((b) => !b)) continue
+      const skel = new Skeleton(bones, m.skeleton.boneInverses.map((x) => x.clone()))
+      m.removeFromParent()
+      m.bind(skel, m.bindMatrix)
+      m.frustumCulled = false
+      m.material = material
+      skeletons.push(skel)
+      meshes.push(m)
+    }
+    const apply = (p: Part) => {
+      material.color.set(p.color)
+      material.sheenColor.set(p.color).lerp(new Color('#ffffff'), 0.3)
+      const gl = p.hairLook?.gloss ?? 0.7
+      material.roughness = 0.55 - 0.3 * gl
+      material.clearcoat = 0.9 * gl
+    }
+    return { part, meshes, materials: [material], apply, skeletons }
+  }
   // cabelo com textura propria: baseColor/normal vem do material do proprio GLB (compartilhados no cache, nao descartar)
   const own = def?.texture === 'own' ? (found[0]?.material as MeshStandardMaterial | undefined) : undefined
   const slotMats = new Map<string, MeshPhysicalMaterial>()
@@ -235,18 +247,22 @@ function applyMorphs(mesh: SkinnedMesh, morphs: Record<string, number>) {
 
 // Efeitos em layout: o look (pele/macacao/cabelo/joias/morphs) e aplicado ANTES do primeiro quadro desenhado.
 // Com useEffect havia 1+ quadros com os uniforms padrao (corpo todo rosa, cabelo sem cor, joias sem material).
-function CharacterImpl({ appearance, layers, shadows = false, anim, handle }: CharacterProps & { handle: React.Ref<CharacterHandle> }) {
-  use(loadBaseMeta(appearance.base))
-  const base = BASES[appearance.base]
+function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterProps & { handle: React.Ref<CharacterHandle> }) {
+  const gender = appearance.gender === 'male' ? 'male' : 'female'
+  use(loadBaseMeta(appearance.base, gender))
+  const base = bodyAssets(gender)
   // useDeferredValue: ao trocar o cabelo (GLB carregado sob demanda) o anterior fica ate o novo estar pronto, sem suspender o personagem
   const hairId = useDeferredValue(appearance.hair.id)
-  const hairDef = getWearable(hairId)
+  const hairDef0 = getWearable(hairId)
+  // cabelos femininos so na boneca e os masculinos so no masculino
+  const hairDef = hairDef0 && !!hairDef0.male === (gender === 'male') ? hairDef0 : null
   use(loadCatalog())
   const o = useDeferredValue(appearance.outfit)
   const accessories = useDeferredValue(appearance.accessories)
   const parts: Part[] = []
   if (hairDef) parts.push({ key: hairDef.id, glb: hairDef.glb, hair: hairDef, color: appearance.hair.color, hairLook: appearance.hair })
-  const worn = [o.dress ?? o.top, o.dress ? undefined : o.bottom, o.gloves, o.legwear, o.shoes]
+  // masculino: as roupas sao do corpo feminino (a boxer e a base); acessorios rigidos ficam ocultos ate serem testados no corpo masculino
+  const worn = gender === 'male' ? [] : [o.dress ?? o.top, o.dress ? undefined : o.bottom, o.gloves, o.legwear, o.shoes]
   // `hides` do manifesto: uma peca esconde (nao desenha) outras, sem tirar do look ('legs' = meias)
   const hidden = new Set<string>()
   for (const r of worn) for (const h of getCatalogItem(r?.id)?.hides ?? []) hidden.add(h === 'legs' ? 'legwear' : h)
@@ -257,21 +273,21 @@ function CharacterImpl({ appearance, layers, shadows = false, anim, handle }: Ch
   // sapatos elevam o personagem (m), para a sola assentar no chao
   const lift = worn.reduce((m, r) => Math.max(m, getCatalogItem(r?.id)?.lift ?? 0), 0)
   const jewels: Array<{ item: CatalogItem; ref: ItemRef }> = []
-  const wornAcc = accessories.map((r) => getCatalogItem(r.id)).filter((x): x is CatalogItem => !!x)
+  const wornAcc = (gender === 'male' ? [] : accessories).map((r) => getCatalogItem(r.id)).filter((x): x is CatalogItem => !!x)
   const hasScarf = wornAcc.some((x) => x.slot === 'scarf')
   const hasBackBag = wornAcc.some((x) => x.slot === 'bag' && x.carry === 'back')
-  for (const r of accessories) {
+  for (const r of gender === 'male' ? [] : accessories) {
     const item = getCatalogItem(r.id)
     if (!item || item.kind !== 'jewelry') continue
     // regras de esconder: lenco esconde gargantilhas; mochila esconde colares longos nas costas
     if (item.slot === 'neck' && ((hasScarf && /choker/.test(item.id)) || (hasBackBag && /^(opera_pearls|layered_gold|chunky_chain)$/.test(item.id)))) continue
     jewels.push({ item, ref: r })
   }
-  const gltfs = useGLTF([layers?.glb ?? base.glb, ...parts.map((d) => d.glb), ...jewels.map((j) => j.item.glb)]) as GLTF[]
-  const masks = useTexture([layers?.mask ?? base.mask, base.mask2, base.mask3, base.mask4])
+  const gltfs = useGLTF([base.glb, ...parts.map((d) => d.glb), ...jewels.map((j) => j.item.glb)]) as GLTF[]
+  const masks = useTexture(gender === 'male' ? [base.mask] : base.layers ? [base.mask, base.mask2] : [base.mask, base.mask2, base.mask3!, base.mask4!])
 
   // ---- esqueleto + malha do corpo (clone por instancia) ----
-  const rig = useMemo(() => buildRig(gltfs[0].scene), [gltfs[0]]) // eslint-disable-line react-hooks/exhaustive-deps
+  const rig = useMemo(() => buildRig(gltfs[0].scene, gender), [gltfs[0]]) // eslint-disable-line react-hooks/exhaustive-deps
   useImperativeHandle(handle, () => rig, [rig])
   useLayoutEffect(() => {
     applyRestPose(rig.bones, rig.root)
@@ -304,29 +320,49 @@ function CharacterImpl({ appearance, layers, shadows = false, anim, handle }: Ch
   }, [masks])
 
   // ---- material do corpo (um por instancia) ----
-  const layersGlb = layers?.glb
-  const bodyMat = useMemo(
-    () => (layersGlb ? (createDollLayersMaterial(rig.map, rig.normalMap, masks[0], layers!.face) as unknown as DollBodyMaterial) : createBodyMaterial(rig.map, rig.normalMap, { mask: masks[0], mask2: masks[1], mask3: masks[2], mask4: masks[3] }, BLANK_TEXTURE)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [rig, masks, layersGlb],
-  )
-  useLayoutEffect(() => {
-    if (layers) (bodyMat as unknown as { setFace?: (f: MaleFace) => void }).setFace?.(layers.face)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bodyMat, layers?.face])
-  useLayoutEffect(() => {
-    rig.body.material = bodyMat.material
-    rig.body.frustumCulled = false
-    return () => bodyMat.material.dispose()
-  }, [rig, bodyMat])
-
+  // rosto por camadas: o estado efetivo respeita a maquiagem antiga (sobrancelha/cilios desenhados pela maquiagem escondem os da camada)
   const mkp = useMemo(() => normalizeMakeup(appearance.makeup ?? DEFAULT_MAKEUP), [appearance.makeup])
+  const faceKey = JSON.stringify([appearance.faceLayers, gender === 'female' ? [mkp.brows.style, mkp.lashes.style] : 0])
+  const faceLayers = useMemo<FaceLayers>(() => {
+    const f: FaceLayers = appearance.faceLayers ?? DEFAULT_FACE_LAYERS
+    if (gender === 'male') return f
+    return {
+      ...f,
+      brow: { ...f.brow, opacity: mkp.brows.style !== 'painted' ? 0 : f.brow.opacity },
+      eye: { ...f.eye, lash: mkp.lashes.style !== 'natural' ? 'none' : f.eye.lash },
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [faceKey])
+  const maleMat = useMemo(() => (gender === 'male' ? createMaleMaterial(rig.map, masks[0], faceLayers) : null), [rig, masks, gender]) // eslint-disable-line react-hooks/exhaustive-deps
+  const bodyMat = useMemo(
+    () => (gender === 'male' ? null : createBodyMaterial(rig.map, rig.normalMap, { mask: masks[0], mask2: masks[1], mask3: masks[2], mask4: masks[3] }, BLANK_TEXTURE, base.layers ? faceLayers : null)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [rig, masks, gender],
+  )
+  const bodyMaterial = (maleMat?.material ?? bodyMat!.material) as MeshPhysicalMaterial
+  useLayoutEffect(() => {
+    maleMat?.setFace(faceLayers)
+    bodyMat?.setFace?.(faceLayers)
+  }, [maleMat, bodyMat, faceLayers])
+  useLayoutEffect(() => {
+    rig.body.material = bodyMaterial
+    rig.body.frustumCulled = false
+    return () => {
+      maleMat?.dispose()
+      bodyMat?.dispose?.() ?? bodyMat?.material.dispose()
+    }
+  }, [rig, bodyMaterial, maleMat, bodyMat])
+
   const lookKey = JSON.stringify([appearance.skin, appearance.suit, appearance.lips, appearance.hair.color, appearance.eyes, mkp, !!(appearance.outfit.dress || appearance.outfit.top), !!(appearance.outfit.dress || appearance.outfit.bottom)])
   useLayoutEffect(() => {
+    if (maleMat) {
+      maleMat.setLook(appearance.skin.tone, appearance.suit.color, appearance.hair.color)
+      return
+    }
     const eyes = appearance.eyes
     const brow = mkp.brows
     const nails = mkp.nails
-    applyBodyLook(bodyMat, {
+    applyBodyLook(bodyMat!, {
       skin: appearance.skin.tone,
       suit: appearance.suit.color,
       finish: appearance.suit.finish,
@@ -342,13 +378,13 @@ function CharacterImpl({ appearance, layers, shadows = false, anim, handle }: Ch
       lash: { color: mkp.lashes.style !== 'natural' || mkp.lashes.color.toLowerCase() !== DEFAULT_MAKEUP.lashes.color ? mkp.lashes.color : null },
       nails: { style: { none: 0, solid: 1, french: 2, ombre: 3, glitter: 4 }[nails.style], c1: nails.color, c2: nails.color2, fin: { gloss: 0, matte: 1, chrome: 2 }[nails.finish] },
     })
-    if (makeupIsEmpty(mkp)) setMakeupTextures(bodyMat, null, null, BLANK_TEXTURE)
+    if (makeupIsEmpty(mkp)) setMakeupTextures(bodyMat!, null, null, BLANK_TEXTURE)
     else {
       const t = getMakeupTextures(mkp, appearance.skin.tone)
-      setMakeupTextures(bodyMat, t.color, t.fx, BLANK_TEXTURE)
+      setMakeupTextures(bodyMat!, t.color, t.fx, BLANK_TEXTURE)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bodyMat, lookKey])
+  }, [bodyMat, maleMat, lookKey])
 
   // ---- cabelo e roupa: presos ao mesmo esqueleto ----
   const attachKey = parts.map((d) => d.key).join('|')
@@ -437,9 +473,12 @@ function CharacterImpl({ appearance, layers, shadows = false, anim, handle }: Ch
   }, [attachments, clipKey])
 
   // ---- morphs (corpo e cabelo compartilham os nomes) ----
-  const morphKey = JSON.stringify(appearance.morphs) + JSON.stringify(layers?.shape ?? null)
+  const morphKey = JSON.stringify(appearance.morphs) + JSON.stringify(appearance.shape ?? null) + gender
   useLayoutEffect(() => {
-    const mm = { ...appearance.morphs, ...(layers?.shape ?? {}) }
+    // formato do rosto (f_*): o masculino ganha o rosto masculino base em 1, a menos que o perfil diga outra coisa
+    const shape = appearance.shape ?? {}
+    const mm: Record<string, number> = { ...appearance.morphs, ...shape }
+    if (gender === 'male' && mm[MALE_BASE_SHAPE] === undefined) mm[MALE_BASE_SHAPE] = 1
     applyMorphs(rig.body, mm)
     for (const a of attachments) for (const m of a.meshes) applyMorphs(m, appearance.morphs)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -484,6 +523,9 @@ export const Character = forwardRef<CharacterHandle, CharacterProps>(function Ch
 // pre-carrega os GLB e mascaras (cache do drei)
 // so a base e o cabelo padrao sao pre-carregados; os demais carregam sob demanda ao selecionar
 const DEFAULT_HAIR_ID = 'hair.meshyUpdo'
-useGLTF.preload([BASES.doll.glb, ...Object.values(WEARABLES).filter((w) => w.id === DEFAULT_HAIR_ID).map((w) => w.glb)])
-useTexture.preload([BASES.doll.mask, BASES.doll.mask2, BASES.doll.mask3, BASES.doll.mask4])
+const FB = bodyAssets('female')
+useGLTF.preload([FB.glb, ...Object.values(WEARABLES).filter((w) => w.id === DEFAULT_HAIR_ID).map((w) => w.glb)])
+useTexture.preload(FB.layers ? [FB.mask, FB.mask2] : [FB.mask, FB.mask2, FB.mask3!, FB.mask4!])
 void loadBaseMeta('doll')
+void BASES
+void MALE_WEARABLES

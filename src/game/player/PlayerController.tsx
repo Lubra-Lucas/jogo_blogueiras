@@ -30,7 +30,7 @@ function fitClip(c: SitClipInfo, f: BodyFit): SitClipInfo {
   _ci.outDur = c.outDur
   _ci.offX = c.offX * f.stride
   _ci.offZ = c.offZ * f.stride
-  _ci.endY = c.endY + f.hipsDelta
+  _ci.endY = c.endY * f.hipsScale + f.hipsDelta
   _ci.outX = c.outX * f.stride
   _ci.outZ = c.outZ * f.stride
   return _ci
@@ -52,7 +52,7 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
   const visual = useRef<Group>(null)
   const appearance = useAppearanceStore((st) => st.appearance)
   // corpo: capsula (altura) e demais sistemas (camera, assento) leem `playerStore.fit`
-  const fit = useMemo(() => fitOf(appearance.body), [appearance.body])
+  const fit = useMemo(() => fitOf(appearance.body, appearance.gender), [appearance.body, appearance.gender])
   useMemo(() => usePlayerStore.setState({ fit }), [fit])
   const capHalf = Math.max(0.3, (C.halfHeight + C.radius) * fit.heightScale - C.radius) // altura 1,65 m x escala; solta para cima, pes fixos
   const controller = useRef<CharacterController | null>(null)

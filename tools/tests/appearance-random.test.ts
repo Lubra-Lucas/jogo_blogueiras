@@ -22,6 +22,9 @@ import {
   catalogIds,
   type FaceListKey,
 } from '../../src/shared/faceCatalog.ts'
+import { DEFAULT_MALE_APPEARANCE, classicFromLegacy } from '../../src/shared/appearance.ts'
+import { MALE_SHAPE_GROUPS, FEMALE_SHAPE_GROUPS, shapeNames, sanitizeFaceLayers, sanitizeShape, EYE_STYLES, BEARD_STYLES, BROW_STYLES as LAYER_BROWS, MOUTH_STYLES } from '../../src/shared/faceLayers.ts'
+import { TWELVE, FEM_SIX } from '../../src/shared/facePresets.ts'
 import {
   BROW_HAIR_MAX_DELTA,
   HAIR_NATURAL_HEX,
@@ -359,6 +362,95 @@ await t('proporcoes por osso: migracao zera, sanitize limita, sorteio concentrad
   }
   assert.ok(near / tot > 0.8, `perto do meio ${near / tot}`)
   assert.ok(far / tot > 0.005 && far / tot < 0.1, `extremos ${far / tot}`)
+})
+
+// ---------- genero, camadas do rosto e formato ----------
+await t('catalogo de camadas e formatos: 5 olhos, 5 sobrancelhas, 5 bocas, 5 barbas, 26 formatos masculinos, 12 femininos, presets 12/6', () => {
+  assert.equal(EYE_STYLES.length, 5)
+  assert.equal(LAYER_BROWS.length, 5)
+  assert.equal(MOUTH_STYLES.length, 5)
+  assert.equal(BEARD_STYLES.length, 5)
+  assert.equal(shapeNames('male').length, 26)
+  assert.equal(shapeNames('female').length, 12)
+  assert.ok(MALE_SHAPE_GROUPS.length === 6 && FEMALE_SHAPE_GROUPS.length === 5)
+  assert.equal(TWELVE.length, 12)
+  assert.equal(FEM_SIX.length, 6)
+  for (const p of [...TWELVE, ...FEM_SIX]) {
+    const g = (TWELVE as unknown[]).includes(p) ? 'male' : 'female'
+    assert.deepEqual(sanitizeFaceLayers(p.face), p.face, p.name)
+    for (const k of Object.keys(p.shape)) assert.ok(shapeNames(g).includes(k) || k === 'f_maleBase', `${p.name}: ${k}`)
+  }
+})
+
+await t('migracao: perfil antigo vira female + Classica com cores atuais mantidas', () => {
+  const old = normalizeAppearance({ v: 5, eyes: { color: '#3b2517', ring: 0.3 }, lips: { color: '#a8566e', gloss: 0.8 }, makeup: { brows: { style: 'painted', color: '#17110f', thickness: 0.5 } } } as never)
+  assert.equal(old.gender, 'female')
+  assert.equal(old.faceLayers.eye.style, 'classic')
+  assert.equal(old.faceLayers.eye.iris, '#3b2517')
+  assert.equal(old.faceLayers.mouth.color, '#a8566e')
+  assert.equal(old.faceLayers.brow.color, '#17110f')
+  assert.equal(normalizeAppearance({ v: 5 } as never).faceLayers.eye.style, 'classic')
+  assert.equal(classicFromLegacy({}).eye.style, 'classic')
+  assert.equal(normalizeAppearance({ gender: 'male' } as never).faceLayers.eye.style, DEFAULT_MALE_APPEARANCE.faceLayers.eye.style)
+})
+
+await t('sanitize: genero, camadas e formato validos; lixo e limitado', () => {
+  const bad = sanitizeAppearance({ ...DEFAULT_MALE_APPEARANCE, faceLayers: { eye: { style: 'x', scale: 99, iris: 'red' }, beard: { style: 'full', amount: 9 } }, shape: { f_jawWide: 5, f_noseWide: 1, f_chinPointed: 0.4, nope: 1, f_earsBig: 'x' } } as never)!
+  assert.equal(bad.gender, 'male')
+  assert.ok(EYE_STYLES.some((e) => e.id === bad.faceLayers.eye.style))
+  assert.ok(bad.faceLayers.eye.scale <= 2.4)
+  assert.match(bad.faceLayers.eye.iris, HEX)
+  assert.equal(bad.faceLayers.beard.amount, 1)
+  assert.deepEqual(Object.keys(bad.shape).sort(), ['f_chinPointed', 'f_jawWide', 'f_noseWide'])
+  assert.equal(bad.shape.f_jawWide, 1)
+  const fem = sanitizeAppearance({ ...DEFAULT_APPEARANCE, shape: { f_jawWide: 0.5, f_browRidge: 1 } } as never)!
+  assert.deepEqual(Object.keys(fem.shape), ['f_jawWide'])
+  assert.deepEqual(sanitizeShape('x', 'male'), {})
+})
+
+await t('aleatorio por genero: camadas e formato validos e deterministicos; NPCs misturadas', () => {
+  const beards = new Set<string>()
+  for (let i = 0; i < 400; i++) {
+    const m = randomAppearance(`g${i}`, { gender: 'male' })
+    const f = randomAppearance(`g${i}`, { gender: 'female' })
+    assert.equal(m.gender, 'male')
+    assert.equal(f.gender, 'female')
+    assert.ok((m.hair.id ?? '').startsWith('hair.m.'), String(m.hair.id))
+    assert.ok(!(f.hair.id ?? '').startsWith('hair.m.'))
+    assert.notEqual(m.faceLayers.eye.style, 'classic')
+    assert.notEqual(m.faceLayers.mouth.style, 'classic')
+    assert.equal(f.faceLayers.beard.style, 'none')
+    assert.deepEqual(sanitizeFaceLayers(m.faceLayers), m.faceLayers)
+    assert.deepEqual(sanitizeFaceLayers(f.faceLayers), f.faceLayers)
+    assert.deepEqual(sanitizeShape(m.shape, 'male'), m.shape)
+    assert.deepEqual(sanitizeShape(f.shape, 'female'), f.shape)
+    assert.deepEqual(m, randomAppearance(`g${i}`, { gender: 'male' }))
+    assert.ok(Object.keys(m.shape).length >= 2 && Object.keys(f.shape).length >= 2)
+    beards.add(m.faceLayers.beard.style)
+  }
+  assert.ok(beards.size >= 4, 'varias barbas')
+  let nm = 0
+  for (let i = 0; i < 400; i++) {
+    const n = npcAppearance(`npc-x${i}`, DEFAULT_APPEARANCE, 0.3)
+    if (n.gender === 'male') {
+      nm++
+      assert.deepEqual(n.outfit, {})
+      assert.ok((n.hair.id ?? '').startsWith('hair.m.'))
+    }
+    assert.equal(npcAppearance(`npc-x${i}`, DEFAULT_APPEARANCE, 0.3), n)
+  }
+  assert.ok(nm > 80 && nm < 170, `masculinos ${nm}`)
+  const any = Array.from({ length: 300 }, (_, i) => randomAppearance(`any${i}`, { gender: 'any' }).gender)
+  assert.ok(any.filter((g) => g === 'male').length > 70)
+})
+
+await t('sanitize(JSON) preserva genero, camadas e formato (codigo de compartilhamento / nuvem)', () => {
+  for (const a of [randomAppearance('jb-m', { gender: 'male' }), randomAppearance('jb-f', { gender: 'female' })]) {
+    const r = sanitizeAppearance(JSON.parse(JSON.stringify(a)))!
+    assert.equal(r.gender, a.gender)
+    assert.deepEqual(r.faceLayers, a.faceLayers)
+    assert.deepEqual(r.shape, a.shape)
+  }
 })
 
 console.log(`\n${passed} verificacoes passaram (${N} aparencias sorteadas).`)

@@ -2,29 +2,33 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { useAppearanceStore } from '../../state/appearanceStore'
 import { IconSave } from './icons'
 import type { StageFocus } from './CharacterPreview'
-import { BodySection, BrowsSection, EyesSection, FaceSection, HairSection, LipsSection, LooksSection, MakeupSection, NailsSection, SkinSection } from './appearance/sections'
+import { BodySection, HairSection, LooksSection, MakeupSection, NailsSection, SkinSection } from './appearance/sections'
+import { BeardLayerSection, BrowLayerSection, EyeLayerSection, FacesSection, GenderBar, LashLayerSection, MouthLayerSection, ShapeSection } from './appearance/layersSections'
 import { CIconBody, CIconBrow, CIconCompare, CIconDice, CIconEye, CIconFace, CIconHair, CIconLips, CIconLooks, CIconMakeup, CIconNail, CIconRedo, CIconSkin, CIconUndo } from './appearance/icons'
 import { randomLook } from './appearance/random'
 import './appearance/appearance.css'
 
-type Cat = 'looks' | 'rosto' | 'olhos' | 'sobrancelhas' | 'labios' | 'maquiagem' | 'pele' | 'corpo' | 'cabelo' | 'unhas'
+type Cat = 'looks' | 'rostos' | 'formato' | 'olhos' | 'cilios' | 'sobrancelhas' | 'boca' | 'barba' | 'maquiagem' | 'pele' | 'corpo' | 'cabelo' | 'unhas'
 
 /** Categorias do criador: o enquadramento da camera acompanha (close no rosto ao editar rosto/maquiagem). */
-const CATS: Array<{ id: Cat; label: string; focus: StageFocus; icon: ReactNode; view: () => ReactNode }> = [
+const CATS: Array<{ id: Cat; label: string; focus: StageFocus; icon: ReactNode; view: () => ReactNode; only?: 'female' | 'male' }> = [
   { id: 'looks', label: 'Looks', focus: 'body', icon: <CIconLooks />, view: () => <LooksSection /> },
-  { id: 'rosto', label: 'Rosto', focus: 'face', icon: <CIconFace />, view: () => <FaceSection /> },
-  { id: 'olhos', label: 'Olhos', focus: 'eyes', icon: <CIconEye />, view: () => <EyesSection /> },
-  { id: 'sobrancelhas', label: 'Sobrancelhas', focus: 'eyes', icon: <CIconBrow />, view: () => <BrowsSection /> },
-  { id: 'labios', label: 'Lábios', focus: 'mouth', icon: <CIconLips />, view: () => <LipsSection /> },
-  { id: 'maquiagem', label: 'Maquiagem', focus: 'face', icon: <CIconMakeup />, view: () => <MakeupSection /> },
-  { id: 'pele', label: 'Pele', focus: 'torso', icon: <CIconSkin />, view: () => <SkinSection /> },
+  { id: 'rostos', label: 'Rostos', focus: 'face', icon: <CIconFace />, view: () => <FacesSection /> },
+  { id: 'formato', label: 'Formato', focus: 'face', icon: <CIconFace />, view: () => <ShapeSection /> },
+  { id: 'olhos', label: 'Olhos', focus: 'eyes', icon: <CIconEye />, view: () => <EyeLayerSection /> },
+  { id: 'cilios', label: 'Cílios', focus: 'eyes', icon: <CIconEye />, view: () => <LashLayerSection /> },
+  { id: 'sobrancelhas', label: 'Sobrancelhas', focus: 'eyes', icon: <CIconBrow />, view: () => <BrowLayerSection /> },
+  { id: 'boca', label: 'Boca', focus: 'mouth', icon: <CIconLips />, view: () => <MouthLayerSection /> },
+  { id: 'barba', label: 'Barba', focus: 'mouth', icon: <CIconFace />, view: () => <BeardLayerSection />, only: 'male' },
+  { id: 'maquiagem', label: 'Maquiagem', focus: 'face', icon: <CIconMakeup />, view: () => <MakeupSection />, only: 'female' },
+  { id: 'pele', label: 'Pele e extras', focus: 'torso', icon: <CIconSkin />, view: () => <SkinSection /> },
   { id: 'corpo', label: 'Corpo', focus: 'body', icon: <CIconBody />, view: () => <BodySection /> },
   { id: 'cabelo', label: 'Cabelo', focus: 'hair', icon: <CIconHair />, view: () => <HairSection /> },
-  { id: 'unhas', label: 'Unhas', focus: 'hands', icon: <CIconNail />, view: () => <NailsSection /> },
+  { id: 'unhas', label: 'Unhas', focus: 'hands', icon: <CIconNail />, view: () => <NailsSection />, only: 'female' },
 ]
 
 export function AppearanceTab({ onFocus }: { onFocus: (f: StageFocus) => void }) {
-  const [cat, setCat] = useState<Cat>('rosto')
+  const [cat, setCat] = useState<Cat>('rostos')
   const appearance = useAppearanceStore((s) => s.appearance)
   const saved = useAppearanceStore((s) => s.saved)
   const past = useAppearanceStore((s) => s.past.length)
@@ -38,7 +42,8 @@ export function AppearanceTab({ onFocus }: { onFocus: (f: StageFocus) => void })
   const [justSaved, setJustSaved] = useState(false)
 
   const dirty = JSON.stringify(appearance) !== JSON.stringify(saved)
-  const cur = CATS.find((c) => c.id === cat)!
+  const cats = CATS.filter((c) => !c.only || c.only === appearance.gender)
+  const cur = cats.find((c) => c.id === cat) ?? cats[1]
 
   // ao sair da aba, o antes/depois desliga
   useEffect(() => () => useAppearanceStore.getState().setCompare(false), [])
@@ -64,9 +69,10 @@ export function AppearanceTab({ onFocus }: { onFocus: (f: StageFocus) => void })
 
   return (
     <div className="cc">
+      <GenderBar />
       <div className="cc__rail" role="tablist" aria-label="Categorias da aparência">
-        {CATS.map((c) => (
-          <button key={c.id} type="button" role="tab" className="cc__cat" aria-selected={cat === c.id} onClick={() => go(c)}>
+        {cats.map((c) => (
+          <button key={c.id} type="button" role="tab" className="cc__cat" aria-selected={cur.id === c.id} onClick={() => go(c)}>
             {c.icon}
             <span>{c.label}</span>
           </button>

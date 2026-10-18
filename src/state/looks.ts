@@ -51,7 +51,8 @@ export function ownedSet(): Set<string> {
 export function stripUnowned(a: Appearance, owned: Set<string> = ownedSet()): Appearance {
   const outfit: Appearance['outfit'] = {}
   for (const [k, r] of Object.entries(a.outfit)) if (r && owned.has(r.id)) outfit[k as keyof Appearance['outfit']] = r
-  return { ...a, outfit, hair: a.hair.id && !owned.has(a.hair.id) ? { ...a.hair, id: DEFAULT_APPEARANCE.hair.id } : a.hair, accessories: a.accessories.filter((r) => owned.has(r.id)) }
+  if (a.gender === 'male') return { ...a, outfit: {}, accessories: [], hair: a.hair.id?.startsWith('hair.m.') ? a.hair : { ...a.hair, id: 'hair.m.quiff' } }
+  return { ...a, outfit, hair: a.hair.id && (a.hair.id.startsWith('hair.m.') || !owned.has(a.hair.id)) ? { ...a.hair, id: DEFAULT_APPEARANCE.hair.id } : a.hair, accessories: a.accessories.filter((r) => owned.has(r.id)) }
 }
 
 export type DecodeResult = { ok: true; appearance: Appearance; dropped: number } | { ok: false; error: string }
@@ -65,9 +66,10 @@ export function decodeLook(code: string): DecodeResult {
     // codigo antigo (JB4 sem `v: 5`) nao tem face/body: parte do padrao SEM esses blocos para que sejam derivados
     // de makeup/morphs na normalizacao (cilios, sobrancelhas, tamanho do olho) em vez de virarem o padrao v5
     const isV5 = !!raw && typeof raw === 'object' && (raw as { v?: unknown }).v === 5
-    const { face: _f, body: _b, ...legacyBase } = DEFAULT_APPEARANCE
+    const { face: _f, body: _b, faceLayers: _fl, ...legacyBase } = DEFAULT_APPEARANCE
     void _f
     void _b
+    void _fl
     const merged = mergeOver(isV5 ? DEFAULT_APPEARANCE : legacyBase, raw)
     const a = sanitizeAppearance(merged)
     if (!a) return { ok: false, error: 'Código sem aparência.' }

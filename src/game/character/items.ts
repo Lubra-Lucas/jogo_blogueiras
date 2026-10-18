@@ -23,6 +23,8 @@ export interface WearableDef {
   texture?: 'atlas' | 'own'
   /** Cabelo: luminancia linear media da textura (referencia da recoloracao por razao de luminancia). */
   refLum?: number
+  /** cabelo MASCULINO (male_base): casca com cor de vertice, sem textura; so aparece para o genero masculino */
+  male?: boolean
 }
 
 const A = `${import.meta.env.BASE_URL}assets/characters/`
@@ -44,6 +46,14 @@ export const WEARABLES: Record<string, WearableDef> = {
   'hair.caramelCurls': { id: 'hair.caramelCurls', slot: 'hair', glb: `${A}hair_caramelCurls.glb`, kind: 'hair', defaultColor: '#c08a4e', label: 'Cachos caramelo', texture: 'own' },
 }
 
+/** Cabelos masculinos (fora de WEARABLES: nao entram na loja/inventario; sao gratuitos para o masculino). */
+export const MALE_WEARABLES: Record<string, WearableDef> = {
+  'hair.m.buzz': { id: 'hair.m.buzz', slot: 'hair', glb: `${A}male/hair_buzz.glb`, kind: 'hair', defaultColor: '#2b2622', label: 'Raspado', male: true },
+  'hair.m.quiff': { id: 'hair.m.quiff', slot: 'hair', glb: `${A}male/hair_quiff.glb`, kind: 'hair', defaultColor: '#6a4a2a', label: 'Topete curto', male: true },
+  'hair.m.sidepart': { id: 'hair.m.sidepart', slot: 'hair', glb: `${A}male/hair_sidepart.glb`, kind: 'hair', defaultColor: '#4a3626', label: 'Curto com risca', male: true },
+}
+export const maleHairStyles = (): WearableDef[] => Object.values(MALE_WEARABLES)
+
 /** Estilos de cabelo disponiveis (ordem do registro), para o seletor do editor. */
 export function hairStyles(): WearableDef[] {
   return Object.values(WEARABLES).filter((w) => w.slot === 'hair')
@@ -53,11 +63,11 @@ export function hairStyles(): WearableDef[] {
 export function resolveHairId(raw: string | null | undefined): string | null {
   if (!raw) return null
   const id = raw.startsWith('hair.') ? raw : `hair.${raw}`
-  return WEARABLES[id] ? id : null
+  return WEARABLES[id] || MALE_WEARABLES[id] ? id : null
 }
 
 export function getWearable(id: string | null | undefined): WearableDef | null {
-  return id ? (WEARABLES[id] ?? null) : null
+  return id ? (WEARABLES[id] ?? MALE_WEARABLES[id] ?? null) : null
 }
 
 /** Cor efetiva de uma peca: `ref.colors[0]` ou a cor padrao do registro. */

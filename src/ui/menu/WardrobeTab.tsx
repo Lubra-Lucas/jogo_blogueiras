@@ -46,7 +46,22 @@ function CategoryIcon({ c }: { c: Category }) {
   return <>{SLOT_ICONS[c.icon]({})}</>
 }
 
+/** Masculino: as 107 pecas sao do corpo feminino; a boxer e a roupa base. */
 export function WardrobeTab() {
+  const gender = useAppearanceStore((s) => s.appearance.gender)
+  if (gender === 'male')
+    return (
+      <div className="cc-block" style={{ padding: 16 }}>
+        <h3 className="cc__title">Roupas masculinas em breve</h3>
+        <p className="cc-hint" style={{ fontSize: 14 }}>
+          Por enquanto o avatar masculino usa a boxer como roupa base. As roupas e joias atuais são do modelo feminino: elas ficam guardadas e voltam quando você trocar o gênero em Aparência.
+        </p>
+      </div>
+    )
+  return <WardrobeFemale />
+}
+
+function WardrobeFemale() {
   const [catId, setCatId] = useState('top')
   const [jewelSlot, setJewelSlot] = useState<ItemSlot | 'all'>('all')
   const [selected, setSelected] = useState<string | null>(null)

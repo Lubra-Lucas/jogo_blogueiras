@@ -61,6 +61,8 @@ const SPECS: NpcSpec[] = [
   { id: 'salva-vidas-b', path: [[74.4, 34]], speed: 0, clip: 'idle', hair: 'hair.chestnutWaves', hairColor: '#c9a15a', skin: '#efcdbd', suit: '#e9553b', top: 'tank', bottom: 'tailored_shorts', phase: 0 },
 ]
 
+/** fracao das NPCs de rua que sao masculinas (so a boxer: ainda nao ha roupas masculinas) */
+const NPC_MALE_CHANCE = 0.3
 const HAIRS = ['hair.meshyUpdo', 'hair.chestnutWaves', 'hair.platinumUndercut', 'hair.caramelCurls']
 function appearanceOf(n: NpcSpec): Appearance {
   // rosto e corpo variados e estaveis por NPC (seed = id); gerado uma vez e guardado em cache
@@ -77,7 +79,7 @@ function appearanceOf(n: NpcSpec): Appearance {
       ...(n.dress ? { dress: { id: n.dress } } : {}),
       ...(n.shoes ? { shoes: { id: n.shoes } } : {}),
     },
-  })
+  }, NPC_MALE_CHANCE)
 }
 
 function pathLen(p: [number, number][]) {

@@ -15,7 +15,10 @@ import {
   type FaceParams,
 } from './faceCatalog'
 
-export type { BodyParams, FaceParams }
+import { CLASSIC_DEFAULTS, mergeFace, sanitizeFaceLayers, sanitizeShape, type FaceLayers, type Gender } from './faceLayers'
+import { DOLL_REPLICA, TWELVE } from './facePresets'
+
+export type { BodyParams, FaceParams, FaceLayers, Gender }
 
 /**
  * Aparencia de um personagem: JSON puro (sem tipos do three), versionado (`v: 5`).
@@ -91,6 +94,12 @@ export interface Appearance {
   v: 5
   /** qual malha base (GLB) */
   base: 'doll'
+  /** genero: escolhe o modelo (feminino = boneca com rosto em camadas; masculino = avatar masculino). Ausente = female. */
+  gender: Gender
+  /** rosto por camadas em tempo real (estilo + cor + escala/posicao por camada; barba so masculino) */
+  faceLayers: FaceLayers
+  /** formato do rosto: pesos 0..1 dos morphs `f_*` do genero (o masculino ganha `f_maleBase` = 1 por padrao) */
+  shape: Record<string, number>
   /** nome do morph target -> 0..1 (corpo e rosto); nomes desconhecidos sao ignorados */
   morphs: Record<string, number>
   /** pele nua (rosto, pescoco, maos, pes): tom, acabamento, sardas/pintas no corpo */
@@ -113,6 +122,8 @@ export interface Appearance {
   /** joias e acessorios rigidos (um item por slot: neck/ears/head/wrist/finger/hat/glasses/bag/belt/scarf/anklet/brooch) */
   accessories: ItemRef[]
 }
+
+const HEX = /^#[0-9a-f]{6}$/i
 
 /** Cor padrao da base: nude que acompanha o tom da pele. */
 export const NUDE_UNDER = '#d9bba8'
@@ -139,6 +150,9 @@ export const DEFAULT_MAKEUP: Makeup = {
 export const DEFAULT_APPEARANCE: Appearance = {
   v: 5,
   base: 'doll',
+  gender: 'female',
+  faceLayers: DOLL_REPLICA.face,
+  shape: {},
   morphs: {},
   skin: { tone: '#efcdbd', finish: 'natural' },
   suit: { color: '#16141a', finish: 'satin', base: 'auto' },
@@ -157,6 +171,9 @@ const ALT_MORPHS = { bustBig: 0.5, buttBig: 0.6, hipsWide: 0.5, waistThin: 0.6, 
 export const ALT_APPEARANCE: Appearance = {
   v: 5,
   base: 'doll',
+  gender: 'female',
+  faceLayers: DOLL_REPLICA.face,
+  shape: {},
   morphs: ALT_MORPHS,
   skin: { tone: '#6b4128', finish: 'dewy' },
   suit: { color: '#16141a', finish: 'latex', base: 'color' },
@@ -206,6 +223,54 @@ export function deriveFace(makeup: Makeup, morphs: Record<string, number>): Face
   }
 }
 
+/** Rosto masculino padrao (oval jovem) e look base do masculino. */
+export const DEFAULT_MALE_LAYERS: FaceLayers = mergeFace(TWELVE[0].face, { beard: { style: 'none' } })
+export const DEFAULT_MALE_APPEARANCE: Appearance = {
+  ...DEFAULT_APPEARANCE,
+  gender: 'male',
+  faceLayers: DEFAULT_MALE_LAYERS,
+  shape: {},
+  skin: { tone: '#e3b08f', finish: 'natural' },
+  suit: { color: '#2a4fa8', finish: 'satin', base: 'auto' },
+  hair: { id: 'hair.m.quiff', color: '#6a4a2a' },
+  outfit: {},
+  accessories: [],
+}
+/** Aparencia padrao de cada genero. */
+export const defaultAppearanceFor = (g: Gender): Appearance => (g === 'male' ? DEFAULT_MALE_APPEARANCE : DEFAULT_APPEARANCE)
+
+/**
+ * Perfis ANTIGOS (sem `faceLayers`) viram female com a "Classica" (pintura original extraida em camadas) e as cores atuais mantidas:
+ * iris (`eyes.color`), batom (`lips`), sobrancelha (`makeup.brows.color`/`face.browColor` se diferente do padrao).
+ */
+export function classicFromLegacy(a: { eyes?: Appearance['eyes']; lips?: Appearance['lips']; makeup?: Makeup; face?: Partial<FaceParams> }): FaceLayers {
+  const f = mergeFace(DOLL_REPLICA.face, {})
+  const iris = a.eyes?.color
+  if (iris && HEX.test(iris)) f.eye.iris = iris
+  const lip = a.lips?.color
+  if (lip && HEX.test(lip) && lip.toLowerCase() !== DEFAULT_APPEARANCE.lips!.color) f.mouth.color = lip
+  if (a.lips) f.mouth.gloss = Math.min(1, 0.25 + a.lips.gloss * 0.9)
+  const brow = a.makeup?.brows?.color ?? a.face?.browColor
+  if (brow && HEX.test(brow) && brow.toLowerCase() !== DEFAULT_MAKEUP.brows.color) f.brow.color = brow
+  else f.brow.color = CLASSIC_DEFAULTS.brow
+  return f
+}
+
+/** Troca o modelo mantendo o que faz sentido: pele, cor do cabelo, proporcoes do corpo e cor da base; rosto e cabelo do novo genero partem do padrao dele. */
+export function switchGender(a: Appearance, g: Gender): Appearance {
+  if (a.gender === g) return a
+  const d = defaultAppearanceFor(g)
+  return {
+    ...a,
+    gender: g,
+    faceLayers: g === 'male' ? DEFAULT_MALE_APPEARANCE.faceLayers : DEFAULT_APPEARANCE.faceLayers,
+    shape: {},
+    hair: { ...d.hair, color: a.hair.color },
+    suit: g === 'male' ? { ...a.suit, color: a.suit.color.toLowerCase() === '#16141a' ? d.suit.color : a.suit.color, base: 'auto' } : a.suit,
+    // roupas ficam guardadas no perfil (o masculino so mostra a boxer), voltam ao trocar de novo
+  }
+}
+
 /**
  * Normaliza qualquer aparencia (v3 salvo, v4 parcial, v5, look de NPC) para v5 completa.
  * v3 -> v4: ganha `makeup` padrao, `eyes` padrao, acabamento natural e `suit.base = 'color'` (o look salvo nao muda).
@@ -217,10 +282,17 @@ export function normalizeAppearance(a: Partial<Omit<Appearance, 'v'>> & { v?: nu
   const makeup = normalizeMakeup(a.makeup)
   const faceIn = a.face && typeof a.face === 'object' ? a.face : {}
   const bodyIn = a.body && typeof a.body === 'object' ? a.body : {}
+  const gender: Gender = a.gender === 'male' ? 'male' : 'female'
+  const layersBase = gender === 'male' ? DEFAULT_MALE_LAYERS : classicFromLegacy({ eyes: a.eyes, lips: a.lips, makeup, face: faceIn })
+  const faceLayers = a.faceLayers && typeof a.faceLayers === 'object' ? mergeFace(layersBase, a.faceLayers as never) : layersBase
+  const shape = a.shape && typeof a.shape === 'object' ? { ...a.shape } : {}
   return {
     ...DEFAULT_APPEARANCE,
     ...a,
     v: 5,
+    gender,
+    faceLayers,
+    shape,
     skin: { ...DEFAULT_APPEARANCE.skin, ...a.skin },
     suit: { ...DEFAULT_APPEARANCE.suit, ...a.suit, base: legacyBase(a.suit?.base) ?? (fromV3 ? 'color' : 'auto') },
     eyes: { ...DEFAULT_APPEARANCE.eyes!, ...a.eyes },
@@ -259,7 +331,6 @@ export function makeupIsEmpty(m: Makeup | undefined): boolean {
 }
 
 // ---------- validacao de dados nao confiaveis (codigo de compartilhamento, rede) ----------
-const HEX = /^#[0-9a-f]{6}$/i
 const ENUMS: Record<string, readonly string[]> = {
   'blush.style': ['none', 'apple', 'draping', 'sunkissed'],
   'eyeshadow.style': ['none', 'wash', 'smoky', 'cut', 'halo', 'graphic'],
@@ -344,9 +415,13 @@ export function sanitizeAppearance(raw: unknown): Appearance | null {
   const b = n.body as unknown as Record<string, unknown>
   const bodyOut: Record<string, number> = {}
   for (const k of BODY_KEYS) bodyOut[k] = num(b[k], -1, 1, 0)
+  const gender: Gender = n.gender === 'male' ? 'male' : 'female'
   return {
     v: 5,
     base: 'doll',
+    gender,
+    faceLayers: sanitizeFaceLayers(n.faceLayers, gender === 'male' ? DEFAULT_MALE_LAYERS : DOLL_REPLICA.face),
+    shape: sanitizeShape(n.shape, gender),
     morphs,
     face: faceOut as unknown as FaceParams,
     body: bodyOut as unknown as BodyParams,

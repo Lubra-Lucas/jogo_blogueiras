@@ -3,6 +3,8 @@ import { useAppearanceStore, LOOK_SLOTS } from '../../../state/appearanceStore'
 import { NUDE_UNDER, DEFAULT_APPEARANCE, type Appearance, type SuitFinish, FINISH_LABELS } from '../../../shared/appearance'
 import { MORPH_LABELS, MORPH_PAIRS, pairValue, withPairValue } from '../../../game/character/morphConfig'
 import { hairList } from '../../../game/character/outfit'
+import { maleHairStyles } from '../../../game/character/items'
+import { SkinExtrasBlock } from './layersSections'
 import { RARITY_COLORS, tagsOf } from '../../../game/character/itemTags'
 import { MAKEUP_LOOKS, applyMakeupLook } from '../../../game/character/makeup/presets'
 import { decodeLook, encodeLook, stripUnowned } from '../../../state/looks'
@@ -270,9 +272,17 @@ export function SkinSection() {
       <Block title="Acabamento da pele">
         <Choice options={(Object.keys(D.SKIN_FINISH_LABELS) as Array<keyof typeof D.SKIN_FINISH_LABELS>).map((id) => ({ id, label: D.SKIN_FINISH_LABELS[id] }))} value={a.skin.finish ?? 'natural'} onChange={(finish) => edit((x) => ({ ...x, skin: { ...x.skin, finish } }))} cols={4} />
       </Block>
+      {a.gender !== 'male' && (
       <Block title="Detalhes do corpo">
         <Slider label="Sardas no colo e ombros" value={a.skin.bodyFreckles ?? 0} onChange={(v) => edit((x) => ({ ...x, skin: { ...x.skin, bodyFreckles: v } }), 'bf')} />
       </Block>
+      )}
+      {a.gender === 'male' && (
+        <Block title="Cor da boxer" hint="A boxer é a roupa base do avatar masculino.">
+          <NamedSwatches list={D.BODY_BASE_COLORS} value={a.suit.color} onChange={(c) => setSuit({ color: c ?? a.suit.color })} label="Cor da boxer" />
+        </Block>
+      )}
+      {a.gender !== 'male' && (
       <Block title="Base do corpo" hint="O que aparece sob roupas sem alça ou decotadas.">
         <Choice
           options={[
@@ -289,6 +299,8 @@ export function SkinSection() {
           <Choice options={(Object.keys(FINISH_LABELS) as SuitFinish[]).map((f) => ({ id: f, label: FINISH_LABELS[f] }))} value={a.suit.finish} onChange={(finish) => setSuit({ finish })} cols={3} />
         )}
       </Block>
+      )}
+      <SkinExtrasBlock />
     </>
   )
 }
@@ -322,6 +334,36 @@ function ProportionSliders({ list }: { list: typeof PROPORTION_SLIDERS }) {
   )
 }
 
+const MALE_BODY_KEYS = ['weightUp', 'weightDown', 'muscleUp', 'bellyUp', 'shouldersBroad', 'shouldersNarrow', 'chestBroad', 'waistThin', 'hipsWide', 'thighsThick']
+
+/** Ajustes de corpo do masculino (os 10 morphs de male_base.glb). */
+function MaleBodyAdjust() {
+  const { a, edit } = useLook()
+  const pair = (label: string, minus: string, plus: string, minusL: string, plusL: string) => (
+    <BipolarSlider
+      key={label}
+      label={label}
+      minusLabel={minusL}
+      plusLabel={plusL}
+      value={(a.morphs[plus] ?? 0) - (a.morphs[minus] ?? 0)}
+      onChange={(v) => edit((x) => ({ ...x, morphs: { ...x.morphs, [plus]: Math.max(0, v), [minus]: Math.max(0, -v) } }), `mm.${label}`)}
+    />
+  )
+  const one = (label: string, k: string) => <Slider key={k} label={label} value={a.morphs[k] ?? 0} onChange={(v) => edit((x) => ({ ...x, morphs: { ...x.morphs, [k]: v } }), `mm.${k}`)} />
+  return (
+    <Block title="Físico" hint="Peso, músculo e barriga do avatar masculino.">
+      {pair('Peso', 'weightDown', 'weightUp', 'magro', 'gordo')}
+      {one('Músculos', 'muscleUp')}
+      {one('Barriga', 'bellyUp')}
+      {pair('Ombros', 'shouldersNarrow', 'shouldersBroad', 'estreitos', 'largos')}
+      {one('Peito largo', 'chestBroad')}
+      {one('Cintura fina', 'waistThin')}
+      {one('Quadril largo', 'hipsWide')}
+      {one('Coxas grossas', 'thighsThick')}
+    </Block>
+  )
+}
+
 export function BodySection() {
   const { a, edit } = useLook()
   const set = (k: string, v: number) => edit((x) => ({ ...x, morphs: { ...x.morphs, [k]: v } }), `m.${k}`)
@@ -342,9 +384,13 @@ export function BodySection() {
           Zerar proporções
         </button>
       </Row>
+      {a.gender === 'male' ? <MaleBodyAdjust /> : null}
+      {a.gender !== 'male' && (
       <Block title="Silhuetas" hint="Todas as formas são bonitas: escolha a que combina com a sua personagem.">
         <PresetCards list={D.BODY_PRESETS} current={cur} onPick={(p) => edit((x) => D.applyMorphGroup(x, D.BODY_KEYS, p.morphs))} />
       </Block>
+      )}
+      {a.gender !== 'male' && (
       <Block title="Ajustes">
         {MORPH_PAIRS.map((p) => (
           <BipolarSlider key={p.id} label={p.label} minusLabel={p.minusLabel} plusLabel={p.plusLabel} value={pairValue(p, a.morphs)} onChange={(v) => edit((x) => ({ ...x, morphs: withPairValue(p, x.morphs, v) }), `p.${p.id}`)} />
@@ -353,8 +399,9 @@ export function BodySection() {
           <Slider key={k} label={MORPH_LABELS[k]} value={a.morphs[k] ?? 0} onChange={(v) => set(k, v)} />
         ))}
       </Block>
+      )}
       <Row>
-        <button type="button" className="btn" onClick={() => edit((x) => D.applyMorphGroup(x, D.BODY_KEYS, {}))}>
+        <button type="button" className="btn" onClick={() => edit((x) => D.applyMorphGroup(x, [...D.BODY_KEYS, ...MALE_BODY_KEYS], {}))}>
           Zerar corpo
         </button>
       </Row>
@@ -375,7 +422,7 @@ export function HairSection() {
             <span className="card__icon">{SLOT_ICONS.hair({ style: { color: '#b8b2c4' } })}</span>
             Sem cabelo
           </button>
-          {hairList().map((w) => (
+          {(a.gender === 'male' ? maleHairStyles() : hairList()).map((w) => (
             <button key={w.id} type="button" className="card" style={{ ['--rar' as string]: RARITY_COLORS[tagsOf(w.id).rarity] }} aria-pressed={h.id === w.id} onClick={() => setHair({ id: w.id, color: w.defaultColor, color2: undefined, mode: 'solid' })}>
               <span className="card__icon">{SLOT_ICONS.hair({ style: { color: w.defaultColor } })}</span>
               {w.label}
@@ -393,6 +440,7 @@ export function HairSection() {
         <div className="cc-sub">Fantasia</div>
         <NamedSwatches list={D.HAIR_FANTASY} value={h.color} onChange={(c) => setHair({ color: c ?? h.color }, 'hc')} label="Cores de fantasia" />
       </Block>
+      {a.gender !== 'male' && (
       <Block title="Coloração">
         <Choice
           options={[
@@ -413,6 +461,7 @@ export function HairSection() {
           </>
         )}
       </Block>
+      )}
       <Block title="Brilho">
         <Slider label="Brilho do cabelo" value={h.gloss ?? 0.5} onChange={(v) => setHair({ gloss: v }, 'hgl')} />
       </Block>

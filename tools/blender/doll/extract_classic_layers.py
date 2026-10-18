@@ -23,7 +23,7 @@ from glbtool import Glb
 
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 CH = os.path.join(REPO, "public", "assets", "characters")
-OUT = os.path.join(CH, "male", "face")
+OUT = os.path.join(REPO, "tools", "blender", "male", "kit_src")
 N = 1024; SS = 2
 DBG = r'C:/Users/user/AppData/Local/Temp/claude/shots/boneca_camadas2'
 X0, X1, Y0, Y1 = -0.11, 0.11, 1.28, 1.50

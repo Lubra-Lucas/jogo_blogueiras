@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { ALT_APPEARANCE, DEFAULT_APPEARANCE, normalizeAppearance, type Appearance } from '../shared/appearance'
+import { ALT_APPEARANCE, DEFAULT_APPEARANCE, normalizeAppearance, switchGender, type Appearance } from '../shared/appearance'
 import { getWearable, resolveHairId } from '../game/character/items'
 import { loadJson, saveJson, STORAGE_KEYS } from '../shared/storage'
 
@@ -86,13 +86,15 @@ function hairFromQuery(b: Appearance): Appearance['hair'] {
   return { ...b.hair, id, color }
 }
 
+const qGender = query.get('gender') === 'male' ? 'male' : query.get('gender') === 'female' ? 'female' : null
+const base2: Appearance = qGender ? switchGender(base, qGender) : base
 const initial: Appearance = {
-  ...base,
-  morphs: { ...base.morphs, ...morphsFromQuery() },
+  ...base2,
+  morphs: { ...base2.morphs, ...morphsFromQuery() },
   // `?nooutfit=1`: so para checar a superficie do corpo (teste de arte)
-  outfit: query.get('nooutfit') ? {} : base.outfit,
+  outfit: query.get('nooutfit') ? {} : base2.outfit,
   // `?nohair=1`: cabelo removido (checar a cabeça); `?hair=<estilo>`: troca o estilo
-  hair: hairFromQuery(base),
+  hair: hairFromQuery(base2),
 }
 
 let lastGroup = ''
