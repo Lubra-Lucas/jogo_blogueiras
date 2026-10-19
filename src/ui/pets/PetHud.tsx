@@ -6,7 +6,6 @@ import { useSitStore } from '../../game/sit/sitStore'
 import { useMinigameStore } from '../../game/minigames/minigameStore'
 import { useVehicleStore } from '../../game/vehicles/driveStore'
 import { useShopStore } from '../shop/shopStore'
-import { useDeviceStore } from '../../game/systems/device'
 import { useUiStore } from '../../state/uiStore'
 import { PET_ACCESSORIES, PET_FOOD, petAccFits, type PetAccSlot } from '../../game/economy/prices'
 import { findPet, loadPetCatalog, PET_NAME_IDEAS, usePetCatalog } from '../../game/pets/catalog'
@@ -54,28 +53,20 @@ function Bar({ label, value, tone }: { label: string; value: number; tone: 'ambe
   )
 }
 
-/** Nome, necessidades e atalho para o painel do pet + aviso de carinho perto dele. */
+/** Nome, necessidades e atalho para o painel do pet. */
 export function PetHud() {
   const active = usePetStore((s) => s.active)
   const names = usePetStore((s) => s.names)
   const loaded = usePetCatalog((s) => s.loaded)
   const breeds = usePetCatalog((s) => s.breeds)
-  const isTouch = useDeviceStore((s) => s.isTouch)
   const busy = useUiStore((s) => s.menuOpen || s.phoneOpen || s.cameraMode)
   const shop = useShopStore((s) => !!s.open)
   const mg = useMinigameStore((s) => !!s.active)
   const open = useOpen()
-  const [near, setNear] = useState(false)
   const [, tick] = useState(0)
-  const nearbyPoi = useInteractionStore((s) => s.nearby !== null)
-  const sitBusy = useSitStore((s) => s.nearest !== null || s.seat !== null)
-  const roomPrompt = useInteriorStore((s) => s.prompt !== null)
-  // o aviso do carro ("F Dirigir") tem prioridade sobre o carinho
-  const carBusy = useVehicleStore((s) => s.nearbyUid !== null || s.drivingUid !== null)
   useEffect(() => loadPetCatalog(), [])
   useEffect(() => {
     const t = window.setInterval(() => {
-      setNear(!!usePetStore.getState().active && petRuntime.dist < 2.7)
       tick((n) => n + 1)
     }, 300)
     return () => window.clearInterval(t)
@@ -112,15 +103,6 @@ export function PetHud() {
             <i style={{ width: `${n.joy}%` }} className="pet-chip__r" />
           </span>
         </button>
-      )}
-      {near && !nearbyPoi && !sitBusy && !roomPrompt && !carBusy && !open && !busy && (
-        <div className="pet-prompt" role="status">
-          <span className="pet-prompt__name">{label}</span>
-          <button type="button" className="pet-btn" onClick={() => usePetStore.getState().caress(active)}>
-            {!isTouch && <span className="pet-key">E</span>}
-            Fazer carinho
-          </button>
-        </div>
       )}
       {open && <PetPanel id={active} breedId={info.breed.id} breedLabel={info.breed.label} coatLabel={info.coat.label} />}
     </>
@@ -204,6 +186,13 @@ function PetPanel({ id, breedId, breedLabel, coatLabel }: { id: string; breedId:
           <Bar label="Fome" value={n.hunger} tone="amber" />
           <Bar label="Alegria" value={n.joy} tone="rose" />
           <p className="pet-note">Sem pressa: as barras caem devagar e nada de ruim acontece. Cuidar só deixa seu pet mais feliz.</p>
+          <button type="button" className="pet-btn" onClick={() => {
+            usePetStore.getState().caress(id)
+            tick((v) => v + 1)
+          }}>
+            <IconHeart />
+            Fazer carinho
+          </button>
         </section>
 
         <section>

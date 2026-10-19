@@ -11,7 +11,10 @@
     "test:appearance": "node --import ./tools/casino-tests/register.mjs tools/tests/appearance-random.test.ts",
     "test:save": "node --import ./tools/casino-tests/register.mjs tools/tests/save.test.ts",
     "test:ranking": "node --import ./tools/casino-tests/register.mjs tools/tests/ranking.test.ts",
-    "test:versus": "node --import ./tools/casino-tests/register.mjs tools/tests/versus.test.ts"
+    "test:versus": "node --import ./tools/casino-tests/register.mjs tools/tests/versus.test.ts",
+    "test:environment": "node --import ./tools/casino-tests/register.mjs tools/tests/environment-registry.test.ts",
+    "test:minimap": "node tools/tests/minimap.test.mjs",
+    "test:pet-hud": "node tools/tests/pet-hud.test.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

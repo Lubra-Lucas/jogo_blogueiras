@@ -20,26 +20,36 @@ interface Wet {
   dark: number
 }
 
-const glows: Glow[] = []
-const wets: Wet[] = []
-const seen = new WeakSet<Material>()
+const glows = new Map<Material, Glow>()
+const wets = new Map<Material, Wet>()
+
+function watchDisposal(mat: Material) {
+  if (glows.has(mat) || wets.has(mat)) return
+  const remove = () => {
+    glows.delete(mat)
+    wets.delete(mat)
+    mat.removeEventListener('dispose', remove)
+  }
+  mat.addEventListener('dispose', remove)
+}
 
 /** MeshBasicMaterial: multiplica a cor (vertex color * color), >1 estoura para branco. */
 export function registerGlowColor(mat: MeshBasicMaterial, day: number, night: number) {
-  if (seen.has(mat)) return
-  seen.add(mat)
-  glows.push({ k: 'color', mat, day, night })
+  if (glows.has(mat)) return
+  watchDisposal(mat)
+  glows.set(mat, { k: 'color', mat, day, night })
 }
 /** Material PBR com emissive: intensidade de dia -> noite. */
 export function registerGlowEmissive(mat: MeshStandardMaterial, day: number, night: number) {
-  if (seen.has(mat)) return
-  seen.add(mat)
-  glows.push({ k: 'emissive', mat, day, night })
+  if (glows.has(mat)) return
+  watchDisposal(mat)
+  glows.set(mat, { k: 'emissive', mat, day, night })
 }
 /** Superficie que fica molhada na chuva (mais lisa, mais escura, com mais verniz). */
 export function registerWet(mat: MeshStandardMaterial, o: { roughWet: number; ccWet: number; dark: number }) {
-  if (wets.some((w) => w.mat === mat)) return
-  wets.push({ mat, rough: mat.roughness, roughWet: o.roughWet, cc: (mat as MeshPhysicalMaterial).clearcoat ?? 0, ccWet: o.ccWet, dark: o.dark })
+  if (wets.has(mat)) return
+  watchDisposal(mat)
+  wets.set(mat, { mat, rough: mat.roughness, roughWet: o.roughWet, cc: (mat as MeshPhysicalMaterial).clearcoat ?? 0, ccWet: o.ccWet, dark: o.dark })
 }
 
 export const nightUniform = { value: 0 }
@@ -84,13 +94,13 @@ export function nightGlass(mat: MeshPhysicalMaterial, strength = 1.9) {
 
 export function applyRegistries() {
   const L = env.lights
-  for (const g of glows) {
+  for (const g of glows.values()) {
     const v = MathUtils.lerp(g.day, g.night, L)
     if (g.k === 'color') g.mat.color.setScalar(v)
     else g.mat.emissiveIntensity = v
   }
   const w = env.wet
-  for (const m of wets) {
+  for (const m of wets.values()) {
     m.mat.roughness = MathUtils.lerp(m.rough, m.roughWet, w)
     const pm = m.mat as MeshPhysicalMaterial
     if (pm.isMeshPhysicalMaterial) pm.clearcoat = MathUtils.lerp(m.cc, m.ccWet, w)

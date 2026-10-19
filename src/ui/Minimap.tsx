@@ -7,6 +7,9 @@ import { useUiStore } from '../state/uiStore'
 import { drawBig, drawMini } from './mapDraw'
 import { activeDoors, activeWorld } from '../game/travel/worlds'
 import { useTravelStore } from '../game/travel/travelStore'
+import { useMinigameStore } from '../game/minigames/minigameStore'
+import { useShopStore } from './shop/shopStore'
+import { useMarketUi } from './market/marketUi'
 
 const MINI_RADIUS_M = 85
 
@@ -18,12 +21,14 @@ export function Minimap() {
   const big = useRef<HTMLCanvasElement>(null)
   const open = useUiStore((st) => st.bigMapOpen)
   const setOpen = useUiStore((st) => st.setBigMap)
+  const menuOpen = useUiStore((st) => st.menuOpen)
+  const minigameOpen = useMinigameStore((st) => st.active !== null)
+  const shopOpen = useShopStore((st) => st.open !== null)
+  const marketOpen = useMarketUi((st) => st.open)
+  const covered = menuOpen || minigameOpen || shopOpen || marketOpen
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('bigmap') === '1') useUiStore.getState().setBigMap(true)
   }, [])
-  const openRef = useRef(open)
-  openRef.current = open
-
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const t = e.target
@@ -36,6 +41,8 @@ export function Minimap() {
   }, [])
 
   useEffect(() => {
+    // O mapa grande fica acima dos menus; so o minimapa fica encoberto por eles.
+    if ((covered || inside) && !open) return
     let raf = 0
     let last = 0
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -48,7 +55,7 @@ export function Minimap() {
       const mp = interiorBridge.active ? interiorBridge.mapPos : null
       const p = mp ? { position: { x: mp.x, z: mp.z }, yaw: ps.yaw } : ps
       const m = mini.current
-      if (m) {
+      if (m && !open) {
         const css = m.clientWidth
         const px = Math.round(css * dpr)
         if (m.width !== px) {
@@ -59,7 +66,7 @@ export function Minimap() {
         if (g && px > 0) drawMini(g, px, css, p.position.x, p.position.z, p.yaw, MINI_RADIUS_M)
       }
       const b = big.current
-      if (b && openRef.current) {
+      if (b && open) {
         const css = b.clientWidth
         const px = Math.round(css * dpr)
         if (b.width !== px) {
@@ -70,9 +77,20 @@ export function Minimap() {
         if (g && px > 0) drawBig(g, px, p.position.x, p.position.z, p.yaw)
       }
     }
-    raf = requestAnimationFrame(loop)
-    return () => cancelAnimationFrame(raf)
-  }, [])
+    const updateVisibility = () => {
+      cancelAnimationFrame(raf)
+      if (!document.hidden) {
+        last = 0
+        raf = requestAnimationFrame(loop)
+      }
+    }
+    document.addEventListener('visibilitychange', updateVisibility)
+    updateVisibility()
+    return () => {
+      cancelAnimationFrame(raf)
+      document.removeEventListener('visibilitychange', updateVisibility)
+    }
+  }, [covered, inside, open])
 
   return (
     <>

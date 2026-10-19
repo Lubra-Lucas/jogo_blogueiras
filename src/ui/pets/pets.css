@@ -1,4 +1,4 @@
-/* ===== Pets: chip, aviso de carinho, painel (vidro perolado, acentos ambar/jade) ===== */
+/* ===== Pets: chip e painel (vidro perolado, acentos ambar/jade) ===== */
 .pet-chip {
   position: fixed;
   left: 12px;
@@ -32,26 +32,6 @@
   transition: opacity 0.25s;
 }
 
-.pet-prompt {
-  position: fixed;
-  left: 50%;
-  bottom: calc(96px + env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  z-index: 20; /* abaixo de telefone (24), menus e lojas (30+) */
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 10px 8px 18px;
-  border-radius: 28px;
-  color: #46304c;
-  background: linear-gradient(180deg, #fffdf8, #f5efe4);
-  box-shadow: 0 4px 0 #e0d3bb, 0 12px 24px rgba(70, 48, 76, 0.25), inset 0 2px 0 #fff;
-  font-family: var(--f-sans);
-}
-/* celular: sobe acima do chat e do joystick (canto inferior esquerdo) */
-@media (max-width: 760px) { .pet-prompt { bottom: calc(240px + env(safe-area-inset-bottom)); } }
-.pet-prompt__name { font: italic 700 17px var(--f-serif); }
 .pet-btn {
   display: inline-flex;
   align-items: center;
@@ -69,7 +49,6 @@
 .pet-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #226b5b; }
 .pet-btn:disabled { opacity: 0.55; cursor: default; }
 .pet-btn--ghost { background: #fff; color: var(--ui-ink); box-shadow: inset 0 0 0 1.5px rgba(201, 154, 46, 0.5); }
-.pet-key { display: inline-grid; place-items: center; min-width: 22px; height: 22px; border-radius: 6px; background: rgba(255, 255, 255, 0.25); font-size: 12px; }
 
 .pet-modal { position: fixed; inset: 0; z-index: 130; display: flex; justify-content: flex-end; align-items: center; pointer-events: none; padding: 12px; }
 .pet-panel { width: min(400px, 100%); max-height: 100%; pointer-events: auto; box-shadow: 0 12px 40px rgba(40, 28, 52, 0.35); overflow: auto; padding: 16px 18px 18px; border-radius: 22px; color: var(--ui-ink); font-family: var(--f-sans); background: rgba(255, 252, 247, 0.96); display: grid; gap: 14px; user-select: none; }
