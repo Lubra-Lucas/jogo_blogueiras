@@ -360,7 +360,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
     }
   }, [rig, bodyMaterial, maleMat, bodyMat])
 
-  const lookKey = JSON.stringify([appearance.skin, appearance.suit, appearance.lips, appearance.hair.color, appearance.eyes, mkp, !!(appearance.outfit.dress || appearance.outfit.top), !!(appearance.outfit.dress || appearance.outfit.bottom)])
+  const lookKey = JSON.stringify([appearance.skin, appearance.suit, appearance.lips, appearance.hair.color, appearance.eyes, mkp, !!(appearance.outfit.dress || appearance.outfit.top), !!(appearance.outfit.dress || appearance.outfit.bottom), !hairDef])
   useLayoutEffect(() => {
     if (maleMat) {
       maleMat.setLook(appearance.skin.tone, appearance.suit.color, appearance.hair.color)
@@ -380,6 +380,7 @@ function CharacterImpl({ appearance, shadows = false, anim, handle }: CharacterP
       lips: appearance.lips,
       lipFinish: mkp.lips.finish,
       hair: appearance.hair.color,
+      bald: !hairDef,
       eyes: eyes ? { l: eyes.color, r: eyes.colorR ?? eyes.color, ring: eyes.ring } : undefined,
       brow: { mode: brow.style !== 'painted' ? 'erase' : brow.color.toLowerCase() !== DEFAULT_MAKEUP.brows.color ? 'tint' : 'keep', color: brow.color },
       lash: { color: mkp.lashes.style !== 'natural' || mkp.lashes.color.toLowerCase() !== DEFAULT_MAKEUP.lashes.color ? mkp.lashes.color : null },
