@@ -40,11 +40,14 @@ export default function App() {
   // minijogo em tela cheia: os que tem cena 3D usam o proprio <Canvas>; o mundo por tras nao precisa renderizar
   const minigameOpen = useMinigameStore((s) => s.active !== null)
   const menuOpen = uiMenu || shopOpen || marketOpen || minigameOpen
+  // celular: minijogo com cena 3D propria + a cidade na memoria estouram a GPU (o Safari recarrega a pagina = "desconecta").
+  // Enquanto o minijogo esta aberto a cidade sai da memoria; ao fechar volta onde a jogadora estava (PlayerController).
+  const freeWorld = isTouch && minigameOpen && !driving
   useEffect(() => initDeviceDetection(), [])
   return (
     <div className="app">
       <Suspense fallback={<div className="loading">Carregando...</div>}>
-        <Canvas
+        {!freeWorld && <Canvas
           frameloop={menuOpen ? 'never' : 'always'}
           dpr={settings.dpr}
           shadows={settings.shadows ? "percentage" : false}
@@ -57,7 +60,7 @@ export default function App() {
           }}
         >
           <Game tier={tier} />
-        </Canvas>
+        </Canvas>}
       </Suspense>
       <div className="ui-layer">
         <Hud />
