@@ -84,6 +84,7 @@ export function createBodyMaterial(map: Texture | null, normalMap: Texture | nul
     uCovLow: u(0),
     uLips: u(new Color('#da7076')),
     uHairBody: u(new Color('#d8b46e')),
+    uBald: u(0),
     uUseLips: u(1),
     uRoughSkin: u(0.4),
     uRoughSuit: u(0.12),
@@ -135,7 +136,7 @@ varying vec3 vRest; varying vec3 vRestN;
 ${layers ? 'uniform sampler2D uMask;' : 'uniform sampler2D uMask; uniform sampler2D uMask2; uniform sampler2D uMask3; uniform sampler2D uMask4;'}
 ${layers ? FL_DECL : ''}
 uniform sampler2D uMk; uniform float uUseMk; uniform vec4 uFaceBox;
-uniform vec3 uHairBody; uniform vec3 uSkin; uniform vec3 uSuit; uniform float uSuitSkin; uniform vec3 uUnder; uniform float uUnderOn; uniform float uCovUp; uniform float uCovLow; uniform vec3 uLips; uniform float uUseLips;
+uniform vec3 uHairBody; uniform float uBald; uniform vec3 uSkin; uniform vec3 uSuit; uniform float uSuitSkin; uniform vec3 uUnder; uniform float uUnderOn; uniform float uCovUp; uniform float uCovLow; uniform vec3 uLips; uniform float uUseLips;
 uniform float uRoughSkin; uniform float uRoughSuit; uniform float uCcSkin; uniform float uCcrSkin;
 uniform float uCcSuit; uniform float uCcrSuit; uniform vec3 uShSkin; uniform vec3 uShSuit;
 uniform float uLipRough; uniform float uLipMetal; uniform float uLipMatte;
@@ -223,7 +224,8 @@ ${layers ? `  // mascara unica empacotada (RGBA): R = peso da pele (macacao = 1 
   // sobrancelha pintada: cor propria (1) ou apagada para dar lugar a sobrancelha da maquiagem (2)
   vec3 browCol = mix(uBrow * clamp(tl / ${REF_BROW_LUM}, 0.5, 1.5), uSkin * 0.98, step(1.5, uBrowMode));
   base = mix(base, browCol, clamp(mk3.g * 1.1, 0.0, 1.0) * step(0.5, uBrowMode));
-  base = mix(base, uHairBody * clamp(tl / ${REF_HAIR_LUM}, 0.4, 1.0), wHl);
+  // couro cabeludo + linha do cabelo pintados na textura: cor do cabelo sob o cabelo 3D; sem cabelo, pele lisa (como o masculino)
+  base = mix(base, mix(uHairBody * clamp(tl / ${REF_HAIR_LUM}, 0.4, 1.0), uSkin * 1.02, uBald), wHl);
   ${layers ? FL_BODY : ''}
   // maquiagem projetada de frente (so rosto: normal para frente, na faixa da cabeca)
   fuv = (vRest.xy - uFaceBox.xy) * uFaceBox.zw;
@@ -321,6 +323,8 @@ export interface BodyLook {
   lips?: { color: string; gloss: number }
   lipFinish?: LipFinish
   hair?: string
+  /** sem cabelo 3D: o cabelo pintado no couro cabeludo vira pele */
+  bald?: boolean
   /** iris: null = pintada original */
   eyes?: { l: string | null; r: string | null; ring: number }
   /** sobrancelha pintada: 'keep' | 'tint' (cor) | 'erase' (a maquiagem desenha outra) */
@@ -363,6 +367,7 @@ export function applyBodyLook(m: DollBodyMaterial, look: BodyLook) {
   ;(U.uShSkin.value as Color).set(look.skin).lerp(new Color('#ffffff'), 0.5).multiplyScalar(sf.sheen)
   U.uBodyFreck.value = look.bodyFreckles ?? 0
   if (look.hair) (U.uHairBody.value as Color).set(look.hair)
+  U.uBald.value = look.bald ? 1 : 0
   if (look.lips) {
     ;(U.uLips.value as Color).set(look.lips.color)
     U.uUseLips.value = 1
