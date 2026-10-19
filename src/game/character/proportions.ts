@@ -257,6 +257,8 @@ export class BodyRig {
   headLift = 0
 
   readonly gender: Gender
+  /** retarget do masculino (ver retargetFrom): q' = pre * q * post por osso; `out`/`q` desfazem no begin() o que nao tem trilha */
+  private retarget: { bone: Bone; pre: Quaternion; post: Quaternion; q: Quaternion; out: Quaternion; active: boolean }[] = []
 
   constructor(root: Object3D, bones: Record<string, Bone>, gender: Gender = 'female') {
     this.root = root
@@ -313,11 +315,48 @@ export class BodyRig {
     this.bone('Head')?.scale.setScalar(p.head)
   }
 
+  /**
+   * Os clipes sao da boneca (Mixamo retargetado nela) e as rotacoes de repouso dos dois esqueletos sao identidade, mas os ossos do
+   * masculino APONTAM para outros lados em repouso (braco ~30 graus, coxa ~11). A mesma rotacao entao torce o membro (pior na corrida).
+   * Por osso, C = giro que leva a direcao do filho principal no masculino ate a da boneca; q' = C(pai)^-1 * q * C(osso) faz cada osso
+   * apontar como na boneca. `src` = esqueleto da boneca (cena do GLB de animacoes).
+   */
+  retargetFrom(src: Object3D) {
+    const fem: Record<string, Object3D> = {}
+    src.traverse((o) => void (fem[o.name] = o))
+    const MAIN: Record<string, string> = { mixamorigHips: 'mixamorigSpine', mixamorigSpine2: 'mixamorigNeck' }
+    const corr = new Map<string, Quaternion>()
+    for (const n in this.bones) {
+      const b = this.bones[n]
+      const kids = b.children.filter((c) => (c as Bone).isBone && this.rest.has(c.name) && fem[c.name])
+      const c = kids.find((k) => k.name === MAIN[n]) ?? kids[0]
+      const q = new Quaternion()
+      if (c) {
+        const dm = this.rest.get(c.name)!.clone().normalize()
+        const df = fem[c.name].position.clone().normalize()
+        if (dm.lengthSq() > 0 && df.lengthSq() > 0) q.setFromUnitVectors(dm, df)
+      }
+      corr.set(n, q)
+    }
+    this.retarget = []
+    for (const n in this.bones) {
+      const b = this.bones[n]
+      const post = corr.get(n)!
+      const pre = (corr.get(b.parent?.name ?? '') ?? new Quaternion()).clone().invert()
+      if (Math.abs(post.w) > 0.99999 && Math.abs(pre.w) > 0.99999) continue
+      this.retarget.push({ bone: b, pre, post, q: new Quaternion(), out: new Quaternion(), active: false })
+    }
+  }
+
   /** 1o passo do quadro: desfaz o que o `apply` do quadro anterior escreveu (o mixer so reescreve o que tem trilha). */
   begin() {
     for (const s of this.saved.values()) {
       if (s.active && s.bone.quaternion.equals(s.out)) s.bone.quaternion.copy(s.q)
       s.active = false
+    }
+    for (const r of this.retarget) {
+      if (r.active && r.bone.quaternion.equals(r.out)) r.bone.quaternion.copy(r.q)
+      r.active = false
     }
     const hips = this.bone('Hips')
     if (hips && this.hipsActive && hips.position.equals(this.hipsOut)) hips.position.copy(this.hipsBase)
@@ -327,6 +366,12 @@ export class BodyRig {
   /** Depois da animacao: eleva/escala o quadril e soma a postura. */
   apply() {
     const p = this.p
+    for (const r of this.retarget) {
+      r.q.copy(r.bone.quaternion)
+      r.bone.quaternion.premultiply(r.pre).multiply(r.post)
+      r.out.copy(r.bone.quaternion)
+      r.active = true
+    }
     const hips = this.bone('Hips')
     if (hips && (p.hipsDelta !== 0 || p.stride !== 1 || p.hipsScale !== 1)) {
       this.hipsBase.copy(hips.position)
