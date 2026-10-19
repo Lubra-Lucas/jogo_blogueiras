@@ -8,8 +8,10 @@ import {
   pairsStarTh, pairsTypical, pickPairs, pieceKey,
   type Card, type LookRound, type MemMode, type Pool,
 } from '../../../game/minigames/memoria/logic'
+import { endMatch, matchSeed, parseMatchBase, reportScore, setPlaying, useVersusStore } from '../../../game/net/versus'
 import { useProfileStore } from '../../../state/profileStore'
 import { DiffPicker, IcoCards, IcoEye, IcoHelp, Overlay, ResultsCard, TopBar, Tutorial, markSeen, pref, seen, setPref, type TutStep } from '../shared/kit'
+import { VersusCountdown, VersusLobby, VersusStandings, useVersusStart } from '../shared/Versus'
 import { CardBack, PieceImg, preloadPieces } from './art'
 import './memoria.css'
 
@@ -102,6 +104,7 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
   const [tutorial, setTutorial] = useState<MemMode | null>(null)
   const [ready, setReady] = useState(useCatalogStore.getState().loaded)
   const [live, setLive] = useState('')
+  const match = useVersusStore((s) => s.match)
   const timers = useRef<number[]>([])
   const token = useRef(0)
 
@@ -195,32 +198,39 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
   }
 
   // ---------------------------------------------------------------- iniciar
-  const start = async () => {
-    if (!ready) return
+  // cfg = partida da competicao ao vivo: modo/dificuldade/seed combinados, nunca diaria e sem tutorial
+  const start = async (cfg?: { mode: MemMode; difficulty: Difficulty; seed: number }) => {
+    if (!useCatalogStore.getState().loaded) {
+      if (!cfg) return
+      await loadCatalog()
+    }
+    const m = cfg?.mode ?? mode
+    const d = cfg?.difficulty ?? difficulty
+    const dl = !cfg && daily
     const pool = (poolRef.current ??= buildPool(useCatalogStore.getState().items))
-    const seed = daily ? dailySeed(mode === 'pares' ? 'memoria' : 'memoria-look') : Math.floor(Math.random() * 2 ** 31)
+    const seed = cfg?.seed ?? (dl ? dailySeed(m === 'pares' ? 'memoria' : 'memoria-look') : Math.floor(Math.random() * 2 ** 31))
     const my = ++token.current
     timers.current.forEach((t) => window.clearTimeout(t))
     timers.current = []
     const fresh = blank()
-    Object.assign(gRef.current, fresh, { mode, difficulty, daily, seed })
+    Object.assign(gRef.current, fresh, { mode: m, difficulty: d, daily: dl, seed })
     const G = gRef.current
     playSfx('click')
-    if (mode === 'pares') {
+    if (m === 'pares') {
       const r = rng(seed)
-      const pairs = pickPairs(pool, difficulty, r)
+      const pairs = pickPairs(pool, d, r)
       G.cards = dealCards(pairs, r)
       G.state = G.cards.map(() => 'down' as const)
-      G.total = G.time = PAIRS_CFG[difficulty].time
+      G.total = G.time = PAIRS_CFG[d].time
       G.phase = 'loading'
       force()
       await preloadPieces(pairs, 5000)
       if (my !== token.current) return
       G.state = G.cards.map(() => 'up' as const)
-      G.peekLeft = PAIRS_CFG[difficulty].peek
+      G.peekLeft = PAIRS_CFG[d].peek
       G.phase = G.peekLeft > 0 ? 'peek' : 'playing'
       if (!G.peekLeft) G.state = G.cards.map(() => 'down' as const)
-      if (!seen(TUT_PAIRS)) {
+      if (!cfg && !seen(TUT_PAIRS)) {
         G.resume = G.phase === 'peek' ? 'playing' : 'playing'
         G.state = G.cards.map(() => 'down' as const)
         G.phase = 'paused'
@@ -228,10 +238,10 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
       }
       force()
     } else {
-      G.total = G.time = LOOK_CFG[difficulty].pick
+      G.total = G.time = LOOK_CFG[d].pick
       G.round = -1
       await nextLook(my)
-      if (my === token.current && !seen(TUT_LOOK)) {
+      if (my === token.current && !cfg && !seen(TUT_LOOK)) {
         G.resume = G.phase
         G.phase = 'paused'
         setTutorial('look')
@@ -239,6 +249,16 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
       }
     }
   }
+
+  // competicao: config de outra jogadora validada; conta ate o inicio combinado e comeca com a mesma seed
+  const count = useVersusStart(
+    (c) => {
+      const b = parseMatchBase(c)
+      const mm = (c as { mode?: unknown }).mode
+      return b && (mm === 'pares' || mm === 'look') ? { ...b, mode: mm as MemMode } : null
+    },
+    (c) => (setTutorial(null), void start(c)),
+  )
 
   // ---------------------------------------------------------------- pares
   const flip = (i: number) => {
@@ -434,6 +454,23 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
   const title = 'Memória Fashion'
   const playing = ph === 'playing' || ph === 'choose' || ph === 'memorize'
 
+  useEffect(() => setPlaying(ph !== 'intro'), [ph])
+  // competicao: placar parcial a cada ~1 s e o final ao terminar
+  const inMatch = match !== null
+  useEffect(() => {
+    if (!inMatch) return
+    const id = window.setInterval(() => {
+      const G = gRef.current
+      if (G.phase !== 'intro' && G.phase !== 'done') reportScore(G.score, '', false)
+    }, 1000)
+    return () => window.clearInterval(id)
+  }, [inMatch])
+  useEffect(() => {
+    const G = gRef.current
+    if (inMatch && ph === 'done') reportScore(G.finalScore, G.mode === 'pares' ? `${Math.round(G.total - Math.max(0, G.time))}s · ${G.errors} erros` : `${G.correct} acertos`, true)
+  }, [inMatch, ph])
+  const leaveMatch = () => match && endMatch()
+
   return (
     <div className={`nj mm${contrast ? ' nj--hc mm--hc' : ''}${labels ? ' mm--labels' : ''}`} data-phase={ph} data-mode={g.mode}>
       <TopBar
@@ -460,7 +497,8 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
       </div>
       <div className="sr-only" role="status" aria-live="polite" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)' }}>{live}</div>
 
-      {ph === 'intro' && (
+      {ph === 'intro' && match && <VersusCountdown count={count} />}
+      {ph === 'intro' && !match && (
         <Overlay>
           <h1>Memória Fashion</h1>
           <div className="nj-seg nj-seg--mode" role="radiogroup" aria-label="Modo de jogo">
@@ -484,6 +522,7 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
           </div>
           </div>
           </div>
+          <VersusLobby gameId="memoria" onStart={() => ({ mode, difficulty, seed: matchSeed() })} />
           <div className="nj-actions">
             <button className="nj-cta" onClick={() => void start()} disabled={!ready}>{ready ? 'Começar' : 'Carregando o catálogo…'}</button>
             <button className="nj-cta nj-cta--ghost" onClick={() => setTutorial(mode)}><IcoHelp />Como jogar</button>
@@ -541,12 +580,14 @@ export function MemoriaGame({ onExit }: { onExit: () => void }) {
           board={st.board}
           rank={st.rank}
           thresholds={th}
-          onAgain={() => void start()}
+          extra={match && <VersusStandings />}
+          onAgain={() => (leaveMatch(), void start())}
           onChange={() => {
+            leaveMatch()
             gRef.current.phase = 'intro'
             force()
           }}
-          onExit={onExit}
+          onExit={() => (leaveMatch(), onExit())}
         />
       )}
     </div>

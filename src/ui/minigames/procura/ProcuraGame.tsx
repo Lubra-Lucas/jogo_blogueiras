@@ -6,8 +6,10 @@ import {
   DIFF_CFG, ROUNDS, SCORE, STAR_TH, THEME_NAME, TYPICAL, generateScene, personHeight, themeFor,
   type Entity, type Scene, type SceneTarget, type ThemeId,
 } from '../../../game/minigames/procura/gen'
+import { endMatch, matchSeed, parseMatchBase, reportScore, setPlaying, useVersusStore } from '../../../game/net/versus'
 import { useProfileStore } from '../../../state/profileStore'
 import { DiffPicker, IcoBulb, IcoHelp, IcoSearch, Overlay, ResultsCard, TopBar, Tutorial, markSeen, pref, seen, setPref, type TutStep } from '../shared/kit'
+import { VersusCountdown, VersusLobby, VersusStandings, useVersusStart } from '../shared/Versus'
 import { drawPerson, drawPet } from './drawPeople'
 import { drawBackground } from './drawScene'
 import './procura.css'
@@ -114,6 +116,7 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
   }, [])
   if (!gRef.current) gRef.current = empty
   const g = gRef.current
+  const phase = g.phase
 
   // ---------------------------------------------------------------- vista
   const clampView = useCallback(() => {
@@ -232,12 +235,15 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
   }, [])
 
   // ---------------------------------------------------------------- fluxo
-  const start = () => {
-    const seed = daily ? dailySeed('procura') : Math.floor(Math.random() * 2 ** 31)
-    const cfg = DIFF_CFG[difficulty]
+  // mp = partida da competicao ao vivo: dificuldade/seed combinadas, nunca diaria e sem tutorial
+  const start = (mp?: { difficulty: Difficulty; seed: number }) => {
+    const d = mp?.difficulty ?? difficulty
+    const dl = !mp && daily
+    const seed = mp?.seed ?? (dl ? dailySeed('procura') : Math.floor(Math.random() * 2 ** 31))
+    const cfg = DIFF_CFG[d]
     const G = gRef.current!
     Object.assign(G, {
-      difficulty, daily, seed, time: cfg.time, total: cfg.time, score: 0, combo: 0, bestCombo: 0, wrong: 0, hintsUsed: 0, foundTargets: 0,
+      difficulty: d, daily: dl, seed, time: cfg.time, total: cfg.time, score: 0, combo: 0, bestCombo: 0, wrong: 0, hintsUsed: 0, foundTargets: 0,
       lastFoundAt: cfg.time, flashes: [], settled: null, finalScore: 0, timeLeftBonus: 0, allDone: false, phase: 'playing' as const,
     })
     buildRound(G, 0)
@@ -247,11 +253,30 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
     resetView()
     playSfx('click')
     force()
-    if (!seen(TUT_KEY)) {
+    if (!mp && !seen(TUT_KEY)) {
       G.phase = 'paused'
       setTutorial(true)
     }
   }
+
+  const match = useVersusStore((s) => s.match)
+  const count = useVersusStart(parseMatchBase, (c) => (setTutorial(false), start(c)))
+  useEffect(() => setPlaying(phase !== 'intro'), [phase])
+  // competicao: placar parcial a cada ~1 s e o final ao terminar
+  const inMatch = match !== null
+  useEffect(() => {
+    if (!inMatch) return
+    const id = window.setInterval(() => {
+      const G = gRef.current!
+      if (G.phase !== 'intro' && G.phase !== 'done') reportScore(G.score, '', false)
+    }, 1000)
+    return () => window.clearInterval(id)
+  }, [inMatch])
+  useEffect(() => {
+    const G = gRef.current!
+    if (inMatch && phase === 'done') reportScore(G.finalScore, `${G.foundTargets}/${G.totalTargets} achados · ${G.wrong} erros`, true)
+  }, [inMatch, phase])
+  const leaveMatch = () => match && endMatch()
 
   const pause = () => {
     const G = gRef.current!
@@ -547,7 +572,6 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const phase = g.phase
   const toggleContrast = () => {
     const v = !contrast
     setContrast(v)
@@ -605,7 +629,8 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
       </div>
       <div className="sr-only" role="status" aria-live="polite" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)' }}>{live}</div>
 
-      {phase === 'intro' && (
+      {phase === 'intro' && match && <VersusCountdown count={count} />}
+      {phase === 'intro' && !match && (
         <Overlay>
           <h1>Cadê a Blogueira?</h1>
           <p>Uma cena lotada, uma lista de alvos. Ache cada um pela descrição antes que o tempo acabe: {ROUNDS} cenas por partida.</p>
@@ -622,8 +647,9 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
           </div>
           </div>
           </div>
+          <VersusLobby gameId="procura" onStart={() => ({ difficulty, seed: matchSeed() })} />
           <div className="nj-actions">
-            <button className="nj-cta" onClick={start}>Começar</button>
+            <button className="nj-cta" onClick={() => start()}>Começar</button>
             <button className="nj-cta nj-cta--ghost" onClick={() => setTutorial(true)}><IcoHelp />Como jogar</button>
             <button className="nj-cta nj-cta--ghost" onClick={onExit}>Sair</button>
           </div>
@@ -673,12 +699,14 @@ export function ProcuraGame({ onExit }: { onExit: () => void }) {
           board={st.board}
           rank={st.rank}
           thresholds={STAR_TH}
-          onAgain={start}
+          extra={match && <VersusStandings />}
+          onAgain={() => (leaveMatch(), start())}
           onChange={() => {
+            leaveMatch()
             gRef.current!.phase = 'intro'
             force()
           }}
-          onExit={onExit}
+          onExit={() => (leaveMatch(), onExit())}
         />
       )}
     </div>

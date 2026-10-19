@@ -5,7 +5,7 @@ import { currentCharId } from '../../net/save'
 import { useProfileStore } from '../../state/profileStore'
 import type { VersusPlayer, VersusScore } from './standings'
 
-export { standings } from './standings'
+export { standings, parseMatchBase, matchSeed } from './standings'
 export type { VersusPlayer, VersusScore }
 
 /**
