@@ -42,6 +42,7 @@ export function CharacterAnimation({ rig, driver }: { rig: CharacterHandle; driv
   const gltf = useGLTF(CORE_URL) as unknown as GLTF
   const animator = useMemo(() => {
     applyRestPose(rig.bones, rig.root) // base do idle de reserva
+    if (rig.proportions.gender === 'male') rig.proportions.retargetFrom(gltf.scene) // clipes da boneca no esqueleto masculino
     const a = new CharacterAnimator(rig.root, rig.bones, gltf.animations)
     if (emotesLoaded) a.addClips(emotesLoaded)
     return a
