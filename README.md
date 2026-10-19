@@ -54,6 +54,10 @@ Login com e-mail e senha, ate 3 personagens por conta e a cidade compartilhada, 
 - `?offline=1` joga sem login e sem rede (save so do navegador), como antes.
 - Detalhes em [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#multiplayer-supabase).
 
+## Influencer Tycoon (jogo paralelo)
+
+Clicker/idle em pixel art, independente do jogo 3D, na pasta [`influencer-tycoon/`](influencer-tycoon/README.md). Publicado em https://lubra-lucas.github.io/jogo_blogueiras/influencer-tycoon/.
+
 ## Arquitetura
 
 Veja [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
