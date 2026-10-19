@@ -38,6 +38,8 @@ Com `npm run dev` em outro terminal, `npm run test:minimap` verifica pausa e ret
 
 `npm run test:pet-hud` usa o mesmo navegador e servidor para verificar que o cachorro proximo nao exibe aviso flutuante, que o carinho funciona pelo painel e que fechar o painel nao faz o aviso voltar.
 
+`npm run test:garment-motion` verifica nove roupas femininas: calcas/legging/macacao sem balanco de saia e saia/vestido com o efeito preservado. `npm run test:player-light` verifica luz suave noturna, render mais claro da personagem, desligamento de dia, transicao ao anoitecer e acompanhamento da personagem. Usam o mesmo servidor e navegador CDP.
+
 ## Controles e UI
 - **Andar**: WASD/setas (Shift corre), clique no chao, joystick no celular. **Q/E** gira a camera.
 - **C / Tab**: menu da personagem (Perfil, Aparencia com sliders de rosto e corpo, Guarda-roupa com roupas e joias, Ajustes). **P**: celular (Missoes, Blogram, Mensagens, Mapa, Camera). **G**: roda de emotes (numeros 1-9 tambem). **Enter**: chat. **M**: mapa grande.

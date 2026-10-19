@@ -25,6 +25,7 @@ import { applyRestPose } from './pose'
 import { BodyRig } from './proportions'
 import { ensureTangents } from './tangents'
 import { CharacterAnimation, type AnimDriver } from './animation/CharacterAnimation'
+import { SKIRT_GARMENTS } from './secondary/skirtGarments'
 
 export interface CharacterHandle {
   /** raiz (pes em y=0, olhando para +Z) */
@@ -147,7 +148,10 @@ function buildAttachment(rig: Rig, part: Part, gltf: GLTF): Attachment {
     meshes.push(m)
     if (!def) {
       let mat = slotMats.get(slot)
-      if (!mat) slotMats.set(slot, (mat = new MeshPhysicalMaterial({ name: slot })))
+      if (!mat) {
+        slotMats.set(slot, (mat = new MeshPhysicalMaterial({ name: slot })))
+        if (SKIRT_GARMENTS.has(part.item!.id)) mat.userData.secondaryMotion = 'skirt'
+      }
       m.material = mat
     }
   }

@@ -1,5 +1,17 @@
 # Registro de alterações
 
+## Calças femininas e iluminação noturna da personagem
+
+Base de trabalho: `3e918fc`. Esta entrada acompanha o commit da correção e da nova iluminação.
+
+- **Causa das calças alternando com pele**: o scanner reconhecia saias pela presença de vértices centrais entre as pernas. As cinco calças do catálogo também satisfazem esse critério; o material principal recebia deslocamento de saia após a animação dos ossos, enquanto os detalhes não recebiam o mesmo movimento.
+- **Correção**: `secondary/skirtGarments.ts` registra explicitamente as 35 saias/vestidos atuais. `Character.tsx` marca os materiais dessas peças antes do scanner. `CharacterSecondary.tsx` aplica o balanço apenas aos materiais marcados, sem inferir pelo formato dos vértices. Calças, leggings e macacões acompanham somente o esqueleto; os materiais de cada saia/vestido recebem o mesmo efeito. Ao cadastrar novas peças com saia, atualize esse registro.
+- **Luz noturna**: `player/PlayerNightLight.tsx`, montada em `Game.tsx` depois do jogador e da câmera. Uma única luz suave, sem sombras extras, de alcance de 4 m, acompanha a personagem pelo lado da câmera. Intensidade proporcional a `env.night`, apagada de dia; altura acompanha as proporções da personagem.
+- **Validação**: build e os testes `appearance` (24 verificações/3.000 aparências), `save`, `ranking`, `versus` e `environment` passaram. `test:garment-motion` passou em nove roupas: cinco calças, legging, macacão, saia lápis e vestido de gala. `test:player-light` confirmou luz noturna, desligamento de dia, intensidade intermediária ao anoitecer, acompanhamento após teleporte e aumento real de luminância no render do corpo com a luz ligada. As falhas foram reproduzidas antes das correções; revisão de código concluída.
+- **Limites**: validação em Chromium com toque e renderização por software; sem medição de FPS nem validação em Safari/aparelho real nesta rodada. Nenhuma mudança de dependências, assets GLB ou formato dos saves. Permanece o aviso conhecido de bundles grandes no build.
+
+Para acompanhar entre devs, atualize a partir de `origin/main` antes de editar os arquivos de personagem/iluminação e preserve estes testes de regressão. Os comandos estão no README.
+
 ## Desempenho no celular e interface do pet
 
 Base de trabalho: `5b61197` (merge do PR #10). Esta entrada acompanha o commit que reúne as mudanças abaixo; consulte `git log --oneline` para identificar a revisão instalada.

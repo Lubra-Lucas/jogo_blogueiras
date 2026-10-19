@@ -11,6 +11,7 @@ import { Physics } from '@react-three/rapier'
 import { KeyboardInput } from './input/KeyboardInput'
 import { ClickToMove } from './input/ClickToMove'
 import { PlayerController } from './player/PlayerController'
+import { PlayerNightLight } from './player/PlayerNightLight'
 import { DestinationMarker } from './player/DestinationMarker'
 import { CameraInput } from './input/CameraInput'
 import { ThirdPersonCamera } from './camera/ThirdPersonCamera'
@@ -117,6 +118,7 @@ export function Game({ tier }: { tier: QualityTier }) {
             <NavigationRunner />
             {/* depois do PlayerController: useFrame na ordem de montagem */}
             {MAP_MODE ? <MapCamera /> : <ThirdPersonCamera />}
+            <PlayerNightLight />
           </Physics>
           <KeyboardInput />
           <ClickToMove />
