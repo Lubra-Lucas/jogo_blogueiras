@@ -58,12 +58,14 @@ export function PlayerController({ shadows }: { shadows: boolean }) {
   const controller = useRef<CharacterController | null>(null)
 
   // Estado de simulacao + temporarios reutilizados (sem alocacao por frame).
+  // remontado (a cidade saiu da memoria durante um minijogo no celular): continua onde estava
+  const back = usePlayerStore.getState().hasMoved ? usePlayerStore.getState() : null
   const sim = useMemo(
     () => ({
-      pos: new Vector3(C.spawn[0], SPAWN_Y, C.spawn[1]),
+      pos: back ? back.position.clone().setY(back.position.y + 0.05) : new Vector3(C.spawn[0], SPAWN_Y, C.spawn[1]),
       hv: new Vector3(), // velocidade horizontal suavizada (x, z)
       vy: 0,
-      yaw: Math.PI, // spawn olhando para -Z (de costas para a camera inicial)
+      yaw: back ? back.yaw : Math.PI, // spawn olhando para -Z (de costas para a camera inicial)
       lastStamp: -1,
       bestDist: Infinity,
       stuck: 0,
